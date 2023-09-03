@@ -1,0 +1,617 @@
+{
+  "preset_info": {
+    "version": 1,
+    "title": "Custom Battery Level Widget 1.0",
+    "description": "View battery levels of all devices",
+    "author": "Corey Welsh",
+    "email": "coreyw2000@gmail.com ",
+    "width": 816,
+    "height": 286,
+    "features": "",
+    "release": 373314510,
+    "locked": false,
+    "pflags": 0
+  },
+  "preset_root": {
+    "internal_type": "RootLayerModule",
+    "config_scale_value": 45,
+    "internal_flows": [
+      {
+        "id": "Fn3HjMHl",
+        "name": "Flow000",
+        "t": [],
+        "a": []
+      }
+    ],
+    "globals_list": {
+      "charge": {
+        "index": 1,
+        "type": "COLOR",
+        "title": "charge",
+        "description": "Charged battery color",
+        "value": "#FFFFFFFF"
+      },
+      "device": {
+        "index": 2,
+        "type": "COLOR",
+        "title": "device",
+        "description": "Device color",
+        "value": "#FFFFFFFF"
+      },
+      "charge2": {
+        "index": 3,
+        "type": "COLOR",
+        "title": "charge2",
+        "description": "Charged battery color",
+        "value": "#FF008F95"
+      },
+      "hide": {
+        "index": 4,
+        "type": "COLOR",
+        "title": "hide",
+        "value": "#00FF00FF"
+      },
+      "phonepwr": {
+        "index": 5,
+        "type": "SWITCH",
+        "title": "phonepwr",
+        "on_mode": "MANUAL_FORMULA",
+        "on_formula": "$br(tasker, kwgt_phone_battery_state) = charging$",
+        "off_mode": "MANUAL_FORMULA",
+        "off_formula": "$br(tasker, kwgt_phone_battery_state) = discharging$"
+      }
+    },
+    "viewgroup_items": [
+      {
+        "internal_type": "OverlapLayerModule",
+        "internal_title": "Battery Levels",
+        "position_anchor": "CENTERRIGHT",
+        "config_scale_value": 125,
+        "viewgroup_items": [
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "Phone",
+            "position_anchor": "CENTERLEFT",
+            "position_offset_x": 80,
+            "position_padding_bottom": 25,
+            "viewgroup_items": [
+              {
+                "internal_type": "OverlapLayerModule",
+                "internal_title": "Battery Icon",
+                "position_padding_bottom": 80,
+                "internal_events": [
+                  {
+                    "type": "SINGLE_TAP",
+                    "action": "OPEN_LINK",
+                    "url": "homeassistant://navigate/dashboard-widgets/battery-levels?kiosk"
+                  }
+                ],
+                "viewgroup_items": [
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "battery_std",
+                    "position_offset_x": 100,
+                    "internal_title": "Battery",
+                    "internal_toggles": {
+                      "fx_shadow_blur": 0,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "fx_shadow_blur": "$if(br(tasker, mb_state_k)=on, 200, 0)$",
+                      "paint_color": "$if(br(tasker, kwgt_bedroom_lights)=on,#FF008F95,#FFFFFF)$"
+                    },
+                    "fx_shadow_blur": 1,
+                    "fx_shadow_distance": 0,
+                    "fx_shadow_color": "#FFFFEE9D",
+                    "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT_Power.kwgt/icons/material.ttf",
+                    "paint_color": "#FF00626D",
+                    "position_anchor": "TOP",
+                    "internal_globals": {
+                      "paint_color": "charge"
+                    },
+                    "icon_size": 180
+                  },
+                  {
+                    "internal_type": "ProgressModule",
+                    "internal_toggles": {
+                      "position_anchor": 0,
+                      "color_fgcolor": 100,
+                      "color_bgcolor": 100,
+                      "progress_level": 10
+                    },
+                    "internal_formulas": {
+                      "position_anchor": "",
+                      "progress_level": "$br(tasker, kwgt_phone_battery_level)$"
+                    },
+                    "internal_globals": {
+                      "color_fgcolor": "charge2",
+                      "color_bgcolor": "device"
+                    },
+                    "progress_rotate_mode": "DEG270",
+                    "color_mode": "MULTIPLY",
+                    "style_size": 155,
+                    "style_height": 80,
+                    "progress_progress": "CUSTOM",
+                    "position_padding_top": 8
+                  },
+                  {
+                    "internal_type": "OverlapLayerModule",
+                    "internal_title": "Charging",
+                    "internal_toggles": {
+                      "config_visible": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(br(tasker, kwgt_phone_battery_state) = \"charging\",ALWAYS,br(tasker, kwgt_phone_battery_level) =100,ALWAYS,NEVER)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "ShapeModule",
+                        "internal_title": "Charging Icon",
+                        "internal_toggles": {
+                          "paint_color": 10,
+                          "paint_mode": 10
+                        },
+                        "internal_formulas": {
+                          "paint_color": "$if(br(tasker, kwgt_phone_battery_level) = 100,#FFFFFFFF,#FF008F95)$",
+                          "paint_mode": "$if(br(tasker, kwgt_phone_battery_level) = 100,NORMAL,MULTIPLY)$"
+                        },
+                        "shape_type": "PATH",
+                        "shape_width": 100,
+                        "shape_height": 100,
+                        "shape_path": "M 70.583419,39.708292 H 55.145856 V 3.6873078 L 29.416581,55.145855 H 44.85415 v 41.166837z",
+                        "paint_color": "#FF008F95",
+                        "paint_mode": "MULTIPLY",
+                        "position_padding_top": 25
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "internal_type": "FontIconModule",
+                "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT.kwgt/icons/material.ttf",
+                "icon_icon": "phone_android",
+                "position_anchor": "BOTTOM",
+                "position_padding_top": 190,
+                "paint_color": "#FF00626D",
+                "internal_toggles": {
+                  "0": 0,
+                  "paint_color": 100
+                },
+                "internal_title": "Phone Icon",
+                "internal_globals": {
+                  "paint_color": "device"
+                }
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "Watch",
+            "internal_toggles": {
+              "position_padding_right": 0
+            },
+            "position_padding_right": 144,
+            "position_padding_bottom": 25,
+            "viewgroup_items": [
+              {
+                "internal_type": "OverlapLayerModule",
+                "position_padding_bottom": 80,
+                "internal_title": "Battery Icon",
+                "internal_events": [
+                  {
+                    "type": "SINGLE_TAP",
+                    "action": "OPEN_LINK",
+                    "url": "homeassistant://navigate/dashboard-widgets/battery-levels?kiosk"
+                  }
+                ],
+                "viewgroup_items": [
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "battery_std",
+                    "position_offset_x": 100,
+                    "internal_title": "Battery",
+                    "internal_toggles": {
+                      "fx_shadow_blur": 0,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "fx_shadow_blur": "$if(br(tasker, mb_state_k)=on, 200, 0)$",
+                      "paint_color": "$if(br(tasker, kwgt_bedroom_lights)=on,#FF008F95,#FFFFFF)$"
+                    },
+                    "fx_shadow_blur": 1,
+                    "fx_shadow_distance": 0,
+                    "fx_shadow_color": "#FFFFEE9D",
+                    "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT_Power.kwgt/icons/material.ttf",
+                    "paint_color": "#FF00626D",
+                    "position_anchor": "TOP",
+                    "internal_globals": {
+                      "paint_color": "charge"
+                    },
+                    "icon_size": 180
+                  },
+                  {
+                    "internal_type": "ProgressModule",
+                    "internal_toggles": {
+                      "position_anchor": 0,
+                      "color_fgcolor": 100,
+                      "color_bgcolor": 100,
+                      "progress_progress": 10,
+                      "progress_level": 10
+                    },
+                    "internal_formulas": {
+                      "position_anchor": "",
+                      "progress_level": "$br(tasker, kwgt_watch_battery_level)$"
+                    },
+                    "internal_globals": {
+                      "color_fgcolor": "charge2",
+                      "color_bgcolor": "device"
+                    },
+                    "progress_rotate_mode": "DEG270",
+                    "color_mode": "MULTIPLY",
+                    "style_size": 155,
+                    "style_height": 80,
+                    "position_padding_top": 8,
+                    "progress_progress": "CUSTOM",
+                    "progress_level": 70
+                  },
+                  {
+                    "internal_type": "OverlapLayerModule",
+                    "internal_title": "Charging",
+                    "internal_toggles": {
+                      "config_visible": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(br(tasker, kwgt_watch_battery_state) = \"charging\",ALWAYS,br(tasker, kwgt_watch_battery_level) =100,ALWAYS,NEVER)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "ShapeModule",
+                        "internal_title": "Charging Icon",
+                        "internal_toggles": {
+                          "paint_color": 10,
+                          "paint_mode": 10
+                        },
+                        "internal_formulas": {
+                          "paint_color": "$if(br(tasker, kwgt_watch_battery_level) = 100,#FFFFFFFF,#FF008F95)$",
+                          "paint_mode": "$if(br(tasker, kwgt_watch_battery_level) = 100,NORMAL,MULTIPLY)$"
+                        },
+                        "shape_type": "PATH",
+                        "shape_width": 100,
+                        "shape_height": 100,
+                        "shape_path": "M 70.583419,39.708292 H 55.145856 V 3.6873078 L 29.416581,55.145855 H 44.85415 v 41.166837z",
+                        "paint_color": "#FF008F95",
+                        "paint_mode": "MULTIPLY",
+                        "position_padding_top": 25
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "internal_type": "FontIconModule",
+                "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT.kwgt/icons/material.ttf",
+                "icon_icon": "watch",
+                "position_anchor": "BOTTOM",
+                "position_padding_top": 190,
+                "paint_color": "#FF00626D",
+                "internal_title": "Watch Icon",
+                "internal_toggles": {
+                  "paint_color": 100
+                },
+                "internal_globals": {
+                  "paint_color": "device"
+                }
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "Remote",
+            "position_padding_left": 144,
+            "position_padding_bottom": 25,
+            "viewgroup_items": [
+              {
+                "internal_type": "OverlapLayerModule",
+                "position_padding_bottom": 80,
+                "internal_title": "Battery Icon",
+                "internal_events": [
+                  {
+                    "type": "SINGLE_TAP",
+                    "action": "OPEN_LINK",
+                    "url": "homeassistant://navigate/dashboard-widgets/battery-levels?kiosk"
+                  }
+                ],
+                "viewgroup_items": [
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "battery_std",
+                    "position_offset_x": 100,
+                    "internal_title": "Battery",
+                    "internal_toggles": {
+                      "fx_shadow_blur": 0,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "fx_shadow_blur": "$if(br(tasker, mb_state_k)=on, 200, 0)$",
+                      "paint_color": "$if(br(tasker, kwgt_bedroom_lights)=on,#FF008F95,#FFFFFF)$"
+                    },
+                    "fx_shadow_blur": 1,
+                    "fx_shadow_distance": 0,
+                    "fx_shadow_color": "#FFFFEE9D",
+                    "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT_Power.kwgt/icons/material.ttf",
+                    "paint_color": "#FF00626D",
+                    "position_anchor": "TOP",
+                    "internal_globals": {
+                      "paint_color": "charge"
+                    },
+                    "icon_size": 180
+                  },
+                  {
+                    "internal_type": "ProgressModule",
+                    "internal_toggles": {
+                      "position_anchor": 0,
+                      "color_fgcolor": 100,
+                      "color_bgcolor": 100,
+                      "progress_progress": 10,
+                      "progress_level": 10
+                    },
+                    "internal_formulas": {
+                      "position_anchor": "",
+                      "progress_level": "$br(tasker, kwgt_remote_battery_level)$"
+                    },
+                    "internal_globals": {
+                      "color_fgcolor": "charge2",
+                      "color_bgcolor": "device"
+                    },
+                    "progress_rotate_mode": "DEG270",
+                    "color_mode": "MULTIPLY",
+                    "style_size": 155,
+                    "style_height": 80,
+                    "position_padding_top": 8,
+                    "progress_progress": "CUSTOM",
+                    "progress_level": 70
+                  },
+                  {
+                    "internal_type": "OverlapLayerModule",
+                    "internal_title": "Charging",
+                    "internal_toggles": {
+                      "config_visible": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(br(tasker, kwgt_remote_battery_state) = \"charging\",ALWAYS,br(tasker, kwgt_remote_battery_level) =100,ALWAYS,NEVER)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "ShapeModule",
+                        "internal_title": "Charging Icon",
+                        "internal_toggles": {
+                          "paint_color": 10,
+                          "paint_mode": 10
+                        },
+                        "internal_formulas": {
+                          "paint_color": "$if(br(tasker, kwgt_remote_battery_level) = 100,#FFFFFFFF,#FF008F95)$",
+                          "paint_mode": "$if(br(tasker, kwgt_phone_battery_level) = 100,NORMAL,MULTIPLY)$"
+                        },
+                        "shape_type": "PATH",
+                        "shape_width": 100,
+                        "shape_height": 100,
+                        "shape_path": "M 70.583419,39.708292 H 55.145856 V 3.6873078 L 29.416581,55.145855 H 44.85415 v 41.166837z",
+                        "paint_color": "#FF008F95",
+                        "paint_mode": "MULTIPLY",
+                        "position_padding_top": 25
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "internal_type": "FontIconModule",
+                "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT.kwgt/icons/material.ttf",
+                "icon_icon": "smartphone",
+                "position_anchor": "BOTTOM",
+                "position_padding_top": 190,
+                "paint_color": "#FF00626D",
+                "internal_title": "Remote Icon",
+                "internal_toggles": {
+                  "paint_color": 100
+                },
+                "internal_globals": {
+                  "paint_color": "device"
+                }
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "Laptop",
+            "position_anchor": "CENTERRIGHT",
+            "position_offset_x": 80,
+            "position_padding_bottom": 25,
+            "viewgroup_items": [
+              {
+                "internal_type": "OverlapLayerModule",
+                "position_padding_bottom": 80,
+                "internal_title": "Battery Icon",
+                "internal_events": [
+                  {
+                    "type": "SINGLE_TAP",
+                    "action": "OPEN_LINK",
+                    "url": "homeassistant://navigate/dashboard-widgets/battery-levels?kiosk"
+                  }
+                ],
+                "viewgroup_items": [
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "battery_std",
+                    "position_offset_x": 100,
+                    "internal_title": "Battery",
+                    "internal_toggles": {
+                      "fx_shadow_blur": 0,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "fx_shadow_blur": "$if(br(tasker, mb_state_k)=on, 200, 0)$",
+                      "paint_color": "$if(br(tasker, kwgt_bedroom_lights)=on,#FF008F95,#FFFFFF)$"
+                    },
+                    "fx_shadow_blur": 1,
+                    "fx_shadow_distance": 0,
+                    "fx_shadow_color": "#FFFFEE9D",
+                    "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT_Power.kwgt/icons/material.ttf",
+                    "paint_color": "#FF00626D",
+                    "position_anchor": "TOP",
+                    "internal_globals": {
+                      "paint_color": "charge"
+                    },
+                    "icon_size": 180
+                  },
+                  {
+                    "internal_type": "ProgressModule",
+                    "internal_toggles": {
+                      "position_anchor": 0,
+                      "color_fgcolor": 100,
+                      "color_bgcolor": 100,
+                      "progress_progress": 10,
+                      "progress_level": 10
+                    },
+                    "internal_formulas": {
+                      "position_anchor": "",
+                      "progress_level": "$br(tasker, kwgt_laptop_battery_level)$"
+                    },
+                    "internal_globals": {
+                      "color_fgcolor": "charge2",
+                      "color_bgcolor": "device"
+                    },
+                    "progress_rotate_mode": "DEG270",
+                    "color_mode": "MULTIPLY",
+                    "style_size": 155,
+                    "style_height": 80,
+                    "position_padding_top": 8,
+                    "progress_progress": "CUSTOM",
+                    "progress_level": 70
+                  },
+                  {
+                    "internal_type": "OverlapLayerModule",
+                    "internal_title": "Charging",
+                    "internal_toggles": {
+                      "config_visible": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(br(tasker, kwgt_laptop_battery_state) = on,ALWAYS,br(tasker, kwgt_laptop_battery_level) =100,ALWAYS,NEVER)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "ShapeModule",
+                        "internal_title": "Charging Icon",
+                        "internal_toggles": {
+                          "paint_color": 10,
+                          "paint_mode": 10
+                        },
+                        "internal_formulas": {
+                          "paint_color": "$if(br(tasker, kwgt_laptop_battery_level) = 100,#FFFFFFFF,#FF008F95)$",
+                          "paint_mode": "$if(br(tasker, kwgt_laptop_battery_level) = 100,NORMAL,MULTIPLY)$"
+                        },
+                        "shape_type": "PATH",
+                        "shape_width": 100,
+                        "shape_height": 100,
+                        "shape_path": "M 70.583419,39.708292 H 55.145856 V 3.6873078 L 29.416581,55.145855 H 44.85415 v 41.166837z",
+                        "paint_color": "#FF008F95",
+                        "paint_mode": "MULTIPLY",
+                        "position_padding_top": 25
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "internal_type": "FontIconModule",
+                "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT.kwgt/icons/material.ttf",
+                "icon_icon": "laptop",
+                "position_anchor": "BOTTOM",
+                "position_padding_top": 190,
+                "paint_color": "#FF00626D",
+                "internal_title": "Laptop Icon",
+                "internal_toggles": {
+                  "paint_color": 100
+                },
+                "internal_globals": {
+                  "paint_color": "device"
+                }
+              }
+            ]
+          },
+          {
+            "internal_type": "ShapeModule",
+            "internal_title": "Spacer",
+            "shape_type": "RECT",
+            "shape_width": 600,
+            "shape_height": 320,
+            "paint_color": "#00FFFFFF",
+            "position_anchor": "TOP"
+          }
+        ]
+      },
+      {
+        "internal_type": "OverlapLayerModule",
+        "internal_title": "Controls",
+        "config_scale_value": 275,
+        "position_anchor": "CENTERLEFT",
+        "position_offset_x": 380,
+        "viewgroup_items": [
+          {
+            "internal_type": "FontIconModule",
+            "internal_title": "KWGT config",
+            "icon_set": "kfile://org.kustom.provider/icons/fontawesome.ttf",
+            "icon_icon": "cog, gear",
+            "icon_size": 36,
+            "paint_color": "#2AFFFFFF",
+            "position_anchor": "CENTERLEFT",
+            "position_offset_x": 60,
+            "internal_events": [
+              {
+                "type": "SINGLE_TAP",
+                "action": "KUSTOM_ACTION"
+              }
+            ],
+            "position_padding_left": 5,
+            "position_padding_bottom": 82
+          },
+          {
+            "internal_type": "FontIconModule",
+            "internal_title": "Refresh",
+            "icon_icon": "replay",
+            "icon_size": 40,
+            "paint_color": "#37FFFFFF",
+            "position_offset_x": 100,
+            "internal_events": [
+              {
+                "type": "SINGLE_TAP",
+                "action": "LAUNCH_SHORTCUT",
+                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-33%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_action_autorenew%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELight%20State%20Update%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELight%20State%20Update%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1688861066638%3C%2Fcdate%3E%3Cedate%3E1688861066638%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=3aff0d4d-14cf-453d-95ee-1c0a80c0660a;S.org.kustom.intent.label=Task%20Shortcut;end"
+              }
+            ],
+            "position_anchor": "CENTERLEFT"
+          },
+          {
+            "internal_type": "FontIconModule",
+            "internal_title": "Home Assistant",
+            "icon_set": "kfile://org.kustom.provider/widgets/HASS_KWGT.kwgt/icons/material.ttf",
+            "icon_icon": "home",
+            "icon_size": 39,
+            "paint_color": "#2AFFFFFF",
+            "position_anchor": "CENTERLEFT",
+            "position_offset_x": 147,
+            "internal_events": [
+              {
+                "type": "SINGLE_TAP",
+                "action": "LAUNCH_APP",
+                "intent": "intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;component=io.homeassistant.companion.android/.launch.LaunchActivity;S.org.kustom.intent.label=Home%20Assistant;end"
+              }
+            ],
+            "position_padding_top": 75
+          }
+        ]
+      }
+    ]
+  }
+}

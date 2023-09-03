@@ -1,0 +1,438 @@
+  {
+    "globals_list": {
+      "readme": {
+        "index": 1,
+        "type": "LIST",
+        "title": "README",
+        "entries": "\"Hey there! To setup this widget correctly, you'll need to install Tasker. Please read the setup instructions at my GitHub here:\n<URL>\n\nHighlights of this widget are a OneUI based interface thats full customizable down to margins and corner radius. Features includes:\n- Modify icon sizes, padding and spacing to get the look you want\n- Automatic resizing and adjusting of layout, with further manual adjustments\n- \"setup\" mode which allows you to view all the data for spacing and icons you need\nAnd many more!\n\nCreated by Corey Welsh to fill the need of an easy-setup Home Assistant widget also looks great\""
+      },
+      "- 1.": {
+        "index": 2,
+        "type": "LIST",
+        "title": "-- 1",
+        "entries": "-- Color Options --\nClick to read color editing options\n\nTo edit the filters put onto the color, look for the dark or light color calculations in the flows tab. Follow the guide on github for color edits",
+        "value": "-- Color Options --"
+      },
+      "colors": {
+        "index": 3,
+        "type": "FOLDER",
+        "title": "colors",
+        "description": "-- Color Options --"
+      },
+      "colors/col1sel": {
+        "index": 4,
+        "type": "LIST",
+        "title": "col1sel",
+        "description": "Color 1 - Choose the color source for the smaller box background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
+        "entries": "0##Wallpaper #1, 1##Wallpaper #2, 2##System (MaterialYou), 3##Manual (Color picker)",
+        "value": "0"
+      },
+      "colors/col1sysc": {
+        "index": 5,
+        "type": "LIST",
+        "title": "col1sysc",
+        "description": "Color 1 - System/MaterialYou Only\nChoose a color tone.",
+        "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Neutral #3",
+        "value": "2"
+      },
+      "colors/col1fil1": {
+        "index": 6,
+        "type": "LIST",
+        "title": "col1fil1",
+        "description": "Color 1 - Wallpaper Only\nChoose filter.",
+        "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
+        "value": "2"
+      },
+      "colors/col1adj": {
+        "index": 7,
+        "type": "NUMBER",
+        "title": "col1adj",
+        "description": "Color 1 - Filter adjustment\n0 = None, 100 = Strong",
+        "min": 0,
+        "max": 100,
+        "value": 40.0
+      },
+      "colors/col1fil2": {
+        "index": 8,
+        "type": "LIST",
+        "title": "col1fil2",
+        "description": "Color 1 - Choose filter manipulation - Changes slider above from total into add/subtract from current (optional)",
+        "entries": "0##None, 1##Add, 2##Remove",
+        "value": "0"
+      },
+      "colors/col1pick": {
+        "index": 9,
+        "type": "COLOR",
+        "title": "col1pick",
+        "description": "Color 1 - Manual Color choice, overrides filter\nAlso used as fallback color for extracted colors",
+        "value": "#FFFFFFFF"
+      },
+      "colors/col1alph": {
+        "index": 10,
+        "type": "NUMBER",
+        "title": "col1alph",
+        "description": "Color 1 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
+        "min": 0,
+        "max": 100,
+        "value": 75.0
+      },
+      "colors/col2sel": {
+        "index": 11,
+        "type": "LIST",
+        "title": "col2sel",
+        "description": "Color 2 - Choose the color source for the larger box background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
+        "entries": "0##Wallpaper #1, 1##Wallpaper #2, 2##System (MaterialYou), 3##Manual (Color picker)",
+        "value": "0"
+      },
+      "colors/col2sysc": {
+        "index": 12,
+        "type": "LIST",
+        "title": "col2sysc",
+        "description": "Color 2 - System/MaterialYou Only\nChoose a color tone",
+        "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Shade Level",
+        "value": "0"
+      },
+      "colors/col2fil1": {
+        "index": 13,
+        "type": "LIST",
+        "title": "col2fil1",
+        "description": "Color 2 - Wallpaper Only\nChoose filter.",
+        "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
+        "value": "2"
+      },
+      "colors/col2adj": {
+        "index": 14,
+        "type": "NUMBER",
+        "title": "col2adj",
+        "description": "Color 2 - Filter adjustment\n0 = None, 100 = Strong",
+        "min": 0,
+        "max": 100,
+        "value": 55.0
+      },
+      "colors/col2fil2": {
+        "index": 15,
+        "type": "LIST",
+        "title": "col2fil2",
+        "description": "Color 2 - Choose filter manipulation - Changes number above from total into add/subtract from current (optional)",
+        "entries": "0##None, 1##Add, 2##Remove",
+        "value": "0"
+      },
+      "colors/col2pick": {
+        "index": 16,
+        "type": "COLOR",
+        "title": "col2pick",
+        "description": "Color 2 - Manual Color choice, overrides filter.\nAlso used as fallback color for extracted colors",
+        "value": "#E7FFFFFF"
+      },
+      "colors/col2alph": {
+        "index": 17,
+        "type": "NUMBER",
+        "title": "col2alph",
+        "description": "Color 2 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
+        "min": 0,
+        "max": 100,
+        "value": 75.0
+      },
+      "colors/colico": {
+        "index": 18,
+        "type": "COLOR",
+        "title": "colico",
+        "description": "Color of icons and text. Default: #E7FFFFFF",
+        "value": "#E7FFFFFF"
+      },
+      "- 2.": {
+        "index": 19,
+        "type": "LIST",
+        "title": "- 2.",
+        "entries": "-- Widget Sizing and Alignment --",
+        "value": "-- Widget Sizing and Alignment --"
+      },
+      "wgtboxsw": {
+        "index": 20,
+        "type": "LIST",
+        "title": "wgtboxsw",
+        "description": "Swap the large and small boxes on your Widget",
+        "entries": "0##Normal Layout, 1##Inverted Layout",
+        "value": "0"
+      },
+      "wgtmode": {
+        "index": 21,
+        "type": "LIST",
+        "title": "wgtmode",
+        "description": "Choose a Widget mode",
+        "entries": "0##Device Controls by room (Eg all lights in house), 1##Single room Controls (eg a fan and a light)",
+        "value": "1"
+      },
+      "smboxper": {
+        "index": 22,
+        "type": "LIST",
+        "title": "smboxper",
+        "description": "Choose how many icons you want shown in the smaller box. If using single room controls, choose 2. Default: 4",
+        "entries": "15##2 Main Icons, 30##4 Main Icons",
+        "value": "15"
+      },
+      "corrad": {
+        "index": 23,
+        "type": "NUMBER",
+        "title": "corrad",
+        "description": "Set the radius of the rounded corners.\nDefault: 10kpx",
+        "min": 0,
+        "max": 50,
+        "value": 10.0
+      },
+      "- 3.": {
+        "index": 24,
+        "type": "LIST",
+        "title": "- 3.",
+        "entries": "-- Icon Sizing and Alignment --",
+        "value": "-- Icon Sizing and Alignment --"
+      },
+      "icomain": {
+        "index": 25,
+        "type": "NUMBER",
+        "title": "icomain",
+        "description": "Set the size of the main icons.\nDefault: 80kpx",
+        "min": 20,
+        "max": 120,
+        "value": 80.0
+      },
+      "icosm": {
+        "index": 26,
+        "type": "NUMBER",
+        "title": "icosm",
+        "description": "Set the size of the small icon(s).\nDefault: 32kpx",
+        "min": 20,
+        "max": 75,
+        "value": 32.0
+      },
+      "icodev": {
+        "index": 27,
+        "type": "NUMBER",
+        "title": "icodev",
+        "description": "Set the full size of the device icon.\nDefault: 120kpx",
+        "min": 0,
+        "max": 120,
+        "value": 120.0
+      },
+      "icodevsm": {
+        "index": 28,
+        "type": "LIST",
+        "title": "icodevsm",
+        "description": "CHANGE TO icodevsc - Control the size of the device icon.\nDefault: Auto-adjust",
+        "entries": "0##Normal Device icon size, 1##Match small icons, 2## Auto-shrink for smaller widget",
+        "value": "2"
+      },
+      "- 3.": {
+        "index": 29,
+        "type": "LIST",
+        "title": "- 3.",
+        "entries": "-- Padding and Spacing --",
+        "value": "-- Padding and Spacing --"
+      },
+      "icomarg": {
+        "index": 30,
+        "type": "NUMBER",
+        "title": "icomarg",
+        "description": "Set the margin between the edge of widget and the icons.\nDefault: 10kpx",
+        "min": 0,
+        "max": 200,
+        "value": 10.0
+      },
+      "icopad": {
+        "index": 31,
+        "type": "NUMBER",
+        "title": "icopad",
+        "description": "Set the padding between icons in a row.\nDefault: 20kpx",
+        "min": 0,
+        "max": 50,
+        "value": 20.0
+      },
+      "padside": {
+        "index": 32,
+        "type": "NUMBER",
+        "title": "padside",
+        "description": "Set the padding from the edge of screen to the side of widget.\nDefault: 15kpx",
+        "value": 15.0,
+        "min": 0,
+        "max": 50
+      },
+      "padupdwn": {
+        "index": 33,
+        "type": "NUMBER",
+        "title": "padupdwn",
+        "description": "Set the padding from the edge of screen to the top/bottom of widget. Will double when two widgets are stacked. Default: 4kpx",
+        "value": 4,
+        "min": 0,
+        "max": 50
+      },
+      "icohide": {
+        "index": 34,
+        "type": "SWITCH",
+        "title": "icohide",
+        "description": "Hide the settings icons.\nOff = Show settings, On = Hide settings",
+        "value": 0
+      },
+      "- 4.": {
+        "index": 35,
+        "type": "LIST",
+        "title": "- 4.",
+        "entries": "-- Advanced Options (may break things) --",
+        "value": "-- Advanced Options (may break things) --"
+      },
+      "setupmde": {
+        "index": 36,
+        "type": "SWITCH",
+        "title": "setupmde",
+        "description": "ADVANCED: Enable showing setup data. This will give you numbers and information for fine-tuning the widget to fit your device screen",
+        "value": 0
+      },
+      "icopadr": {
+        "index": 37,
+        "type": "SWITCH",
+        "title": "icopadr",
+        "description": "ADVANCED: Remove icon padding for settings while leaving icons. You may need to adjust icon size to prevent overlapping. Default: Off",
+        "value": "0"
+      },
+      "autoalig": {
+        "index": 38,
+        "type": "SWITCH",
+        "title": "autoalig",
+        "description": "ADVANCED - Manually set layout direction of widget. Use with next 2 options to configure",
+        "value": "0"
+      },
+      "wgtalign": {
+        "index": 39,
+        "type": "SWITCH",
+        "title": "wgtalign",
+        "description": "ADVANCED - Auto horizontal or vertical alignment based on widget sizing",
+        "on_mode": "MANUAL_FORMULA",
+        "on_formula": "$if(gv(autoalig) = 0, (si(rratio) < 0.8, 0))$",
+        "off_mode": "MANUAL_FORMULA",
+        "off_formula": "$if(gv(autoalig) = 0, (si(rratio) > 0.8, 0))$"
+      },
+      "position": {
+        "index": 40,
+        "type": "LIST",
+        "title": "position",
+        "description": "ADVANCED - Change the alignment of the smaller box. Use with two previous settings",
+        "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout",
+        "value": "TOP"
+      },
+      "generate": {
+        "index": 41,
+        "type": "FOLDER",
+        "title": "generate",
+        "description": "Generated Globals. Editing these formula may cause unintended issues. Proceed with caution."
+      },
+      "generate/col1": {
+        "index": 42,
+        "type": "COLOR",
+        "title": "col1",
+        "description": "GENERATED - Background color generated from user settings for smaller box",
+        "value": "$lv(col, ce(si(wpcolor1),lum,40)))$$ce(#col,alpha,75)$",
+        "toggles": 10,
+        "global_formula": "$lv(source, (if(gv(colors/col1sel) = 0, \"wpcolor1\", gv(colors/col1sel) = 1, \"wpcolor2\", gv(colors/col1sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(colors/col1fil1) = 1, \"sat\", gv(colors/col1fil1) = 2, \"lum\", gv(colors/col1fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(colors/col1sysc) = 0, \"sysca1\", gv(colors/col1sysc) = 1, \"sysca2\", gv(colors/col1sysc) = 2, \"sysca3\", gv(colors/col1sysc) = 3, \"syscn1\", gv(colors/col1sysc) = 4, \"syscn2\", gv(colors/col1sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(colors/col1fil2) = 0, \"\", gv(colors/col1fil2) = 1, \"a\", gv(colors/col1fil2) = 2, \"r\", \"\")))$\n\n$if(gv(colors/col1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(col1, ce(si(#source), #filter, gv(colors/col1adj))))$\n$if(gv(colors/col1fil1) > 0 & #source = \"sys\", lv(col2, si(#coltone, gv(colors/col1adj))))$\n$if(gv(colors/col1fil1) = 0 | gv(colors/col1sel) = 3, lv(col3, gv(colors/col1pick)))$\n\n\n$lv(color, (if(gv(colors/col1sel) <= 1, #col1, gv(colors/col1sel) = 2, #col2, gv(colors/col1sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, gv(colors/col1alph)))$\n$#final$\n"
+      },
+      "generate/col2": {
+        "index": 43,
+        "type": "COLOR",
+        "title": "col2",
+        "description": "GENERATED - Background color generated from user settings for larger box",
+        "value": "$lv(col, ce(si(wpcolor1),lum,55))$$ce(#col,alpha,75)$",
+        "toggles": 10,
+        "global_formula": "$lv(source, (if(gv(colors/col2sel) = 0, \"wpcolor1\", gv(colors/col2sel) = 1, \"wpcolor2\", gv(colors/col2sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(colors/col2fil1) = 1, \"sat\", gv(colors/col2fil1) = 2, \"lum\", gv(colors/col2fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(colors/col2sysc) = 0, \"sysca1\", gv(colors/col2sysc) = 1, \"sysca2\", gv(colors/col2sysc) = 2, \"sysca3\", gv(colors/col2sysc) = 3, \"syscn1\", gv(colors/col2sysc) = 4, \"syscn2\", gv(colors/col2sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(colors/col2fil2) = 0, \"\", gv(colors/col2fil2) = 1, \"a\", gv(colors/col2fil2) = 2, \"r\", \"\")))$\n\n$if(gv(colors/col2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(col1, ce(si(#source), #filter, gv(colors/col2adj))))$\n$if(gv(colors/col2fil1) > 0 & #source = \"sys\", lv(col2, si(#coltone, gv(colors/col2adj))))$\n$if(gv(colors/col2fil1) = 0 | gv(colors/col2sel) = 3, lv(col3, gv(colors/col2pick)))$\n\n\n$lv(color, (if(gv(colors/col2sel) <= 1, #col1, gv(colors/col2sel) = 2, #col2, gv(colors/col2sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, gv(colors/col2alph)))$\n$#final$"
+      },
+      "generate/wgwidth": {
+        "index": 44,
+        "type": "NUMBER",
+        "title": "wgwidth",
+        "description": "GENERATED - Width of widget, minus padding",
+        "min": 100,
+        "max": 300,
+        "toggles": 10,
+        "global_formula": "$si(rwidth) - (gv(padside) * 2)$"
+      },
+      "generate/wgheight": {
+        "index": 45,
+        "type": "NUMBER",
+        "title": "wgheight",
+        "description": "GENERATED - Height of widget, minus padding",
+        "value": 690,
+        "min": 500,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$si(rheight) - (gv(padupdwn) * 2)$"
+      },
+      "generate/smboxw": {
+        "index": 46,
+        "type": "NUMBER",
+        "title": "smboxw",
+        "description": "GENERATED - Width of the smaller box",
+        "min": 0,
+        "max": 500,
+        "value": 120.0,
+        "toggles": 10,
+        "global_formula": "$if(gv(wgtalign) = 0, (gv(smboxper) * 720 / 100), (gv(generate/wgwidth)))$"
+      },
+      "generate/smboxh": {
+        "index": 47,
+        "type": "NUMBER",
+        "title": "smboxh",
+        "description": "GENERATED - Height of the smaller box",
+        "min": 0,
+        "max": 500,
+        "value": 120.0,
+        "toggles": 10,
+        "global_formula": "$if(gv(wgtalign) = 0, gv(generate/wgheight) (gv(smboxper) * 720 / 100))$"
+      },
+      "generate/lgboxw": {
+        "index": 48,
+        "type": "NUMBER",
+        "title": "lgboxw",
+        "description": "GENERATED - Width of the larger box",
+        "min": 0,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$if(gv(wgtalign) = 0, (if(gv(generate/wgwidth) <= gv(generate/lgboxmin), gv(generate/lgboxmin), (gv(generate/wgwidth) - gv(generate/smboxw)))), gv(generate/wgwidth))$"
+      },
+      "generate/lgboxh": {
+        "index": 49,
+        "type": "NUMBER",
+        "title": "lgboxh",
+        "description": "GENERATED - Height of the larger box",
+        "min": 0,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$if(gv(wgtalign) = 0, gv(generate/wgheight), (gv(generate/wgheight) - gv(generate/smboxh)))$"
+      },
+      "generate/icocount": {
+        "index": 50,
+        "type": "NUMBER",
+        "title": "icocount",
+        "description": "GENERATED - Number of icons visible in a row. Based on widget size and padding",
+        "value": 4.0,
+        "min": 0,
+        "max": 10,
+        "toggles": 10,
+        "global_formula": "$/* Generate number of icons able to be shown\nCalculate icon sizes, padding and widget alignment */\nlv(icon, gv(icomain) + gv(icopad))$$lv(lgbox, if(gv(wgtalign) = 0, gv(generate/lgboxw), gv(generate/lgboxh)))$\n\n$/* Subtract settings icons, unless they're gone.\nGet final number: Icon size / Box - settings */\nlv(adjustment, if(gv(icopadr) = 0, gv(icosm), 0))$\n$lv(boxsize, #lgbox - #adjustment)$\n$lv(count, #boxsize / #icon)$\n$if(#count <= 2, 2, tc(cut, mu(abs,#count), 1))$"
+      },
+      "generate/lgboxmin": {
+        "index": 51,
+        "type": "TEXT",
+        "title": "lgboxmin",
+        "description": "GENERATED - Minimum size of device Control box. Based on icon sizes and padding",
+        "toggles": 10,
+        "global_formula": "$/* If padding is hidden, remove from calculation */lv(icoopt, if(gv(icopadr) = 0,  (gv(icodevge)), 0))$\n\n$/*Calculate the minimum size the large box can be (2 icons) */\n((gv(icomain) * 2) + (gv(icomarg) * 2) + gv(icopad) + #icoopt)$"
+      },
+      "generate/icodevge": {
+        "index": 52,
+        "type": "NUMBER",
+        "title": "icodevge",
+        "description": "GENERATED - Minimal device logo. Uses HA icon size and padding to align outside edge of icons",
+        "min": 0,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$lv(small, gv(icomarg) + gv(icosm))$\n$lv(large, gv(icodev))$\n$lv(autoshr, (if(gv(generate/icocount) < 4 & gv(icodevsm) = 2, 1, 0)))$\n$if(#autoshr = 1 | gv(icodevsm) = 1, #small, #autoshr = 0 | gv(icodevsm) = 0, #large)$"
+      }
+    }
+  }
