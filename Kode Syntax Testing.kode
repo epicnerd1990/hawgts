@@ -3,6 +3,11 @@ SAVED COLOR CODES:
 DARK: $lv(col, ce(si(wpcolor1),lum,40))$$ce(#col,alpha,75)$
 LIGHT: $lv(col, ce(si(wpcolor1),lum,55))$$ce(#col,alpha,75)$
 
+
+
+
+
+
 Me Working Test
 $lv(source, (if(gv(colors/col1sel) = 0, "wpcolor1", gv(colors/col1sel) = 1, "wpcolor2", gv(colors/col1sel) = 2, "sys", "0")))$source: $#source$
 $lv(filter, (if(gv(colors/col1fil1) = 1, "sat", gv(colors/col1fil1) = 2, "lum", gv(colors/col1fil1) = 3, "comp", "sat")))$filter: $#filter$
