@@ -1,0 +1,50 @@
+$/*Saved code snippets*/$
+
+COLOR CONTROL AND CONFIGURATION
+
+Original
+DARK: $lv(col, ce(si(wpcolor1),lum,40))$$ce(#col,alpha,75)$
+LIGHT: $lv(col, ce(si(wpcolor1),lum,55))$$ce(#col,alpha,75)$
+
+Me Working Test
+$lv(source, (if(gv(colors/col1sel) = 0, "wpcolor1", gv(colors/col1sel) = 1, "wpcolor2", gv(colors/col1sel) = 2, "sys", "0")))$source: $#source$
+$lv(filter, (if(gv(colors/col1fil1) = 1, "sat", gv(colors/col1fil1) = 2, "lum", gv(colors/col1fil1) = 3, "comp", "sat")))$filter: $#filter$
+$lv(coltone, (if(gv(colors/col1sysc) = 0, "sysca1", gv(colors/col1sysc) = 1, "sysca2", gv(colors/col1sysc) = 2, "sysca3", gv(colors/col1sysc) = 3, "syscn1", gv(colors/col1sysc) = 4, "syscn2", gv(colors/col1sysc) = 5, "syscn3", "sysca1")))$color tone: $#coltone$
+$lv(addsub, (if(gv(colors/col1fil2) = 0, "", gv(colors/col1fil2) = 1, "a", gv(colors/col1fil2) = 2, "r", "")))$ addsub: $#addsub$
+
+$if(gv(colors/col1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(col1, ce(si(#source), #filter, gv(colors/col1adj))))$wpcolor: $#col1$
+$if(gv(colors/col1fil1) > 0 & #source = "sys", lv(col2, si(#coltone, gv(colors/col1adj))))$sysui: $#col2$
+$if(gv(colors/col1fil1) = 0 | gv(colors/col1sel) = 3, lv(col3, gv(colors/col1pick)))$colpick: $#col3$
+
+$lv(color, (if(gv(colors/col1sel) <= 1, #col1, gv(colors/col1sel) = 2, #col2, gv(colors/col1sel) = 3, #col3)))$$#color$
+$lv(final, ce(#color, alpha, gv(colors/col1alph)))$
+Final color: $#final$
+
+Me Working Functional
+$lv(source, (if(gv(colors/col2sel) = 0, "wpcolor1", gv(colors/col2sel) = 1, "wpcolor2", gv(colors/col2sel) = 2, "sys", "0")))$
+$lv(filter, (if(gv(colors/col2fil1) = 1, "sat", gv(colors/col2fil1) = 2, "lum", gv(colors/col2fil1) = 3, "comp", "sat")))$
+$lv(coltone, (if(gv(colors/col2sysc) = 0, "sysca1", gv(colors/col2sysc) = 1, "sysca2", gv(colors/col2sysc) = 2, "sysca3", gv(colors/col2sysc) = 3, "syscn1", gv(colors/col2sysc) = 4, "syscn2", gv(colors/col2sysc) = 5, "syscn3", "sysca1")))$
+$lv(addsub, (if(gv(colors/col2fil2) = 0, "", gv(colors/col2fil2) = 1, "a", gv(colors/col2fil2) = 2, "r", "")))$
+
+$if(gv(colors/col2fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(col1, ce(si(#source), #filter, gv(colors/col2adj))))$
+$if(gv(colors/col2fil1) > 0 & #source = "sys", lv(col2, si(#coltone, gv(colors/col2adj))))$
+$if(gv(colors/col2fil1) = 0 | gv(colors/col2sel) = 3, lv(col3, gv(colors/col2pick)))$
+
+$lv(color, (if(gv(colors/col2sel) <= 1, #col1, gv(colors/col2sel) = 2, #col2, gv(colors/col2sel) = 3, #col3)))$
+$lv(final, ce(#color, alpha, gv(colors/col2alph)))$
+$#final$
+
+
+AUTO-RESIZING DEVICE ICON
+
+ICODEVGE:
+$lv(small, gv(icomarg) + gv(icosm))$
+$lv(large, gv(icodev))$
+$lv(autoshr, (if(gv(generate/icocount) < 4 & gv(icodevsm) = 2, 1, 0)))$
+$if(#autoshr = 1 | gv(icodevsm) = 1, #small, #autoshr = 0 | gv(icodevsm) = 0, #large)$
+> to Device Icon
+
+OLD
+$lv(small, gv(icomarg) + gv(icosm))$
+$lv(auto, (if((gv(generate/icocount) < 4 | gv(icodevsm) > 0), #small)))$
+$if(gv(icodevsm) = 0, gv(icodev), #auto)$

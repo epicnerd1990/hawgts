@@ -1,14 +1,14 @@
 {
   "preset_info": {
-    "version": 14,
-    "title": "Fan Control Widget 3.1",
-    "description": "My Home Control Fan Widget",
+    "version": 13,
+    "title": "Device Control Widget 0.3.4a Alpha",
+    "description": "My Home Device Widget",
     "author": "Corey Welsh",
     "email": "coreyw2000@gmail.com",
     "width": 1080,
-    "height": 321,
+    "height": 314,
     "features": "",
-    "release": 373314510,
+    "release": 374323018,
     "locked": false,
     "pflags": 0
   },
@@ -25,7 +25,8 @@
         "index": 1,
         "type": "LIST",
         "title": "README",
-        "entries": "\"Hey there! To setup this widget correctly, you'll need to install Tasker. Please read the setup instructions at my GitHub here:\n<URL>\n\nHighlights of this widget are a OneUI based interface thats full customizable down to margins and corner radius. Features includes:\n- Modify icon sizes, padding and spacing to get the look you want\n- Automatic resizing and adjusting of layout, with further manual adjustments\n- \"setup\" mode which allows you to view all the data for spacing and icons you need\nAnd many more!\n\nCreated by Corey Welsh to fill the need of an easy-setup Home Assistant widget also looks great\""
+        "entries": "\"Hey there! To setup this widget correctly, you'll need to install Tasker. Please read the setup instructions at my GitHub here:\n<URL>\n\nHighlights of this widget are a OneUI based interface thats full customizable down to margins and corner radius. Features includes:\n- Modify icon sizes, padding and spacing to get the look you want\n- Automatic resizing and adjusting of layout, with further manual adjustments\n- \"setup\" mode which allows you to view all the data for spacing and icons you need\nAnd many more!\n\nCreated by Corey Welsh to fill the need of an easy-setup Home Assistant widget also looks great\"",
+        "value": "Hey there! To setup this widget correctly, you'll need to install Tasker. Please read the setup instructions at my GitHub here:\n<URL>\n\nHighlights of this widget are a OneUI based interface thats full customizable down to margins and corner radius. Features includes:\n- Modify icon sizes, padding and spacing to get the look you want\n- Automatic resizing and adjusting of layout, with further manual adjustments\n- setup mode which allows you to view all the data for spacing and icons you need\nAnd many more!\n\nCreated by Corey Welsh to fill the need of an easy-setup Home Assistant widget also looks great"
       },
       "- 1.": {
         "index": 2,
@@ -169,7 +170,7 @@
         "value": "-- Widget Sizing and Alignment --"
       },
       "wgtboxsw": {
-        "index": 20,
+        "index": 21,
         "type": "LIST",
         "title": "wgtboxsw",
         "description": "Swap the large and small boxes on your Widget",
@@ -177,11 +178,11 @@
         "value": "1"
       },
       "wgtmode": {
-        "index": 21,
+        "index": 20,
         "type": "LIST",
         "title": "wgtmode",
-        "description": "Choose a Widget mode",
-        "entries": "0##Device Controls by room (Eg all lights in house), 1##Single room Controls (eg a fan and a light)",
+        "description": "Choose Widget box scaling. Match to what your current preset requires",
+        "entries": "0##4 Main Icons, 1##2 Main Icons",
         "value": "0"
       },
       "smboxper": {
@@ -369,7 +370,7 @@
         "type": "LIST",
         "title": "pagenum",
         "description": "GENERATED - Number of displayed page",
-        "entries": "0##Room #1, 1##Room #2, 2##Room #3, 4##Room #4",
+        "entries": "0##Room #1, 1##Room #2, 2##Room #3, 3##Room #4",
         "value": "0"
       },
       "generate/wgwidth": {
@@ -463,6 +464,28 @@
         "max": 720,
         "toggles": 10,
         "global_formula": "$lv(small, gv(icomarg) + gv(icosm))$\n$lv(large, gv(icodev))$\n$lv(autoshr, (if(gv(generate/icocount) < 4 & gv(icodevsm) = 2, 1, 0)))$\n$if(#autoshr = 1 | gv(icodevsm) = 1, #small, #autoshr = 0 | gv(icodevsm) = 0, #large)$"
+      },
+      "tasker": {
+        "index": 54,
+        "type": "FOLDER",
+        "title": "tasker",
+        "description": "Global variables to be updated with tasker data"
+      },
+      "colors/colicoon": {
+        "index": 55,
+        "type": "COLOR",
+        "title": "colicoon",
+        "description": "Color of icons and text when device is on",
+        "value": "#FF00DEFF",
+        "toggles": 10,
+        "global_formula": "$ce(si(wpcolor1, comp), sat, 60)$"
+      },
+      "tasker/hactrl": {
+        "index": 57,
+        "type": "TEXT",
+        "title": "hactrl",
+        "description": "GENERATED - Device control data from touch event of each button",
+        "value": "light.turn_on&{ \"entity_id\": \"light.bedroom_lights\", \"brightness\": 30 } "
       }
     },
     "internal_flows": [
@@ -604,8 +627,38 @@
             }
           }
         ]
+      },
+      {
+        "id": "FNmCqvPE",
+        "name": "Tasker - Send control data",
+        "t": [
+          {
+            "id": "TTF5FNrP",
+            "type": "T_FORMULA",
+            "params": {
+              "formula": "$gv(tasker/hactrl)$"
+            }
+          }
+        ],
+        "a": [
+          {
+            "id": "TAGxT3jY",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "$lv(command, tc(split, gv(tasker/hactrl), \"&\", 0))$$lv(commandinfo, tc(split, gv(tasker/hactrl), \"&\", 1))$$lv(recomb, \"tasker://secondary?service=\" + #command + \"&json=\" + #commandinfo)$$#recomb$"
+            }
+          },
+          {
+            "id": "TA5q6BtU",
+            "type": "A_INTENT_URI",
+            "params": {
+              "uri": "$#last$"
+            }
+          }
+        ]
       }
     ],
+    "config_scale_value": 80.0,
     "viewgroup_items": [
       {
         "internal_type": "OverlapLayerModule",
@@ -658,80 +711,7 @@
           {
             "internal_type": "StackLayerModule",
             "config_margin": 15.0,
-            "internal_title": "Single Room",
-            "internal_toggles": {
-              "config_stacking": 10,
-              "config_margin": 100,
-              "config_visible": 10
-            },
-            "internal_formulas": {
-              "config_stacking": "$if(gv(wgtalign) = 0, VERTICAL_LEFT, HORIZONTAL_CENTER)$",
-              "config_visible": "$if(gv(wgtmode) = 0, \"NEVER\", \"ALWAYS\")$"
-            },
-            "internal_globals": {
-              "config_margin": "icomarg"
-            },
-            "viewgroup_items": [
-              {
-                "internal_type": "FontIconModule",
-                "icon_icon": "material-fan",
-                "position_anchor": "TOPRIGHT",
-                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                "icon_size": 95.0,
-                "internal_title": "Fan Power",
-                "internal_events": [
-                  {
-                    "type": "SINGLE_TAP",
-                    "action": "LAUNCH_SHORTCUT",
-                    "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-25%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Power%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Power%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742452662%3C%2Fcdate%3E%3Cedate%3E1689742452662%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=9fc6c1eb-fdb7-4aee-9649-94d30c90551b;S.org.kustom.intent.label=Task%20Shortcut;end"
-                  }
-                ],
-                "internal_toggles": {
-                  "icon_icon": 0,
-                  "icon_size": 10,
-                  "paint_color": 100
-                },
-                "internal_formulas": {
-                  "icon_icon": "",
-                  "icon_size": "$gv(icomain)$"
-                },
-                "internal_globals": {
-                  "paint_color": "colors/colico"
-                }
-              },
-              {
-                "internal_type": "FontIconModule",
-                "icon_icon": "material-air-conditioner",
-                "internal_title": "A/C Power",
-                "position_anchor": "BOTTOMRIGHT",
-                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                "internal_toggles": {
-                  "icon_icon": 0,
-                  "icon_size": 10,
-                  "paint_color": 100
-                },
-                "internal_formulas": {
-                  "icon_icon": "",
-                  "icon_size": "$gv(icomain)$"
-                },
-                "internal_globals": {
-                  "paint_color": "colors/colico"
-                },
-                "icon_size": 95.0,
-                "internal_events": [
-                  {
-                    "type": "SINGLE_TAP",
-                    "action": "LAUNCH_SHORTCUT",
-                    "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-10%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EA%2FC%20Power%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EA%2FC%20Power%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690523678767%3C%2Fcdate%3E%3Cedate%3E1690523678767%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=13d35941-b619-484f-8425-18922b649f15;S.org.kustom.intent.label=Task%20Shortcut;end"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "internal_type": "StackLayerModule",
-            "config_margin": 15.0,
-            "internal_title": "By Device",
+            "internal_title": "CHOOSE - 4 Device Controls",
             "internal_toggles": {
               "config_stacking": 10,
               "config_margin": 100,
@@ -749,69 +729,77 @@
                 "internal_type": "StackLayerModule",
                 "config_stacking": "HORIZONTAL_CENTER",
                 "config_margin": 15,
-                "internal_title": "Icons",
+                "internal_title": "EDIT > Room Selection Controls",
                 "viewgroup_items": [
                   {
                     "internal_type": "StackLayerModule",
                     "config_stacking": "VERTICAL_CENTER",
                     "config_margin": 15,
-                    "internal_title": "Left",
+                    "internal_title": "EDIT - Left Stack",
                     "viewgroup_items": [
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-king-bed",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 1",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "SWITCH_GLOBAL",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-23%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Speed%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Speed%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742403321%3C%2Fcdate%3E%3Cedate%3E1689742403321%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=6929c49f-b3c8-4930-95bc-d74afe8efb91;S.org.kustom.intent.label=Task%20Shortcut;end",
-                            "switch": "generate/pagenum",
-                            "switch_text": "$if(gv(generate/pagenum)!=0,0,0)$"
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-king-bed",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-23%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Speed%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Speed%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742403321%3C%2Fcdate%3E%3Cedate%3E1689742403321%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=6929c49f-b3c8-4930-95bc-d74afe8efb91;S.org.kustom.intent.label=Task%20Shortcut;end",
+                                "switch": "generate/pagenum",
+                                "switch_text": "$if(gv(generate/pagenum)!=0,0,0)$",
+                                "switch_list": "0"
+                              }
+                            ],
+                            "internal_title": "Rm Sel 1",
+                            "icon_size": 90,
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
                           }
-                        ],
-                        "internal_title": "Bedroom",
-                        "icon_size": 90,
-                        "internal_toggles": {
-                          "icon_icon": 0,
-                          "icon_size": 10,
-                          "paint_color": 100
-                        },
-                        "internal_formulas": {
-                          "icon_icon": "",
-                          "icon_size": "$gv(icomain)$"
-                        },
-                        "internal_globals": {
-                          "paint_color": "colors/colico"
-                        }
+                        ]
                       },
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-sofa-outline",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 3",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "SWITCH_GLOBAL",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-24%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Oscillation%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Oscillation%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742428453%3C%2Fcdate%3E%3Cedate%3E1689742428453%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=962363af-4847-4ba0-9db9-c5c4fde3df87;S.org.kustom.intent.label=Task%20Shortcut;end",
-                            "switch": "generate/pagenum",
-                            "switch_text": "$if(gv(generate/pagenum)!=3,3,0)$"
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-sofa-outline",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-24%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Oscillation%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Oscillation%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742428453%3C%2Fcdate%3E%3Cedate%3E1689742428453%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=962363af-4847-4ba0-9db9-c5c4fde3df87;S.org.kustom.intent.label=Task%20Shortcut;end",
+                                "switch": "generate/pagenum",
+                                "switch_text": "$if(gv(generate/pagenum)!=3,3,0)$",
+                                "switch_list": "2"
+                              }
+                            ],
+                            "internal_title": "Rm Sel 2",
+                            "icon_size": 90,
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
                           }
-                        ],
-                        "internal_title": "Living Room",
-                        "icon_size": 90,
-                        "internal_toggles": {
-                          "icon_icon": 0,
-                          "icon_size": 10,
-                          "paint_color": 100
-                        },
-                        "internal_formulas": {
-                          "icon_icon": "",
-                          "icon_size": "$gv(icomain)$"
-                        },
-                        "internal_globals": {
-                          "paint_color": "colors/colico"
-                        }
+                        ]
                       }
                     ]
                   },
@@ -819,60 +807,68 @@
                     "internal_type": "StackLayerModule",
                     "config_stacking": "VERTICAL_CENTER",
                     "config_margin": 15,
-                    "internal_title": "Right",
+                    "internal_title": "EDIT - Right Stack",
                     "viewgroup_items": [
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-desk",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_title": "Study",
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 2",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "SWITCH_GLOBAL",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-25%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Power%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Power%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742452662%3C%2Fcdate%3E%3Cedate%3E1689742452662%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=9fc6c1eb-fdb7-4aee-9649-94d30c90551b;S.org.kustom.intent.label=Task%20Shortcut;end",
-                            "switch": "generate/pagenum",
-                            "switch_text": "$if(gv(generate/pagenum)!=1,1,0)$"
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-desk",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_title": "Rm Sel 3",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-25%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Power%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Power%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742452662%3C%2Fcdate%3E%3Cedate%3E1689742452662%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=9fc6c1eb-fdb7-4aee-9649-94d30c90551b;S.org.kustom.intent.label=Task%20Shortcut;end",
+                                "switch": "generate/pagenum",
+                                "switch_text": "$if(gv(generate/pagenum)!=1,1,0)$",
+                                "switch_list": "1"
+                              }
+                            ],
+                            "icon_size": 90,
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
                           }
-                        ],
-                        "icon_size": 90,
-                        "internal_toggles": {
-                          "icon_icon": 0,
-                          "icon_size": 10,
-                          "paint_color": 100
-                        },
-                        "internal_formulas": {
-                          "icon_icon": "",
-                          "icon_size": "$gv(icomain)$"
-                        },
-                        "internal_globals": {
-                          "paint_color": "colors/colico"
-                        }
+                        ]
                       },
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-coat-rack",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_title": "Foyer",
-                        "icon_size": 90,
-                        "internal_toggles": {
-                          "icon_icon": 0,
-                          "icon_size": 10,
-                          "paint_color": 100
-                        },
-                        "internal_formulas": {
-                          "icon_icon": "",
-                          "icon_size": "$gv(icomain)$"
-                        },
-                        "internal_globals": {
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 4",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "SWITCH_GLOBAL",
-                            "switch": "generate/pagenum",
-                            "switch_text": "$if(gv(generate/pagenum)!=2,2,0)$"
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-coat-rack",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_title": "Rm Sel 4",
+                            "icon_size": 90,
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            },
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "generate/pagenum",
+                                "switch_text": "$if(gv(generate/pagenum)!=2,2,0)$",
+                                "switch_list": "3"
+                              }
+                            ]
                           }
                         ]
                       }
@@ -881,6 +877,349 @@
                 ]
               }
             ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "CHOOSE - 2 Device Controls",
+            "viewgroup_items": [
+              {
+                "internal_type": "StackLayerModule",
+                "config_margin": 15.0,
+                "internal_title": "EDIT - 2 Device Controls",
+                "internal_toggles": {
+                  "config_stacking": 10,
+                  "config_margin": 100,
+                  "config_visible": 10
+                },
+                "internal_formulas": {
+                  "config_stacking": "$if(gv(wgtalign) = 0, VERTICAL_LEFT, HORIZONTAL_CENTER)$",
+                  "config_visible": "$if(gv(wgtmode) = 0, \"NEVER\", \"ALWAYS\")$"
+                },
+                "internal_globals": {
+                  "config_margin": "icomarg"
+                },
+                "viewgroup_items": [
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "material-fan",
+                    "position_anchor": "TOPRIGHT",
+                    "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                    "icon_size": 95.0,
+                    "internal_title": "Fan Power",
+                    "internal_events": [
+                      {
+                        "type": "SINGLE_TAP",
+                        "action": "SWITCH_GLOBAL",
+                        "switch": "tasker/hactrl",
+                        "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_power\" }"
+                      }
+                    ],
+                    "internal_toggles": {
+                      "icon_icon": 0,
+                      "icon_size": 10,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "icon_icon": "",
+                      "icon_size": "$gv(icomain)$"
+                    },
+                    "internal_globals": {
+                      "paint_color": "colors/colico"
+                    }
+                  },
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "material-air-conditioner",
+                    "internal_title": "A/C Power",
+                    "position_anchor": "BOTTOMRIGHT",
+                    "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                    "internal_toggles": {
+                      "icon_icon": 0,
+                      "icon_size": 10,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "icon_icon": "",
+                      "icon_size": "$gv(icomain)$"
+                    },
+                    "internal_globals": {
+                      "paint_color": "colors/colico"
+                    },
+                    "icon_size": 95.0,
+                    "internal_events": [
+                      {
+                        "type": "SINGLE_TAP",
+                        "action": "SWITCH_GLOBAL",
+                        "switch": "tasker/hactrl",
+                        "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_power\" }"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "CHOOSE - 1 Device Control",
+            "viewgroup_items": [
+              {
+                "internal_type": "StackLayerModule",
+                "config_margin": 15.0,
+                "internal_title": "*** Soundbar Controls 2 Icons",
+                "internal_toggles": {
+                  "config_stacking": 10,
+                  "config_margin": 100,
+                  "config_visible": 10
+                },
+                "internal_formulas": {
+                  "config_stacking": "$if(gv(wgtalign) = 0, VERTICAL_LEFT, HORIZONTAL_CENTER)$",
+                  "config_visible": "$if(gv(wgtmode) = 0, \"NEVER\", \"ALWAYS\")$"
+                },
+                "internal_globals": {
+                  "config_margin": "icomarg"
+                },
+                "viewgroup_items": [
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "material-fan",
+                    "position_anchor": "TOPRIGHT",
+                    "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                    "icon_size": 95.0,
+                    "internal_title": "Fan Power",
+                    "internal_events": [
+                      {
+                        "type": "SINGLE_TAP",
+                        "action": "SWITCH_GLOBAL",
+                        "switch": "tasker/hactrl",
+                        "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_power\" }"
+                      }
+                    ],
+                    "internal_toggles": {
+                      "icon_icon": 0,
+                      "icon_size": 10,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "icon_icon": "",
+                      "icon_size": "$gv(icomain)$"
+                    },
+                    "internal_globals": {
+                      "paint_color": "colors/colico"
+                    }
+                  },
+                  {
+                    "internal_type": "FontIconModule",
+                    "icon_icon": "material-air-conditioner",
+                    "internal_title": "A/C Power",
+                    "position_anchor": "BOTTOMRIGHT",
+                    "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                    "internal_toggles": {
+                      "icon_icon": 0,
+                      "icon_size": 10,
+                      "paint_color": 100
+                    },
+                    "internal_formulas": {
+                      "icon_icon": "",
+                      "icon_size": "$gv(icomain)$"
+                    },
+                    "internal_globals": {
+                      "paint_color": "colors/colico"
+                    },
+                    "icon_size": 95.0,
+                    "internal_events": [
+                      {
+                        "type": "SINGLE_TAP",
+                        "action": "SWITCH_GLOBAL",
+                        "switch": "tasker/hactrl",
+                        "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_power\" }"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "internal_type": "StackLayerModule",
+                "config_margin": 15.0,
+                "internal_title": "*** Soundbar Controls 4 Icons",
+                "internal_toggles": {
+                  "config_stacking": 10,
+                  "config_margin": 100,
+                  "config_visible": 10
+                },
+                "internal_formulas": {
+                  "config_stacking": "$if(gv(wgtalign) = 0, VERTICAL_LEFT, HORIZONTAL_CENTER)$",
+                  "config_visible": "$if(gv(wgtmode) = 0, \"NEVER\", \"ALWAYS\")$"
+                },
+                "internal_globals": {
+                  "config_margin": "icomarg"
+                },
+                "viewgroup_items": [
+                  {
+                    "internal_type": "StackLayerModule",
+                    "config_stacking": "VERTICAL_CENTER",
+                    "config_margin": 15,
+                    "internal_title": "EDIT - Left Stack",
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 1",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-fan",
+                            "position_anchor": "TOPRIGHT",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "icon_size": 95.0,
+                            "internal_title": "Fan Power",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_power\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 10,
+                              "paint_color": 100
+                            },
+                            "internal_formulas": {
+                              "icon_icon": "",
+                              "icon_size": "$gv(icomain)$"
+                            },
+                            "internal_globals": {
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 3",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-air-conditioner",
+                            "internal_title": "A/C Power",
+                            "position_anchor": "BOTTOMRIGHT",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 10,
+                              "paint_color": 100
+                            },
+                            "internal_formulas": {
+                              "icon_icon": "",
+                              "icon_size": "$gv(icomain)$"
+                            },
+                            "internal_globals": {
+                              "paint_color": "colors/colico"
+                            },
+                            "icon_size": 95.0,
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_power\" }"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "internal_type": "StackLayerModule",
+                    "config_stacking": "VERTICAL_CENTER",
+                    "config_margin": 15,
+                    "internal_title": "EDIT - Right Stack",
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 2",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-fan",
+                            "position_anchor": "TOPRIGHT",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "icon_size": 95.0,
+                            "internal_title": "Fan Power",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_power\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 10,
+                              "paint_color": 100
+                            },
+                            "internal_formulas": {
+                              "icon_icon": "",
+                              "icon_size": "$gv(icomain)$"
+                            },
+                            "internal_globals": {
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Room Selection, Icon 4",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-air-conditioner",
+                            "internal_title": "A/C Power",
+                            "position_anchor": "BOTTOMRIGHT",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 10,
+                              "paint_color": 100
+                            },
+                            "internal_formulas": {
+                              "icon_icon": "",
+                              "icon_size": "$gv(icomain)$"
+                            },
+                            "internal_globals": {
+                              "paint_color": "colors/colico"
+                            },
+                            "icon_size": 95.0,
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_power\" }"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "CHOOSE - Logo Or Icon",
+            "viewgroup_items": []
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "CHOOSE - Hidden",
+            "viewgroup_items": []
           }
         ]
       },
@@ -936,7 +1275,877 @@
           },
           {
             "internal_type": "OverlapLayerModule",
-            "internal_title": "Single Room",
+            "internal_title": "CHOOSE - 4 Devices Visible",
+            "internal_toggles": {
+              "position_anchor": 10,
+              "position_padding_left": 10,
+              "position_padding_right": 10,
+              "position_padding_top": 10,
+              "position_padding_bottom": 10,
+              "config_visible": 10
+            },
+            "internal_formulas": {
+              "position_anchor": "$if(gv(position) = RIGHT, CENTERRIGHT, gv(position) = LEFT, CENTERLEFT,  gv(position) = TOP, TOP,  gv(position) = BOTTOM, BOTTOM)$",
+              "position_padding_left": "$if(gv(position) = LEFT, gv(icomarg), 0)$",
+              "position_padding_right": "$if(gv(position) = RIGHT, gv(icomarg), 0)$",
+              "position_padding_top": "$if(gv(position) = TOP, gv(icomarg), 0)$",
+              "position_padding_bottom": "$if(gv(position) = BOTTOM, gv(icomarg), 0)$",
+              "config_visible": "$if(gv(wgtmode) = 0, \"ALWAYS\", \"NEVER\")$"
+            },
+            "viewgroup_items": [
+              {
+                "internal_type": "OverlapLayerModule",
+                "internal_title": "Lighting",
+                "viewgroup_items": [
+                  {
+                    "internal_type": "StackLayerModule",
+                    "internal_title": "Rm 1",
+                    "position_anchor": "CENTERLEFT",
+                    "internal_toggles": {
+                      "config_visible": 10,
+                      "config_stacking": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(gv(generate/pagenum)=0,\"ALWAYS\",\"NEVER\")$",
+                      "config_stacking": "$if(gv(position) = RIGHT, VERTICAL_RIGHT, gv(position) = LEFT, VERTICAL_LEFT,  gv(position) = TOP, HORIZONTAL_TOP,  gv(position) = BOTTOM, HORIZONTAL_BOTTOM)$",
+                      "position_anchor": "$if(gv(position) = RIGHT, CENTERRIGHT, gv(position) = LEFT, CENTERLEFT,  gv(position) = TOP, TOP,  gv(position) = BOTTOM, BOTTOM)$",
+                      "position_padding_right": "$if(gv(position) = RIGHT, gv(icomarg), 0)$",
+                      "position_padding_top": "$if(gv(position) = TOP, gv(icomarg), 0)$",
+                      "position_padding_left": "$if(gv(position) = LEFT, gv(icomarg), 0)$",
+                      "position_padding_bottom": "$if(gv(position) = BOTTOM, gv(icomarg), 0)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 1, Row 1",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 1, Row 1, Power",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "Material-power",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_title": "Rm 1 Power",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.toggle&{ \"entity_id\": \"light.bedroom_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 1, Row 1, HA",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-king-bed",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 1 HA",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "OPEN_LINK",
+                                    "url": "homeassistant://navigate/dashboard-widgets/bedroom-lights?kiosk"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 1, Row 2",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 1, Row 2, OFF",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-off-outline",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_off { \"entity_id\": \"light.bedroom_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 1 OFF"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 1, Row 2, LOW",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on-30",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.bedroom_lights\", \"brightness\": 30 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 1 LOW"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 1, Row 2, MED",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on-60",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.bedroom_lights\", \"brightness\": 125 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 1 MED"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 1, Row 2, HI",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.bedroom_lights\", \"brightness\": 255 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 1 HIGH"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "internal_type": "StackLayerModule",
+                    "internal_title": "Rm 2",
+                    "config_stacking": "VERTICAL_RIGHT",
+                    "position_anchor": "CENTERLEFT",
+                    "internal_toggles": {
+                      "config_visible": 10,
+                      "config_stacking": 10,
+                      "position_anchor": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(gv(generate/pagenum)=1,\"ALWAYS\",\"NEVER\")$",
+                      "config_stacking": "$if(gv(position) = RIGHT, VERTICAL_RIGHT, gv(position) = LEFT, VERTICAL_LEFT,  gv(position) = TOP, HORIZONTAL_TOP,  gv(position) = BOTTOM, HORIZONTAL_BOTTOM)$",
+                      "position_anchor": "$if(gv(position) = RIGHT, CENTERRIGHT, gv(position) = LEFT, CENTERLEFT,  gv(position) = TOP, TOP,  gv(position) = BOTTOM, BOTTOM)$",
+                      "position_padding_right": "$if(gv(position) = RIGHT, gv(icomarg), 0)$",
+                      "position_padding_top": "$if(gv(position) = TOP, gv(icomarg), 0)$",
+                      "position_padding_left": "$if(gv(position) = LEFT, gv(icomarg), 0)$",
+                      "position_padding_bottom": "$if(gv(position) = BOTTOM, gv(icomarg), 0)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 2, Row 1",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 2, Row 1, Power",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "Material-power",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_title": "Rm 2 Power",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.toggle&{ \"entity_id\": \"light.study_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 2, Row 1, HA",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-desk",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 2 HA",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "OPEN_LINK",
+                                    "url": "homeassistant://navigate/dashboard-widgets/bedroom-lights?kiosk"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 2, Row 2",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 2, Row 2, OFF",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-off-outline",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_off&{ \"entity_id\": \"light.study_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 2 OFF"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 2, Row 2, LOW",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on-30",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.study_lights\", \"brightness\": 30 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 2 LOW"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 2, Row 2, MED",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on-60",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.study_lights\", \"brightness\": 125 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 2 MED"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 2, Row 2, HI",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.study_lights\", \"brightness\": 255 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 2 HIGH"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "internal_type": "StackLayerModule",
+                    "internal_title": "Rm 3",
+                    "config_stacking": "VERTICAL_RIGHT",
+                    "position_anchor": "CENTERLEFT",
+                    "internal_toggles": {
+                      "config_visible": 10,
+                      "config_stacking": 10,
+                      "position_anchor": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(gv(generate/pagenum)=2,\"ALWAYS\",\"NEVER\")$",
+                      "config_stacking": "$if(gv(position) = RIGHT, VERTICAL_RIGHT, gv(position) = LEFT, VERTICAL_LEFT,  gv(position) = TOP, HORIZONTAL_TOP,  gv(position) = BOTTOM, HORIZONTAL_BOTTOM)$",
+                      "position_anchor": "$if(gv(position) = RIGHT, CENTERRIGHT, gv(position) = LEFT, CENTERLEFT,  gv(position) = TOP, TOP,  gv(position) = BOTTOM, BOTTOM)$",
+                      "position_padding_right": "$if(gv(position) = RIGHT, gv(icomarg), 0)$",
+                      "position_padding_top": "$if(gv(position) = TOP, gv(icomarg), 0)$",
+                      "position_padding_left": "$if(gv(position) = LEFT, gv(icomarg), 0)$",
+                      "position_padding_bottom": "$if(gv(position) = BOTTOM, gv(icomarg), 0)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 3, Row 1",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 3, Row 1, Power",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "Material-power",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_title": "Rm 3 Power",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "switch.toggle&{ \"entity_id\": \"switch.lr_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 3, Row 1, HA",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-sofa-outline",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 3 HA",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "OPEN_LINK",
+                                    "url": "homeassistant://navigate/dashboard-widgets/bedroom-lights?kiosk"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 3, Row 2",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 3, Row 2, OFF",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-off-outline",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "switch.turn_off&{ \"entity_id\": \"switch.lr_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 3 OFF"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 3, Row 2, HI",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "switch.turn_on&{ \"entity_id\": \"switch.lr_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 3 HIGH"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "internal_type": "StackLayerModule",
+                    "internal_title": "Rm 4",
+                    "config_stacking": "VERTICAL_RIGHT",
+                    "position_anchor": "CENTERLEFT",
+                    "internal_toggles": {
+                      "config_visible": 10,
+                      "config_stacking": 10,
+                      "position_anchor": 10
+                    },
+                    "internal_formulas": {
+                      "config_visible": "$if(gv(generate/pagenum)=3,\"ALWAYS\",\"NEVER\")$",
+                      "config_stacking": "$if(gv(position) = RIGHT, VERTICAL_RIGHT, gv(position) = LEFT, VERTICAL_LEFT,  gv(position) = TOP, HORIZONTAL_TOP,  gv(position) = BOTTOM, HORIZONTAL_BOTTOM)$",
+                      "position_anchor": "$if(gv(position) = RIGHT, CENTERRIGHT, gv(position) = LEFT, CENTERLEFT,  gv(position) = TOP, TOP,  gv(position) = BOTTOM, BOTTOM)$",
+                      "position_padding_right": "$if(gv(position) = RIGHT, gv(icomarg), 0)$",
+                      "position_padding_top": "$if(gv(position) = TOP, gv(icomarg), 0)$",
+                      "position_padding_left": "$if(gv(position) = LEFT, gv(icomarg), 0)$",
+                      "position_padding_bottom": "$if(gv(position) = BOTTOM, gv(icomarg), 0)$"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 4, Row 1",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 4, Row 1, Power",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "Material-power",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_title": "Rm 4 Power",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.toggle&{ \"entity_id\": \"light.foyer_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 4, Row 1, HA",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "coat-rack",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 4 HA",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "OPEN_LINK",
+                                    "url": "homeassistant://navigate/dashboard-widgets/foyer-lights?kiosk"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "StackLayerModule",
+                        "config_stacking": "HORIZONTAL_CENTER",
+                        "internal_title": "Rm 4, Row 2",
+                        "config_margin": 15,
+                        "internal_toggles": {
+                          "config_stacking": 10,
+                          "config_margin": 100
+                        },
+                        "internal_formulas": {
+                          "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                        },
+                        "internal_globals": {
+                          "config_margin": "icopad"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 4, Row 2, OFF",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-off-outline",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_off&{ \"entity_id\": \"light.foyer_lights\" }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 4 OFF"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 4, Row 2, LOW",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on-30",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.foyer_lights\", \"brightness\": 30 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 4 LOW"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 4, Row 2, MED",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on-60",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.foyer_lights\", \"brightness\": 125 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 4 MED"
+                              }
+                            ]
+                          },
+                          {
+                            "internal_type": "OverlapLayerModule",
+                            "internal_title": "Rm 4, Row 2, HI",
+                            "viewgroup_items": [
+                              {
+                                "internal_type": "FontIconModule",
+                                "icon_icon": "material-lightbulb-on",
+                                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                                "internal_events": [
+                                  {
+                                    "type": "SINGLE_TAP",
+                                    "action": "SWITCH_GLOBAL",
+                                    "switch": "tasker/hactrl",
+                                    "switch_text": "light.turn_on&{ \"entity_id\": \"light.foyer_lights\", \"brightness\": 255 }"
+                                  }
+                                ],
+                                "internal_toggles": {
+                                  "icon_size": 100,
+                                  "paint_color": 100
+                                },
+                                "internal_globals": {
+                                  "icon_size": "icomain",
+                                  "paint_color": "colors/colico"
+                                },
+                                "internal_title": "Rm 4 HIGH"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "CHOOSE - 2 Devices Visible",
             "internal_toggles": {
               "position_anchor": 10,
               "position_padding_left": 10,
@@ -956,7 +2165,7 @@
             "viewgroup_items": [
               {
                 "internal_type": "StackLayerModule",
-                "internal_title": "Dev Icons",
+                "internal_title": "Device Control Icons",
                 "config_margin": 15.0,
                 "config_stacking": "VERTICAL_RIGHT",
                 "position_offset_x": 35.0,
@@ -987,152 +2196,7 @@
                     "internal_type": "StackLayerModule",
                     "config_stacking": "HORIZONTAL_CENTER",
                     "config_margin": 20.0,
-                    "internal_title": "Dev - Row 1",
-                    "internal_toggles": {
-                      "config_stacking": 10,
-                      "config_margin": 100,
-                      "config_visible": 0
-                    },
-                    "internal_formulas": {
-                      "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
-                    },
-                    "internal_globals": {
-                      "config_margin": "icopad"
-                    },
-                    "viewgroup_items": [
-                      {
-                        "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 1 - Icon 1",
-                        "viewgroup_items": [
-                          {
-                            "internal_type": "FontIconModule",
-                            "internal_title": "Fan Speed",
-                            "icon_icon": "custom-fan-speed",
-                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                            "internal_events": [
-                              {
-                                "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-23%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Speed%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Speed%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742403321%3C%2Fcdate%3E%3Cedate%3E1689742403321%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=6929c49f-b3c8-4930-95bc-d74afe8efb91;S.org.kustom.intent.label=Task%20Shortcut;end"
-                              }
-                            ],
-                            "internal_toggles": {
-                              "icon_icon": 0,
-                              "icon_size": 10,
-                              "paint_color": 100
-                            },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
-                            "internal_globals": {
-                              "paint_color": "colors/colico"
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 1 - Icon 2",
-                        "viewgroup_items": [
-                          {
-                            "internal_type": "FontIconModule",
-                            "internal_title": "Fan Oscillation",
-                            "icon_icon": "custom-fan-oscillation",
-                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                            "internal_events": [
-                              {
-                                "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-24%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Oscillation%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Oscillation%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742428453%3C%2Fcdate%3E%3Cedate%3E1689742428453%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=962363af-4847-4ba0-9db9-c5c4fde3df87;S.org.kustom.intent.label=Task%20Shortcut;end"
-                              }
-                            ],
-                            "internal_toggles": {
-                              "icon_icon": 0,
-                              "icon_size": 10,
-                              "paint_color": 100
-                            },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
-                            "internal_globals": {
-                              "paint_color": "colors/colico"
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 1 - Icon 3",
-                        "config_visible": "REMOVE",
-                        "viewgroup_items": [
-                          {
-                            "internal_type": "FontIconModule",
-                            "internal_title": "Icon 1",
-                            "icon_icon": "custom-fan-speed",
-                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                            "internal_events": [
-                              {
-                                "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-23%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Speed%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Speed%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742403321%3C%2Fcdate%3E%3Cedate%3E1689742403321%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=6929c49f-b3c8-4930-95bc-d74afe8efb91;S.org.kustom.intent.label=Task%20Shortcut;end"
-                              }
-                            ],
-                            "internal_toggles": {
-                              "icon_icon": 0,
-                              "icon_size": 10,
-                              "paint_color": 100
-                            },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
-                            "internal_globals": {
-                              "paint_color": "colors/colico"
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 1 - Icon 4",
-                        "config_visible": "REMOVE",
-                        "viewgroup_items": [
-                          {
-                            "internal_type": "FontIconModule",
-                            "internal_title": "Icon 2",
-                            "icon_icon": "custom-fan-oscillation",
-                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                            "internal_events": [
-                              {
-                                "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-24%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EFan%20Oscillation%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EFan%20Oscillation%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1689742428453%3C%2Fcdate%3E%3Cedate%3E1689742428453%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=962363af-4847-4ba0-9db9-c5c4fde3df87;S.org.kustom.intent.label=Task%20Shortcut;end"
-                              }
-                            ],
-                            "internal_toggles": {
-                              "icon_icon": 0,
-                              "icon_size": 10,
-                              "paint_color": 100
-                            },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
-                            "internal_globals": {
-                              "paint_color": "colors/colico"
-                            }
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "internal_type": "StackLayerModule",
-                    "config_stacking": "HORIZONTAL_CENTER",
-                    "config_margin": 25.0,
-                    "internal_title": "Dev - Row 2",
+                    "internal_title": "MATCH - Fan",
                     "internal_toggles": {
                       "config_stacking": 10,
                       "config_margin": 100
@@ -1146,7 +2210,143 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 2 - Icon 1",
+                        "internal_title": "Fan, Icon 1",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Speed",
+                            "icon_icon": "custom-fan-speed",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_speedtoggle\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Fan, Icon 2",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Oscillation",
+                            "icon_icon": "custom-fan-oscillation",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_oscillation\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Fan, Icon 3",
+                        "config_visible": "REMOVE",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Speed",
+                            "icon_icon": "custom-fan-speed",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_speedtoggle\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Fan, Icon 4",
+                        "config_visible": "REMOVE",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Oscillation",
+                            "icon_icon": "custom-fan-oscillation",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_oscillation\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "internal_type": "StackLayerModule",
+                    "config_stacking": "HORIZONTAL_CENTER",
+                    "config_margin": 25.0,
+                    "internal_title": "MATCH - A/C",
+                    "internal_toggles": {
+                      "config_stacking": 10,
+                      "config_margin": 100
+                    },
+                    "internal_formulas": {
+                      "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                    },
+                    "internal_globals": {
+                      "config_margin": "icopad"
+                    },
+                    "viewgroup_items": [
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "A/C, Icon 1",
                         "viewgroup_items": [
                           {
                             "internal_type": "FontIconModule",
@@ -1155,21 +2355,19 @@
                             "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
                             "internal_toggles": {
                               "icon_icon": 0,
-                              "icon_size": 10,
+                              "icon_size": 100,
                               "paint_color": 100
                             },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
                             "internal_globals": {
+                              "icon_size": "icomain",
                               "paint_color": "colors/colico"
                             },
                             "internal_events": [
                               {
                                 "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-11%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EA%2FC%20Fan%20Speed%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EA%2FC%20Fan%20Speed%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690523704408%3C%2Fcdate%3E%3Cedate%3E1690523704408%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=b55ac38e-a0f3-47ed-9d00-7420dd2d3eb4;S.org.kustom.intent.label=Task%20Shortcut;end"
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_fan_speed\" }"
                               }
                             ]
                           }
@@ -1177,7 +2375,7 @@
                       },
                       {
                         "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 2 - Icon 2",
+                        "internal_title": "A/C, Icon 2",
                         "viewgroup_items": [
                           {
                             "internal_type": "FontIconModule",
@@ -1186,21 +2384,19 @@
                             "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
                             "internal_toggles": {
                               "icon_icon": 0,
-                              "icon_size": 10,
+                              "icon_size": 100,
                               "paint_color": 100
                             },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
                             "internal_globals": {
+                              "icon_size": "icomain",
                               "paint_color": "colors/colico"
                             },
                             "internal_events": [
                               {
                                 "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-12%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EA%2FC%20Mode%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EA%2FC%20Mode%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690523724741%3C%2Fcdate%3E%3Cedate%3E1690523724741%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=bf0ce3d6-d817-4a46-81e0-33985f892ab9;S.org.kustom.intent.label=Task%20Shortcut;end"
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_mode\" }"
                               }
                             ]
                           }
@@ -1208,7 +2404,7 @@
                       },
                       {
                         "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 2 - Icon 3",
+                        "internal_title": "A/C, Icon 3",
                         "internal_toggles": {
                           "config_visible": 10
                         },
@@ -1223,21 +2419,19 @@
                             "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
                             "internal_toggles": {
                               "icon_icon": 0,
-                              "icon_size": 10,
+                              "icon_size": 100,
                               "paint_color": 100
                             },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
                             "internal_globals": {
+                              "icon_size": "icomain",
                               "paint_color": "colors/colico"
                             },
                             "internal_events": [
                               {
                                 "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-13%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EA%2FC%20Temp%20Down%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EA%2FC%20Temp%20Down%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690523745137%3C%2Fcdate%3E%3Cedate%3E1690523745137%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=af6f37e8-f41c-4488-94dd-50e66410089c;S.org.kustom.intent.label=Task%20Shortcut;end"
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_temp_down\" }"
                               }
                             ]
                           }
@@ -1245,7 +2439,7 @@
                       },
                       {
                         "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 2 - Icon 4",
+                        "internal_title": "A/C, Icon 4",
                         "internal_toggles": {
                           "config_visible": 10
                         },
@@ -1260,21 +2454,19 @@
                             "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
                             "internal_toggles": {
                               "icon_icon": 0,
-                              "icon_size": 10,
+                              "icon_size": 100,
                               "paint_color": 100
                             },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
                             "internal_globals": {
+                              "icon_size": "icomain",
                               "paint_color": "colors/colico"
                             },
                             "internal_events": [
                               {
                                 "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-14%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EA%2FC%20Temp%20Up%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EA%2FC%20Temp%20Up%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690523760539%3C%2Fcdate%3E%3Cedate%3E1690523760539%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=84255f58-c33f-4e68-8f4d-2d30e392c42b;S.org.kustom.intent.label=Task%20Shortcut;end"
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_temp_up\" }"
                               }
                             ]
                           }
@@ -1282,7 +2474,7 @@
                       },
                       {
                         "internal_type": "OverlapLayerModule",
-                        "internal_title": "Dev - Row 2 - Icon 5",
+                        "internal_title": "A/C, Icon 5",
                         "internal_toggles": {
                           "config_visible": 10
                         },
@@ -1297,21 +2489,19 @@
                             "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
                             "internal_toggles": {
                               "icon_icon": 0,
-                              "icon_size": 10,
+                              "icon_size": 100,
                               "paint_color": 100
                             },
-                            "internal_formulas": {
-                              "icon_icon": "",
-                              "icon_size": "$gv(icomain)$"
-                            },
                             "internal_globals": {
+                              "icon_size": "icomain",
                               "paint_color": "colors/colico"
                             },
                             "internal_events": [
                               {
                                 "type": "SINGLE_TAP",
-                                "action": "LAUNCH_SHORTCUT",
-                                "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-14%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3EA%2FC%20Temp%20Up%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3EA%2FC%20Temp%20Up%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690523760539%3C%2Fcdate%3E%3Cedate%3E1690523760539%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=84255f58-c33f-4e68-8f4d-2d30e392c42b;S.org.kustom.intent.label=Task%20Shortcut;end"
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_temp_up\" }"
                               }
                             ]
                           }
@@ -1325,88 +2515,168 @@
           },
           {
             "internal_type": "OverlapLayerModule",
-            "internal_title": "Single Room",
-            "internal_toggles": {
-              "position_anchor": 10,
-              "position_padding_left": 10,
-              "position_padding_right": 10,
-              "position_padding_top": 10,
-              "position_padding_bottom": 10,
-              "config_visible": 10
-            },
-            "internal_formulas": {
-              "position_anchor": "$if(gv(position) = RIGHT, CENTERRIGHT, gv(position) = LEFT, CENTERLEFT,  gv(position) = TOP, TOP,  gv(position) = BOTTOM, BOTTOM)$",
-              "position_padding_left": "$if(gv(position) = LEFT, gv(icomarg), 0)$",
-              "position_padding_right": "$if(gv(position) = RIGHT, gv(icomarg), 0)$",
-              "position_padding_top": "$if(gv(position) = TOP, gv(icomarg), 0)$",
-              "position_padding_bottom": "$if(gv(position) = BOTTOM, gv(icomarg), 0)$",
-              "config_visible": "$if(gv(wgtmode) = 0, \"ALWAYS\", \"NEVER\")$"
-            },
+            "internal_title": "CHOOSE - 1 Device Control",
             "viewgroup_items": [
               {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "Bedroom",
-                "position_anchor": "CENTERLEFT",
+                "internal_type": "StackLayerModule",
+                "internal_title": "*** Soundbar Controls",
+                "config_margin": 15.0,
+                "config_stacking": "VERTICAL_RIGHT",
+                "position_offset_x": 35.0,
                 "internal_toggles": {
+                  "config_stacking": 10,
+                  "position_anchor": 0,
+                  "position_padding_right": 0,
+                  "position_padding_top": 0,
+                  "position_padding_left": 0,
+                  "position_padding_bottom": 0,
+                  "config_margin": 100,
                   "config_visible": 10
                 },
                 "internal_formulas": {
-                  "config_visible": "$if(gv(generate/pagenum)=0,\"ALWAYS\",\"NEVER\")$"
+                  "config_stacking": "$if(gv(position) = RIGHT, VERTICAL_RIGHT, gv(position) = LEFT, VERTICAL_LEFT,  gv(position) = TOP, HORIZONTAL_TOP,  gv(position) = BOTTOM, HORIZONTAL_BOTTOM)$",
+                  "position_anchor": "$if(gv(position) = RIGHT, CENTERRIGHT, gv(position) = LEFT, CENTERLEFT,  gv(position) = TOP, TOP,  gv(position) = BOTTOM, BOTTOM)$",
+                  "position_padding_right": "$if(gv(position) = RIGHT, gv(icomarg), 0)$",
+                  "position_padding_top": "$if(gv(position) = TOP, gv(icomarg), 0)$",
+                  "position_padding_left": "$if(gv(position) = LEFT, gv(icomarg), 0)$",
+                  "position_padding_bottom": "$if(gv(position) = BOTTOM, gv(icomarg), 0)$",
+                  "config_visible": "$if(gv(wgtmode) = 0, \"NEVER\", \"ALWAYS\")$"
+                },
+                "internal_globals": {
+                  "config_margin": "icomarg"
                 },
                 "viewgroup_items": [
                   {
                     "internal_type": "StackLayerModule",
                     "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_bottom": 85,
-                    "internal_title": "Top Row",
-                    "config_margin": 15,
-                    "position_anchor": "CENTERLEFT",
+                    "config_margin": 20.0,
+                    "internal_title": "MATCH - Fan",
+                    "internal_toggles": {
+                      "config_stacking": 10,
+                      "config_margin": 100
+                    },
+                    "internal_formulas": {
+                      "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                    },
+                    "internal_globals": {
+                      "config_margin": "icopad"
+                    },
                     "viewgroup_items": [
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "Material-power",
-                        "position_anchor": "BOTTOMLEFT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_title": "Power",
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Fan, Icon 1",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-26%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Bedroom%20Toggle%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Bedroom%20Toggle%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690094368252%3C%2Fcdate%3E%3Cedate%3E1690094368252%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=2c681500-68d8-4d82-b7c6-1005ac824f91;S.org.kustom.intent.label=Task%20Shortcut;end"
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Speed",
+                            "icon_icon": "custom-fan-speed",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_speedtoggle\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
                           }
-                        ],
-                        "position_padding_left": 15,
-                        "position_padding_bottom": 20,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        }
+                        ]
                       },
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-king-bed",
-                        "position_anchor": "BOTTOMRIGHT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "position_padding_right": 15,
-                        "position_padding_bottom": 15,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "HASS",
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Fan, Icon 2",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "OPEN_LINK",
-                            "url": "homeassistant://navigate/dashboard-widgets/bedroom-lights?kiosk"
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Oscillation",
+                            "icon_icon": "custom-fan-oscillation",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_oscillation\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Fan, Icon 3",
+                        "config_visible": "REMOVE",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Speed",
+                            "icon_icon": "custom-fan-speed",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_speedtoggle\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "Fan, Icon 4",
+                        "config_visible": "REMOVE",
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "internal_title": "Fan Oscillation",
+                            "icon_icon": "custom-fan-oscillation",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_fan_oscillation\" }"
+                              }
+                            ],
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            }
                           }
                         ]
                       }
@@ -1415,567 +2685,197 @@
                   {
                     "internal_type": "StackLayerModule",
                     "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_top": 85,
-                    "internal_title": "Bottom Row",
-                    "config_margin": 15,
-                    "position_padding_left": 15,
+                    "config_margin": 25.0,
+                    "internal_title": "MATCH - A/C",
+                    "internal_toggles": {
+                      "config_stacking": 10,
+                      "config_margin": 100
+                    },
+                    "internal_formulas": {
+                      "config_stacking": "$if(gv(wgtalign) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
+                    },
+                    "internal_globals": {
+                      "config_margin": "icopad"
+                    },
                     "viewgroup_items": [
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-off-outline",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "A/C, Icon 1",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-23%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Bedroom%20Off%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Bedroom%20Off%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690094293960%3C%2Fcdate%3E%3Cedate%3E1690094293960%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=b5c51b96-9e10-4a4b-8718-9c877345d7d2;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPLEFT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "OFF"
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on-30",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-22%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Bedroom%20Low%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Bedroom%20Low%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690094276702%3C%2Fcdate%3E%3Cedate%3E1690094276702%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=aaf32aa8-941a-4737-b656-343b4791905b;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "LOW"
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on-60",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-24%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Bedroom%20Med%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Bedroom%20Med%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690094305371%3C%2Fcdate%3E%3Cedate%3E1690094305371%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=35fd4fea-3d35-41b3-a410-56100a90bf62;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "MED"
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-25%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Bedroom%20High%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Bedroom%20High%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690094317034%3C%2Fcdate%3E%3Cedate%3E1690094317034%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=277949f9-6bb6-489a-861a-ba81f7845273;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "HIGH"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "Study",
-                "position_anchor": "CENTERLEFT",
-                "internal_toggles": {
-                  "config_visible": 10
-                },
-                "internal_formulas": {
-                  "config_visible": "$if(gv(generate/pagenum)=1,\"ALWAYS\",\"NEVER\")$"
-                },
-                "viewgroup_items": [
-                  {
-                    "internal_type": "StackLayerModule",
-                    "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_bottom": 85,
-                    "internal_title": "Top Row",
-                    "config_margin": 15,
-                    "position_anchor": "CENTERLEFT",
-                    "viewgroup_items": [
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "Material-power",
-                        "position_anchor": "BOTTOMLEFT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_title": "Power",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-31%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Study%20Toggle%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Study%20Toggle%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690096895503%3C%2Fcdate%3E%3Cedate%3E1690096895503%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=050418e5-8f26-47d4-bba6-15b535b9b985;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_padding_left": 15,
-                        "position_padding_bottom": 20,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        }
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-desk",
-                        "position_anchor": "BOTTOMRIGHT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "position_padding_right": 15,
-                        "position_padding_bottom": 15,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "HASS",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "OPEN_LINK",
-                            "url": "homeassistant://navigate/dashboard-widgets/bedroom-lights?kiosk"
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "custom-fan-speed",
+                            "internal_title": "A/C Speed",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            },
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_fan_speed\" }"
+                              }
+                            ]
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "internal_type": "StackLayerModule",
-                    "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_top": 85,
-                    "internal_title": "Bottom Row",
-                    "config_margin": 15,
-                    "position_padding_left": 15,
-                    "viewgroup_items": [
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-off-outline",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-32%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Study%20Off%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Study%20Off%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690096951128%3C%2Fcdate%3E%3Cedate%3E1690096951128%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=1b387efe-c283-4fed-85f2-d4ac4ea799cf;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPLEFT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "OFF"
                       },
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on-30",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "A/C, Icon 2",
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-33%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Study%20Low%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Study%20Low%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690096963634%3C%2Fcdate%3E%3Cedate%3E1690096963634%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=110b6353-f4cf-4d3d-b3f8-5c87de2b81d2;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "LOW"
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on-60",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-34%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Study%20Med%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Study%20Med%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690096977076%3C%2Fcdate%3E%3Cedate%3E1690096977076%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=a8410141-52b1-4c58-889f-0d09ab78097a;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "MED"
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-35%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Study%20High%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Study%20High%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690096987675%3C%2Fcdate%3E%3Cedate%3E1690096987675%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=af20768c-0d48-4467-b90e-3ab9e7c21360;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "HIGH"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "Foyer",
-                "position_anchor": "CENTERLEFT",
-                "internal_toggles": {
-                  "config_visible": 10
-                },
-                "internal_formulas": {
-                  "config_visible": "$if(gv(generate/pagenum)=2,\"ALWAYS\",\"NEVER\")$"
-                },
-                "viewgroup_items": [
-                  {
-                    "internal_type": "StackLayerModule",
-                    "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_bottom": 85,
-                    "internal_title": "Top Row",
-                    "config_margin": 15,
-                    "position_anchor": "CENTERLEFT",
-                    "viewgroup_items": [
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "Material-power",
-                        "position_anchor": "BOTTOMLEFT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_title": "Power",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-37%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Foyer%20Toggle%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Foyer%20Toggle%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097040963%3C%2Fcdate%3E%3Cedate%3E1690097040963%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=176aec02-7e31-4f48-82bb-bc6911712131;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_padding_left": 15,
-                        "position_padding_bottom": 20,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        }
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "coat-rack",
-                        "position_anchor": "BOTTOMRIGHT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "position_padding_right": 15,
-                        "position_padding_bottom": 15,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "HASS",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "OPEN_LINK",
-                            "url": "homeassistant://navigate/dashboard-widgets/bedroom-lights?kiosk"
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-snowflake",
+                            "internal_title": "A/C Mode",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            },
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_mode\" }"
+                              }
+                            ]
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "internal_type": "StackLayerModule",
-                    "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_top": 85,
-                    "internal_title": "Bottom Row",
-                    "config_margin": 15,
-                    "position_padding_left": 15,
-                    "viewgroup_items": [
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-off-outline",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-38%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Foyer%20Off%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Foyer%20Off%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097060589%3C%2Fcdate%3E%3Cedate%3E1690097060589%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=fc6378bc-661b-43dc-9f44-94ddb3716f43;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPLEFT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "OFF"
                       },
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on-30",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-39%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Foyer%20Low%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Foyer%20Low%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097079173%3C%2Fcdate%3E%3Cedate%3E1690097079173%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=3b3bba23-35da-486a-a123-55cdd797d2c5;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "A/C, Icon 3",
                         "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
+                          "config_visible": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
+                        "internal_formulas": {
+                          "config_visible": "$if(gv(generate/icocount)  < 3, REMOVE, ALWAYS)$"
                         },
-                        "internal_title": "LOW"
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on-60",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
+                        "viewgroup_items": [
                           {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-40%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Foyer%20Med%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Foyer%20Med%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097098721%3C%2Fcdate%3E%3Cedate%3E1690097098721%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=4b60d16d-6793-4ed7-9626-40e4d65ef1e6;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "MED"
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-41%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20Foyer%20High%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20Foyer%20High%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097114423%3C%2Fcdate%3E%3Cedate%3E1690097114423%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=385933bb-6d7a-47d5-9be6-a330849ea93d;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "HIGH"
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "Living Room",
-                "position_anchor": "CENTERLEFT",
-                "internal_toggles": {
-                  "config_visible": 10
-                },
-                "internal_formulas": {
-                  "config_visible": "$if(gv(generate/pagenum)=3,\"ALWAYS\",\"NEVER\")$"
-                },
-                "viewgroup_items": [
-                  {
-                    "internal_type": "StackLayerModule",
-                    "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_bottom": 85,
-                    "internal_title": "Top Row",
-                    "config_margin": 15,
-                    "position_anchor": "CENTERLEFT",
-                    "viewgroup_items": [
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "Material-power",
-                        "position_anchor": "BOTTOMLEFT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_title": "Power",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-42%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20LR%20Toggle%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20LR%20Toggle%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097137512%3C%2Fcdate%3E%3Cedate%3E1690097137512%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=df41c34e-e3c2-4918-b4ea-0d4eec303b14;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_padding_left": 15,
-                        "position_padding_bottom": 20,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        }
-                      },
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-sofa-outline",
-                        "position_anchor": "BOTTOMRIGHT",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "position_padding_right": 15,
-                        "position_padding_bottom": 15,
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "HASS",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "OPEN_LINK",
-                            "url": "homeassistant://navigate/dashboard-widgets/bedroom-lights?kiosk"
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-thermometer-minus",
+                            "internal_title": "A/C Down",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            },
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_temp_down\" }"
+                              }
+                            ]
                           }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "internal_type": "StackLayerModule",
-                    "config_stacking": "HORIZONTAL_CENTER",
-                    "position_padding_top": 85,
-                    "internal_title": "Bottom Row",
-                    "config_margin": 15,
-                    "position_padding_left": 15,
-                    "viewgroup_items": [
-                      {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-off-outline",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-43%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20LR%20Off%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20LR%20Off%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097153873%3C%2Fcdate%3E%3Cedate%3E1690097153873%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=2fe8d70e-a633-4529-b3df-7807f530db73;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPLEFT",
-                        "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
-                        },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
-                        },
-                        "internal_title": "OFF"
                       },
                       {
-                        "internal_type": "FontIconModule",
-                        "icon_icon": "material-lightbulb-on",
-                        "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
-                        "internal_events": [
-                          {
-                            "type": "SINGLE_TAP",
-                            "action": "LAUNCH_SHORTCUT",
-                            "intent": "intent:#Intent;action=net.dinglisch.android.tasker.WIDICKYUM;component=net.dinglisch.android.taskerm/.IntentHandler;S.mcro=%3CTask%20sr%3D%22%22%3E%3Cid%3E-44%3C%2Fid%3E%3CImg%20sr%3D%22icn%22ve%3D%222%22%3E%3Cnme%3Emw_places_ac_unit%3C%2Fnme%3E%3C%2FImg%3E%3Cnme%3ELights%20-%20LR%20High%3C%2Fnme%3E%3Cpri%3E7%3C%2Fpri%3E%3Crty%3E2%3C%2Frty%3E%3CAction%20sr%3D%22act0%22ve%3D%227%22%3E%3CStr%20sr%3D%22arg0%22ve%3D%223%22%3ELights%20-%20LR%20High%3C%2FStr%3E%3CInt%20sr%3D%22arg1%22val%3D%227%22%2F%3E%3CStr%20sr%3D%22arg2%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg3%22ve%3D%223%22%2F%3E%3CStr%20sr%3D%22arg4%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg5%22val%3D%221%22%2F%3E%3CInt%20sr%3D%22arg6%22%2F%3E%3CStr%20sr%3D%22arg7%22ve%3D%223%22%2F%3E%3CInt%20sr%3D%22arg8%22%2F%3E%3CInt%20sr%3D%22arg9%22%2F%3E%3Ccode%3E130%3C%2Fcode%3E%3CInt%20sr%3D%22arg10%22%2F%3E%3C%2FAction%3E%3Ccdate%3E1690097164617%3C%2Fcdate%3E%3Cedate%3E1690097164617%3C%2Fedate%3E%3C%2FTask%3E;S.AUTH_ID=f2b9fb58-410b-40e4-b01c-29312301296b;S.org.kustom.intent.label=Task%20Shortcut;end"
-                          }
-                        ],
-                        "position_anchor": "TOPRIGHT",
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "A/C, Icon 4",
                         "internal_toggles": {
-                          "icon_size": 100,
-                          "paint_color": 100
+                          "config_visible": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "icomain",
-                          "paint_color": "colors/colico"
+                        "internal_formulas": {
+                          "config_visible": "$if(gv(generate/icocount)  < 4, REMOVE, ALWAYS)$"
                         },
-                        "internal_title": "HIGH"
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-thermometer-plus",
+                            "internal_title": "A/C Up",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            },
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_temp_up\" }"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "internal_type": "OverlapLayerModule",
+                        "internal_title": "A/C, Icon 5",
+                        "internal_toggles": {
+                          "config_visible": 10
+                        },
+                        "internal_formulas": {
+                          "config_visible": "$if(gv(generate/icocount)  < 5, REMOVE, ALWAYS)$"
+                        },
+                        "viewgroup_items": [
+                          {
+                            "internal_type": "FontIconModule",
+                            "icon_icon": "material-thermometer-plus",
+                            "internal_title": "A/C Up",
+                            "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                            "internal_toggles": {
+                              "icon_icon": 0,
+                              "icon_size": 100,
+                              "paint_color": 100
+                            },
+                            "internal_globals": {
+                              "icon_size": "icomain",
+                              "paint_color": "colors/colico"
+                            },
+                            "internal_events": [
+                              {
+                                "type": "SINGLE_TAP",
+                                "action": "SWITCH_GLOBAL",
+                                "switch": "tasker/hactrl",
+                                "switch_text": "homeassistant.turn_on&{ \"entity_id\": \"script.ir_ac_temp_up\" }"
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
                 ]
               }
             ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "CHOOSE - Logo Or Icon",
+            "viewgroup_items": []
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "CHOOSE - Hidden",
+            "viewgroup_items": []
           }
         ]
       },
@@ -2029,7 +2929,53 @@
                 "icon_icon": "custom-fan-outline",
                 "icon_size": 120.0,
                 "position_offset_x": 15.0,
-                "internal_title": "Fan",
+                "internal_title": "Fan Icon",
+                "internal_events": [
+                  {
+                    "type": "SINGLE_TAP",
+                    "action": "KUSTOM_ACTION"
+                  }
+                ],
+                "internal_globals": {
+                  "position_offset_y": "padupdwn",
+                  "position_offset_x": "padside",
+                  "icon_size": "generate/icodevge"
+                },
+                "icon_rotate_mode": "DEG270"
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "Light Icon",
+            "internal_toggles": {
+              "config_visible": 10
+            },
+            "internal_formulas": {
+              "config_visible": "$if(gv(wgtmode) = 0, \"ALWAYS\", \"NEVER\")$"
+            },
+            "viewgroup_items": [
+              {
+                "internal_type": "FontIconModule",
+                "internal_toggles": {
+                  "paint_color": 10,
+                  "position_offset_y": 100,
+                  "position_offset_x": 100,
+                  "position_anchor": 0,
+                  "icon_rotate_mode": 10,
+                  "icon_size": 100
+                },
+                "internal_formulas": {
+                  "paint_color": "$ce(gv(colors/colico),alpha,20)$",
+                  "position_anchor": "",
+                  "icon_rotate_mode": "$if(gv(position) = RIGHT, NONE, gv(position) = LEFT, NONE,  gv(position) = TOP, DEG270,  gv(position) = BOTTOM, NONE)$",
+                  "icon_size": ""
+                },
+                "icon_set": "kfile://org.kustom.provider/icons/myicons4.ttf",
+                "icon_icon": "material-wb-incandescent",
+                "icon_size": 120.0,
+                "position_offset_x": 15.0,
+                "internal_title": "Light Icon",
                 "internal_events": [
                   {
                     "type": "SINGLE_TAP",
@@ -2050,7 +2996,7 @@
       {
         "internal_type": "FontIconModule",
         "icon_icon": "material-home-assistant",
-        "internal_title": "App #1",
+        "internal_title": "App 1",
         "icon_size": 32.0,
         "position_anchor": "BOTTOMLEFT",
         "internal_events": [
@@ -2084,7 +3030,7 @@
       {
         "internal_type": "FontIconModule",
         "icon_icon": "custom-material-charging",
-        "internal_title": "App #2",
+        "internal_title": "App 2",
         "icon_size": 32.0,
         "position_anchor": "BOTTOMLEFT",
         "internal_events": [
@@ -2118,7 +3064,7 @@
       },
       {
         "internal_type": "ShapeModule",
-        "internal_title": "Persistent Settings - DO NOT DELETE",
+        "internal_title": "Backup Settings Button",
         "internal_toggles": {
           "position_anchor": 10
         },
@@ -2150,7 +3096,7 @@
           {
             "internal_type": "TextModule",
             "text_expression": "[bl=-10]Widget: $si(rwidth)$W, $si(rheight)$H, $si(rratio)$ 1:1\nBox Area: $tc(reg, gv(generate/lgboxmin), \"\\n\", \"\")$ Min, $gv(generate/lgboxw)$W/$gv(generate/lgboxh)$H\n\nWidget Padding: $gv(padside)$ Side, $gv(padupdwn)$ Top\nIcon: $gv(icomain)$kpx, $tc(reg, gv(generate/icocount), \"\\n\", \"\")$ Vis\nIcon Padding:$gv(icomarg)$ Edge, $gv(icopad)$ MID\n\n$lv(icon, gv(icomain) + gv(icopad))$$lv(lgbox, if(gv(wgtalign) = 0, gv(generate/lgboxw), gv(generate/lgboxh)))$$lv(adjustment, if(gv(icopadr) = 0, gv(icosm), 0))$$lv(boxsize, #lgbox - #adjustment)$Icon to size ratio: $mu(abs, #boxsize /#icon)$[/bl]",
-            "internal_title": "Debugging Info",
+            "internal_title": "Widget Icon Padding",
             "text_align": "CENTER",
             "text_family": "kfile://org.kustom.provider/fonts/RobotoCondensed-Bold.ttf",
             "text_filter": [

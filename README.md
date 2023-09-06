@@ -3,7 +3,7 @@
 These widgets were built to fill a need for a customizable, nice-looking android widget for controlling Smart home devices and TV's without opening the Home Assistant app. The original concept was nice-looking device controls for a wall-mounted android device, so they are primarily designed to be used in a page layout, stacked on a single Android launcher page as a Control Hub. However, the smaller widgets are designed to also work on your regular launcher pages, and on a larger device like a tablet, all widgets should work well with your layout.
 
 
-### Widget package will contain:
+## Widget package will contain:
 - Medium-sized widget
     - Dual room-by-room or simple device controls
     - Room-by-room single device controls (like lighting) supports up to 4 devices, indicated by room
@@ -21,7 +21,7 @@ These widgets were built to fill a need for a customizable, nice-looking android
     - Devices that arent used often but sometimes need the a button pushed to resync your system (eg soundsystem)
 
  
-### All widgets will have the following features:
+## All widgets will have the following features:
 - Comprehensive background control with the following color sources
     - Extract colors from your wallpaper
     - Extract specific custom system colors from Android 13? onwards to match your current device customization
@@ -37,37 +37,37 @@ These widgets were built to fill a need for a customizable, nice-looking android
 - Distributed as a Kustom "Komponent" for use across Kustom software (Step-by-step assumes KWGT)
 
 
-### Pre-requisites
-## Required
+## Pre-requisites
+### Required
 - A Home Assistant setup configured with the devices you'd like to control
 - Tasker installed on the device you'd like to use this widget on
 - KWGT or KLWP ([Kustom](<URL>) software is phenomenal and offers very advanced android customization)
 - A basic knowlege of how these programs work (step-by-step assumes familiarity with terminology used in software)
 
-## Recommended
+### Recommended
 - Previous use of Kustom and Tasker software will significantly speed up your setup process
 - Use of a second screen/device (your android device + computer/laptop is ideal) for easy transfer of information
 - Time to get the inital communication between all the software working and functional.
 
-### Setup and installation of software
+## Setup and installation of software
 
 
-### Getting your software to talk to each other - inital setup
+## Getting your software to talk to each other - inital setup
 
 
-### Setting up KWGT with devices you want to control
+## Setting up widgets with devices you want to control
 
 
-### Setting up tasker tasks for your specific device controls
+## Linking tasker commands to KWGT
+Formatting commands - KWGT touch event
+Switching from Yaml to JSON [link](https://www.json2yaml.com/convert-yaml-to-json) & removing lines
+(haservicecall)&(hatemplatejson)
+light.turn_on&{ "entity_id": "light.bedroom_lights", "brightness": 30 }
+
+## Testing all controls
 
 
-### Linking tasker commands to KWGT
+## Trouboleshooting
 
 
-### Testing all controls
-
-
-### Trouboleshooting
-
-
-### Final notes
+## Final notes
