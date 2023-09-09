@@ -2,6 +2,8 @@
 
 These widgets were built to fill a need for a customizable, nice-looking android widget for controlling Smart home devices and TV's without opening the Home Assistant app. The original concept was nice-looking device controls for a wall-mounted android device, so they are primarily designed to be used in a page layout, stacked on a single Android launcher page as a Control Hub. However, the smaller widgets are designed to also work on your regular launcher pages, and on a larger device like a tablet, all widgets should work well with your layout.
 
+This document was written assuming you're very new to Home Assistant or KWGT, more advanced users can skip to <HERE>.
+
 
 ## Widget package will contain:
 - Medium-sized widget
@@ -59,6 +61,20 @@ These widgets were built to fill a need for a customizable, nice-looking android
 
 
 ## Linking tasker commands to KWGT
+
+You'll need the following information from Home Assistant for each of the devices you want to control
+- [Entity ID](<HAURL>) (eg. light.living_room)
+- The [Service Call]<HAURL> you want to use for the entity (eg. light.turn_on). If you use the pre-setup templates in the widget, the service calls for the relavent devices will be preset with common defaults
+- Parameters you want to pass to the entity (eg. light brightness or hue). [This](https://www.home-assistant.io/integrations/light/#service-lightturn_on) is a list of the parameters accepted by the light.turn_on as an example
+
+![Screenshot of a code sample from the Home Assistant Docs website indicating the previous information](<ha-light-sample>)
+
+###Helpful Information
+If you don't know much about service calls, go to Developer Tools > Services in your HA installation. The dropdown menu will show all avalible services and you can test your calls here before using them in KWGT. Below is a few basic service calls to get you started if you're just doing basics
+- ```light.toggle```, ```light.turn_on``` and ```light.turn_off``` for light controls
+- ```switch.toggle```, ```switch.turn_on``` & ```switch.turn_off``` for smart switches
+- ```homeassisstant.turn_on``` & ```homeassisstant.turn_off``` for running scripts
+
 Formatting commands - KWGT touch event
 Switching from Yaml to JSON [link](https://www.json2yaml.com/convert-yaml-to-json) & removing lines
 (haservicecall)&(hatemplatejson)
