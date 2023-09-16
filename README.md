@@ -2,7 +2,7 @@
 
 These widgets were built to fill a need for a customizable, nice-looking android widget for controlling Smart home devices and TV's without opening the Home Assistant app. The original concept was nice-looking device controls for a wall-mounted android device, so they are primarily designed to be used in a page layout, stacked on a single Android launcher page as a Control Hub. However, the smaller widgets are designed to also work on your regular launcher pages, and on a larger device like a tablet, all widgets should work well with your layout.
 
-This document was written assuming you're very new to Home Assistant or KWGT, more advanced users can skip to <HERE>.
+This document was written assuming you're very new to Home Assistant or KWGT, more advanced users can skip to <HERE>. For readability, Home Assistant will be shortened to HA 
 
 
 ## Widget package will contain:
@@ -83,7 +83,25 @@ light.turn_on&{ "entity_id": "light.bedroom_lights", "brightness": 30 }
 ## Testing all controls
 
 
-## Trouboleshooting
+## Troubleshooting
+
+
+## Advanced
+
+### Add more icons to rows in Device Control Widget
+Create a new Overlay Group and place it in the list where you'd like it. If this is the third (or higher) control in the row, you have to make sure the groups visibility is set to the following formula:
+```$if(gv(generate/icocount)  < #, REMOVE, ALWAYS)$```
+Where # is the number of this icon lists in the order. This is used to hide the last icons first when the widget is sized smaller.
+
+Name your Overlay Group to your device name and place a control icon inside the group
+
+### Create a custom device control
+This widget comes with many examples of device controls you can try, complete with HA commands that should work with only minor tweaks. If you're comfortable with Kustom products and want to create your own controls, the following information should help. All icons material design icons, either official or from [Pictogrammers](https://pictogrammers.com/library/mdi/). Its a vast database of material-styled icons for almost every use.
+
+The following attributes are used for the FontIcon in this widget for alignment and sizing:
+- Size: Global Variable "icomain"
+- Color: Global Varaible "colico"
+- Touch: Toggle Global Switch > Global Variable "tasker/hactrl" > HA Command code
 
 
 ## Final notes

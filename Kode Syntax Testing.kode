@@ -1,4 +1,6 @@
-Kustom Global data:
+-- OLD
+
+Custom Global data:
 gv(tasker/hactrl) = light.turn_on&{ "entity_id": "light.bedroom_lights", "brightness": 30 }
 
 URI Format:
@@ -8,6 +10,34 @@ Combined:
 tasker://secondary?service=light.turn_on&json={ "entity_id": "light.bedroom_lights", "brightness": 30 }
 
 
-$lv(command, tc(split, gv(hactrl), "&", 0))$
-$lv(commandinfo, tc(split, gv(hactrl), "&", 1))$
-$lv(recomb, ("tasker://secondary?service=" + #command + "&json=" + #commandinfo))$
+-- NEW
+Kustom Global data:
+light_on&light.bedroom_lights&brightness:255
+
+URI Format:
+tasker://secondary?service_call=var&entity_id=var&parameters=var:100
+
+Combined:
+tasker://secondary?service_call=light_on&entity_id=light.bedroom_lights&parameters=brightness:125
+
+$lv(srvccall, tc(split, gv(tasker/hactrl), "&", 0))$
+$lv(entityid, tc(split, gv(tasker/hactrl), "&", 1))$
+$lv(data, tc(split, gv(tasker/hactrl), "&", 2))$
+$lv(recomb, "tasker://secondary?service_call=" + #srvccall + "&entity_id=" + #entityid + "&parameters=" + #data)$$#recomb$`
+
+On
+on&light.bedroom_lights
+
+Off
+off&light.bedroom_lights
+
+Toggle
+toggle&light.bedroom_lights
+
+Brightness
+light&light.bedroom_lights&brightness:255
+
+Change all names in first half of My Lighting controls
+
+Use HASS variable data to choose names of system_call
+Set up "template" system_call to allow JSON as a workaround for custom calls
