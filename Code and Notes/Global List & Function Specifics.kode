@@ -1,0 +1,59 @@
+$Global List and function specifics$
+
+// readme
+Thanks for downloading HA Device Control Widget! Setup:\n
+1. Use following settings to configure the UI for the style you want\n
+2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\n
+Please note you'll need to have Tasker installed to facilitate communication to HA\n\n
+
+The below global settings are to configure the interface, while HA communication is set up on each icon.\n
+Box 1 - Smaller box, usually containing main device controls like power\n
+Box 2 - Larger box, usually containing device controls such as volume or brightness\n\n
+
+Created by Corey Welsh to fill the need of universal Home Assistant Android widget"
+
+// deviceicontype
+0##Lights,
+1##Climate,
+2##Television,
+3##Sound System,
+4##Security,
+5##Charging and Battery,
+6##Remote control,
+7##Appliances,
+8##Others
+
+
+// 1-device
+0##Mini - 1x2 Controls (1 Box),
+1##Mini - 2x2 Controls (1 Box),
+2##Small - 1x4+ Controls,
+3##Large - 2x8+ Controls
+
+// 2-device
+0##Mini - 1x2 Controls (1 Box),
+1##Small - 1x4+ Controls,
+2##Large - 2x4+ Controls,
+3##Large - 2x4-4+ Controls (2 boxes)
+4##
+
+// deviceiconstyle
+DATA##Choose one of the options below. Auto-shrinking and Remove Padding will adjust the calculation that determines how many Icons can fit in Box 2,
+0##Regular (Set Below),
+1##Match App Icons,
+2##Regular - Auto-Shrink For Space,
+3##Regular - No Padding,
+4##Hidden
+
+// box1size
+DATA##\"Customize Box 1.\n\nChoose how many columns to display in Box 1, or \"Custom\" to enter the percentage of the widget that Box 1 fills (entered in the next list item).\"
+0##Remove (Single Box Mode),
+1##1 Column (Auto-Center),
+2##2 Column (Auto-Center),
+3##Custom Size (Below)
+
+// box2align
+DATA##'Choose alignment of Box 2 content. Used for:\n- Templates without icons (like komponents)\n- Single box mode\n'
+
+// setupnote
+-- \"Setup Mode\" Details:\n\nTurn this on to display alignment and configuration data live as you resize and setup your widget alignment.

@@ -4,8 +4,8 @@
     "description": "DEVICE - Device Control Pages - Overlay Group - Visibility"
   },
   {
-    "expression": "$if(gv(position) \u003d RIGHT, CENTERRIGHT, gv(position) \u003d LEFT, CENTERLEFT,  gv(position) \u003d TOP, TOP,  gv(position) \u003d BOTTOM, BOTTOM)$",
-    "description": "DEVICE - Box position - Main overlay group"
+    "expression": "$if(gv(advanced/box1position) \u003d RIGHT, CENTERRIGHT, gv(advanced/box1position) \u003d LEFT, CENTERLEFT,  gv(advanced/box1position) \u003d TOP, TOP,  gv(advanced/box1position) \u003d BOTTOM, BOTTOM)$",
+    "description": "DEVICE - Box advanced/box1position - Main overlay group"
   },
   {
     "expression": "$if(gv(icofirst) | ((gv(icofirst)+1)-1)%8+1 | ((gv(icofirst)+2)-1)%8+1 | ((gv(icofirst)+3)-1)%8+1 \u003d 1, ALWAYS, REMOVE)$",

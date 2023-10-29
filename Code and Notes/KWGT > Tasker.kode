@@ -1,0 +1,56 @@
+$KWGT > Tasker Flows and details$
+
+
+HOME ASSISTANT COMMANDS FROM KWGT
+On
+on&light.bedroom_lights
+
+Off
+off&light.bedroom_lights
+
+Toggle
+toggle&light.bedroom_lights
+
+Brightness
+light&light.bedroom_lights&brightness:255
+
+Use Template
+template&{{ states.light.study_lights.attributes.brightness }}
+
+---
+
+URI
+URI SYNTAX:
+tasker://secondary?service_call=var&entity_id=var&parameters=var:100
+
+COMBINED EXAMPLE:
+tasker://secondary?service_call=light_on&entity_id=light.bedroom_lights&parameters=brightness:125
+
+STATE SAMPLE JSON FROM DOCS
+{{ states('device_tracker.paulus') }}
+{{ state_attr('device_tracker.paulus', 'battery') }}
+
+KWGT > TASKER FLOW
+
+V3 - NOT STARTED
+$lv(srvccall, tc(split, gv(tasker/hactrl), "&", 0))$
+$lv(entityid, tc(split, gv(tasker/hactrl), "&", 1))$
+$lv(data, tc(split, gv(tasker/hactrl), "&", 2))$
+$lv(recomb, (if(#srvccall = "template", 
+("tasker://secondary?service_call=" + #srvccall + "&parameters=" + #entityid),
+("tasker://secondary?service_call=" + #srvccall + "&entity_id=" + #entityid + "&parameters=" + #data))))$$#recomb$
+
+V2 - ADDED TEMPLATE SUPPORT
+$lv(srvccall, tc(split, gv(tasker/hactrl), "&", 0))$
+$lv(entityid, tc(split, gv(tasker/hactrl), "&", 1))$
+$lv(data, tc(split, gv(tasker/hactrl), "&", 2))$
+$lv(recomb, (if(#srvccall = "template", 
+("tasker://secondary?service_call=" + #srvccall + "&parameters=" + #entityid),
+("tasker://secondary?service_call=" + #srvccall + "&entity_id=" + #entityid + "&parameters=" + #data))))$$#recomb$
+
+V1
+$lv(srvccall, tc(split, gv(tasker/hactrl), "&", 0))$
+$lv(entityid, tc(split, gv(tasker/hactrl), "&", 1))$
+$lv(data, tc(split, gv(tasker/hactrl), "&", 2))$
+$lv(recomb, "tasker://secondary?service_call=" + #srvccall + "&entity_id=" + #entityid + "&parameters=" + #data)$$#recomb$
+

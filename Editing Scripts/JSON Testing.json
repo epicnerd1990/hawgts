@@ -1,0 +1,70 @@
+{
+  "device_states": [
+    {
+      "entity_id": "light.bedroom_lights",
+      "state": "on",
+      "brightness": 255,
+      "color": "255, 255, 128, 75"
+    },
+    {
+      "entity_id": "light.study_lights",
+      "state": "on",
+      "brightness": 125,
+      "color": "255, 255, 128, 75"
+    },
+    {
+      "entity_id": "light.lr_lights",
+      "state": "off",
+      "brightness": 200,
+      "color": "255, 200, 128, 80"
+    },
+    {
+      "entity_id": "light.foyer_lights",
+      "state": "on",
+      "brightness": 200,
+      "color": "255, 200, 128, 80"
+    },
+    {
+      "entity_id": "sensor.hallway_temperature",
+      "state": "20C",
+      "last_updated": "10:30 AM"
+    }
+  ],
+  "test": [
+    {
+      "entity_id": "light.bedroom_lights",
+      "state": "on",
+      "brightness": "255",
+      "color": "255,255,128,75"
+    },
+    {
+      "entity_id": "light.study_lights",
+      "state": "on",
+      "brightness": "125",
+      "color": "255,255,128,75"
+    },
+    {
+      "entity_id": "light.lr_lights",
+      "state": "off",
+      "brightness": "200",
+      "color": "255,200,128,80"
+    },
+    {
+      "entity_id": "light.foyer_lights",
+      "state": "on",
+      "brightness": "200",
+      "color": "255,200,128,80"
+    },
+    {
+      "entity_id": "sensor.hallway_temperature",
+      "state": "20C",
+      "last_updated": "10: 30AM"
+    },
+    {
+      "entity_id": "light.study_lights",
+      "state": "on",
+      "brightness": "255",
+      "color": "255,0,0"
+    }
+  ]
+}

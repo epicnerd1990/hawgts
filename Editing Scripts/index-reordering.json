@@ -1,0 +1,647 @@
+  {
+    "globals_list": {
+      "readme": {
+        "index": 1,
+        "type": "LIST",
+        "title": "README",
+        "entries": "",
+        "value": "Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget"
+      },
+      "setupnote": {
+        "index": 2,
+        "type": "LIST",
+        "title": "SETUPNOTE",
+        "entries": "-- \"Setup Mode\" Details:,##\n\nTurn this on to display alignment and configuration data live as you resize and setup your widget alignment.",
+        "value": "-- \"Setup Mode\" Details:"
+      },
+      "setupmode": {
+        "index": 3,
+        "type": "SWITCH",
+        "title": "setupmode",
+        "description": "Enable showing setup data",
+        "value": 0
+      },
+      "jsondb": {
+        "index": 4,
+        "type": "TEXT",
+        "title": "jsondb",
+        "value": "{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": 255,\n      \"color\": \"255, 255, 128, 75\"\n    },\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\n      \"color\": \"255, 255, 128, 75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\n      \"color\": \"255, 200, 128, 80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": 200,\n      \"color\": \"255, 200, 128, 80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10:30 AM\"\n    },\n  ]\n}"
+      },
+      "generate": {
+        "index": 5,
+        "type": "FOLDER",
+        "title": "generate",
+        "description": "Generated Globals. Editing these formulas may cause unintended issues. Proceed with caution."
+      },
+      "generate/widgetwidth": {
+        "index": 6,
+        "type": "NUMBER",
+        "title": "widgetwidth",
+        "description": "GENERATED - Width of widget, minus padding",
+        "min": 100,
+        "max": 300,
+        "toggles": 10,
+        "global_formula": "$si(rwidth) - (gv(verticalpadding) * 2)$"
+      },
+      "generate/widgetheight": {
+        "index": 7,
+        "type": "NUMBER",
+        "title": "widgetheight",
+        "description": "GENERATED - Height of widget, minus padding",
+        "value": 690,
+        "min": 500,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$si(rheight) - (gv(horizontalpadding) * 2)$"
+      },
+      "generate/box1width": {
+        "index": 8,
+        "type": "NUMBER",
+        "title": "box1width",
+        "description": "GENERATED - Width of Box 1",
+        "min": 0,
+        "max": 500,
+        "value": 120.0,
+        "toggles": 10,
+        "global_formula": "$if(gv(advanced/widgetalign) = 1, gv(generate/widgetwidth), (gv(box1size) * 720 / 100))$"
+      },
+      "generate/box1height": {
+        "index": 9,
+        "type": "NUMBER",
+        "title": "box1height",
+        "description": "GENERATED - Height of Box 1",
+        "min": 0,
+        "max": 500,
+        "value": 120.0,
+        "toggles": 10,
+        "global_formula": "$if(gv(advanced/widgetalign) = 1, (gv(box1size) * 720 / 100), gv(generate/widgetheight))$"
+      },
+      "generate/box2width": {
+        "index": 10,
+        "type": "NUMBER",
+        "title": "box2width",
+        "description": "GENERATED - Width of Box 2",
+        "min": 0,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$if(gv(advanced/widgetalign) = 0, (if(gv(generate/widgetwidth) <= gv(generate/box2minsize), gv(generate/box2minsize), (gv(generate/widgetwidth) - gv(generate/box1width)))), gv(generate/widgetwidth))$"
+      },
+      "generate/box2height": {
+        "index": 11,
+        "type": "NUMBER",
+        "title": "box2height",
+        "description": "GENERATED - Height of Box 2",
+        "min": 0,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$if(gv(advanced/widgetalign) = 0, gv(generate/widgetheight), (gv(generate/widgetheight) - gv(generate/box1height)))$"
+      },
+      "generate/box2minsize": {
+        "index": 12,
+        "type": "TEXT",
+        "title": "box2minsize",
+        "description": "GENERATED - Minimum size of Box 2. Based on 2 icons and padding",
+        "toggles": 10,
+        "global_formula": "$lv(devicosi, (if(gv(devicosize) = gv(deviceiconsize), gv(deviceiconsize), gv(appiconsize))))$$lv(padding, (if(advanced/removesettingspadding != 3, #devicosi, 0)))$$((gv(iconsize) * 2) + (gv(iconpaddinginstack) * 2) + #padding)$"
+      },
+      "generate/iconcount": {
+        "index": 13,
+        "type": "NUMBER",
+        "title": "iconcount",
+        "description": "GENERATED - Number of icons visible in a Box 2. Based on widget size and padding",
+        "value": 4.0,
+        "min": 0,
+        "max": 10,
+        "toggles": 10,
+        "global_formula": "$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(devicosi, if(gv(devicosize) gv(deviceiconsize), gv(deviceiconsize), gv(aappicnsize)))$$lv(padding, if(advanced/removesettingspadding != 3, #devicosi), 0)$$lv(boxsize1, if(gv(advanced/widgetalign) = 0, gv(generate/box2width), gv(generate/box2height)))$$lv(boxsize2, #boxsize1 - #padding)$$lv(count, #boxsize2 / #icon)$$if(#count <= 2, 2, tc(cut, mu(abs,#count), 1))$"
+      },
+      "generate/devicosize": {
+        "index": 14,
+        "type": "NUMBER",
+        "title": "devicosize",
+        "description": "GENERATED - Shrink Device icon. Uses app icon size and padding to align outside edge of icons",
+        "min": 0,
+        "max": 720,
+        "toggles": 10,
+        "global_formula": "$lv(small, gv(iconpaddinginstack) + gv(appiconsize))$\n$lv(large, gv(deviceiconsize))$\n$lv(autoshr, (if(gv(generate/iconcount) < 4 & gv(deviceiconstyle) = 2, 1, 0)))$\n$lv(1row, (if(si(rheight) <= 150, 1, 0)))$\n$if(#autoshr = 1 | gv(deviceiconstyle) = 1 | #1row = 1, #small, #autoshr = 0 | gv(deviceiconstyle) = 0, #large)$"
+      },
+      "generate/pagenum": {
+        "index": 15,
+        "type": "LIST",
+        "title": "pagenum",
+        "description": "GENERATED - Number of current page for paging templates",
+        "entries": "1##Page #1, 2##Page #2, 3##Page #3, 4##Page #4",
+        "value": "1"
+      },
+      "generate/color1": {
+        "index": 16,
+        "type": "COLOR",
+        "title": "color1",
+        "description": "GENERATED - Background color generated from user settings for Box 1",
+        "toggles": 10,
+        "global_formula": "$lv(source, (if(gv(colors/color1sel) = 0, \"wpcolor1\", gv(colors/color1sel) = 1, \"wpcolor2\", gv(colors/color1sel) = 2, \"sys\", \"0\")))$$lv(filter, (if(gv(colors/color1fil1) = 1, \"sat\", gv(colors/color1fil1) = 2, \"lum\", gv(colors/color1fil1) = 3, \"comp\", \"sat\")))$$lv(coltone, (if(gv(colors/color1sysc) = 0, \"sysca1\", gv(colors/color1sysc) = 1, \"sysca2\", gv(colors/color1sysc) = 2, \"sysca3\", gv(colors/color1sysc) = 3, \"syscn1\", gv(colors/color1sysc) = 4, \"syscn2\", gv(colors/color1sysc) = 5, \"syscn3\", \"sysca1\")))$$lv(addsub, (if(gv(colors/color1fil2) = 0, \"\", gv(colors/color1fil2) = 1, \"a\", gv(colors/color1fil2) = 2, \"r\", \"\")))$$if(gv(colors/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$$if(gv(colors/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color1adj))))$$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$$#final$"
+      },
+      "generate/color2": {
+        "index": 17,
+        "type": "COLOR",
+        "title": "color2",
+        "description": "GENERATED - Background color generated from user settings for Box 2",
+        "toggles": 10,
+        "global_formula": "$lv(source, (if(gv(colors/color2sel) = 0, \"wpcolor1\", gv(colors/color2sel) = 1, \"wpcolor2\", gv(colors/color2sel) = 2, \"sys\", \"0\")))$$lv(filter, (if(gv(colors/color2fil1) = 1, \"sat\", gv(colors/color2fil1) = 2, \"lum\", gv(colors/color2fil1) = 3, \"comp\", \"sat\")))$$lv(coltone, (if(gv(colors/color2sysc) = 0, \"sysca1\", gv(colors/color2sysc) = 1, \"sysca2\", gv(colors/color2sysc) = 2, \"sysca3\", gv(colors/color2sysc) = 3, \"syscn1\", gv(colors/color2sysc) = 4, \"syscn2\", gv(colors/color2sysc) = 5, \"syscn3\", \"sysca1\")))$$lv(addsub, (if(gv(colors/color2fil2) = 0, \"\", gv(colors/color2fil2) = 1, \"a\", gv(colors/color2fil2) = 2, \"r\", \"\")))$$if(gv(colors/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color2adj))))$$if(gv(colors/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color2adj))))$$if(gv(colors/color2fil1) = 0 | gv(colors/color2sel) = 3, lv(col3, gv(colors/color2pick)))$$lv(color, (if(gv(colors/color2sel) <= 1, #color1, gv(colors/color2sel) = 2, #color2, gv(colors/color2sel) = 3, #col3)))$$lv(final, ce(#color, alpha, mu(round, gv(colors/color2alph), 0)))$$#final$"
+      },
+      "tasker": {
+        "index": 18,
+        "type": "FOLDER",
+        "title": "tasker",
+        "description": "Global variables to be updated with tasker data"
+      },
+      "tasker/data": {
+        "index": 19,
+        "type": "LIST",
+        "title": "DATA",
+        "entries": "-- Live data - Do not edit!",
+        "value": "-- Date sent and received from Tasker & HA"
+      },
+      "tasker/totasker": {
+        "index": 20,
+        "type": "TEXT",
+        "title": "totasker",
+        "description": "TASKER - Device control data to send to tasker from button click",
+        "value": "light&light.study_lights&brightness:30"
+      },
+      "tasker/fromtasker": {
+        "index": 21,
+        "type": "TEXT",
+        "title": "fromtasker",
+        "description": "State information sent from tasker to apply to \"tasker/statedat\". Only entitites listed in HA Tasker blueprint are sent.",
+        "value": "$br(tasker, states)$"
+      },
+      "tasker/fromcolorpic": {
+        "index": 22,
+        "type": "TEXT",
+        "title": "fromcolorpic",
+        "description": "Return from tasker Color Picker",
+        "value": "$br(tasker, fromcolorpic)$"
+      },
+      "formulas": {
+        "index": 23,
+        "type": "FOLDER",
+        "title": "formulas",
+        "description": "Formulas used for calling from formula boxes. Editing these formulas may cause unintended issues. Proceed with caution."
+      },
+      "formulas/devicestate": {
+        "index": 24,
+        "type": "TEXT",
+        "title": "devicestate",
+        "description": "FORMULA - Code used to determine device state",
+        "value": "  $if(\n    tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n      tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].state\")\n  )$"
+      },
+      "formulas/lightlevel": {
+        "index": 25,
+        "type": "TEXT",
+        "title": "lightlevel",
+        "description": "FORMULA - Code used to determine light brightness level",
+        "value": "$if(\n  tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n    tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].brightness\")\n)$"
+      },
+      "formulas/lightcolor": {
+        "index": 26,
+        "type": "TEXT",
+        "title": "lightcolor",
+        "description": "FORMULA - Code used to determine light color",
+        "value": "$if(\n  tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n    tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].color\")\n)$"
+      },
+      "formulas/jsonrementity": {
+        "index": 27,
+        "type": "TEXT",
+        "title": "jsonrementity",
+        "description": "Remove specified entity from JSON",
+        "value": "$tc(reg, \n  #datawipe \n  (\"\\{\\\" + tc(utf, 22) + \"entity_id\" + \"\\\" + tc(utf, 22) + \":\\\" + tc(utf, 22) + \n  #entity + \"\\\" + tc(utf, 22) + \".*?\\},\"), \n  \"\"\n)$"
+      },
+      "formulas/jsonaddentity": {
+        "index": 28,
+        "type": "TEXT",
+        "title": "jsonaddentity",
+        "description": "Add new entry to JSON",
+        "value": "$tc(reg, #jsonrem, \"\\},\\]\\}\", (\"\\},\" + #jsonwipe + \"\\]\\}\"))$"
+      },
+      "formulas/jsonaddnewline": {
+        "index": 29,
+        "type": "TEXT",
+        "title": "jsonaddnewline",
+        "description": "Add new lines and in-line spaces to JSON to make it human-readable",
+        "value": "$tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, #jsonout, \"\\},\", \"\\},\" + tc(utf, 0A)), \":\", \": \"), \"\\\" + tc(utf, 22) + \",\", \"\\\" + tc(utf, 22) + \",\" + tc(utf, 0A)), \"\\{\", \"\\{\" + tc(utf, 0A)), \"\\}\", tc(utf, 0A) + \"\\}\"), \"\\[\", \"\\[\" + tc(utf, 0A)), \"\\\" + tc(utf, 22) + \"device_states\\\" + tc(utf, 22) + \".*\", \"$0\"), \"\\]\", \"  ]\")$"
+      },
+      "formulas/jsonaddindents": {
+        "index": 30,
+        "type": "TEXT",
+        "title": "jsonaddindents",
+        "description": "Add corret indentation inside the JSON array to make it human-readable",
+        "value": "$tc(reg, tc(reg, #jsonline, (\"(?<=\\[)[^\\[\\]]*(?=\\])\"), tc(utf, 0A) + \"    \" + #jarredit + tc(utf, 0A) + \"  \"), (\"(?<!\\[)(?<=\\n|^)\\s*(\" + tc(utf, 22) + \".*)\"), \"  $0\")$"
+      },
+      "formulas/stackalign": {
+        "index": 31,
+        "type": "TEXT",
+        "title": "icoalign",
+        "description": "FORMULA - Stack group advanced/box1positioning",
+        "value": "$if(gv(advanced/box1position) = RIGHT, VERTICAL_RIGHT, gv(advanced/box1position) = LEFT, VERTICAL_LEFT,  gv(advanced/box1position) = TOP, HORIZONTAL_TOP,  gv(advanced/box1position) = BOTTOM, HORIZONTAL_BOTTOM)$"
+      },
+      "formulas/boxalign": {
+        "index": 32,
+        "type": "TEXT",
+        "title": "boxalign",
+        "description": "FORMULA - Box advanced/box1positioning",
+        "value": "$if(gv(advanced/box1position) = RIGHT, CENTERRIGHT, gv(advanced/box1position) = LEFT, CENTERLEFT,  gv(advanced/box1position) = TOP, TOP,  gv(advanced/box1position) = BOTTOM, BOTTOM)$"
+      },
+      "- 1.": {
+        "index": 33,
+        "type": "LIST",
+        "title": "-- 1",
+        "value": "-- Color Options --",
+        "entries": "-- Color Options --\nClick to read color editing options\n\nTo edit the filters put onto the color, look for the dark or light color calculations in the flows tab. Follow the guide on github for color edits"
+      },
+      "colors": {
+        "index": 34,
+        "type": "FOLDER",
+        "title": "colors",
+        "description": "-- Choose your Widget colors --"
+      },
+      "colors/color1sel": {
+        "index": 35,
+        "type": "LIST",
+        "title": "color1sel",
+        "description": "Color 1 - Choose the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
+        "entries": "0##Wallpaper #1, 1##Wallpaper #2, 2##System (MaterialYou), 3##Manual (Color picker)",
+        "value": "0"
+      },
+      "colors/color1sysc": {
+        "index": 36,
+        "type": "LIST",
+        "title": "color1sysc",
+        "description": "Color 1 - System/MaterialYou Only\nChoose a color tone.",
+        "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Neutral #3",
+        "value": "2"
+      },
+      "colors/color1fil1": {
+        "index": 37,
+        "type": "LIST",
+        "title": "color1fil1",
+        "description": "Color 1 - Wallpaper Only\nChoose filter.",
+        "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
+        "value": "2"
+      },
+      "colors/color1adj": {
+        "index": 38,
+        "type": "NUMBER",
+        "title": "color1adj",
+        "description": "Color 1 - Filter adjustment\n0 = None, 100 = Strong",
+        "min": 0,
+        "max": 100,
+        "value": 40.0
+      },
+      "colors/color1fil2": {
+        "index": 39,
+        "type": "LIST",
+        "title": "color1fil2",
+        "description": "Color 1 - Choose filter manipulation - Changes slider above from total into add/subtract from current (optional)",
+        "entries": "0##None, 1##Add, 2##Remove",
+        "value": "0"
+      },
+      "colors/color1pick": {
+        "index": 40,
+        "type": "COLOR",
+        "title": "color1pick",
+        "description": "Color 1 - Manual Color choice, overrides filter\nAlso used as fallback color for extracted colors",
+        "value": "#FFFFFFFF"
+      },
+      "colors/color1alph": {
+        "index": 41,
+        "type": "NUMBER",
+        "title": "color1alph",
+        "description": "Color 1 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
+        "min": 0,
+        "max": 100,
+        "value": 75.0
+      },
+      "colors/color2sel": {
+        "index": 42,
+        "type": "LIST",
+        "title": "color2sel",
+        "description": "Color 2 - Choose the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
+        "entries": "0##Wallpaper #1, 1##Wallpaper #2, 2##System (MaterialYou), 3##Manual (Color picker)",
+        "value": "0"
+      },
+      "colors/color2sysc": {
+        "index": 43,
+        "type": "LIST",
+        "title": "color2sysc",
+        "description": "Color 2 - System/MaterialYou Only\nChoose a color tone",
+        "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Shade Level",
+        "value": "0"
+      },
+      "colors/color2fil1": {
+        "index": 44,
+        "type": "LIST",
+        "title": "color2fil1",
+        "description": "Color 2 - Wallpaper Only\nChoose filter.",
+        "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
+        "value": "2"
+      },
+      "colors/color2adj": {
+        "index": 45,
+        "type": "NUMBER",
+        "title": "color2adj",
+        "description": "Color 2 - Filter adjustment\n0 = None, 100 = Strong",
+        "min": 0,
+        "max": 100,
+        "value": 55.0
+      },
+      "colors/color2fil2": {
+        "index": 46,
+        "type": "LIST",
+        "title": "color2fil2",
+        "description": "Color 2 - Choose filter manipulation - Changes number above from total into add/subtract from current (optional)",
+        "entries": "0##None, 1##Add, 2##Remove",
+        "value": "0"
+      },
+      "colors/color2pick": {
+        "index": 47,
+        "type": "COLOR",
+        "title": "color2pick",
+        "description": "Color 2 - Manual Color choice, overrides filter.\nAlso used as fallback color for extracted colors",
+        "value": "#E7FFFFFF"
+      },
+      "colors/color2alph": {
+        "index": 48,
+        "type": "NUMBER",
+        "title": "color2alph",
+        "description": "Color 2 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
+        "min": 0,
+        "max": 100,
+        "value": 75.0
+      },
+      "colors/colico": {
+        "index": 49,
+        "type": "COLOR",
+        "title": "colico",
+        "description": "Color of icons and text. Default: #E7FFFFFF",
+        "value": "#E7FFFFFF"
+      },
+      "colors/colicoon": {
+        "index": 50,
+        "type": "COLOR",
+        "title": "colicoon",
+        "description": "Color of icons and text when device is on",
+        "value": "#FF00DEFF",
+        "toggles": 10,
+        "global_formula": "$ce(si(wpcolor1, comp), sat, 60)$"
+      },
+      "colors/color2fin": {
+        "index": 51,
+        "type": "COLOR",
+        "title": "color2fin",
+        "description": "Final output of color in Hex ARGB form",
+        "global_formula": "$ce(gv(generate/color2), gv(generate/color2), 50)$",
+        "value": "#BF007D8C"
+      },
+      "colors/color1fin": {
+        "index": 52,
+        "type": "COLOR",
+        "title": "color1fin",
+        "value": "#BF005B66"
+      },
+      "-- 2.": {
+        "index": 53,
+        "type": "LIST",
+        "title": "- 2.",
+        "entries": "-- Widget Style, Size and Alignment --",
+        "value": "-- Widget Style, Size and Alignment --"
+      },
+      "devicecount": {
+        "index": 54,
+        "type": "LIST",
+        "title": "devicecount",
+        "description": "Choose how many devices you'd like to control with this Widget, then select the style below",
+        "entries": "1##One (Choose Config Below),2##Two (Choose Config Below),3##Three or more",
+        "value": "3"
+      },
+      "1-device": {
+        "index": 55,
+        "type": "LIST",
+        "title": "1-device",
+        "description": "For 1 device control. Choose your widget style. The chosen style will determine what templates are avaliable.",
+        "entries": "DATA##\"Control 1 device with a style below. The chosen style will determine what templates are avaliable.\",0##Single Row\nSingle Box,1##Double Row\nSingle Box,2##Single Row\nDouble Box,3##Double Row\nDouble Box",
+        "value": "2"
+      },
+      "2-device": {
+        "index": 56,
+        "type": "LIST",
+        "title": "2-device",
+        "description": "For 2 device control. Choose your widget style. The chosen style will determine what templates are avaliable.",
+        "entries": "DATA##\"Control 2 devices with a style below. The chosen style will determine what templates are avaliable.\",1##Single Row\nDouble Box,2##Double Row\nOne row per device,3##Double Row\nOne box per device",
+        "value": "2"
+      },
+      "box1size": {
+        "index": 57,
+        "type": "LIST",
+        "title": "box1size",
+        "description": "Configure the size of Box 1",
+        "entries": "DATA##\"Customize Box 1.\n\"Custom Size\" is the percentage of the widget that Box 1 uses, entered in the next list item.\nColumn options are default presets of 15 and 30%\",0##Single Box Widget (Hide),15##1 Column,30##2 Column,CUSTOM##Custom Size (next item)",
+        "value": "CUSTOM"
+      },
+      "box1sizecustom": {
+        "index": 58,
+        "type": "NUMBER",
+        "title": "box1sizecustom",
+        "description": "If you Selected \"Custom\" above, choose the percent of the widget Box 1 uses",
+        "min": 0,
+        "max": 100,
+        "value": 35.0
+      },
+      "box2align": {
+        "index": 59,
+        "type": "LIST",
+        "title": "box2align",
+        "description": "Choose alignment of Box 2 content",
+        "entries": "DATA##'Choose alignment of Box 2 content. Used for:\n- Templates without icons (like komponents)\n- Single box mode\n',0##Beside Box 1,1##Centered",
+        "value": "0"
+      },
+      "boxorder": {
+        "index": 60,
+        "type": "LIST",
+        "title": "boxorder",
+        "description": "Set the order of the boxes on your widget. Save the widget for changes to take effect",
+        "entries": "DATA##'Set the order of the boxes on your widget.\nSave the widget for changes to take effect',1##Box 1 > Box 2,0##Box 2 > Box 1",
+        "value": "0"
+      },
+      "deviceicontype": {
+        "index": 61,
+        "type": "LIST",
+        "title": "deviceicontype",
+        "description": "Choose the device icon to display in the corner of the widget. Hide it below. See Docs for custom icons",
+        "entries": "DATA##Choose the device icon for the device you want to control,0##Lights,1##Climate,2##Television,3##Audio,4##Security,5##Charging and Battery,6##Remote control,7##Custom (See Docs)\n",
+        "value": "6"
+      },
+      "deviceiconstyle": {
+        "index": 62,
+        "type": "LIST",
+        "title": "deviceiconstyle",
+        "description": "Configure the device icon.\nDefault: Auto-shrink",
+        "entries": "DATA##Choose one of the options below. Auto-shrinking and Remove Padding will adjust the calculation that determines how many Icons can fit in Box 2,0##Normal Size (Set Below),1##Match App Icons,2##Auto-Shrink To Fit More Icons,3##Show But Remove Padding,4##Hidden",
+        "value": "2"
+      },
+      "-- 3.": {
+        "index": 63,
+        "type": "LIST",
+        "title": "- 3.",
+        "entries": "-- Icon Sizing and Alignment --",
+        "value": "-- Icon Sizing and Alignment --"
+      },
+      "deviceiconsize": {
+        "index": 64,
+        "type": "NUMBER",
+        "title": "deviceiconsize",
+        "description": "Set the size of the Device Icon (if not shrunk above)\nDefault: 120kpx",
+        "min": 0,
+        "max": 120,
+        "value": 120.0
+      },
+      "iconsize": {
+        "index": 65,
+        "type": "NUMBER",
+        "title": "iconsize",
+        "description": "Set the size of the widget icons.\nDefault: 80kpx",
+        "min": 20,
+        "max": 120,
+        "value": 80.0
+      },
+      "appiconsize": {
+        "index": 66,
+        "type": "NUMBER",
+        "title": "appiconsize",
+        "description": "Set the size of the small app-launcher icon(s).\nDefault: 32kpx",
+        "min": 20,
+        "max": 75,
+        "value": 32.0
+      },
+      "appiconhide": {
+        "index": 67,
+        "type": "SWITCH",
+        "title": "appiconhide",
+        "description": "Hide the app icons.\nOff = Show settings, On = Hide settings",
+        "value": 1
+      },
+      "openeditor": {
+        "index": 68,
+        "type": "SWITCH",
+        "title": "openeditor",
+        "description": "Enable device icon click to open KWGT Editor. Diable once widget is set up",
+        "value": 1
+      },
+      "cornerradius": {
+        "index": 69,
+        "type": "NUMBER",
+        "title": "cornerradius",
+        "description": "Set the radius of the rounded corners.\nDefault: 10kpx",
+        "min": 0,
+        "max": 100,
+        "value": 10.0
+      },
+      "-- 4.": {
+        "index": 70,
+        "type": "LIST",
+        "title": "- 4.",
+        "entries": "-- Padding and Spacing --",
+        "value": "-- Padding and Spacing --"
+      },
+      "iconpaddinginstack": {
+        "index": 71,
+        "type": "NUMBER",
+        "title": "iconpaddinginstack",
+        "description": "Set the icon padding inside each row/column. Default: 20kpx",
+        "min": 0,
+        "max": 50,
+        "value": 20.0
+      },
+      "iconpaddingstack": {
+        "index": 72,
+        "type": "NUMBER",
+        "title": "iconpaddingstack",
+        "description": "Set the icon padding between each row/column. Default: 20kpx",
+        "min": 0,
+        "max": 50,
+        "value": 20.0
+      },
+      "iconpaddingbox": {
+        "index": 73,
+        "type": "NUMBER",
+        "title": "iconpaddingbox",
+        "description": "Set the icon padding from the edge of Box 2. Default: 10kpx",
+        "min": 0,
+        "max": 50,
+        "value": 10.0
+      },
+      "paddingnote": {
+        "index": 74,
+        "type": "LIST",
+        "title": "PADDINGNOTE",
+        "entries": "-- Use your launchers \"Remove Padding\" option to utilize the next 2 options",
+        "value": "-- Use your launchers \"Remove Padding\" option to utilize the next 2 options"
+      },
+      "verticalpadding": {
+        "index": 75,
+        "type": "NUMBER",
+        "title": "verticalpadding",
+        "description": "Set Horizontal padding from the launcher widget outline to the widgetx.\nDefault: 6kpx",
+        "value": 6.0,
+        "min": 0,
+        "max": 50
+      },
+      "horizontalpadding": {
+        "index": 76,
+        "type": "NUMBER",
+        "title": "horizontalpadding",
+        "description": "Set Vertical padding from the launcher widget outline to the widget. Will double when two widgets are stacked. Default: 3kpx",
+        "value": 3.0,
+        "min": 0,
+        "max": 50
+      },
+      "endsetupnote": {
+        "index": 77,
+        "type": "TEXT",
+        "title": "ENDSETUPNOTE",
+        "value": "-- END OF SETUP --"
+      },
+      "advanced": {
+        "index": 78,
+        "type": "FOLDER",
+        "title": "advanced",
+        "description": "-- Advanced Options (may break things) --"
+      },
+      "advanced/autoalign": {
+        "index": 79,
+        "type": "SWITCH",
+        "title": "autoalign",
+        "description": "Auto-align On/Off. Use next 2 options to manually set alignment",
+        "value": "0"
+      },
+      "advanced/widgetalign": {
+        "index": 80,
+        "type": "SWITCH",
+        "title": "widgetalign",
+        "description": "Auto horizontal or vertical alignment based on widget size",
+        "on_mode": "MANUAL_FORMULA",
+        "on_formula": "$if(gv(advanced/autoalign) = 0, (si(rratio) < 0.8, 0))$",
+        "off_mode": "MANUAL_FORMULA",
+        "off_formula": "$if(gv(advanced/autoalign) = 0, (si(rratio) > 0.8, 0))$",
+        "value": 1
+      },
+      "advancedbox1position": {
+        "index": 81,
+        "type": "LIST",
+        "title": "box1position",
+        "description": "Change the alignment of Box 1. Use with two previous settings",
+        "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout",
+        "value": "TOP"
+      }
+    },
+  }

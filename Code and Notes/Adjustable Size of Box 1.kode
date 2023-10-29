@@ -1,0 +1,201 @@
+ADD CUSTOM BOX 1 SIZE TO WIDGET
+
+// box1size
+DATA##\"Customize Box 1.\n\nChoose how many columns to display in Box 1, or \"Custom\" to enter the percentage of the widget that Box 1 fills (entered in the next list item).\"
+0##Remove (Single Box Mode),
+1##1 Column (Auto-Center),
+2##2 Column (Auto-Center),
+3##Custom Size (Below)
+
+generate/widgetwidth
+$si(rwidth) - (gv(horizontaldevicopd) * 2)$
+
+generate/widgetheight
+$si(rheight) - (gv(verticaldevicopd) * 2)$
+
+----------------------------------------
+
+GENERATE/BOX1WIDTH
+V4 - Auto-align 1+2 column options, add flow to sync to custom
+
+> Flow
+Write to icondevicopdbox. trigger: box1size, si(ratio), iconsize, icondevicopdstack
+$gv(formulas/boxsize)$
+$lv(size, (if(gv(box1size) = 1 | gv(box1size) = 2, (#pad / 2))))$
+$lv(out, if(#size >= 1, #size))$$#out$
+
+> Flow
+Write to box1customize. trigger: generate/box1size 
+$gv(formulas/boxsize)$
+$lv(size, (if(gv(box1size) = 1, ((#pad + gv(iconsize)) * 100 / 720),
+              gv(box1size) = 2, ((#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)) * 100 / 720))))$
+$lv(out, (if(#align = 1, gv(generate/widgetwidth), #size >= 1, #size)))$$#out$
+
+
+generate/box1width & generate/box1height (copy below)
+$gv(formulas/boxsize)$
+$lv(size, (if(
+    gv(box1size) = 0, 0,
+    gv(box1size) = 1, (#pad + gv(iconsize)),
+    gv(box1size) = 2, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),
+    gv(box1size) = 3, (gv(box1sizecustom) * 720 / 100)
+)))$
+$lv(out, (if(#align = 1, gv(generate/widgetwidth), #size >= 1, #size)))$$#out$
+
+formulas/boxsize
+$lv(align, gv(advanced/widgetalign))$
+$lv(wgtdir, if(#align = 0, gv(generate/widgetheight), gv(generate/widgetwidth)))$
+$lv(pad, (#wgtdir - ((gv(iconsize) * 2) + gv(icondevicopdstack))))$
+
+EDITING
+$lv(align, gv(advanced/widgetalign))$
+$lv(wgtdir, if(#align = 0, si(rheight), si(rwidth)))$
+$lv(wgtpad, if(#align = 0, gv(verticaldevicopd), gv(horizontaldevicopd)))$
+$lv(two, ((gv(iconsize) * 2) + gv(iconpaddinginstack) + (gv(iconpaddinginstack) * 2)))$
+$if(#align = 1, gv(generate/widgetwidth), (#size * 720 / 100))$
+
+
+V3
+$lv(size, (if(gv(box1size) = CUSTOM, gv(box1sizecustom), gv(box1size))))$
+$if(gv(advanced/widgetalign) = 1, gv(generate/widgetwidth), (#size * 720 / 100))$
+
+V2
+$if(gv(wgtalign) = 0,
+if(gv(smboxper) = 0, gv(smboxcus),
+gv(smboxper) = 15, (gv(iconsize) + (gv(iconpaddinginstack) * 2)),
+gv(smboxper) = 30, ((gv(iconsize) * 2) + gv(iconpaddinginstack) + (gv(iconpaddinginstack) * 2)),
+((gv(iconsize) * 2) + gv(iconpaddinginstack) + (gv(iconpaddinginstack) * 2))),
+gv(generate/wgwidth))$
+
+V1
+$if(gv(wgtalign) = 0, (gv(smboxper) * 720 / 100), (gv(generate/wgwidth)))$
+
+----------------------------------------
+
+GENERATE/BOX1HEIGHT
+V4 (copied from generate/box1width)
+$gv(formulas/boxsize)$
+$lv(size, (if(
+    gv(box1size) = 0, 0,
+    gv(box1size) = 1, (#pad + gv(iconsize)),
+    gv(box1size) = 2, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),
+    gv(box1size) = 3, (gv(box1sizecustom) * 720 / 100)
+)))$
+$lv(out, (if(#align = 0, gv(generate/widgetheight), #size >= 1, #size)))$$#out$
+
+formulas/boxsize
+$lv(align, gv(advanced/widgetalign))$
+$lv(wgtdir, if(#align = 0, gv(generate/widgetheight), gv(generate/widgetwidth)))$
+$lv(pad, (#wgtdir - ((gv(iconsize) * 2) + gv(icondevicopdstack))))$
+
+V3
+$lv(size, (if(gv(box1size) = CUSTOM, gv(box1sizecustom), gv(box1size))))$
+$if(gv(advanced/widgetalign) = 0, gv(generate/widgetheight), (#size * 720 / 100))$
+
+V2
+$if(gv(wgtalign) = 1, if(gv(smboxper) = 0, gv(smboxcus), (gv(smboxper) * 720 / 100)), gv(generate/wgheight))$
+
+V1:
+$if(gv(wgtalign) = 0, gv(generate/wgheight), (gv(smboxper) * 720 / 100))$
+
+----------------------------------------
+
+box2width
+$if(gv(wgtalign) = 0, 
+(if(gv(generate/wgwidth) <= gv(generate/lgboxmin),
+ gv(generate/lgboxmin), (gv(generate/wgwidth) - gv(generate/smboxw))))
+ , gv(generate/wgwidth))$
+
+box2height
+$if(gv(wgtalign) = 0, gv(generate/wgheight), (gv(generate/wgheight) - gv(generate/smboxh)))$
+
+----------------------------------------
+
+box2minsize
+V2.5
+$lv(devicosi, (if(gv(devicosize) = gv(deviceiconsize), gv(deviceiconsize), gv(appiconsize))))$
+$lv(devicopd, (if(gv(deviceiconstyle) != 3, #devicosi, 0)))$
+$((gv(iconsize) * 2) + (gv(iconpaddinginstack) * 2) + #devicopd + gv(iconpaddingbox))$
+
+V2
+$lv(devicosi, (if(gv(icodevge) = gv(icodev), gv(icodev), gv(icosm))))$
+$lv(devicopd, (if(icopadr = 0, #devicosi, 0)))$
+$((gv(iconsize) * 2) + gv(iconpaddinginstack) + gv(iconpaddinginstack) + #devicopd)$
+
+$/* If devicopd is hidden, remove from calculation */$
+$lv(devicosi, (if(gv(icodevge) = gv(icodev), gv(icodev), gv(icosm))))$
+$lv(devicopd, (if(icopadr = 0, #devicosi, 0)))$
+$/*Calculate the minimum size Box 2 can be */$
+$((gv(iconsize) * 2) + gv(iconpaddinginstack) + gv(iconpaddinginstack) + #devicopd)$
+
+V1
+$/* If devicopd is hidden, remove from calculation */lv(icoopt, if(gv(icopadr) = 0,  (gv(icodevge)), 0))$
+$/*Calculate the minimum size Box 2 can be (2 icons) */((gv(iconsize) * 2) + (gv(iconpaddinginstack) * 2) + gv(iconpaddinginstack) + #icoopt)$
+
+----------------------------------------
+
+iconcount
+V3
+$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$
+$lv(devicosi, if(gv(deviceiconstyle) = 1, gv(appiconsize), gv(deviceiconstyle) = 3, 0, gv(deviceiconsize)))$
+$lv(boxsize1, if(gv(advanced/widgetalign) = 0, gv(generate/box2width), gv(generate/box2height)))$
+$if(((#boxsize1 - #devicosi) / #icon) <= 2, 2, (tc(cut, mu(abs,#count)), 1))$
+
+V2
+$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$
+$lv(devicosi, if(gv(icodevge) gv(icodev), gv(icodev), gv(icosm)))$
+$lv(devicopd, if(icopadr = 0, #devicosi), 0)$
+$lv(boxsize1, if(gv(wgtalign) = 0, gv(generate/lgboxw), gv(generate/lgboxh)))$
+$lv(boxsize2, #boxsize1 - #devicopd)$
+$lv(count, #boxsize2 / #icon)$
+$if(#count <= 2, 2, tc(cut, mu(abs,#count), 1))$
+
+$/* Generate number of icons able to be shown in Box 2
+Calculate icon sizes, devicopd and widget alignment */$
+$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$
+$lv(devicosi, if(gv(icodevge) = gv(icodev), gv(icodev), gv(icosm)))$
+$lv(devicopd, if(icopadr = 0, #devicosi), 0)$
+$lv(boxsize1, if(gv(wgtalign) = 0, gv(generate/lgboxw), gv(generate/lgboxh)))$
+
+$/* Subtract settings icons, unless they're hidden.
+Get final number: Icon size / Box - settings */$
+$lv(boxsize2, #boxsize1 - #devicopd)$
+$lv(count, #boxsize2 / #icon)$
+$/* mu(abs) removes decimal point. This causes the count to round up and formats it for use.*/$
+$if(#count <= 2, 2, tc(cut, mu(abs,#count), 1))$
+
+V1
+$/* Generate number of icons able to be shown
+Calculate icon sizes, devicopd and widget alignment */
+lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(lgbox, if(gv(wgtalign) = 0, gv(generate/lgboxw), gv(generate/lgboxh)))$
+
+$/* Subtract settings icons, unless they're gone.
+Get final number: Icon size / Box - settings */
+lv(adjustment, if(gv(icopadr) = 0, gv(icosm), 0))$
+$lv(boxsize, #lgbox - #adjustment)$
+$lv(count, #boxsize / #icon)$
+$if(#count <= 2, 2, tc(cut, mu(abs,#count), 1))$
+
+----------------------------------------
+
+generate/devicosize
+V2
+$lv(small, gv(iconpaddinginstack) + gv(appiconsize))$
+$lv(large, gv(deviceiconsize))$
+$lv(autoshr, (if(gv(generate/iconcount) < 4 & gv(deviceiconstyle) = 2, 1, 0)))$
+$lv(1row, (if(si(rheight) <= 150, 1, 0)))$
+$if(#autoshr = 1 | gv(deviceiconstyle) = 1 | #1row = 1, #small, #autoshr = 0 | gv(deviceiconstyle) = 0, #large)$
+
+V1
+$lv(small, gv(iconpaddinginstack) + gv(icosm))$
+$lv(large, gv(icodev))$
+$lv(autoshr, (if(gv(generate/icocount) < 4 & gv(icodevsm) = 2, 1, 0)))$
+$lv(1row, (if(si(rheight) <= 150, 1, 0)))$
+$if(#autoshr = 1 | gv(icodevsm) = 1 | #1row = 1, #small, #autoshr = 0 | gv(icodevsm) = 0, #large)$
+
+TO-DO
+- Add mini mode to code.
+- Make small box width the lgboxmin? Based on smboxper?
+    - Adjust lgboxmin code based on 0 (box gone), one icon or two (0, 1, 2) (no custom)
+    -
+-
