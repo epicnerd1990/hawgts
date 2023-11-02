@@ -71,7 +71,7 @@ Once you've got those applications set up, open them up and follow the intital s
 
 Next, you need to install [this]<TASKERNET> tasker plugin from TaskerNet. It includes some tasks from the official Tasker plugin by Joan, the KWGT plugin by *UNKNOWN* and some custom tasks used to format data between KWGT and Home Assistant better.
 
-When installing the plugin, you'll be asked *VERIFY* for your Home Assistant server information and API key. If you don't have a [Nabu Casa]<HAURL> account set up, which is used to give you a custom URL, you'll only be able to control data when on the same network as the server. In this case, you can provide your IP Address and Port (usually 8123). To get your API key, open Home Assistant and click on your user settings. At the bottom of the page is the option to generate a new long-lived access key.
+When installing the plugin, you'll be asked *VERIFY* for your Home Assistant server information and API key. If you don't have a [Nabu Casa]<HAURL> account set up, which is used to give you a custom URL, you'll only be able to control data when on the same network as the server. In this case, you can provide your IP Address and Port (usually 8123). To get your API key, open Home Assistant and click on your user settings. At the bottom of the page is the option to generated a new long-lived access key.
 
 Next, log into Home Assistant and install [this]<TASKERURL> blueprint into home assistant, following the instructions from the Tasker developer. Use the same info you used in the taskernet setup and add your devices local IP address or Nabu Casa account *VERIFY*
 
@@ -126,7 +126,7 @@ Global variable     |       Returns
 formulas/state              Device state
 formulas/lgtlevel           Light Brightness (out of 255)
 formulas/lgtcolor           Light Color
-generate/pagenum            Number of current page if using a "pages" template
+generated/pagenum            Number of current page if using a "pages" template
 
 
 
@@ -154,7 +154,7 @@ light.turn_on&{ "entity_id": "light.bedroom_lights", "brightness": 30 }
 
 ## Add more icons to rows in Device Control Widget
 Create a new Overlay Group and place it in the list where you'd like it. If this is the third (or higher) control in the row, you have to make sure the groups visibility is set to the following formula:
-```$if(gv(generate/icocount)  < #, REMOVE, ALWAYS)$```
+```$if(gv(generated/icocount)  < #, REMOVE, ALWAYS)$```
 Where # is the number of this icon lists in the order. This is used to hide the last icons first when the widget is sized smaller.
 
 Name your Overlay Group to your device name and place a control icon inside the group

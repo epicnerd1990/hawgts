@@ -2,7 +2,8 @@ $Saved code snippets$
 
 COLOR CONTROL AND CONFIGURATION
 
-V2 - COL 1 - ADD GLOBAL SETTINGS
+> Global generated/color1
+V2 - ADD GLOBAL SETTINGS
 $lv(source, (if(gv(colors/color1sel) = 0, "wpcolor1", gv(colors/color1sel) = 1, "wpcolor2", gv(colors/color1sel) = 2, "sys", "0")))$source: $#source$
 $lv(filter, (if(gv(colors/color1fil1) = 1, "sat", gv(colors/color1fil1) = 2, "lum", gv(colors/color1fil1) = 3, "comp", "sat")))$filter: $#filter$
 $lv(coltone, (if(gv(colors/color1sysc) = 0, "sysca1", gv(colors/color1sysc) = 1, "sysca2", gv(colors/color1sysc) = 2, "sysca3", gv(colors/color1sysc) = 3, "syscn1", gv(colors/color1sysc) = 4, "syscn2", gv(colors/color1sysc) = 5, "syscn3", "sysca1")))$color tone: $#coltone$
@@ -16,7 +17,8 @@ $lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #co
 $lv(final, ce(#color, alpha, gv(colors/color1alph)))$
 Final color: $#final$
 
-V2 - color2 - ADD GLOBAL SETTINGS
+> Global generated/color1
+V2 - ADD GLOBAL SETTINGS
 $lv(source, (if(gv(colors/color2sel) = 0, "wpcolor1", gv(colors/color2sel) = 1, "wpcolor2", gv(colors/color2sel) = 2, "sys", "0")))$
 $lv(filter, (if(gv(colors/color2fil1) = 1, "sat", gv(colors/color2fil1) = 2, "lum", gv(colors/color2fil1) = 3, "comp", "sat")))$
 $lv(coltone, (if(gv(colors/color2sysc) = 0, "sysca1", gv(colors/color2sysc) = 1, "sysca2", gv(colors/color2sysc) = 2, "sysca3", gv(colors/color2sysc) = 3, "syscn1", gv(colors/color2sysc) = 4, "syscn2", gv(colors/color2sysc) = 5, "syscn3", "sysca1")))$
@@ -37,42 +39,80 @@ LIGHT: $lv(col, ce(si(wpcolor1),lum,55))$$ce(#col,alpha,75)$
 
 ----------------------------------------------------------------------------------------------------
 
-AUTO-RESIZING DEVICE ICON (generate/devicosize)
+AUTO-RESIZING DEVICE ICON
+> Global generated/devicosize
 
 V3
 $lv(small, gv(iconpaddinginstack) + gv(appiconsize))$
 $lv(large, gv(deviceiconsize))$
-$lv(autosize, (if(gv(generate/iconcount) < 4 & gv(deviceiconstyle) = 2, 1, 0)))$
+$lv(autosize, (if(gv(generated/iconcount) < 4 & gv(deviceiconstyle) = 2, 1, 0)))$
 $lv(1row, (if(si(rheight) <= 150, 1, 0)))$
 $if(#autosize = 1 | gv(deviceiconstyle) = 1 | #1row = 1, #small, #autosize = 0 | gv(deviceiconstyle) = 0, #large)$
-
-
 
 V2 - ADD GLOBAL SETTINGS
 $lv(small, gv(iconpaddinginstack) + gv(icosm))$
 $lv(large, gv(icodev))$
-$lv(autosize, (if(gv(generate/icocount) < 4 & gv(icodevsm) = 2, 1, 0)))$
+$lv(autosize, (if(gv(generated/icocount) < 4 & gv(icodevsm) = 2, 1, 0)))$
 $if(#autosize = 1 | gv(icodevsm) = 1, #small, #autosize = 0 | gv(icodevsm) = 0, #large)$
 > to Device Icon
 
 V1 - BASIC RESIZE
 $lv(small, gv(iconpaddinginstack + gv(icosm))$
-$lv(auto, (if((gv(generate/icocount) < 4 | gv(icodevsm) > 0), #small)))$
+$lv(auto, (if((gv(generated/icocount) < 4 | gv(icodevsm) > 0), #small)))$
 $if(gv(icodevsm) = 0, gv(icodev), #auto)$
 
 
 ----------------------------------------------------------------------------------------------------
 
-generate/iconcount
-
+CURRENT VISIBLE ICON COUNT
+> Global generated/iconcount
 $lv(icon, gv(iconsize) + gv(iconpaddinginstack))$
 $lv(devicosi, if(gv(deviceiconstyle) = 1, gv(appiconsize), gv(deviceiconsize)))$
 $lv(padding, if(gv(deviceiconstyle) != 3, #devicosi), 0)$
-$lv(boxsize1, if(gv(advanced/widgetalign) = 0, gv(generate/box2width), gv(generate/box2height)))$
+$lv(boxsize1, if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height)))$
 $lv(boxsize2, #boxsize1 - #padding)$
 $lv(count, #boxsize2 / #icon)$
 $if(#count <= 2, 2, tc(cut, mu(abs,#count), 1))$
 
-$if(gv(box1size) = CUSTOM & gv(box1sizecustom) <= 20, \"ALWAYS\", gv(box1size) = 15, \"ALWAYS\", \"REMOVE\")$
+$if(gv(box1dir1) = CUSTOM & gv(box1dir1percent) <= 20, \"ALWAYS\", gv(box1dir1) = 15, \"ALWAYS\", \"REMOVE\")$
 
-$if(gv(advanced/box1position) = RIGHT, gv(iconpaddinginstack), gv(advanced/box1position) = LEFT, gv(iconpaddinginstack),  gv(advanced/box1position) = TOP, gv(iconpaddingstack),  gv(advanced/box1position) = BOTTOM, gv(iconpaddingstack))$",
+$if(gv(box1position) = RIGHT, gv(iconpaddinginstack), gv(box1position) = LEFT, gv(iconpaddinginstack),  gv(box1position) = TOP, gv(iconpaddingstack),  gv(box1position) = BOTTOM, gv(iconpaddingstack))$",
+
+----------------------------------------------------------------------------------------------------
+
+SHOW/HIDE TEMPLATE FOLDERS BASED ON GLOBAL SETTINGS
+
+> Global formulas/colcount
+$if(gv(box1dir1percent) >= 20, 2, gv(box1dir1percent) = 0, 0, 1)$
+
+
+> Samples
+$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 2, ALWAYS, REMOVE)$
+$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 2 & gv(devicecount) = 1, ALWAYS, REMOVE)$
+$if(gv(box1dir2) = 2 & gv(devicecount) = 3, ALWAYS, REMOVE)$
+$if(gv(box2align) = 1, CENTER, gv(formulas/boxalign))$
+
+$lv(source, (if(gv(colors/color1sel) = 0, "wpcolor1", gv(colors/color1sel) = 1, "wpcolor2", gv(colors/color1sel) = 2, "sys", "0")))$
+$lv(filter, (if(gv(colors/color1fil1) = 1, "sat", gv(colors/color1fil1) = 2, "lum", gv(colors/color1fil1) = 3, "comp", "sat")))$
+$lv(coltone, (if(gv(colors/color1sysc) = 0, "sysca1", gv(colors/color1sysc) = 1, "sysca2", gv(colors/color1sysc) = 2, "sysca3", gv(colors/color1sysc) = 3, "syscn1", gv(colors/color1sysc) = 4, "syscn2", gv(colors/color1sysc) = 5, "syscn3", "sysca1")))$
+$lv(addsub, (if(gv(colors/color1fil2) = 0, "", gv(colors/color1fil2) = 1, "a", gv(colors/color1fil2) = 2, "r", "")))$
+
+$if(gv(colors/color1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$
+$if(gv(colors/color1fil1) > 0 & #source = "sys", lv(color2, si(#coltone, gv(colors/color1adj))))$
+$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$
+
+$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$
+$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$$#final$
+
+$lv(source, (if(gv(colors/color1sel) = 0, "wpcolor1", gv(colors/color1sel) = 1, "wpcolor2", gv(colors/color1sel) = 2, "sys", "0")))$
+$lv(filter, (if(gv(colors/color1fil1) = 1, "sat", gv(colors/color1fil1) = 2, "lum", gv(colors/color1fil1) = 3, "comp", "sat")))$
+$lv(coltone, (if(gv(colors/color1sysc) = 0, "sysca1", gv(colors/color1sysc) = 1, "sysca2", gv(colors/color1sysc) = 2, "sysca3", gv(colors/color1sysc) = 3, "syscn1", gv(colors/color1sysc) = 4, "syscn2", gv(colors/color1sysc) = 5, "syscn3", "sysca1")))$
+$lv(addsub, (if(gv(colors/color1fil2) = 0, "", gv(colors/color1fil2) = 1, "a", gv(colors/color1fil2) = 2, "r", "")))$
+
+$if(gv(colors/color1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$
+$if(gv(colors/color1fil1) > 0 & #source = "sys", lv(color2, si(#coltone, gv(colors/color1adj))))$
+$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$
+
+$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$
+$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$
+$#final$

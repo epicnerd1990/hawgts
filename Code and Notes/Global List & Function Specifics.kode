@@ -1,7 +1,9 @@
 $Global List and function specifics$
 
+
+
 // readme
-Thanks for downloading HA Device Control Widget! Setup:\n
+\"Thanks for downloading HA Device Control Widget! Setup:\n
 1. Use following settings to configure the UI for the style you want\n
 2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\n
 Please note you'll need to have Tasker installed to facilitate communication to HA\n\n
@@ -10,7 +12,7 @@ The below global settings are to configure the interface, while HA communication
 Box 1 - Smaller box, usually containing main device controls like power\n
 Box 2 - Larger box, usually containing device controls such as volume or brightness\n\n
 
-Created by Corey Welsh to fill the need of universal Home Assistant Android widget"
+Created by Corey Welsh to fill the need of universal Home Assistant Android widget\"
 
 // deviceicontype
 0##Lights,
@@ -23,37 +25,51 @@ Created by Corey Welsh to fill the need of universal Home Assistant Android widg
 7##Appliances,
 8##Others
 
-
-// 1-device
-0##Mini - 1x2 Controls (1 Box),
-1##Mini - 2x2 Controls (1 Box),
-2##Small - 1x4+ Controls,
-3##Large - 2x8+ Controls
-
-// 2-device
-0##Mini - 1x2 Controls (1 Box),
-1##Small - 1x4+ Controls,
-2##Large - 2x4+ Controls,
-3##Large - 2x4-4+ Controls (2 boxes)
-4##
+// devicecount
+DATA##\"Select how many devices to control with this widget\",
+1##1 Device,
+2##2 Devices,
+3##3 Devices
 
 // deviceiconstyle
-DATA##Choose one of the options below. Auto-shrinking and Remove Padding will adjust the calculation that determines how many Icons can fit in Box 2,
+DATA##Select one of the options below. Auto-shrinking and Remove Padding will adjust the calculation that determines how many Icons can fit in Box 2,
 0##Regular (Set Below),
 1##Match App Icons,
 2##Regular - Auto-Shrink For Space,
 3##Regular - No Padding,
 4##Hidden
 
-// box1size
-DATA##\"Customize Box 1.\n\nChoose how many columns to display in Box 1, or \"Custom\" to enter the percentage of the widget that Box 1 fills (entered in the next list item).\"
+// box1dir1
+DATA##\"Customize Box 1.\n\nSelect how many columns to display in Box 1, or \"Custom\" to enter the percentage of the widget that Box 1 fills (entered in the next list item).\",
 0##Remove (Single Box Mode),
 1##1 Column (Auto-Center),
 2##2 Column (Auto-Center),
 3##Custom Size (Below)
 
 // box2align
-DATA##'Choose alignment of Box 2 content. Used for:\n- Templates without icons (like komponents)\n- Single box mode\n'
+DATA##\"Select alignment of Box 2 content. Use for:\n- Templates without icons (like komponents)\n- Single box mode\",
+0##Beside Box 1,
+1##Centered
+
+// box1dir2
+DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,
+1##1 Rows,
+2##2 Rows
 
 // setupnote
 -- \"Setup Mode\" Details:\n\nTurn this on to display alignment and configuration data live as you resize and setup your widget alignment.
+
+// alignoptionsnote
+-- OPEN - Alignment Options
+\"Advanced Options\n\nUse the following settings to manually set these \"Automatic\" widget functions\n\n- Auto-align - Disable and set alignment and box position manually.\n- Box 2 Alignment - Center icons in Box 2 instead of aligning to Box 1\"
+
+// paddingnote
+-- OPEN - Widget padding settings
+\"The following options work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"
+
+// colornote
+-- OPEN - Color Options
+Edit widget colors by following through this setup
+
+// appiconhide
+DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",1##Show App Icons,0##Hide App Icons

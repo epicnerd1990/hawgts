@@ -59,7 +59,7 @@ $if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/l
 V2
 LOW
 $lv(glbname, "light.bedroom_lights")$
-$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generate/colico), gv(formulas/lightlevel) = "", #00FFFFFF, #00FFFFFF)$
+$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generated/colico), gv(formulas/lightlevel) = "", #00FFFFFF, #00FFFFFF)$
 
 ----------------------------------------
 
@@ -68,28 +68,28 @@ WORKING UI CODE FOR STATUS ICONS (V3)
 OFF (CIRCLE COLOR)
 CURRENT
 $lv(glbname, "light.bedroom_lights")$
-$if(gv(formulas/devicestate) = off, gv(generate/colico), #00FFFFFF)$
+$if(gv(formulas/devicestate) = off, gv(generated/colico), #00FFFFFF)$
 EDIT
 $lv(glbname, "light.bedroom_lights")$
-$if(gv(formulas/devicestate) = off, gv(generate/colico), #00FFFFFF)$
+$if(gv(formulas/devicestate) = off, gv(generated/colico), #00FFFFFF)$
 
 LOW (CIRCLE COLOR)
 CURRENT
 $lv(glbname, "light.bedroom_lights")$
-$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generate/colico), gv(formulas/lightlevel) = "", #00FFFFFF, #00FFFFFF)$
-$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generate/colico), #00FFFFFF)$
+$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generated/colico), gv(formulas/lightlevel) = "", #00FFFFFF, #00FFFFFF)$
+$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generated/colico), #00FFFFFF)$
 EDIT
 $lv(glbname, "light.bedroom_lights")$
 $if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/lightlevel) <= 75, (if(gv(formulas/devicestate) = on, gv(colors/colico), #00FFFFFF)), #00FFFFFF)), #00FFFFFF)), #00FFFFFF)$
 
 $lv(glbname, \"light.bedroom_lights\")$
-$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generate/colico), gv(formulas/lightlevel) = \"\", #00FFFFFF, #00FFFFFF)$
-$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generate/colico), gv(formulas/lightlevel) = "", #00FFFFFF, #00FFFFFF)$
+$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generated/colico), gv(formulas/lightlevel) = \"\", #00FFFFFF, #00FFFFFF)$
+$if(gv(formulas/lightlevel) >= 1 & gv(formulas/lightlevel) <= 75, gv(generated/colico), gv(formulas/lightlevel) = "", #00FFFFFF, #00FFFFFF)$
 
 MED (CIRCLE COLOR)
 CURRENT
 $lv(glbname, "light.bedroom_lights")$
-$if(gv(formulas/lightlevel) >= 76 & gv(formulas/lightlevel) <= 200, gv(generate/colico), #00FFFFFF)$
+$if(gv(formulas/lightlevel) >= 76 & gv(formulas/lightlevel) <= 200, gv(generated/colico), #00FFFFFF)$
 EDIT
 $lv(glbname, "light.bedroom_lights")$
 $if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/lightlevel) <= 200, (if(gv(formulas/devicestate) = on, gv(colors/colico), #00FFFFFF)), #00FFFFFF)), #00FFFFFF)), #00FFFFFF)$
@@ -98,18 +98,18 @@ $if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/
 HIGH (CIRCLE COLOR)
 CURRENT
 $lv(glbname, "light.bedroom_lights")$
-$if(gv(formulas/lightlevel) >= 201, gv(generate/colico), #00FFFFFF)$
+$if(gv(formulas/lightlevel) >= 201, gv(generated/colico), #00FFFFFF)$
 EDIT
 $lv(glbname, "light.bedroom_lights")$
 $if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 201, (if(gv(formulas/devicestate) = on, gv(colors/colico), #00FFFFFF)), #00FFFFFF)), #00FFFFFF)$
 
 ROOM SELECT (CIRCLE COLOR)
 NEW
-$if(gv(generate/pagenum) = 1, gv(generate/colico), #00FFFFFF)$
+$if(gv(generated/pagenum) = 1, gv(generated/colico), #00FFFFFF)$
 ICON COLOR
-$if(gv(generate/pagenum) = 3, gv(generate/color1), gv(colors/colico))$
+$if(gv(generated/pagenum) = 3, gv(generated/color1), gv(colors/colico))$
 FILTER
-$if(gv(generate/pagenum) = 3, "MULTIPLY", "NORMAL")$
+$if(gv(generated/pagenum) = 3, "MULTIPLY", "NORMAL")$
 
 ----------------------------------------
 
@@ -118,7 +118,7 @@ $if(tc(reg, gv(tasker/statedat), #glbname, #glbname) != "",
 sh("echo '" + gv(tasker/statedat) + "' | tr ';;' '\n' | awk -F':' '/^" + #glbname + ":/ {print $3}' | grep -E '^[0-9]+$' || echo 0"))$
 
 $lv(glbname, \"light.bedroom_lights\")$
-$if(gv(formulas/lightlevel) = off, gv(generate/colico), #00FFFFFF)$"
+$if(gv(formulas/lightlevel) = off, gv(generated/colico), #00FFFFFF)$"
 
 SHELL TESTING
 $sh("echo '" + gv(tasker/statedat) + "' | tr ';;' '\n' | awk -F':' '/^" + #glbname + ":/ {print $3}'")$
