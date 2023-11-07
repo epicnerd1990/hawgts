@@ -5,52 +5,47 @@ DCW to-do lists, notes, ideas and more
 ## TO-DO Current
 
 ### Now
-- ~~Add code back to preset and debug new formulas~~
-- ~~Box restructuring based on flow chart~~
-- ~~`Fix generated/boxsize name`~~
-- ~~`Fix box1dir2 text (fixed in notes)`~~
-- ~~`Fix box2align note (fixed in notes)`~~
-- `Fix readme` **Potentially Fixed, check**
-- ~~`Reverse advanced/auto-align`~~
-- ~~`Fix "devicecount" notes to remove config selection`~~
-- ~~`"Select" > "Select", "Row" > "Rows', "2 Boxes" > "2 Boxes", "Device" > "Devices"`~~
-- ~~`Update notes with a 1st item to have a different value. Maybe "-- CLICK FOR SETUP NOTE --"?`~~
-- ~~`Add section after end of setup in globals for post-configuration`~~` - Move device icon click, app icons, etc`
-- ~~`Move 3 main folders to top top of globals`~~
-- ~~`Create global formulas for box 1 column and row alignments, padding, etc`~~
-- ~~`Remove "1-device" and "2-device" globals`~~
-- ~~`Rename box1dir2`~~
-- ~~`Move any global that a flow updates out of folders - Remove advanced folder?`~~ Check Color Flows in Editor
-- ~~`Rename Flows to be easily recognisable`~~
-- `Update "paddingnote" and "--5."`
-- `Change "widgetorder" to list`
-- `Change color flows back to proper values after test`
-- `Add check in every function that calls a List Global with a "DATA" value.`
-    - `Check will verify the Global is set correctly and not to "DATA"`
-    - `Use Global function with preset error message with global set from check`
-        - "Error: Global "#glbname" not set correctly"
+- Find way to reintroduce box2minsize check into box2width without loop
+- ~~devicosize does not get bigger inside box 1~~
+- ~~`Update "paddingnote" and "--5."`~~
+- ~~`Change "widgetorder" to list`~~
+- ~~`Rename devicopo to deviceiconposition`~~
+- ~~`Find out about box2min flow and merge into global`~~
+- ~~`Fix deviceiconposition and deviceiconrotation - Make quotes work`~~
+- ~~`Add check in every function that calls a List Global with a "DATA" value.`~~
+    - ~~`Check will verify the Global is set correctly and not to "DATA"`~~
+- ~~Update flow "AA Box 1 Position"~~
+- ~~`Write rotate code that matches icon rotation main`~~
+- ~~`Change deviceiconsize max to 450`~~
+- ~~`Change "Regular" > "Default"`~~
+- `Swap 1 and 0 in appiconhide`
+- ~~Check box1dir1percent - value is 282?`~~
+- ~~Device Icon rotation code~~
+    - ~~New list global in --2: deviceiconrotation~~
+        - ~~Rotate 90, 180, 270, Flip X/Y~~
+    - ~~`Remove all existing rotation code and set rotation offset default to 180 for all icons`~~
+        - ~~`Set Rotation to deviceiconrotation - Light "Lamp" as test`~~
 - ~~Change Notes in folders to be as minimal and basic as possible. Add/Remove as needed~~ Done up until each template folder
-- ~~Create "Enabled" and "Disabled" text objects for in boxes - based on Global settings~~
-- ~~Enable optional row padding to all elements (ex. light rm 1) + swap row and icon padding based on alignment~~
-- ~~Copy margin formula on light room 1 and enable on all other double rows~~
-- Investigate Box 2 size problems
+- ~~Alignment~~
+    - ~~Test widget in all directions~~
+    - ~~Test all directions widget moves in and verify all diretions work~~
+    - ~~Device Icons~~
+        - ~~Verify all and add rotation to flip objects~~
+        - ~~Check AC 2, Radiator and icons in different alignments~~
+- ~~Revamp entire Device Icon and settings icon Global system~~
+    - ~~Add Device Icon Position setting. 1 = Normal, 2 = Inside Box 1, 3 = Swap with settings icons~~
+    - ~~Recode globals~~
+    - ~~Code settings icons to move when swapped~~
+    - ~~Code Box 1 icons to remove when device icon is in box 1?~~
+    - ~~Rewrite box2min and iconcount in generate to allow for device icon movement~~
+    - ~~Test box2min and iconcount once back in editor~~
+- `Change color flows back to proper values after test`
 
 ### Working
-- Alignment (Use "flip" value for some icons where it works.)
-    - Test widget in all directions
-    - Test all directions widget moves in and verify all diretions work
-    - Device Icons
-        - Verify all and add rotation to flip objects
-        - Check AC 2, Radiator and icons in different alignments
-- ~~`Create "rratio" global that saves the rratio when the widget first opens, then all flows look to it for changes (compare to rratio). on change, do flows, then update global`~~
-- Restructure Boxes to flow chart
-    - ~~Create"box1dir2" global which is a row count~~
-        - ~~`Change row count checks to new global`~~
-        - ~~Use for visibility of new box organization~~
-    - ~~`Modify box globals to be more user-friendly and simple`~~
-- Try fixing loading problems with colors by writing colors from a flow to a global or from a global to another global to keep a fixed copy while the color gets regenerated <**TESTING NOW**>
-
-### Future
+- "Preset" folder where you can insert your HA information for preset templates
+    - Eg add "light.bedroom_lights" as room 1
+- **TESTING** Try fixing loading problems with colors by writing colors from a flow to a global or from a global to another global to keep a fixed copy while the color gets regenerated
+- If above test works, try setting "default" options to things like box size and icon alignment to avoid weird rendering issues while widget is loading changes
 - Templates
     - Finish "security" 2x2 and copy to 1x2 and 1x4
     - Copy lock 2x2 from sample and make 1x2
@@ -60,8 +55,12 @@ DCW to-do lists, notes, ideas and more
     - Create "Komponent" Templates for different modes
     - Check every template for blanks that work with respective layout
     - Switch all Box 1 > 2 Boxes templates to have columns instead of rows. Copy from Light template
-- "Preset" folder where you can insert your HA information for preset templates
-    - Eg add "light.bedroom_lights" as room 1
+- Setup Mode
+    - Set up "setupmode" text layout better and add a few different text options (sizing, json, etc)
+    - Group in overlay groups and use visibility to display each one
+    - Set up a note for visibility like the ones inside templates
+
+### Future
 - Work on README
     - Create second readme "Global Settings"
         - Go through all global settings item by item. Organize page to be accessible by tree (multiple depths?)
@@ -72,7 +71,10 @@ DCW to-do lists, notes, ideas and more
     - Possibly re-do based on UI types and Tasker setup interface/color picker
     - Make sure it works properly if not
 - Setup auto-hiding icons where needed (After templates are complete)
+- Set up new tasker pipeline for custom commands for advanced users ()
 
+### Version 2.0 features (tentative)
+- Make widget a Komponent that can be added to a KWLP wallpaper
 
 
 
@@ -85,7 +87,7 @@ DCW to-do lists, notes, ideas and more
 - Fix and set up favourite formulas in KWGT before starting Media Control Widget
 
 ### TASKER
-- Allow tasker and KWGT to process all data at once (losing some state updates)
+- Allow tasker and KWGT to process all data at once (losing some state updates maybe?)
 - Create user-friendly message when HA is unavaliable
     - Use new setup GUI
     - Or use status bar? KWGT code complete, send string to kwgt br: "error"
@@ -95,6 +97,7 @@ DCW to-do lists, notes, ideas and more
     - State not returned after change
     - JSON Error
     - Tasker Error
+- Set up and build Tasker plugin. Be sure to add setup features from JOAPPS tasker and potentially integreate KWGT setup into this?
 
 ### END OF PROJECT
 - Make more templates
@@ -114,16 +117,25 @@ DCW to-do lists, notes, ideas and more
     - Soundbar-mod
     - Projector Screen 
     - Lawn Mower
+    - Sprinklers
     - Solar Panels
+    - Radiant Heat
+    - Battery
+    - Alert
+    - Wind Power
 - Stick in the corner of the screen
     - Snowflake
     - Alert (x2?)
+- Flip
+    - Sprinkler
+    - Wind Power
 - Add chain to lock icon
 
 ### Rename
 - `All "ico" Icons to "dev"`
 - `Look into sort again and find way to group icons better`
-    - `"material" > "mdi" and append "-google"?`
+    - `"material" > "mdi" and append "-google"? or remove all prefix and append instead?`
+- Identify all icons modified to fit in the corner. ".corner.mdi"?
 
 ## Future Features/Addons
 - Integerate TV templates into widget once TV Remote is complete

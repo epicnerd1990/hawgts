@@ -1,12 +1,12 @@
 {
   "preset_info": {
     "version": 13,
-    "title": "Device Control Widget 0.5.1 Alpha",
+    "title": "Device Control Widget 0.5.25 Alpha",
     "description": "Home Assistant Device Control Widget",
     "author": "Corey Welsh",
     "email": "coreyw2000@gmail.com",
     "width": 1080,
-    "height": 321,
+    "height": 318,
     "features": "WEATHER DOWNLOAD SHELL",
     "release": 374328615,
     "locked": false,
@@ -57,7 +57,7 @@
         "max": 500,
         "value": 120.0,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, (#pad + gv(iconsize)),gv(box1dir1) = 2, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),gv(box1dir1) = 3, (gv(box1dir1percent) * 720 / 100))))$$lv(out, (if(#align = 1, gv(generated/widgetwidth), #size >= 0, #size)))$$#out$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, (#pad + gv(iconsize)),gv(box1dir1) = 2 | gv(box1dir1) = DATA, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),gv(box1dir1) = 3, (gv(box1dir1percent) * 720 / 100))))$$if(#align = 1, gv(generated/widgetwidth), #size >= 0, #size)$"
       },
       "generated/box1height": {
         "index": 5,
@@ -68,7 +68,7 @@
         "max": 500,
         "value": 120.0,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, (#pad + gv(iconsize)),gv(box1dir1) = 2, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),gv(box1dir1) = 3, (gv(box1dir1percent) * 720 / 100))))$$lv(out, (if(#align = 0, gv(generated/widgetheight), #size >= 1, #size)))$$#out$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, (#pad + gv(iconsize)),gv(box1dir1) = 2 | gv(box1dir1) = DATA, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),gv(box1dir1) = 3, (gv(box1dir1percent) * 720 / 100))))$$if(#align = 0, gv(generated/widgetheight), #size >= 1, #size)$"
       },
       "generated/box2width": {
         "index": 6,
@@ -78,7 +78,7 @@
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$if(gv(widgetorient) = 1 | gv(box1dir1) >= 1,gv(generated/widgetwidth),(if(gv(generated/widgetwidth) <= gv(generated/box2minsize),gv(generated/box2minsize),(gv(generated/widgetwidth) - gv(generated/box1width)))))$"
+        "global_formula": "$if(gv(widgetorient) = 1 | gv(box1dir1) = 0,gv(generated/widgetwidth),(gv(generated/widgetwidth) - gv(generated/box1width)))$"
       },
       "generated/box2height": {
         "index": 7,
@@ -96,7 +96,7 @@
         "title": "box2minsize",
         "description": "GENERATED - Minimum size of Box 2. Based on 2 icons and padding",
         "toggles": 10,
-        "global_formula": "250"
+        "global_formula": "$lv(devico, (if(gv(deviceiconposition) = 2 | gv(deviceiconposition) = 4 | gv(deviceappiconpadding) = 0, 0, gv(generated/devicosize))))$$((gv(iconsize) * 2) +(gv(iconpaddinginstack) * 2) +#devico +(gv(iconpaddingbox) * 2))$"
       },
       "generated/widgetratio": {
         "index": 9,
@@ -116,7 +116,7 @@
         "min": 0,
         "max": 10,
         "toggles": 10,
-        "global_formula": "$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$\n$lv(devicosi, if(gv(deviceiconstyle) = 1, gv(appiconsize), gv(deviceiconstyle) = 3, 0, gv(deviceiconsize)))$\n$lv(boxsize1, if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height)))$\n$lv(boxsize2, (#boxsize1 - #devicosi) / #icon)$\n$if(#boxsize2 <= 2, 2, (tc(cut, mu(abs,#boxsize2), 1)))$"
+        "global_formula": "$lv(boxsize1, (if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height))))$$lv(boxsize2, (#boxsize1 - gv(deviceiconsize)) / (gv(iconsize) + gv(iconpaddinginstack)))$\n$lv(boxsize3, (#boxsize1 - gv(appiconsize)) / (gv(iconsize) + gv(iconpaddinginstack)))$$lv(boxsize, (if(#boxsize2 < 4, #boxsize3, #boxsize2)))$\n$lv(icocount, if(#boxsize <= 2, 2, (tc(cut, mu(abs,#boxsize), 1))))$$#icocount$"
       },
       "generated/devicosize": {
         "index": 11,
@@ -126,14 +126,14 @@
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$lv(autoshr, (if(gv(generated/iconcount) < 4 & gv(deviceiconstyle) = 2, 1, 0)))$$if(#autoshr = 1 | gv(deviceiconstyle) = 1 | gv(box1dir2) = 1, (gv(iconpaddinginstack) + gv(appiconsize)), #autoshr = 0 | gv(deviceiconstyle) = 0, gv(deviceiconsize))$"
+        "global_formula": "$if(gv(deviceiconshrink) = 1 | gv(box1dir2) = 1, (gv(appiconsize) + gv(iconpaddinginstack)),gv(generated/iconcount) < 4 & gv(deviceiconshrink) = 2, (gv(appiconsize) + gv(iconpaddinginstack)),gv(deviceiconsize))$"
       },
       "generated/pagenum": {
         "index": 12,
         "type": "LIST",
         "title": "pagenum",
         "description": "GENERATED - Number of current page for paging templates",
-        "entries": "1##Page #1, 2##Page #2, 3##Page #3, 4##Page #4",
+        "entries": "1##Page #1,2##Page #2,3##Page #3,4##Page #4",
         "value": "1"
       },
       "generated/status": {
@@ -141,7 +141,7 @@
         "type": "TEXT",
         "title": "status",
         "description": "Live Status Update",
-        "value": "Error: Could not connect to Home Assistant"
+        "value": "$if(#status = \"#status\", \"\", gv(generated/statuslist, #status))$"
       },
       "generated/statusti": {
         "index": 14,
@@ -152,8 +152,16 @@
         "off_timer": 60,
         "value": 1
       },
-      "generated/color1": {
+      "generated/statuslist": {
         "index": 15,
+        "type": "LIST",
+        "title": "statuslist",
+        "description": "GENERATED - List of errors to output",
+        "entries": "0##\"\",1##\"ERROR - #global not set correctly\", 2##\"ERROR - #global not set correctly\", 3##\"ERROR - #global not set correctly\", 4##\"ERROR - #global not set correctly\"",
+        "value": "1"
+      },
+      "generated/color1": {
+        "index": 16,
         "type": "COLOR",
         "title": "color1",
         "description": "GENERATED - Background color generated from user settings for Box 1",
@@ -161,7 +169,7 @@
         "global_formula": "$lv(source, (if(gv(colors/color1sel) = 0, \"wpcolor1\", gv(colors/color1sel) = 1, \"wpcolor2\", gv(colors/color1sel) = 2, \"sys\", \"0\")))$$lv(filter, (if(gv(colors/color1fil1) = 1, \"sat\", gv(colors/color1fil1) = 2, \"lum\", gv(colors/color1fil1) = 3, \"comp\", \"sat\")))$$lv(coltone, (if(gv(colors/color1sysc) = 0, \"sysca1\", gv(colors/color1sysc) = 1, \"sysca2\", gv(colors/color1sysc) = 2, \"sysca3\", gv(colors/color1sysc) = 3, \"syscn1\", gv(colors/color1sysc) = 4, \"syscn2\", gv(colors/color1sysc) = 5, \"syscn3\", \"sysca1\")))$$lv(addsub, (if(gv(colors/color1fil2) = 0, \"\", gv(colors/color1fil2) = 1, \"a\", gv(colors/color1fil2) = 2, \"r\", \"\")))$$if(gv(colors/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$$if(gv(colors/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color1adj))))$$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$$#final$"
       },
       "generated/color2": {
-        "index": 16,
+        "index": 17,
         "type": "COLOR",
         "title": "color2",
         "description": "GENERATED - Background color generated from user settings for Box 2",
@@ -169,156 +177,156 @@
         "global_formula": "$lv(source, (if(gv(colors/color2sel) = 0, \"wpcolor1\", gv(colors/color2sel) = 1, \"wpcolor2\", gv(colors/color2sel) = 2, \"sys\", \"0\")))$$lv(filter, (if(gv(colors/color2fil1) = 1, \"sat\", gv(colors/color2fil1) = 2, \"lum\", gv(colors/color2fil1) = 3, \"comp\", \"sat\")))$$lv(coltone, (if(gv(colors/color2sysc) = 0, \"sysca1\", gv(colors/color2sysc) = 1, \"sysca2\", gv(colors/color2sysc) = 2, \"sysca3\", gv(colors/color2sysc) = 3, \"syscn1\", gv(colors/color2sysc) = 4, \"syscn2\", gv(colors/color2sysc) = 5, \"syscn3\", \"sysca1\")))$$lv(addsub, (if(gv(colors/color2fil2) = 0, \"\", gv(colors/color2fil2) = 1, \"a\", gv(colors/color2fil2) = 2, \"r\", \"\")))$$if(gv(colors/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color2adj))))$$if(gv(colors/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color2adj))))$$if(gv(colors/color2fil1) = 0 | gv(colors/color2sel) = 3, lv(col3, gv(colors/color2pick)))$$lv(color, (if(gv(colors/color2sel) <= 1, #color1, gv(colors/color2sel) = 2, #color2, gv(colors/color2sel) = 3, #col3)))$$lv(final, ce(#color, alpha, mu(round, gv(colors/color2alph), 0)))$$#final$"
       },
       "tasker": {
-        "index": 17,
+        "index": 18,
         "type": "FOLDER",
         "title": "tasker",
         "description": "LOCKED - Tasker Globals"
       },
       "tasker/data": {
-        "index": 18,
+        "index": 19,
         "type": "LIST",
         "title": "DATA",
         "entries": "-- Live data - Do not edit!",
         "value": "-- Date sent and received from Tasker & HA"
       },
       "tasker/totasker": {
-        "index": 19,
+        "index": 20,
         "type": "TEXT",
         "title": "totasker",
         "description": "TASKER - Device control data to send to tasker from button click",
-        "value": "light&light.study_lights&brightness:30"
+        "value": "light&light.bedroom_lights&brightness:255"
       },
       "tasker/fromtasker": {
-        "index": 20,
+        "index": 21,
         "type": "TEXT",
         "title": "fromtasker",
         "description": "State information sent from tasker to apply to \"tasker/statedat\". Only entitites listed in HA Tasker blueprint are sent.",
         "value": "$br(tasker, states)$"
       },
       "tasker/fromcolorpic": {
-        "index": 21,
+        "index": 22,
         "type": "TEXT",
         "title": "fromcolorpic",
         "description": "Return from tasker Color Picker",
         "value": "$br(tasker, fromcolorpic)$"
       },
       "formulas": {
-        "index": 22,
+        "index": 23,
         "type": "FOLDER",
         "title": "formulas",
         "description": "LOCKED - Global Formulas"
       },
       "formulas/devicestate": {
-        "index": 23,
+        "index": 24,
         "type": "TEXT",
         "title": "devicestate",
         "description": "FORMULA - Code used to determine device state",
         "value": "  $if(\n    tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n      tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].state\")\n  )$"
       },
       "formulas/lightlevel": {
-        "index": 24,
+        "index": 25,
         "type": "TEXT",
         "title": "lightlevel",
         "description": "FORMULA - Code used to determine light brightness level",
         "value": "$if(\n  tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n    tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].brightness\")\n)$"
       },
       "formulas/lightcolor": {
-        "index": 25,
+        "index": 26,
         "type": "TEXT",
         "title": "lightcolor",
         "description": "FORMULA - Code used to determine light color",
         "value": "$if(\n  tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n    tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].color\")\n)$"
       },
       "formulas/jsonrementity": {
-        "index": 26,
+        "index": 27,
         "type": "TEXT",
         "title": "jsonrementity",
         "description": "Remove specified entity from JSON",
         "value": "$tc(reg, \n  #datawipe \n  (\"\\{\\\" + tc(utf, 22) + \"entity_id\" + \"\\\" + tc(utf, 22) + \":\\\" + tc(utf, 22) + \n  #entity + \"\\\" + tc(utf, 22) + \".*?\\},\"), \n  \"\"\n)$"
       },
       "formulas/jsonaddentity": {
-        "index": 27,
+        "index": 28,
         "type": "TEXT",
         "title": "jsonaddentity",
         "description": "Add new entry to JSON",
         "value": "$tc(reg, #jsonrem, \"\\},\\]\\}\", (\"\\},\" + #jsonwipe + \"\\]\\}\"))$"
       },
       "formulas/jsonaddnewline": {
-        "index": 28,
+        "index": 29,
         "type": "TEXT",
         "title": "jsonaddnewline",
         "description": "Add new lines and in-line spaces to JSON to make it human-readable",
         "value": "$tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, #jsonout, \"\\},\", \"\\},\" + tc(utf, 0A)), \":\", \": \"), \"\\\" + tc(utf, 22) + \",\", \"\\\" + tc(utf, 22) + \",\" + tc(utf, 0A)), \"\\{\", \"\\{\" + tc(utf, 0A)), \"\\}\", tc(utf, 0A) + \"\\}\"), \"\\[\", \"\\[\" + tc(utf, 0A)), \"\\\" + tc(utf, 22) + \"device_states\\\" + tc(utf, 22) + \".*\", \"$0\"), \"\\]\", \"  ]\")$"
       },
       "formulas/jsonaddindents": {
-        "index": 29,
+        "index": 30,
         "type": "TEXT",
         "title": "jsonaddindents",
         "description": "Add corret indentation inside the JSON array to make it human-readable",
         "value": "$tc(reg, tc(reg, #jsonline, (\"(?<=\\[)[^\\[\\]]*(?=\\])\"), tc(utf, 0A) + \"    \" + #jarredit + tc(utf, 0A) + \"  \"), (\"(?<!\\[)(?<=\\n|^)\\s*(\" + tc(utf, 22) + \".*)\"), \"  $0\")$"
       },
       "formulas/stackalign": {
-        "index": 30,
+        "index": 31,
         "type": "TEXT",
         "title": "stackalign",
         "description": "FORMULA - Box 2 stack group - icon positioning (if not centered)",
         "value": "$if(gv(box1position) = RIGHT, VERTICAL_RIGHT, gv(box1position) = LEFT, VERTICAL_LEFT,  gv(box1position) = TOP, HORIZONTAL_TOP,  gv(box1position) = BOTTOM, HORIZONTAL_BOTTOM)$"
       },
       "formulas/boxalign": {
-        "index": 31,
+        "index": 32,
         "type": "TEXT",
         "title": "boxalign",
         "description": "FORMULA - Box 1 Positioning",
         "value": "$if(gv(box1position) = RIGHT, CENTERRIGHT, gv(box1position) = LEFT, CENTERLEFT,  gv(box1position) = TOP, TOP,  gv(box1position) = BOTTOM, BOTTOM)$"
       },
       "formulas/boxsize": {
-        "index": 32,
+        "index": 33,
         "type": "TEXT",
         "title": "boxsize",
         "description": "FORMULA - Box Size",
         "value": "$lv(align, gv(widgetorient))$$lv(row, gv(box1dir2))$$lv(wgtdir, if(#align = 0, gv(generated/widgetheight), gv(generated/widgetwidth)))$$lv(pad, (#wgtdir - (if(#row = 1, gv(iconsize), #row = 2, ((gv(iconsize) * 2) + gv(iconpaddingstack))))))$"
       },
       "formulas/colcount": {
-        "index": 33,
+        "index": 34,
         "type": "TEXT",
         "title": "colcount",
         "value": "$if(gv(box1dir1percent) >= 20, 2, gv(box1dir1percent) = 0, 0, 1)$"
       },
       "readme": {
-        "index": 34,
+        "index": 35,
         "type": "LIST",
         "title": "README",
         "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
         "value": "OPEN - Readme"
       },
       "setupmode": {
-        "index": 35,
+        "index": 36,
         "type": "SWITCH",
         "title": "setupmode",
         "description": "MOVE TO BOTTOM - Enable showing setup data",
         "value": 0
       },
       "jsondb": {
-        "index": 36,
+        "index": 37,
         "type": "TEXT",
         "title": "jsondb",
-        "value": "\n\n\n\n\n\n\n\n\n\n{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,0,0\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"31\",\n      \"color\": \"255,103,17\"\n    },\n    {\n      \"entity_id\": \"sensor.watch_battery_level\",\n      \"state\": \"87\"\n    },\n    {\n      \"entity_id\": \"sensor.remotephone_battery_level\",\n      \"state\": \"100\"\n    },\n    {\n      \"entity_id\": \"sensor.s23_ultra_battery_level\",\n      \"state\": \"50\"\n    },\n  ]\n}"
+        "value": "\n\n\n\n\n\n\n\n\n\n{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"255\",\n      \"color\": \"255,103,17\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"128\",\n      \"color\": \"255,0,0\"\n    },\n    {\n      \"entity_id\": \"sensor.watch_battery_level\",\n      \"state\": \"27\"\n    },\n    {\n      \"entity_id\": \"sensor.remotephone_battery_level\",\n      \"state\": \"100\"\n    },\n    {\n      \"entity_id\": \"sensor.s23_ultra_battery_level\",\n      \"state\": \"15\"\n    },\n  ]\n}"
       },
       "colors": {
-        "index": 37,
+        "index": 38,
         "type": "FOLDER",
         "title": "-- 1.",
         "description": "-- Select your Widget colors"
       },
       "colors/colornote": {
-        "index": 38,
+        "index": 39,
         "type": "LIST",
         "title": "COLORNOTE",
         "value": "-- OPEN - Color Options",
         "entries": "Edit widget colors by following through this setup. See Readme for details."
       },
       "colors/color1sel": {
-        "index": 39,
+        "index": 40,
         "type": "LIST",
         "title": "color1sel",
         "description": "Color 1 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -326,7 +334,7 @@
         "value": "0"
       },
       "colors/color1sysc": {
-        "index": 40,
+        "index": 41,
         "type": "LIST",
         "title": "color1sysc",
         "description": "Color 1 - System/MaterialYou Only\nSelect a color tone.",
@@ -334,7 +342,7 @@
         "value": "2"
       },
       "colors/color1fil1": {
-        "index": 41,
+        "index": 42,
         "type": "LIST",
         "title": "color1fil1",
         "description": "Color 1 - Wallpaper Only\nSelect filter.",
@@ -342,7 +350,7 @@
         "value": "2"
       },
       "colors/color1adj": {
-        "index": 42,
+        "index": 43,
         "type": "NUMBER",
         "title": "color1adj",
         "description": "Color 1 - Filter adjustment\n0 = None, 100 = Strong",
@@ -351,7 +359,7 @@
         "value": 40.0
       },
       "colors/color1fil2": {
-        "index": 43,
+        "index": 44,
         "type": "LIST",
         "title": "color1fil2",
         "description": "Color 1 - Select filter manipulation - Changes slider above from total into add/subtract from current (optional)",
@@ -359,14 +367,14 @@
         "value": "0"
       },
       "colors/color1pick": {
-        "index": 44,
+        "index": 45,
         "type": "COLOR",
         "title": "color1pick",
         "description": "Color 1 - Manual Color choice, overrides filter\nAlso used as fallback color for extracted colors",
         "value": "#FFFFFFFF"
       },
       "colors/color1alph": {
-        "index": 45,
+        "index": 46,
         "type": "NUMBER",
         "title": "color1alph",
         "description": "Color 1 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -375,7 +383,7 @@
         "value": 75.0
       },
       "colors/color2sel": {
-        "index": 46,
+        "index": 47,
         "type": "LIST",
         "title": "color2sel",
         "description": "Color 2 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -383,7 +391,7 @@
         "value": "0"
       },
       "colors/color2sysc": {
-        "index": 47,
+        "index": 48,
         "type": "LIST",
         "title": "color2sysc",
         "description": "Color 2 - System/MaterialYou Only\nSelect a color tone",
@@ -391,7 +399,7 @@
         "value": "0"
       },
       "colors/color2fil1": {
-        "index": 48,
+        "index": 49,
         "type": "LIST",
         "title": "color2fil1",
         "description": "Color 2 - Wallpaper Only\nSelect filter.",
@@ -399,7 +407,7 @@
         "value": "2"
       },
       "colors/color2adj": {
-        "index": 49,
+        "index": 50,
         "type": "NUMBER",
         "title": "color2adj",
         "description": "Color 2 - Filter adjustment\n0 = None, 100 = Strong",
@@ -408,7 +416,7 @@
         "value": 55.0
       },
       "colors/color2fil2": {
-        "index": 50,
+        "index": 51,
         "type": "LIST",
         "title": "color2fil2",
         "description": "Color 2 - Select filter manipulation - Changes number above from total into add/subtract from current (optional)",
@@ -416,14 +424,14 @@
         "value": "0"
       },
       "colors/color2pick": {
-        "index": 51,
+        "index": 52,
         "type": "COLOR",
         "title": "color2pick",
         "description": "Color 2 - Manual Color choice, overrides filter.\nAlso used as fallback color for extracted colors",
         "value": "#E7FFFFFF"
       },
       "colors/color2alph": {
-        "index": 52,
+        "index": 53,
         "type": "NUMBER",
         "title": "color2alph",
         "description": "Color 2 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -432,14 +440,14 @@
         "value": 75.0
       },
       "colors/colico": {
-        "index": 53,
+        "index": 54,
         "type": "COLOR",
         "title": "colico",
         "description": "Color of icons and text. Default: #E7FFFFFF",
         "value": "#E7FFFFFF"
       },
       "colors/colicoon": {
-        "index": 54,
+        "index": 55,
         "type": "COLOR",
         "title": "colicoon",
         "description": "Color of icons and text when device is on",
@@ -448,7 +456,7 @@
         "global_formula": "$ce(si(wpcolor1, comp), sat, 60)$"
       },
       "colors/color2fin": {
-        "index": 55,
+        "index": 56,
         "type": "COLOR",
         "title": "color2fin",
         "description": "Final output of color in Hex ARGB form",
@@ -456,20 +464,20 @@
         "value": "#BF007D8C"
       },
       "colors/color1fin": {
-        "index": 56,
+        "index": 57,
         "type": "COLOR",
         "title": "color1fin",
         "value": "#BF005B66"
       },
       "-- 2.": {
-        "index": 57,
+        "index": 58,
         "type": "LIST",
         "title": "-- 2.",
         "entries": "-- Widget Style and Type",
         "value": "-- Widget Style and Type"
       },
       "devicecount": {
-        "index": 58,
+        "index": 59,
         "type": "LIST",
         "title": "devicecount",
         "description": "Select how many devices you'd like to control with this Widget",
@@ -477,7 +485,7 @@
         "value": "3"
       },
       "box1dir1": {
-        "index": 59,
+        "index": 60,
         "type": "LIST",
         "title": "box1dir1",
         "description": "Configure the size of Box 1",
@@ -485,16 +493,16 @@
         "value": "2"
       },
       "box1dir1percent": {
-        "index": 60,
+        "index": 61,
         "type": "NUMBER",
         "title": "box1dir1percent",
         "description": "Set if you selected \"Custom\" above",
-        "value": "28.75",
+        "value": 27.778,
         "min": 0,
         "max": 100
       },
       "box1dir2": {
-        "index": 61,
+        "index": 62,
         "type": "LIST",
         "title": "box1dir2",
         "description": "Select how many Rows to display (or columns if widget is vertical)",
@@ -502,55 +510,62 @@
         "entries": "DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,1##1 Rows,2##2 Rows"
       },
       "boxorder": {
-        "index": 62,
+        "index": 63,
         "type": "LIST",
         "title": "boxorder",
         "description": "Set the order of the boxes on your widget",
         "entries": "DATA##\"Set the order of the boxes on your widget.\nSave the widget for changes to take effect\",1##Box 1 > Box 2,0##Box 2 > Box 1",
-        "value": "0"
+        "value": "1"
       },
       "appiconhide": {
-        "index": 63,
+        "index": 64,
         "type": "LIST",
         "title": "appiconhide",
         "description": "Hide the App Icons",
         "entries": "DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",1##Show App Icons,0##Hide App Icons",
-        "value": 1
+        "value": "0"
       },
       "deviceicontype": {
-        "index": 64,
+        "index": 65,
         "type": "LIST",
         "title": "deviceicontype",
         "description": "Select the device icon to display in the corner of the widget or hide it in the next option",
         "entries": "DATA##Select the device icon for the device you want to control,0##Lighting,1##Climate Control,2##Television,3##Audio,4##Security and Locks,5##Charging and Battery,6##Remote control,7##Appliances,8##Others",
         "value": "0"
       },
-      "deviceiconstyle": {
-        "index": 65,
-        "type": "LIST",
-        "title": "deviceiconstyle",
-        "description": "Configure the device icon.\nDefault: Auto-Shrink",
-        "entries": "DATA##Select one of the options below. Auto-shrinking and Remove Padding will adjust the calculation that determines how many Icons can fit in Box 2,0##Regular (Set Below),1##Match App Icons,2##Regular - Auto-Shrink For Space,3##Regular - No Padding,4##Hidden",
-        "value": "2"
-      },
-      "-- 3.": {
+      "deviceiconposition": {
         "index": 66,
         "type": "LIST",
+        "title": "deviceiconposition",
+        "entries": "DATA##\"Select the location of the Device Icon on your Widget\",1##Default Location,2##Inside Box 1 (for templates not using Box 1),3##Swap with settings icons,4##Hidden",
+        "value": "1"
+      },
+      "deviceiconrotation": {
+        "index": 67,
+        "type": "LIST",
+        "title": "deviceiconrotation",
+        "entries": "DATA##\"Select the rotation of the Device Icon on your Widget\",NONE##0 Degrees,DEG90##90 Degrees,DEG180##180 Degrees,DEG270##180 Degrees,FLIP_X##Flip Vertically,FLIP_Y##Flip Horizontally",
+        "value": "FLIP_Y"
+      },
+      "-- 3.": {
+        "index": 68,
+        "type": "LIST",
         "title": "-- 3.",
-        "entries": "-- Icon Sizing and Alignment",
-        "value": "-- Icon Sizing and Alignment"
+        "entries": "-- Modify UI Elements",
+        "value": "-- Modify UI Elements"
       },
       "deviceiconsize": {
-        "index": 67,
+        "index": 69,
         "type": "NUMBER",
         "title": "deviceiconsize",
-        "description": "Set the size of the Device Icon (if not shrunk above)\nDefault: 120kpx",
+        "description": "Set the normal (default) size of the Device Icon. Auto-shrinking options avaliable below.\nDefault: 120kpx",
+        "global_formula": "120",
+        "value": 120.0,
         "min": 0,
-        "max": 120,
-        "value": 120.0
+        "max": 450
       },
       "iconsize": {
-        "index": 68,
+        "index": 70,
         "type": "NUMBER",
         "title": "iconsize",
         "description": "Set the size of the widget icons.\nDefault: 80kpx",
@@ -559,7 +574,7 @@
         "value": 80.0
       },
       "appiconsize": {
-        "index": 69,
+        "index": 71,
         "type": "NUMBER",
         "title": "appiconsize",
         "description": "Set the size of the small app-launcher icon(s).\nDefault: 32kpx",
@@ -568,7 +583,7 @@
         "value": 32.0
       },
       "cornerradius": {
-        "index": 70,
+        "index": 72,
         "type": "NUMBER",
         "title": "cornerradius",
         "description": "Set the radius of the rounded corners.\nDefault: 10kpx",
@@ -577,14 +592,14 @@
         "value": 10.0
       },
       "-- 4.": {
-        "index": 71,
+        "index": 73,
         "type": "LIST",
         "title": "-- 4.",
         "entries": "-- Padding and Spacing",
         "value": "-- Padding and Spacing"
       },
       "iconpaddinginstack": {
-        "index": 72,
+        "index": 74,
         "type": "NUMBER",
         "title": "iconpaddinginstack",
         "description": "Set the icon padding inside each row/column. Default: 20kpx",
@@ -593,7 +608,7 @@
         "value": 10.0
       },
       "iconpaddingstack": {
-        "index": 73,
+        "index": 75,
         "type": "NUMBER",
         "title": "iconpaddingstack",
         "description": "Set the icon padding between each row/column. Default: 20kpx",
@@ -602,32 +617,32 @@
         "value": 10.0
       },
       "iconpaddingbox": {
-        "index": 74,
+        "index": 76,
         "type": "NUMBER",
         "title": "iconpaddingbox",
         "description": "Set the icon padding from the edge of Box 2. Default: 10kpx",
         "min": 0,
         "max": 50,
-        "value": "16"
+        "value": "\n\n\n\n\n\n15"
       },
       "paddingnote": {
-        "index": 75,
+        "index": 77,
         "type": "LIST",
         "title": "PADDINGNOTE",
-        "entries": "\"-- The following options configure the padding from the Box edge to the edge of the widget. They work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"",
+        "entries": "\"The following options work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"",
         "value": "-- OPEN - Widget padding settings"
       },
       "verticalpadding": {
-        "index": 76,
+        "index": 78,
         "type": "NUMBER",
         "title": "verticalpadding",
         "description": "Select the Vertical widget padding size\nDefault: 6kpx",
-        "value": 3.0,
+        "value": 6.0,
         "min": 0,
         "max": 50
       },
       "horizontalpadding": {
-        "index": 77,
+        "index": 79,
         "type": "NUMBER",
         "title": "horizontalpadding",
         "description": "Select the Horizontal widget padding size\nDefault: 3kpx",
@@ -636,22 +651,22 @@
         "max": 50
       },
       "-- 5.": {
-        "index": 78,
+        "index": 80,
         "type": "LIST",
         "title": "-- 5.",
         "description": "",
-        "entries": "\"Extra Options\n\nUse the following settings to manually set these \"Automatic\" widget functions\n\n- Auto-align - Disable and set alignment and box position manually.\n- Box 2 Alignment - Center icons in Box 2 instead of aligning to Box 1\n- Remove Device Icon touch event\"",
+        "entries": "\"Extra Options\n\nUse the following settings to adjust \"Automatic\" widget functions\n\n- Auto-align - Disable and set alignment and box position manually. Use the follow two settings to manually set alignment\n- Box 2 Alignment - Center icons in Box 2 instead of aligning to Box 1\n- Device Icon Shrinking options\n- Remove Device Icon from padding and sizing calculations\n- Remove Device Icon touch to open editor\"",
         "value": "-- OPEN - Extra Options"
       },
       "autoalign": {
-        "index": 79,
+        "index": 81,
         "type": "SWITCH",
         "title": "autoalign",
         "description": "Auto-align On/Off. Use next 2 options to manually set alignment",
         "value": 1
       },
       "widgetorient": {
-        "index": 80,
+        "index": 82,
         "type": "SWITCH",
         "title": "widgetorient",
         "description": "Set horizontal or vertical orientation of widget. 0 = Horizontal, 1 = Vertical",
@@ -662,45 +677,67 @@
         "value": 0
       },
       "box1position": {
-        "index": 81,
+        "index": 83,
         "type": "LIST",
         "title": "box1position",
         "description": "Set position of Box 1",
         "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout",
-        "value": "LEFT"
+        "value": "BOTTOM"
       },
       "box2align": {
-        "index": 82,
+        "index": 84,
         "type": "LIST",
         "title": "box2align",
         "description": "Select alignment of Box 2 content",
         "entries": "DATA##\"Select alignment of Box 2 content. Use for:\n- Templates without icons (like komponents)\n- Single box mode\",0##Beside Box 1,1##Centered",
         "value": "0"
       },
-      "openeditor": {
-        "index": 83,
+      "deviceiconshrink": {
+        "index": 85,
+        "type": "LIST",
+        "title": "deviceiconshrink",
+        "description": "Select Shrinking options for the Device Icon.\nDefault: Auto-Shrink",
+        "value": "2",
+        "entries": "DATA##\"Select Shrinking options for the Device Icon. Shrinking will allow more space for icons to fit. You can also remove the space that Device icon takes up on the widget to allow the icon to stay while making more room for icons\",0##Default size,2##Default Size & Auto-Shrink For Space,1##Manually Shrink For Space"
+      },
+      "deviceappiconpadding": {
+        "index": 86,
         "type": "SWITCH",
-        "title": "openeditor",
+        "title": "deviceappiconpadding",
+        "description": "Use padding of Device/App icons from Box 2 in \"Icon Count\" calculation. Disable to allow more icons to fit in Box 2. Overlap may occur",
+        "value": 1
+      },
+      "deviceopeneditor": {
+        "index": 87,
+        "type": "SWITCH",
+        "title": "deviceopeneditor",
         "description": "Enable device icon click to open KWGT Editor. Diable once widget is set up",
         "value": 1
       },
       "tc1": {
-        "index": 84,
+        "index": 88,
         "type": "COLOR",
         "title": "tc1",
         "value": "\n\n\n\n\n\n\n\n\n\n\n#BF005B66"
       },
       "tc2": {
-        "index": 85,
+        "index": 89,
         "type": "COLOR",
         "title": "tc2",
         "value": "\n\n\n\n\n\n\n\n\n\n\n\n#BF007D8C"
+      },
+      "appiconh": {
+        "index": 90,
+        "type": "LIST",
+        "title": "appiconh",
+        "description": "Hide the App Icons",
+        "entries": "DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",0##Show App Icons,1##Hide App Icons"
       }
     },
     "internal_flows": [
       {
         "id": "FOol7HW0",
-        "name": "AA Align Widget",
+        "name": "*AA Widget Ratio",
         "t": [
           {
             "id": "TTQUg99e",
@@ -752,7 +789,7 @@
             "id": "TAKkmw2V",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(current, gv(box1position))$$lv(horver, (if(gv(widgetorient) = 0, \"hor\", \"ver\")))$$lv(inverted, (if(gv(boxorder) = 0, \"no\", \"yes\")))$$lv(pos, (if(#horver = \"hor\" & #inverted = \"no\", \"RIGHT\", #horver = \"hor\" & #inverted = \"yes\", \"LEFT\", #horver = \"ver\" & #inverted = \"no\", \"TOP\", #horver = \"ver\" & #inverted = \"yes\", \"BOTTOM\")))$$if(gv(autoalign) = 1, #pos, current)$"
+              "formula": "$lv(align, gv(widgetorient))$$lv(invert, gv(boxorder))$$lv(pos, (if(#align = 0 & #invert = 0, \"RIGHT\",#align = 0 & #invert = 1, \"LEFT\",#align = 1 & #invert = 0, \"TOP\",#align = 1 & #invert = 1, \"BOTTOM\")))$$if(gv(autoalign) = 1, #pos, gv(box1position))$"
             }
           },
           {
@@ -913,7 +950,7 @@
             "id": "TAm4ULru",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir1) = 1 | gv(box1dir1) = 2, (#pad / 2))))$$lv(out, if(#size >= 0, #size))$$#out$"
+              "formula": "$lv(align, gv(widgetorient))$\n$lv(row, gv(box1dir2))$\n$lv(wgtdir, if(#align = 0, gv(generated/widgetheight), gv(generated/widgetwidth)))$\n$lv(pad, (#wgtdir - (if(#row = 1, gv(iconsize), #row = 2, ((gv(iconsize) * 2) + gv(iconpaddingstack))))))$\n$gv(formulas/boxsize)$\n$lv(size, (if(gv(box1dir1) = 1 | gv(box1dir1) = 2 | gv(box1dir1) = DATA, (#pad / 2), 0)))$\n$lv(out, if(#size >= 1 & #size <= 40, #size, 0))$$#out$"
             }
           },
           {
@@ -946,7 +983,7 @@
             "id": "TAdp5TwR",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(formulas/boxsize)$$lv(tempsize, gv(box1dir1percent))$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, ((#pad + gv(iconsize)) * 100 / 720),gv(box1dir1) = 2, ((#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)) * 100 / 720),#tempsize)))$$lv(out, (if(#align = 1, gv(generated/widgetwidth), #size >= 0, #size, 0)))$$#out$"
+              "formula": "$gv(formulas/boxsize)$$lv(tempsize, gv(box1dir1percent))$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, ((#pad + gv(iconsize)) * 100 / 720),gv(box1dir1) = 2 | gv(box1dir1) = DATA, ((#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)) * 100 / 720),#tempsize)))$$if(#align = 1, gv(generated/widgetwidth), #size >= 0, #size, 0)$"
             }
           },
           {
@@ -1004,42 +1041,9 @@
             }
           }
         ]
-      },
-      {
-        "id": "F93VJcV3",
-        "name": "Box 2 Minimum Size",
-        "t": [
-          {
-            "id": "TTk5Akiw",
-            "type": "T_MANUAL"
-          },
-          {
-            "id": "TTrz2XPW",
-            "type": "T_FORMULA",
-            "params": {
-              "formula": "$gv(devicosize)$$gv(appicosize)$$gv(iconsize)$$gv(iconpaddinginstack)$$gv(iconpaddingbox)$"
-            }
-          }
-        ],
-        "a": [
-          {
-            "id": "TAgjvcSZ",
-            "type": "A_FORMULA",
-            "params": {
-              "formula": "$lv(devicosi, (if(gv(devicosize) = gv(deviceiconsize), gv(deviceiconsize), gv(appiconsize))))$$lv(devicopd, (if(gv(deviceiconstyle) != 3, #devicosi, 0)))$$((gv(iconsize) * 2) + (gv(iconpaddinginstack) * 2) + #devicopd + gv(iconpaddingbox))$"
-            }
-          },
-          {
-            "id": "TAbKN4EZ",
-            "type": "A_GLOBAL",
-            "params": {
-              "global": "box2minsize"
-            }
-          }
-        ]
       }
     ],
-    "config_scale_value": 104.046234,
+    "config_scale_value": 99.06542,
     "viewgroup_items": [
       {
         "internal_type": "OverlapLayerModule",
@@ -1052,8 +1056,8 @@
         },
         "internal_formulas": {
           "position_anchor": "$gv(formulas/boxalign)$",
-          "position_offset_x": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
-          "position_offset_y": "$if(gv(widgetorient) = 0, 0, gv(horizontalpadding))$",
+          "position_offset_x": "$if(gv(widgetorient) = 0, gv(horizontalpadding), 0 )$",
+          "position_offset_y": "$if(gv(widgetorient) = 0, 0, gv(verticalpadding))$",
           "config_visible": "$if(gv(formulas/colcount) = 0, REMOVE, ALWAYS)$"
         },
         "viewgroup_items": [
@@ -1104,8 +1108,9 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(box1dir2) = 2 & gv(devicecount) = 3, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 2 & gv(devicecount) = 3, ALWAYS, REMOVE)))$"
             },
+            "config_visible": "REMOVE",
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
@@ -1775,7 +1780,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(box1dir2) = 2 & gv(devicecount) = 2, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 2 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n"
             },
             "viewgroup_items": [
               {
@@ -1959,7 +1964,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(box1dir2) = 2 & gv(devicecount) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 2 & gv(devicecount) = 1, ALWAYS, REMOVE)))$\n"
             },
             "viewgroup_items": [
               {
@@ -2504,7 +2509,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(box1dir2) = 1 & gv(devicecount) = 2, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 1 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n"
             },
             "viewgroup_items": [
               {
@@ -2573,7 +2578,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(box1dir2) = 1 & gv(devicecount) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 1 & gv(devicecount) = 1, ALWAYS, REMOVE)))$\n"
             },
             "viewgroup_items": [
               {
@@ -2974,7 +2979,8 @@
               "shape_height": 100,
               "position_anchor": 10,
               "position_padding_left": 0,
-              "shape_corners": 100
+              "shape_corners": 100,
+              "shape_type": 10
             },
             "internal_title": "-- Background --",
             "position_anchor": "CENTERLEFT",
@@ -3002,7 +3008,7 @@
             },
             "internal_formulas": {
               "config_visible": "$if(gv(formulas/colcount) >= 1 & gv(box1dir2) = 2, ALWAYS, REMOVE)$",
-              "position_anchor": "$if(gv(box2align) = 1, CENTER, gv(formulas/boxalign))$"
+              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
             },
             "viewgroup_items": [
               {
@@ -3024,7 +3030,7 @@
                   "config_visible": 10
                 },
                 "internal_formulas": {
-                  "position_anchor": "$if(gv(box2align) = 0, gv(formulas/boxalign), CENTER)$",
+                  "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$",
                   "position_padding_left": "$if(gv(box1position) = LEFT, gv(iconpaddingbox), 0)$",
                   "position_padding_right": "$if(gv(box1position) = RIGHT, gv(iconpaddingbox), 0)$",
                   "position_padding_top": "$if(gv(box1position) = TOP, gv(iconpaddingbox), 0)$",
@@ -6190,7 +6196,7 @@
                   "config_visible": 10
                 },
                 "internal_formulas": {
-                  "position_anchor": "$if(gv(box2align) = 0, gv(formulas/boxalign), CENTER)$",
+                  "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$",
                   "position_padding_left": "$if(gv(box1position) = LEFT, gv(iconpaddingbox), 0)$",
                   "position_padding_right": "$if(gv(box1position) = RIGHT, gv(iconpaddingbox), 0)$",
                   "position_padding_top": "$if(gv(box1position) = TOP, gv(iconpaddingbox), 0)$",
@@ -6247,7 +6253,6 @@
                         "position_offset_x": 35.0,
                         "internal_toggles": {
                           "config_stacking": 10,
-                          "position_anchor": 0,
                           "position_padding_right": 0,
                           "position_padding_top": 0,
                           "position_padding_left": 0,
@@ -6619,7 +6624,7 @@
                 },
                 "internal_formulas": {
                   "config_visible": "$if(gv(devicecount) = 1, \"ALWAYS\", \"NEVER\")$",
-                  "position_anchor": "$if(gv(box2align) = 0, gv(formulas/boxalign), CENTER)$",
+                  "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$",
                   "position_padding_left": "$if(gv(box1position) = LEFT, gv(iconpaddingbox), 0)$",
                   "position_padding_right": "$if(gv(box1position) = RIGHT, gv(iconpaddingbox), 0)$",
                   "position_padding_top": "$if(gv(box1position) = TOP, gv(iconpaddingbox), 0)$",
@@ -6670,7 +6675,6 @@
                         "position_offset_x": 35.0,
                         "internal_toggles": {
                           "config_stacking": 10,
-                          "position_anchor": 0,
                           "position_padding_right": 0,
                           "position_padding_top": 0,
                           "position_padding_left": 0,
@@ -7058,7 +7062,6 @@
                         "position_offset_x": 35.0,
                         "internal_toggles": {
                           "config_stacking": 10,
-                          "position_anchor": 0,
                           "position_padding_right": 0,
                           "position_padding_top": 0,
                           "position_padding_left": 0,
@@ -7413,7 +7416,6 @@
                         "position_offset_x": 35.0,
                         "internal_toggles": {
                           "config_stacking": 10,
-                          "position_anchor": 0,
                           "position_padding_right": 0,
                           "position_padding_top": 0,
                           "position_padding_left": 0,
@@ -7503,7 +7505,7 @@
             },
             "internal_formulas": {
               "config_visible": "$if(gv(formulas/colcount) >= 1 & gv(box1dir2) = 1, ALWAYS, REMOVE)$\n",
-              "position_anchor": "$if(gv(box2align) = 1, CENTER, gv(formulas/boxalign))$"
+              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
             },
             "viewgroup_items": [
               {
@@ -8709,7 +8711,7 @@
             },
             "internal_formulas": {
               "config_visible": "$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 2, ALWAYS, REMOVE)$",
-              "position_anchor": "$if(gv(box2align) = 1, CENTER, gv(formulas/boxalign))$"
+              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
             },
             "config_visible": "REMOVE",
             "viewgroup_items": [
@@ -8802,14 +8804,12 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 10,
                                       "color_bgcolor": 100,
                                       "progress_progress": 0,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$lv(glbname, \"sensor.s23_ultra_battery_level\")$$gv(formulas/devicestate)$",
                                       "color_fgcolor": "$ce(gv(colors/colico), alpha, 100)$"
                                     },
@@ -8950,14 +8950,12 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 10,
                                       "color_bgcolor": 100,
                                       "progress_progress": 0,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$lv(glbname, \"sensor.watch_battery_level\")$$gv(formulas/devicestate)$",
                                       "color_fgcolor": "$ce(gv(colors/colico), alpha, 100)$"
                                     },
@@ -9095,14 +9093,12 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 10,
                                       "color_bgcolor": 100,
                                       "progress_progress": 0,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$lv(glbname, \"sensor.remotephone_battery_level\")$$gv(formulas/devicestate)$",
                                       "color_fgcolor": "$ce(gv(colors/colico), alpha, 100)$"
                                     },
@@ -9238,14 +9234,12 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 10,
                                       "color_bgcolor": 100,
                                       "progress_progress": 0,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$lv(glbname, \"sensor.arch_battery\")$$gv(formulas/devicestate)$",
                                       "color_fgcolor": "$ce(gv(colors/colico), alpha, 100)$"
                                     },
@@ -9806,7 +9800,7 @@
             },
             "internal_formulas": {
               "config_visible": "$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 1, ALWAYS, REMOVE)$\n",
-              "position_anchor": "$if(gv(box2align) = 1, CENTER, gv(formulas/boxalign))$"
+              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
             },
             "viewgroup_items": [
               {
@@ -10230,13 +10224,11 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 100,
                                       "color_bgcolor": 100,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$br(tasker, kwgt_phone_battery_level)$"
                                     },
                                     "internal_globals": {
@@ -10343,14 +10335,12 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 100,
                                       "color_bgcolor": 100,
                                       "progress_progress": 10,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$br(tasker, kwgt_watch_battery_level)$"
                                     },
                                     "internal_globals": {
@@ -10454,14 +10444,12 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 100,
                                       "color_bgcolor": 100,
                                       "progress_progress": 10,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$br(tasker, kwgt_remote_battery_level)$"
                                     },
                                     "internal_globals": {
@@ -10565,14 +10553,12 @@
                                   {
                                     "internal_type": "ProgressModule",
                                     "internal_toggles": {
-                                      "position_anchor": 0,
                                       "color_fgcolor": 100,
                                       "color_bgcolor": 100,
                                       "progress_progress": 10,
                                       "progress_level": 10
                                     },
                                     "internal_formulas": {
-                                      "position_anchor": "",
                                       "progress_level": "$br(tasker, kwgt_laptop_battery_level)$"
                                     },
                                     "internal_globals": {
@@ -10795,15 +10781,17 @@
         "internal_title": "Device Logos",
         "internal_toggles": {
           "position_anchor": 10,
-          "position_offset_x": 100,
-          "position_offset_y": 100,
+          "position_offset_x": 10,
+          "position_offset_y": 10,
           "config_scale_value": 0,
           "config_visible": 10
         },
         "internal_formulas": {
-          "position_anchor": "$if(gv(box1position) = RIGHT, TOPLEFT, gv(box1position) = LEFT, TOPRIGHT,  gv(box1position) = TOP, BOTTOMLEFT,  gv(box1position) = BOTTOM, TOPLEFT)$",
+          "position_anchor": "$lv(pos, if(gv(deviceiconposition) = DATA, 1, gv(deviceiconposition)))$$if(gv(box1position) = RIGHT, (if(#pos = 1, TOPLEFT, #pos = 2, CENTERRIGHT, #pos = 3, BOTTOMLEFT)),gv(box1position) = LEFT, (if(#pos = 1, TOPRIGHT, #pos = 2, CENTERLEFT, #pos = 3, BOTTOMRIGHT)),gv(box1position) = TOP, (if(#pos = 1, BOTTOMLEFT, #pos = 2, TOP, #pos = 3, BOTTOMRIGHT)),gv(box1position) = BOTTOM, (if(#pos = 1, TOPLEFT, #pos = 2, BOTTOM, #pos = 3, TOPRIGHT)))$",
           "config_scale_value": "",
-          "config_visible": "$if(gv(deviceiconstyle) = 4, REMOVE, ALWAYS)$"
+          "config_visible": "$if(gv(deviceiconposition) = 4, REMOVE, ALWAYS)$",
+          "position_offset_x": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,((gv(generated/box1width) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0)))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$",
+          "position_offset_y": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 0,gv(box1position) = TOP   | gv(box1position) = BOTTOM,((gv(generated/box1height) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2)))))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(horizontalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$"
         },
         "internal_globals": {
           "position_offset_x": "verticalpadding",
@@ -10836,6 +10824,7 @@
                 "internal_formulas": {
                   "config_visible": ""
                 },
+                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -10843,16 +10832,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, DEG270,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "material-ico-wb-incandescent-mod",
                     "icon_size": 120.0,
@@ -10884,13 +10871,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-string-lights",
                     "icon_size": 120.0,
@@ -10913,7 +10901,6 @@
                 "internal_formulas": {
                   "config_visible": ""
                 },
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -10921,13 +10908,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-desk-lamp",
                     "icon_size": 120.0,
@@ -10971,13 +10959,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-thermostat",
                     "icon_size": 120.0,
@@ -10994,6 +10983,7 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Fan 1",
+                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11001,15 +10991,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-fan-mod",
                     "icon_size": 120.0,
@@ -11019,15 +11008,13 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_mode": "DEG270"
+                    }
                   }
                 ]
               },
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Fan 2",
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11035,16 +11022,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, DEG180,  gv(box1position) = BOTTOM, DEG180)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "material-dev-climate-mini-split",
                     "icon_size": 120.0,
@@ -11070,13 +11055,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-snowflake",
                     "icon_size": 120.0,
@@ -11086,8 +11072,7 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_offset": 180.0
+                    }
                   }
                 ]
               },
@@ -11102,16 +11087,15 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_offset": 0
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, DEG90,  gv(box1position) = TOP, DEG180,  gv(box1position) = BOTTOM, FLIP_Y)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-climate-ac-cus",
                     "icon_size": 120.0,
@@ -11121,8 +11105,7 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_mode": "DEG270"
+                    }
                   }
                 ]
               },
@@ -11137,16 +11120,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, DEG90,  gv(box1position) = TOP, FLIP_Y,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-radiator-mod",
                     "icon_size": 120.0,
@@ -11156,8 +11137,7 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_mode": "DEG270"
+                    }
                   }
                 ]
               },
@@ -11172,13 +11152,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-heat-pump",
                     "icon_size": 120.0,
@@ -11203,13 +11184,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-heating-coil",
                     "icon_size": 120.0,
@@ -11234,13 +11216,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-hvac",
                     "icon_size": 120.0,
@@ -11276,6 +11259,7 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Television",
+                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11283,16 +11267,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, DEG180,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-television-mod",
                     "icon_size": 120.0,
@@ -11317,16 +11299,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, DEG180,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-projector-mod",
                     "icon_size": 120.0,
@@ -11343,7 +11323,6 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Projector Screen",
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11351,16 +11330,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, DEG180,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-projector-screen-variant",
                     "icon_size": 120.0,
@@ -11403,16 +11380,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, DEG90,  gv(box1position) = TOP, NONE,  gv(box1position) = BOTTOM, DEG180)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-soundbar-mod",
                     "icon_size": 120.0,
@@ -11438,13 +11413,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-surround-sound",
                     "icon_size": 120.0,
@@ -11469,13 +11445,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-speaker",
                     "icon_size": 120.0,
@@ -11511,6 +11488,7 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Security",
+                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11518,13 +11496,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-security",
                     "icon_size": 120.0,
@@ -11549,13 +11528,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-lock",
                     "icon_size": 120.0,
@@ -11572,7 +11552,6 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Camera",
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11580,16 +11559,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, FLIP_Y,  gv(box1position) = TOP, FLIP_Y,  gv(box1position) = BOTTOM, FLIP_Y)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-cctv-mod",
                     "icon_size": 120.0,
@@ -11614,13 +11591,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-doorbell-video",
                     "icon_size": 120.0,
@@ -11656,6 +11634,7 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Charging",
+                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11663,16 +11642,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, DEG180,  gv(box1position) = BOTTOM, FLIP_X)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-charging-cus",
                     "icon_size": 120.0,
@@ -11683,8 +11660,7 @@
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
                     },
-                    "icon_rotate_mode": "FLIP_X",
-                    "icon_rotate_offset": 359
+                    "icon_rotate_mode": "FLIP_X"
                   }
                 ]
               },
@@ -11699,15 +11675,16 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/widgets/Device_Control_Widget_047_Alpha.kwgt/icons/hawgts2.ttf",
-                    "icon_icon": "mdi-dev-security",
+                    "icon_icon": "mdi-dev-battery-charging",
                     "icon_size": 120.0,
                     "position_offset_x": 15.0,
                     "internal_title": "Battery",
@@ -11722,7 +11699,6 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Car Charging",
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11730,13 +11706,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/widgets/Device_Control_Widget_047_Alpha.kwgt/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-car-electric",
                     "icon_size": 120.0,
@@ -11779,12 +11756,13 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10,
+                      "icon_rotate_offset": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_offset": "$if(gv(box1position) = RIGHT, 110, gv(box1position) = LEFT, 250,  gv(box1position) = TOP, 20,  gv(box1position) = BOTTOM, 110)$"
                     },
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-remote-tv",
@@ -11795,7 +11773,8 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    }
+                    },
+                    "icon_rotate_mode": "MANUAL"
                   }
                 ]
               },
@@ -11810,12 +11789,13 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10,
+                      "icon_rotate_offset": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_offset": "$if(gv(box1position) = RIGHT, 110, gv(box1position) = LEFT, 250,  gv(box1position) = TOP, 20,  gv(box1position) = BOTTOM, 110)$"
                     },
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-remote",
@@ -11826,7 +11806,8 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    }
+                    },
+                    "icon_rotate_mode": "MANUAL"
                   }
                 ]
               }
@@ -11860,16 +11841,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, FLIP_X, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, NONE,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-coffee-maker",
                     "icon_size": 120.0,
@@ -11880,7 +11859,7 @@
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
                     },
-                    "icon_rotate_offset": 20.0
+                    "icon_rotate_mode": "MANUAL"
                   }
                 ]
               },
@@ -11895,13 +11874,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-dishwasher",
                     "icon_size": 120.0,
@@ -11926,13 +11906,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-fridge",
                     "icon_size": 120.0,
@@ -11957,13 +11938,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-microwave",
                     "icon_size": 120.0,
@@ -11980,7 +11962,6 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Stove",
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -11988,13 +11969,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-stove",
                     "icon_size": 120.0,
@@ -12019,13 +12001,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-tumble-dryer",
                     "icon_size": 120.0,
@@ -12050,13 +12033,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-washing-machine",
                     "icon_size": 120.0,
@@ -12098,7 +12082,6 @@
                 "internal_formulas": {
                   "config_visible": ""
                 },
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "FontIconModule",
@@ -12106,16 +12089,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, FLIP_Y,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-ceiling-fan-mod",
                     "icon_size": 120.0,
@@ -12146,16 +12127,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, FLIP_Y,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-ico-blinds-mod",
                     "icon_size": 120.0,
@@ -12165,90 +12144,7 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_mode": "DEG270"
-                  }
-                ]
-              },
-              {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "Rotate",
-                "internal_toggles": {
-                  "config_visible": 0
-                },
-                "internal_formulas": {
-                  "config_visible": ""
-                },
-                "config_visible": "REMOVE",
-                "viewgroup_items": [
-                  {
-                    "internal_type": "FontIconModule",
-                    "internal_toggles": {
-                      "paint_color": 10,
-                      "position_offset_y": 100,
-                      "position_offset_x": 100,
-                      "position_anchor": 0,
-                      "icon_rotate_mode": 10,
-                      "icon_size": 100
-                    },
-                    "internal_formulas": {
-                      "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, FLIP_X, gv(box1position) = LEFT, FLIP_X,  gv(box1position) = TOP, NONE,  gv(box1position) = BOTTOM, FLIP_X)$",
-                      "icon_size": ""
-                    },
-                    "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                    "icon_icon": "material-scene",
-                    "icon_size": 120.0,
-                    "position_offset_x": 15.0,
-                    "internal_title": "Light",
-                    "internal_globals": {
-                      "position_offset_y": "horizontalpadding",
-                      "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_mode": "DEG270"
-                  }
-                ]
-              },
-              {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "Rotate",
-                "internal_toggles": {
-                  "config_visible": 0
-                },
-                "internal_formulas": {
-                  "config_visible": ""
-                },
-                "config_visible": "REMOVE",
-                "viewgroup_items": [
-                  {
-                    "internal_type": "FontIconModule",
-                    "internal_toggles": {
-                      "paint_color": 10,
-                      "position_offset_y": 100,
-                      "position_offset_x": 100,
-                      "position_anchor": 0,
-                      "icon_rotate_mode": 10,
-                      "icon_size": 100
-                    },
-                    "internal_formulas": {
-                      "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, NONE, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, DEG270,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
-                    },
-                    "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                    "icon_icon": "material-ico-wb-incandescent-mod",
-                    "icon_size": 120.0,
-                    "position_offset_x": 15.0,
-                    "internal_title": "Light",
-                    "internal_globals": {
-                      "position_offset_y": "horizontalpadding",
-                      "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_mode": "DEG270"
+                    }
                   }
                 ]
               },
@@ -12263,13 +12159,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "material-dev-earbuds-battery",
                     "icon_size": 120.0,
@@ -12294,13 +12191,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-earbuds",
                     "icon_size": 120.0,
@@ -12325,13 +12223,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "material-sensors",
                     "icon_size": 120.0,
@@ -12356,13 +12255,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-bell",
                     "icon_size": 120.0,
@@ -12387,13 +12287,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-cellphone",
                     "icon_size": 120.0,
@@ -12418,13 +12319,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-devices",
                     "icon_size": 120.0,
@@ -12449,13 +12351,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-fireplace",
                     "icon_size": 120.0,
@@ -12480,13 +12383,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-gate",
                     "icon_size": 120.0,
@@ -12511,13 +12415,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-garage-variant",
                     "icon_size": 120.0,
@@ -12542,13 +12447,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-home-battery",
                     "icon_size": 120.0,
@@ -12573,13 +12479,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-laptop",
                     "icon_size": 120.0,
@@ -12604,13 +12511,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-robot-mower",
                     "icon_size": 120.0,
@@ -12635,13 +12543,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-robot-vacuum",
                     "icon_size": 120.0,
@@ -12666,13 +12575,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-smoke-detector",
                     "icon_size": 120.0,
@@ -12697,16 +12607,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, FLIP_Y, gv(box1position) = LEFT, FLIP_Y,  gv(box1position) = TOP, NONE,  gv(box1position) = BOTTOM, FLIP_Y)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-solar-panel-large",
                     "icon_size": 120.0,
@@ -12716,8 +12624,7 @@
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
-                    },
-                    "icon_rotate_offset": 20.0
+                    }
                   }
                 ]
               },
@@ -12732,16 +12639,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "position_anchor": 0,
                       "icon_rotate_mode": 10,
                       "icon_size": 100
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_rotate_mode": "$if(gv(box1position) = RIGHT, FLIP_X, gv(box1position) = LEFT, NONE,  gv(box1position) = TOP, NONE,  gv(box1position) = BOTTOM, NONE)$",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-sprinkler",
                     "icon_size": 120.0,
@@ -12752,7 +12657,7 @@
                       "position_offset_x": "verticalpadding",
                       "icon_size": "generated/devicosize"
                     },
-                    "icon_rotate_offset": 20.0
+                    "icon_rotate_mode": "FLIP_X"
                   }
                 ]
               },
@@ -12767,13 +12672,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-toggle-switch-variant",
                     "icon_size": 120.0,
@@ -12798,13 +12704,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-watch",
                     "icon_size": 120.0,
@@ -12829,13 +12736,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-watch-variant",
                     "icon_size": 120.0,
@@ -12860,13 +12768,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-dev-wind-power",
                     "icon_size": 120.0,
@@ -12891,13 +12800,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-gauge",
                     "icon_size": 120.0,
@@ -12922,13 +12832,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-home",
                     "icon_size": 120.0,
@@ -12953,13 +12864,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-home-circle",
                     "icon_size": 120.0,
@@ -12984,13 +12896,14 @@
                       "paint_color": 10,
                       "position_offset_y": 100,
                       "position_offset_x": 100,
-                      "icon_size": 100
+                      "icon_size": 100,
+                      "icon_rotate_mode": 10
                     },
                     "internal_formulas": {
                       "paint_color": "$ce(gv(colors/colico),alpha,20)$",
-                      "position_anchor": "",
-                      "icon_size": ""
+                      "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$"
                     },
+                    "icon_rotate_offset": 180.0,
                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                     "icon_icon": "mdi-water-percent",
                     "icon_size": 120.0,
@@ -13017,7 +12930,7 @@
                   "config_visible": 10
                 },
                 "internal_formulas": {
-                  "config_visible": "$if(gv(openeditor) = 1, ALWAYS, REMOVE)$"
+                  "config_visible": "$if(gv(deviceopeneditor) = 1, ALWAYS, REMOVE)$"
                 },
                 "viewgroup_items": [
                   {
@@ -13049,7 +12962,7 @@
                   "config_visible": 10
                 },
                 "internal_formulas": {
-                  "config_visible": "$if(gv(openeditor) = 0, ALWAYS, REMOVE)$"
+                  "config_visible": "$if(gv(deviceopeneditor) = 0, ALWAYS, REMOVE)$"
                 },
                 "viewgroup_items": [
                   {
@@ -13225,7 +13138,7 @@
         "config_stacking": "HORIZONTAL_CENTER",
         "config_margin": 10.0,
         "internal_formulas": {
-          "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
+          "position_anchor": "$if(gv(deviceiconposition) = 3,(if(gv(box1position) = RIGHT, TOPLEFT,gv(box1position) = LEFT, TOPRIGHT,gv(box1position) = TOP, BOTTOMLEFT,gv(box1position) = BOTTOM, TOPLEFT)),(if(gv(box1position) = RIGHT, BOTTOMLEFT,gv(box1position) = LEFT, BOTTOMRIGHT,gv(box1position) = TOP, BOTTOMRIGHT,gv(box1position) = BOTTOM, TOPRIGHT)))$",
           "config_visible": "$if(gv(appiconhide) = 0, ALWAYS, REMOVE)$"
         },
         "position_offset_x": 10.0,
@@ -13349,7 +13262,7 @@
               },
               {
                 "internal_type": "TextModule",
-                "text_expression": "Widget Padding: $gv(verticalpadding)$ Side, $gv(horizontalpadding)$ Top\nIcon: $gv(iconsize)$kpx, $tc(reg, gv(generated/iconcount), \"\\n\", \"\")$ Vis\nIcon Padding:$gv(iconpaddinginstack)$ Edge, $gv(iconpaddinginstack)$ MID\n\n[bl=-10]Widget: $si(rwidth)$W, $si(rheight)$H, $si(rratio)$ 1:1\nBox Area: $tc(reg, gv(generated/box2minsize), \"\\n\", \"\")$ Min, $gv(generated/box2width)$W/$gv(generated/box2height)$H\n\n$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(lgbox, if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height)))$$lv(adjustment, if(gv(deviceiconstyle) != 3, gv(appiconsize), 0))$$lv(boxsize, #lgbox - #adjustment)$Icon to size ratio: $mu(abs, #boxsize /#icon)$[/bl]",
+                "text_expression": "Widget Padding: $gv(verticalpadding)$ Side, $gv(horizontalpadding)$ Top\nIcon: $gv(iconsize)$kpx, $tc(reg, gv(generated/iconcount), \"\\n\", \"\")$ Vis\nIcon Padding:$gv(iconpaddinginstack)$ Edge, $gv(iconpaddinginstack)$ MID\n\n[bl=-10]Widget: $si(rwidth)$W, $si(rheight)$H, $si(rratio)$ 1:1\nBox Area: $tc(reg, gv(generated/box2minsize), \"\\n\", \"\")$ Min, $gv(generated/box2width)$W/$gv(generated/box2height)$H\n\n$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(lgbox, if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height)))$$lv(adjustment, if(gv(deviceappiconpadding) = 1, gv(appiconsize), 0))$$lv(boxsize, #lgbox - #adjustment)$Icon to size ratio: $mu(abs, #boxsize /#icon)$[/bl]",
                 "internal_title": "Widget Icon Padding",
                 "text_align": "CENTER",
                 "text_family": "kfile://org.kustom.provider/fonts/RobotoCondensed-Bold.ttf",

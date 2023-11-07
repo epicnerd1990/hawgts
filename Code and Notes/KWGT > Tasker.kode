@@ -17,6 +17,9 @@ light&light.bedroom_lights&brightness:255
 Use Template
 template&{{ states.light.study_lights.attributes.brightness }}
 
+*Custom
+custom&data
+
 ---
 
 URI

@@ -1,4 +1,4 @@
-$Saved code snippets$
+$Saved code snippets and item formulas$
 
 COLOR CONTROL AND CONFIGURATION
 
@@ -39,47 +39,6 @@ LIGHT: $lv(col, ce(si(wpcolor1),lum,55))$$ce(#col,alpha,75)$
 
 ----------------------------------------------------------------------------------------------------
 
-AUTO-RESIZING DEVICE ICON
-> Global generated/devicosize
-
-V3
-$lv(small, gv(iconpaddinginstack) + gv(appiconsize))$
-$lv(large, gv(deviceiconsize))$
-$lv(autosize, (if(gv(generated/iconcount) < 4 & gv(deviceiconstyle) = 2, 1, 0)))$
-$lv(1row, (if(si(rheight) <= 150, 1, 0)))$
-$if(#autosize = 1 | gv(deviceiconstyle) = 1 | #1row = 1, #small, #autosize = 0 | gv(deviceiconstyle) = 0, #large)$
-
-V2 - ADD GLOBAL SETTINGS
-$lv(small, gv(iconpaddinginstack) + gv(icosm))$
-$lv(large, gv(icodev))$
-$lv(autosize, (if(gv(generated/icocount) < 4 & gv(icodevsm) = 2, 1, 0)))$
-$if(#autosize = 1 | gv(icodevsm) = 1, #small, #autosize = 0 | gv(icodevsm) = 0, #large)$
-> to Device Icon
-
-V1 - BASIC RESIZE
-$lv(small, gv(iconpaddinginstack + gv(icosm))$
-$lv(auto, (if((gv(generated/icocount) < 4 | gv(icodevsm) > 0), #small)))$
-$if(gv(icodevsm) = 0, gv(icodev), #auto)$
-
-
-----------------------------------------------------------------------------------------------------
-
-CURRENT VISIBLE ICON COUNT
-> Global generated/iconcount
-$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$
-$lv(devicosi, if(gv(deviceiconstyle) = 1, gv(appiconsize), gv(deviceiconsize)))$
-$lv(padding, if(gv(deviceiconstyle) != 3, #devicosi), 0)$
-$lv(boxsize1, if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height)))$
-$lv(boxsize2, #boxsize1 - #padding)$
-$lv(count, #boxsize2 / #icon)$
-$if(#count <= 2, 2, tc(cut, mu(abs,#count), 1))$
-
-$if(gv(box1dir1) = CUSTOM & gv(box1dir1percent) <= 20, \"ALWAYS\", gv(box1dir1) = 15, \"ALWAYS\", \"REMOVE\")$
-
-$if(gv(box1position) = RIGHT, gv(iconpaddinginstack), gv(box1position) = LEFT, gv(iconpaddinginstack),  gv(box1position) = TOP, gv(iconpaddingstack),  gv(box1position) = BOTTOM, gv(iconpaddingstack))$",
-
-----------------------------------------------------------------------------------------------------
-
 SHOW/HIDE TEMPLATE FOLDERS BASED ON GLOBAL SETTINGS
 
 > Global formulas/colcount
@@ -90,29 +49,92 @@ $if(gv(box1dir1percent) >= 20, 2, gv(box1dir1percent) = 0, 0, 1)$
 $if(gv(formulas/colcount) = 0 & gv(box1dir2) = 2, ALWAYS, REMOVE)$
 $if(gv(formulas/colcount) = 0 & gv(box1dir2) = 2 & gv(devicecount) = 1, ALWAYS, REMOVE)$
 $if(gv(box1dir2) = 2 & gv(devicecount) = 3, ALWAYS, REMOVE)$
-$if(gv(box2align) = 1, CENTER, gv(formulas/boxalign))$
+$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$
 
-$lv(source, (if(gv(colors/color1sel) = 0, "wpcolor1", gv(colors/color1sel) = 1, "wpcolor2", gv(colors/color1sel) = 2, "sys", "0")))$
-$lv(filter, (if(gv(colors/color1fil1) = 1, "sat", gv(colors/color1fil1) = 2, "lum", gv(colors/color1fil1) = 3, "comp", "sat")))$
-$lv(coltone, (if(gv(colors/color1sysc) = 0, "sysca1", gv(colors/color1sysc) = 1, "sysca2", gv(colors/color1sysc) = 2, "sysca3", gv(colors/color1sysc) = 3, "syscn1", gv(colors/color1sysc) = 4, "syscn2", gv(colors/color1sysc) = 5, "syscn3", "sysca1")))$
-$lv(addsub, (if(gv(colors/color1fil2) = 0, "", gv(colors/color1fil2) = 1, "a", gv(colors/color1fil2) = 2, "r", "")))$
+----------------------------------------------------------------------------------------------------
 
-$if(gv(colors/color1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$
-$if(gv(colors/color1fil1) > 0 & #source = "sys", lv(color2, si(#coltone, gv(colors/color1adj))))$
-$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$
+DEVICE ICON POSITION
 
-$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$
-$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$$#final$
+V2 - Add multiple position support
+$lv(pos, if(gv(deviceiconposition) = DATA, 1, gv(deviceiconposition)))$
+$if(gv(box1position) = RIGHT, (if(#pos = 1, TOPLEFT, #pos = 2, CENTERRIGHT, #pos = 3, BOTTOMLEFT)),
+    gv(box1position) = LEFT, (if(#pos = 1, TOPRIGHT, #pos = 2, CENTERLEFT, #pos = 3, BOTTOMRIGHT)),
+    gv(box1position) = TOP, (if(#pos = 1, BOTTOMLEFT, #pos = 2, TOP, #pos = 3, BOTTOMRIGHT)),
+    gv(box1position) = BOTTOM, (if(#pos = 1, TOPLEFT, #pos = 2, BOTTOM, #pos = 3, TOPRIGHT))
+)$
 
-$lv(source, (if(gv(colors/color1sel) = 0, "wpcolor1", gv(colors/color1sel) = 1, "wpcolor2", gv(colors/color1sel) = 2, "sys", "0")))$
-$lv(filter, (if(gv(colors/color1fil1) = 1, "sat", gv(colors/color1fil1) = 2, "lum", gv(colors/color1fil1) = 3, "comp", "sat")))$
-$lv(coltone, (if(gv(colors/color1sysc) = 0, "sysca1", gv(colors/color1sysc) = 1, "sysca2", gv(colors/color1sysc) = 2, "sysca3", gv(colors/color1sysc) = 3, "syscn1", gv(colors/color1sysc) = 4, "syscn2", gv(colors/color1sysc) = 5, "syscn3", "sysca1")))$
-$lv(addsub, (if(gv(colors/color1fil2) = 0, "", gv(colors/color1fil2) = 1, "a", gv(colors/color1fil2) = 2, "r", "")))$
+V1
+$if(gv(box1position) = RIGHT, TOPLEFT, gv(box1position) = LEFT, TOPRIGHT,  
+    gv(box1position) = TOP, BOTTOMLEFT,  gv(box1position) = BOTTOM, TOPLEFT)$
 
-$if(gv(colors/color1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$
-$if(gv(colors/color1fil1) > 0 & #source = "sys", lv(color2, si(#coltone, gv(colors/color1adj))))$
-$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$
 
-$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$
-$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$
-$#final$
+Device Icon X Offset
+$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 
+            ((gv(generated/box1width) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),
+            gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0
+)))$
+$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),
+    gv(deviceiconposition) = DATA, 1,
+    gv(deviceiconposition) = 2, #pos
+)$
+
+
+Device Icon Y Offset
+$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 0,
+             gv(box1position) = TOP   | gv(box1position) = BOTTOM,
+              ((gv(generated/box1height) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2))
+)))$
+$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(horizontalpadding),
+    gv(deviceiconposition) = DATA, 1,
+    gv(deviceiconposition) = 2, #pos
+)$
+
+----------------------------------------------------------------------------------------------------
+
+DEVICE ICON ROTATION CHECK
+$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$
+
+$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$
+
+----------------------------------------------------------------------------------------------------
+
+STATUS SYSTEM
+
+// generated/statuslist
+1##\"ERROR - #global not set correctly\",
+2##\"ERROR - #global not set correctly\",
+3##\"ERROR - #global not set correctly\",
+4##\"ERROR - #global not set correctly\"
+
+TEST 1 - Failed
+$lv(global, "deviceiconrotation")$
+$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$
+$if(gv(deviceiconrotation) = DATA, lv(status, "1"), lv(status, "0"))$
+$gv(generated/status)$
+
+----------------------------------------------------------------------------------------------------
+
+DEVICE ICON POSITION
+> Anchor - Device Icon
+$lv(pos, if(gv(deviceiconposition) = DATA, 1, gv(deviceiconposition)))$
+$if(gv(box1position) = RIGHT, (if(#pos = 1, TOPLEFT, #pos = 2, CENTERRIGHT, #pos = 3, BOTTOMLEFT)),
+    gv(box1position) = LEFT, (if(#pos = 1, TOPRIGHT, #pos = 2, CENTERLEFT, #pos = 3, BOTTOMRIGHT)),
+    gv(box1position) = TOP, (if(#pos = 1, BOTTOMLEFT, #pos = 2, TOP, #pos = 3, BOTTOMRIGHT)),
+    gv(box1position) = BOTTOM, (if(#pos = 1, TOPLEFT, #pos = 2, BOTTOM, #pos = 3, TOPRIGHT)))$
+
+> Anchor - Settings Icon
+$if(gv(deviceiconposition) = 3,
+    (if(gv(box1position) = RIGHT, TOPLEFT,
+        gv(box1position) = LEFT, TOPRIGHT,
+        gv(box1position) = TOP, BOTTOMLEFT,
+        gv(box1position) = BOTTOM, TOPLEFT
+    )),        
+    (if(gv(box1position) = RIGHT, BOTTOMLEFT,
+        gv(box1position) = LEFT, BOTTOMRIGHT,
+        gv(box1position) = TOP, BOTTOMRIGHT,
+        gv(box1position) = BOTTOM, TOPRIGHT
+    ))
+)$
+
+> Box 2 Items Visibility
+$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 2 & gv(devicecount) = 3, ALWAYS, REMOVE)))$

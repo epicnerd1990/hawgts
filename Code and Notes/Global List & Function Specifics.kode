@@ -31,13 +31,27 @@ DATA##\"Select how many devices to control with this widget\",
 2##2 Devices,
 3##3 Devices
 
-// deviceiconstyle
-DATA##Select one of the options below. Auto-shrinking and Remove Padding will adjust the calculation that determines how many Icons can fit in Box 2,
-0##Regular (Set Below),
-1##Match App Icons,
-2##Regular - Auto-Shrink For Space,
-3##Regular - No Padding,
-4##Hidden
+// deviceiconshrink
+DATA##\"Select Shrinking options for the Device Icon. Shrinking will allow more space for icons to fit. You can also remove the space that Device icon takes up on the widget to allow the icon to stay while making more room for icons\",
+0##Default size,
+2##Default Size & Auto-Shrink For Space,
+1##Manually Shrink For Space
+
+// deviceiconrotation 
+DATA##\"Select the rotation of the Device Icon on your Widget\",
+NONE##0 Degrees,
+DEG90##90 Degrees,
+DEG180##180 Degrees,
+DEG270##180 Degrees,
+FLIP_X##Flip Vertically,
+FLIP_Y##Flip Horizontally
+
+// deviceiconposition
+DATA##\"Select the location of the Device Icon on your Widget. \",
+1##Default Location,
+3##Swap with settings icons,
+4##Hidden,
+2##Inside Box 1 (ONLY for templates not using Box 1)
 
 // box1dir1
 DATA##\"Customize Box 1.\n\nSelect how many columns to display in Box 1, or \"Custom\" to enter the percentage of the widget that Box 1 fills (entered in the next list item).\",
@@ -56,6 +70,15 @@ DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns 
 1##1 Rows,
 2##2 Rows
 
+// appiconhide
+DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",
+1##Show App Icons,
+0##Hide App Icons
+
+----------------------------------------------------------------------------------------------------
+
+INFO LISTS
+
 // setupnote
 -- \"Setup Mode\" Details:\n\nTurn this on to display alignment and configuration data live as you resize and setup your widget alignment.
 
@@ -67,9 +90,16 @@ DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns 
 -- OPEN - Widget padding settings
 \"The following options work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"
 
+// --5.
+-- OPEN - Extra Options
+\"Extra Options\n\n
+Use the following settings to adjust \"Automatic\" widget functions\n\n
+- Auto-align - Disable and set alignment and box position manually. Use the follow two settings to manually set alignment\n
+- Box 2 Alignment - Center icons in Box 2 instead of aligning to Box 1\n
+- Device Icon Shrinking options\n
+- Remove Device Icon from padding and sizing calculations\n
+- Remove Device Icon touch to open editor\"
+
 // colornote
 -- OPEN - Color Options
 Edit widget colors by following through this setup
-
-// appiconhide
-DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",1##Show App Icons,0##Hide App Icons
