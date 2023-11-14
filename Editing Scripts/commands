@@ -1,3 +1,4 @@
 Commands:
 kwgt_reorder - Reorder index count in separate JSON
 kwgt_check - Checks for JSON errors
+kwgt_globals - Output global list in the order they appear in the JSON. Terminal Output

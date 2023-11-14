@@ -1,12 +1,12 @@
 {
   "preset_info": {
     "version": 13,
-    "title": "Device Control Widget 0.5.25 Alpha",
+    "title": "Device Control Widget 0.5.3 Alpha",
     "description": "Home Assistant Device Control Widget",
     "author": "Corey Welsh",
     "email": "coreyw2000@gmail.com",
     "width": 1080,
-    "height": 318,
+    "height": 321,
     "features": "WEATHER DOWNLOAD SHELL",
     "release": 374328615,
     "locked": false,
@@ -52,12 +52,12 @@
         "index": 4,
         "type": "NUMBER",
         "title": "box1width",
-        "description": "GENERATED - Width of Box 1",
+        "description": "DEPRECATED - GENERATED - Width of Box 1",
         "min": 0,
         "max": 500,
         "value": 120.0,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, (#pad + gv(iconsize)),gv(box1dir1) = 2 | gv(box1dir1) = DATA, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),gv(box1dir1) = 3, (gv(box1dir1percent) * 720 / 100))))$$if(#align = 1, gv(generated/widgetwidth), #size >= 0, #size)$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1dir2percent))))$$if(#align = 0, gv(generated/widgetwidth), #size >= 0, #size, 0)$"
       },
       "generated/box1height": {
         "index": 5,
@@ -68,7 +68,7 @@
         "max": 500,
         "value": 120.0,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, (#pad + gv(iconsize)),gv(box1dir1) = 2 | gv(box1dir1) = DATA, (#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)),gv(box1dir1) = 3, (gv(box1dir1percent) * 720 / 100))))$$if(#align = 0, gv(generated/widgetheight), #size >= 1, #size)$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1dir2percent))))$$if(#align = 0, gv(generated/widgetheight), #size >= 0, #size, 0)$"
       },
       "generated/box2width": {
         "index": 6,
@@ -78,7 +78,7 @@
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$if(gv(widgetorient) = 1 | gv(box1dir1) = 0,gv(generated/widgetwidth),(gv(generated/widgetwidth) - gv(generated/box1width)))$"
+        "global_formula": "$if(gv(widgetorient) = 1 | gv(box1dir2) = 0,gv(generated/widgetwidth),(gv(generated/widgetwidth) - gv(box1dir2percent)))$"
       },
       "generated/box2height": {
         "index": 7,
@@ -88,7 +88,7 @@
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$if(gv(widgetorient) = 0, gv(generated/widgetheight), (gv(generated/widgetheight) - gv(generated/box1height)))$"
+        "global_formula": "$if(gv(widgetorient) = 0, gv(generated/widgetheight), (if(gv(box1dir2) = 0, gv(generated/widgetheight), (gv(generated/widgetheight) - gv(generated/box1height)))))$"
       },
       "generated/box2minsize": {
         "index": 8,
@@ -116,7 +116,7 @@
         "min": 0,
         "max": 10,
         "toggles": 10,
-        "global_formula": "$lv(boxsize1, (if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height))))$$lv(boxsize2, (#boxsize1 - gv(deviceiconsize)) / (gv(iconsize) + gv(iconpaddinginstack)))$\n$lv(boxsize3, (#boxsize1 - gv(appiconsize)) / (gv(iconsize) + gv(iconpaddinginstack)))$$lv(boxsize, (if(#boxsize2 < 4, #boxsize3, #boxsize2)))$\n$lv(icocount, if(#boxsize <= 2, 2, (tc(cut, mu(abs,#boxsize), 1))))$$#icocount$"
+        "global_formula": "$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(boxsize1, (if(gv(box1dir2) <= 0, 0, (if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height))))))$$lv(boxsize2, (#boxsize1 - gv(deviceiconsize)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize3, (#boxsize1 - gv(appiconsize)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize, (if(#boxsize2 < 4, #boxsize3, #boxsize2)))$$if(#boxsize <= 2, 2, (tc(cut, mu(abs,#boxsize), 1)))$"
       },
       "generated/devicosize": {
         "index": 11,
@@ -126,7 +126,7 @@
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$if(gv(deviceiconshrink) = 1 | gv(box1dir2) = 1, (gv(appiconsize) + gv(iconpaddinginstack)),gv(generated/iconcount) < 4 & gv(deviceiconshrink) = 2, (gv(appiconsize) + gv(iconpaddinginstack)),gv(deviceiconsize))$"
+        "global_formula": "$if(gv(deviceiconshrink) = 1 | gv(box1dir1) = 1, (gv(appiconsize) + gv(iconpaddinginstack)),gv(generated/iconcount) < 4 & gv(deviceiconshrink) = 2, (gv(appiconsize) + gv(iconpaddinginstack)),gv(deviceiconsize))$"
       },
       "generated/pagenum": {
         "index": 12,
@@ -284,49 +284,109 @@
         "type": "TEXT",
         "title": "boxsize",
         "description": "FORMULA - Box Size",
-        "value": "$lv(align, gv(widgetorient))$$lv(row, gv(box1dir2))$$lv(wgtdir, if(#align = 0, gv(generated/widgetheight), gv(generated/widgetwidth)))$$lv(pad, (#wgtdir - (if(#row = 1, gv(iconsize), #row = 2, ((gv(iconsize) * 2) + gv(iconpaddingstack))))))$"
+        "value": "$gv(formulas/boxsize)$$lv(boxsize2, (#pad + #iconsize))$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1 | gv(box1dir2) = DATA, (if((#iconsize / #wgtdir) >= 0.90 | (#iconsize / #wgtdir) <= 1.10, #wgtdir, #boxsize2)),#boxsize2)))$$if(#size >= 0, tc(split, #size, \".\", 0), 0)$"
       },
       "formulas/colcount": {
         "index": 34,
         "type": "TEXT",
         "title": "colcount",
-        "value": "$if(gv(box1dir1percent) >= 20, 2, gv(box1dir1percent) = 0, 0, 1)$"
+        "value": "$if(gv(box1dir2) = 0, 0, (if(gv(box1dir2percent) >= 20, 2, gv(box1dir2percent) = 0, 0, 1)))$"
+      },
+      "entities": {
+        "index": 35,
+        "type": "FOLDER",
+        "title": "entities",
+        "description": "Home Assistant Entity List"
+      },
+      "entities/-- 5.2": {
+        "index": 36,
+        "type": "LIST",
+        "title": "-- 5.2",
+        "entries": "DATA## Enter Entity IDs here,0##\"ENTITY LIST\\n\\nIf you're only controlling one device, enter it in \"entity1\". If you're controlling more than one, enter them in the order they appear in the template. (1st device is \"entity1\", 2nd is \"entity2\", etc)\"\n",
+        "value": "DATA"
+      },
+      "entities/entity1": {
+        "index": 37,
+        "type": "TEXT",
+        "title": "entity1",
+        "description": "Device 1 Entity ID",
+        "value": "light.bedroom_lights"
+      },
+      "entities/entity2": {
+        "index": 38,
+        "type": "TEXT",
+        "title": "entity2",
+        "description": "Device 2 Entity ID",
+        "value": "light.study_lights"
+
+      },
+      "entities/entity3": {
+        "index": 39,
+        "type": "TEXT",
+        "title": "entity3",
+        "description": "Device 3 Entity ID",
+        "value": "switch.lr_lights"
+
+      },
+      "entities/entity4": {
+        "index": 40,
+        "type": "TEXT",
+        "title": "entity4",
+        "description": "Device 4 Entity ID",
+        "value": "light.foyer_lights"
+
+      },
+      "entities/entity5": {
+        "index": 41,
+        "type": "TEXT",
+        "title": "entity5",
+        "description": "Device 5 Entity ID",
+        "value": "light.bedroom_lights"
+
+      },
+      "entities/entity6": {
+        "index": 42,
+        "type": "TEXT",
+        "title": "entity6",
+        "description": "Device 6 Entity ID",
+        "value": "light.bedroom_lights"
+
       },
       "readme": {
-        "index": 35,
+        "index": 43,
         "type": "LIST",
         "title": "README",
         "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
         "value": "OPEN - Readme"
       },
       "setupmode": {
-        "index": 36,
+        "index": 44,
         "type": "SWITCH",
         "title": "setupmode",
         "description": "MOVE TO BOTTOM - Enable showing setup data",
         "value": 0
       },
       "jsondb": {
-        "index": 37,
+        "index": 45,
         "type": "TEXT",
         "title": "jsondb",
-        "value": "\n\n\n\n\n\n\n\n\n\n{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"255\",\n      \"color\": \"255,103,17\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"128\",\n      \"color\": \"255,0,0\"\n    },\n    {\n      \"entity_id\": \"sensor.watch_battery_level\",\n      \"state\": \"27\"\n    },\n    {\n      \"entity_id\": \"sensor.remotephone_battery_level\",\n      \"state\": \"100\"\n    },\n    {\n      \"entity_id\": \"sensor.s23_ultra_battery_level\",\n      \"state\": \"15\"\n    },\n  ]\n}"
+        "value": "\n\n\n\n\n\n\n\n\n\n{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"255\",\n      \"color\": \"255,103,17\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"128\",\n      \"color\": \"255,0,0\"\n    },\n    {\n      \"entity_id\": \"sensor.watch_battery_level\",\n      \"state\": \"60\"\n    },\n    {\n      \"entity_id\": \"sensor.s23_ultra_battery_level\",\n      \"state\": \"32\"\n    },\n    {\n      \"entity_id\": \"sensor.remotephone_battery_level\",\n      \"state\": \"75\"\n    },\n  ]\n}"
       },
       "colors": {
-        "index": 38,
+        "index": 46,
         "type": "FOLDER",
         "title": "-- 1.",
         "description": "-- Select your Widget colors"
       },
       "colors/colornote": {
-        "index": 39,
+        "index": 47,
         "type": "LIST",
         "title": "COLORNOTE",
         "value": "-- OPEN - Color Options",
         "entries": "Edit widget colors by following through this setup. See Readme for details."
       },
       "colors/color1sel": {
-        "index": 40,
+        "index": 48,
         "type": "LIST",
         "title": "color1sel",
         "description": "Color 1 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -334,7 +394,7 @@
         "value": "0"
       },
       "colors/color1sysc": {
-        "index": 41,
+        "index": 49,
         "type": "LIST",
         "title": "color1sysc",
         "description": "Color 1 - System/MaterialYou Only\nSelect a color tone.",
@@ -342,7 +402,7 @@
         "value": "2"
       },
       "colors/color1fil1": {
-        "index": 42,
+        "index": 50,
         "type": "LIST",
         "title": "color1fil1",
         "description": "Color 1 - Wallpaper Only\nSelect filter.",
@@ -350,7 +410,7 @@
         "value": "2"
       },
       "colors/color1adj": {
-        "index": 43,
+        "index": 51,
         "type": "NUMBER",
         "title": "color1adj",
         "description": "Color 1 - Filter adjustment\n0 = None, 100 = Strong",
@@ -359,7 +419,7 @@
         "value": 40.0
       },
       "colors/color1fil2": {
-        "index": 44,
+        "index": 52,
         "type": "LIST",
         "title": "color1fil2",
         "description": "Color 1 - Select filter manipulation - Changes slider above from total into add/subtract from current (optional)",
@@ -367,14 +427,14 @@
         "value": "0"
       },
       "colors/color1pick": {
-        "index": 45,
+        "index": 53,
         "type": "COLOR",
         "title": "color1pick",
         "description": "Color 1 - Manual Color choice, overrides filter\nAlso used as fallback color for extracted colors",
         "value": "#FFFFFFFF"
       },
       "colors/color1alph": {
-        "index": 46,
+        "index": 54,
         "type": "NUMBER",
         "title": "color1alph",
         "description": "Color 1 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -383,7 +443,7 @@
         "value": 75.0
       },
       "colors/color2sel": {
-        "index": 47,
+        "index": 55,
         "type": "LIST",
         "title": "color2sel",
         "description": "Color 2 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -391,7 +451,7 @@
         "value": "0"
       },
       "colors/color2sysc": {
-        "index": 48,
+        "index": 56,
         "type": "LIST",
         "title": "color2sysc",
         "description": "Color 2 - System/MaterialYou Only\nSelect a color tone",
@@ -399,7 +459,7 @@
         "value": "0"
       },
       "colors/color2fil1": {
-        "index": 49,
+        "index": 57,
         "type": "LIST",
         "title": "color2fil1",
         "description": "Color 2 - Wallpaper Only\nSelect filter.",
@@ -407,7 +467,7 @@
         "value": "2"
       },
       "colors/color2adj": {
-        "index": 50,
+        "index": 58,
         "type": "NUMBER",
         "title": "color2adj",
         "description": "Color 2 - Filter adjustment\n0 = None, 100 = Strong",
@@ -416,7 +476,7 @@
         "value": 55.0
       },
       "colors/color2fil2": {
-        "index": 51,
+        "index": 59,
         "type": "LIST",
         "title": "color2fil2",
         "description": "Color 2 - Select filter manipulation - Changes number above from total into add/subtract from current (optional)",
@@ -424,14 +484,14 @@
         "value": "0"
       },
       "colors/color2pick": {
-        "index": 52,
+        "index": 60,
         "type": "COLOR",
         "title": "color2pick",
         "description": "Color 2 - Manual Color choice, overrides filter.\nAlso used as fallback color for extracted colors",
         "value": "#E7FFFFFF"
       },
       "colors/color2alph": {
-        "index": 53,
+        "index": 61,
         "type": "NUMBER",
         "title": "color2alph",
         "description": "Color 2 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -440,14 +500,14 @@
         "value": 75.0
       },
       "colors/colico": {
-        "index": 54,
+        "index": 62,
         "type": "COLOR",
         "title": "colico",
         "description": "Color of icons and text. Default: #E7FFFFFF",
         "value": "#E7FFFFFF"
       },
       "colors/colicoon": {
-        "index": 55,
+        "index": 63,
         "type": "COLOR",
         "title": "colicoon",
         "description": "Color of icons and text when device is on",
@@ -456,7 +516,7 @@
         "global_formula": "$ce(si(wpcolor1, comp), sat, 60)$"
       },
       "colors/color2fin": {
-        "index": 56,
+        "index": 64,
         "type": "COLOR",
         "title": "color2fin",
         "description": "Final output of color in Hex ARGB form",
@@ -464,20 +524,45 @@
         "value": "#BF007D8C"
       },
       "colors/color1fin": {
-        "index": 57,
+        "index": 65,
         "type": "COLOR",
         "title": "color1fin",
         "value": "#BF005B66"
       },
+      "colors/border": {
+        "index": 66,
+        "type": "SWITCH",
+        "title": "border",
+        "description": "Turn on a border around your boxes",
+        "value": 0
+      },
+      "colors/bordersize": {
+        "index": 67,
+        "type": "NUMBER",
+        "title": "bordersize",
+        "description": "Set the size of the border\\nDefault: 3kpx",
+        "min": 0,
+        "max": 50,
+        "value": 3.0
+      },
+      "colors/bordercolor": {
+        "index": 68,
+        "type": "LIST",
+        "title": "bordercolor",
+        "description": "NOTE: Change to bordercolorlor. Set up so  this color can be completly maniplauted as well when redoing color system",
+        "entries": "#FFFFFF",
+        "value": "FFFFFF"
+      },
       "-- 2.": {
-        "index": 58,
+        "index": 69,
         "type": "LIST",
         "title": "-- 2.",
-        "entries": "-- Widget Style and Type",
-        "value": "-- Widget Style and Type"
+        "description": "Customize the Box style and layout of the widget",
+        "entries": "-- Box Styles",
+        "value": "-- Box Styles"
       },
       "devicecount": {
-        "index": 59,
+        "index": 70,
         "type": "LIST",
         "title": "devicecount",
         "description": "Select how many devices you'd like to control with this Widget",
@@ -485,77 +570,69 @@
         "value": "3"
       },
       "box1dir1": {
-        "index": 60,
+        "index": 71,
         "type": "LIST",
         "title": "box1dir1",
+        "description": "Select how many Rows to display (or columns if widget is vertical)",
+        "value": "2",
+        "entries": "DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,1##1 Row,2##2 Rows"
+      },
+      "box1dir2": {
+        "index": 72,
+        "type": "LIST",
+        "title": "box1dir2",
         "description": "Configure the size of Box 1",
-        "entries": "DATA##\"Customize the size of Box 1 (smaller box).\n\nSelect how many columns (horizontal widget) or rows (vertical widget) to display in Box 1, or \"Custom\". \"Custom\" lets you set the percentage of the widget that Box 1 fills in the next list item.\",0##Remove (Single Box Mode),1##1 Column (Auto-Center),2##2 Column (Auto-Center),3##Custom Size (Below)",
+        "entries": "DATA##\"Customize the size of Box 1 (smaller box).\n\nSelect how many columns (horizontal widget) or rows (vertical widget) to display in Box 1, or \"Custom\". \"Custom\" lets you set the percentage of the widget that Box 1 fills in the next list item.\",0##Remove (Single Box Mode),1##1 Column (Auto-Center),2##2 Columns (Auto-Center),3##Custom Size (Below)",
         "value": "2"
       },
-      "box1dir1percent": {
-        "index": 61,
+      "box1dir2percent": {
+        "index": 73,
         "type": "NUMBER",
-        "title": "box1dir1percent",
+        "title": "box1dir2percent",
         "description": "Set if you selected \"Custom\" above",
-        "value": 27.778,
+        "value": "28.055555",
         "min": 0,
         "max": 100
       },
-      "box1dir2": {
-        "index": 62,
-        "type": "LIST",
-        "title": "box1dir2",
-        "description": "Select how many Rows to display (or columns if widget is vertical)",
-        "value": "2",
-        "entries": "DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,1##1 Rows,2##2 Rows"
-      },
       "boxorder": {
-        "index": 63,
+        "index": 74,
         "type": "LIST",
         "title": "boxorder",
         "description": "Set the order of the boxes on your widget",
         "entries": "DATA##\"Set the order of the boxes on your widget.\nSave the widget for changes to take effect\",1##Box 1 > Box 2,0##Box 2 > Box 1",
         "value": "1"
       },
-      "appiconhide": {
-        "index": 64,
+      "-- 3.": {
+        "index": 75,
         "type": "LIST",
-        "title": "appiconhide",
-        "description": "Hide the App Icons",
-        "entries": "DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",1##Show App Icons,0##Hide App Icons",
-        "value": "0"
+        "title": "-- 3.",
+        "entries": "-- Modify UI Elements",
+        "value": "-- Modify UI Elements"
       },
-      "deviceicontype": {
-        "index": 65,
+      "deviceiconcat": {
+        "index": 76,
         "type": "LIST",
-        "title": "deviceicontype",
+        "title": "deviceiconcat",
         "description": "Select the device icon to display in the corner of the widget or hide it in the next option",
         "entries": "DATA##Select the device icon for the device you want to control,0##Lighting,1##Climate Control,2##Television,3##Audio,4##Security and Locks,5##Charging and Battery,6##Remote control,7##Appliances,8##Others",
         "value": "0"
       },
       "deviceiconposition": {
-        "index": 66,
+        "index": 77,
         "type": "LIST",
         "title": "deviceiconposition",
         "entries": "DATA##\"Select the location of the Device Icon on your Widget\",1##Default Location,2##Inside Box 1 (for templates not using Box 1),3##Swap with settings icons,4##Hidden",
         "value": "1"
       },
       "deviceiconrotation": {
-        "index": 67,
+        "index": 78,
         "type": "LIST",
         "title": "deviceiconrotation",
         "entries": "DATA##\"Select the rotation of the Device Icon on your Widget\",NONE##0 Degrees,DEG90##90 Degrees,DEG180##180 Degrees,DEG270##180 Degrees,FLIP_X##Flip Vertically,FLIP_Y##Flip Horizontally",
         "value": "FLIP_Y"
       },
-      "-- 3.": {
-        "index": 68,
-        "type": "LIST",
-        "title": "-- 3.",
-        "entries": "-- Modify UI Elements",
-        "value": "-- Modify UI Elements"
-      },
       "deviceiconsize": {
-        "index": 69,
+        "index": 79,
         "type": "NUMBER",
         "title": "deviceiconsize",
         "description": "Set the normal (default) size of the Device Icon. Auto-shrinking options avaliable below.\nDefault: 120kpx",
@@ -565,7 +642,7 @@
         "max": 450
       },
       "iconsize": {
-        "index": 70,
+        "index": 80,
         "type": "NUMBER",
         "title": "iconsize",
         "description": "Set the size of the widget icons.\nDefault: 80kpx",
@@ -573,8 +650,16 @@
         "max": 120,
         "value": 80.0
       },
+      "appiconhide": {
+        "index": 81,
+        "type": "LIST",
+        "title": "appiconhide",
+        "description": "Hide the App Icons",
+        "entries": "DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",0##Show App Icons,1##Hide App Icons",
+        "value": "1"
+      },
       "appiconsize": {
-        "index": 71,
+        "index": 82,
         "type": "NUMBER",
         "title": "appiconsize",
         "description": "Set the size of the small app-launcher icon(s).\nDefault: 32kpx",
@@ -583,7 +668,7 @@
         "value": 32.0
       },
       "cornerradius": {
-        "index": 72,
+        "index": 83,
         "type": "NUMBER",
         "title": "cornerradius",
         "description": "Set the radius of the rounded corners.\nDefault: 10kpx",
@@ -592,14 +677,14 @@
         "value": 10.0
       },
       "-- 4.": {
-        "index": 73,
+        "index": 84,
         "type": "LIST",
         "title": "-- 4.",
         "entries": "-- Padding and Spacing",
         "value": "-- Padding and Spacing"
       },
       "iconpaddinginstack": {
-        "index": 74,
+        "index": 85,
         "type": "NUMBER",
         "title": "iconpaddinginstack",
         "description": "Set the icon padding inside each row/column. Default: 20kpx",
@@ -608,7 +693,7 @@
         "value": 10.0
       },
       "iconpaddingstack": {
-        "index": 75,
+        "index": 86,
         "type": "NUMBER",
         "title": "iconpaddingstack",
         "description": "Set the icon padding between each row/column. Default: 20kpx",
@@ -617,23 +702,23 @@
         "value": 10.0
       },
       "iconpaddingbox": {
-        "index": 76,
+        "index": 87,
         "type": "NUMBER",
         "title": "iconpaddingbox",
         "description": "Set the icon padding from the edge of Box 2. Default: 10kpx",
         "min": 0,
         "max": 50,
-        "value": "\n\n\n\n\n\n15"
+        "value": "\n\n\n\n\n\n16"
       },
       "paddingnote": {
-        "index": 77,
+        "index": 88,
         "type": "LIST",
         "title": "PADDINGNOTE",
         "entries": "\"The following options work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"",
         "value": "-- OPEN - Widget padding settings"
       },
       "verticalpadding": {
-        "index": 78,
+        "index": 89,
         "type": "NUMBER",
         "title": "verticalpadding",
         "description": "Select the Vertical widget padding size\nDefault: 6kpx",
@@ -642,7 +727,7 @@
         "max": 50
       },
       "horizontalpadding": {
-        "index": 79,
+        "index": 90,
         "type": "NUMBER",
         "title": "horizontalpadding",
         "description": "Select the Horizontal widget padding size\nDefault: 3kpx",
@@ -651,7 +736,7 @@
         "max": 50
       },
       "-- 5.": {
-        "index": 80,
+        "index": 91,
         "type": "LIST",
         "title": "-- 5.",
         "description": "",
@@ -659,17 +744,17 @@
         "value": "-- OPEN - Extra Options"
       },
       "autoalign": {
-        "index": 81,
+        "index": 92,
         "type": "SWITCH",
         "title": "autoalign",
         "description": "Auto-align On/Off. Use next 2 options to manually set alignment",
         "value": 1
       },
       "widgetorient": {
-        "index": 82,
+        "index": 93,
         "type": "SWITCH",
         "title": "widgetorient",
-        "description": "Set horizontal or vertical orientation of widget. 0 = Horizontal, 1 = Vertical",
+        "description": "Set horizontal or vertical orientation of widget. Off = Horizontal, On = Vertical",
         "on_mode": "MANUAL_FORMULA",
         "on_formula": "$if(gv(autoalign) = 1, (si(rratio) < 0.8, 0))$",
         "off_mode": "MANUAL_FORMULA",
@@ -677,7 +762,7 @@
         "value": 0
       },
       "box1position": {
-        "index": 83,
+        "index": 94,
         "type": "LIST",
         "title": "box1position",
         "description": "Set position of Box 1",
@@ -685,7 +770,7 @@
         "value": "BOTTOM"
       },
       "box2align": {
-        "index": 84,
+        "index": 95,
         "type": "LIST",
         "title": "box2align",
         "description": "Select alignment of Box 2 content",
@@ -693,7 +778,7 @@
         "value": "0"
       },
       "deviceiconshrink": {
-        "index": 85,
+        "index": 96,
         "type": "LIST",
         "title": "deviceiconshrink",
         "description": "Select Shrinking options for the Device Icon.\nDefault: Auto-Shrink",
@@ -701,37 +786,30 @@
         "entries": "DATA##\"Select Shrinking options for the Device Icon. Shrinking will allow more space for icons to fit. You can also remove the space that Device icon takes up on the widget to allow the icon to stay while making more room for icons\",0##Default size,2##Default Size & Auto-Shrink For Space,1##Manually Shrink For Space"
       },
       "deviceappiconpadding": {
-        "index": 86,
+        "index": 97,
         "type": "SWITCH",
         "title": "deviceappiconpadding",
         "description": "Use padding of Device/App icons from Box 2 in \"Icon Count\" calculation. Disable to allow more icons to fit in Box 2. Overlap may occur",
         "value": 1
       },
       "deviceopeneditor": {
-        "index": 87,
+        "index": 98,
         "type": "SWITCH",
         "title": "deviceopeneditor",
         "description": "Enable device icon click to open KWGT Editor. Diable once widget is set up",
         "value": 1
       },
       "tc1": {
-        "index": 88,
+        "index": 99,
         "type": "COLOR",
         "title": "tc1",
-        "value": "\n\n\n\n\n\n\n\n\n\n\n#BF005B66"
+        "value": "\n\n\n\n\n\n\n\n\n\n\n#BF005A66"
       },
       "tc2": {
-        "index": 89,
+        "index": 100,
         "type": "COLOR",
         "title": "tc2",
-        "value": "\n\n\n\n\n\n\n\n\n\n\n\n#BF007D8C"
-      },
-      "appiconh": {
-        "index": 90,
-        "type": "LIST",
-        "title": "appiconh",
-        "description": "Hide the App Icons",
-        "entries": "DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",0##Show App Icons,1##Hide App Icons"
+        "value": "\n\n\n\n\n\n\n\n\n\n\n\n#BF007C8C"
       }
     },
     "internal_flows": [
@@ -941,7 +1019,7 @@
             "id": "TTrBrx8O",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(box1dir1)$$gv(si(rratio))$$gv(iconsize)$$gv(iconpaddingstack)$$gv(iconpaddinginstack)$"
+              "formula": "$gv(box1dir2)$$gv(si(rratio))$$gv(iconsize)$$gv(iconpaddingstack)$$gv(iconpaddinginstack)$"
             }
           }
         ],
@@ -950,7 +1028,7 @@
             "id": "TAm4ULru",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(align, gv(widgetorient))$\n$lv(row, gv(box1dir2))$\n$lv(wgtdir, if(#align = 0, gv(generated/widgetheight), gv(generated/widgetwidth)))$\n$lv(pad, (#wgtdir - (if(#row = 1, gv(iconsize), #row = 2, ((gv(iconsize) * 2) + gv(iconpaddingstack))))))$\n$gv(formulas/boxsize)$\n$lv(size, (if(gv(box1dir1) = 1 | gv(box1dir1) = 2 | gv(box1dir1) = DATA, (#pad / 2), 0)))$\n$lv(out, if(#size >= 1 & #size <= 40, #size, 0))$$#out$"
+              "formula": "$lv(align, gv(widgetorient))$\n$lv(row, gv(box1dir1))$\n$lv(wgtdir, if(#align = 0, gv(generated/widgetheight), gv(generated/widgetwidth)))$\n$lv(pad, (#wgtdir - (if(#row = 1, gv(iconsize), #row = 2, ((gv(iconsize) * 2) + gv(iconpaddingstack))))))$\n$gv(formulas/boxsize)$\n$lv(size, (if(gv(box1dir2) = 1 | gv(box1dir2) = 2 | gv(box1dir2) = DATA, (#pad / 2), 0)))$\n$lv(out, if(#size >= 1 & #size <= 40, #size, 0))$$#out$"
             }
           },
           {
@@ -974,7 +1052,7 @@
             "id": "TT0gENXP",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(box1dir1)$"
+              "formula": "$gv(box1dir2)$"
             }
           }
         ],
@@ -983,14 +1061,14 @@
             "id": "TAdp5TwR",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(formulas/boxsize)$$lv(tempsize, gv(box1dir1percent))$$lv(size, (if(gv(box1dir1) = 0, 0,gv(box1dir1) = 1, ((#pad + gv(iconsize)) * 100 / 720),gv(box1dir1) = 2 | gv(box1dir1) = DATA, ((#pad + (gv(iconsize) * 2) + gv(iconpaddinginstack)) * 100 / 720),#tempsize)))$$if(#align = 1, gv(generated/widgetwidth), #size >= 0, #size, 0)$"
+              "formula": "$gv(formulas/boxsize)$$lv(boxsize, (#pad + #iconsize))$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) = 1, (if((#iconsize / #wgtdir) >= 0.90 | (#iconsize / #wgtdir) <= 1.10, #wgtdir, #boxsize)),gv(box1dir2) = 2 | gv(box1dir2) = DATA, (if((#iconsize / #wgtdir) >= 0.90 | (#iconsize / #wgtdir) <= 1.10, #wgtdir, #boxsize)),#boxsize)))$$if(#size >= 0, tc(split, #size, \".\", 1), 0)$"
             }
           },
           {
             "id": "TALDjuUt",
             "type": "A_GLOBAL",
             "params": {
-              "global": "box1dir1percent"
+              "global": "box1dir2percent"
             }
           }
         ]
@@ -1041,6 +1119,25 @@
             }
           }
         ]
+      },
+      {
+        "id": "FoaidZYN",
+        "name": "1st Run",
+        "t": [
+          {
+            "id": "TTljAlAJ",
+            "type": "T_MANUAL"
+          }
+        ],
+        "a": [
+          {
+            "id": "TAjhgtHT",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "box2minsize"
+            }
+          }
+        ]
       }
     ],
     "config_scale_value": 99.06542,
@@ -1065,16 +1162,16 @@
             "internal_type": "TextModule",
             "text_expression": "$if(gv(formulas/colcount) = 0, \"[DISABLED]\", \"[ENABLED]\")$",
             "paint_color": "#00FFFFFF",
-            "internal_title": "-- Folder Status (based on global settings)",
+            "internal_title": "-- Folder Status",
             "text_size": 1.0
           },
           {
             "internal_type": "ShapeModule",
-            "internal_title": "-- Background - Do Not Edit - -",
+            "internal_title": "-- Background - Edit in Globals",
             "internal_toggles": {
               "paint_color": 100,
-              "shape_width": 100,
-              "shape_height": 100,
+              "shape_width": 10,
+              "shape_height": 10,
               "position_anchor": 0,
               "position_padding_left": 0,
               "position_padding_right": 0,
@@ -1083,6 +1180,8 @@
             },
             "internal_formulas": {
               "paint_color": "$ce(gv(generated/color1),alpha,75)$",
+              "shape_width": "$if(gv(widgetorient) = 1, gv(generated/widgetwidth), gv(box1dir2percent))$",
+              "shape_height": "$if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1dir2percent))$",
               "position_anchor": "$if(gv(widgetorient) = 0, CENTERRIGHT, TOP)$",
               "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
               "position_padding_right": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
@@ -1095,28 +1194,84 @@
             "paint_mode": "OVERLAY",
             "shape_corners": 10.0,
             "internal_globals": {
-              "shape_width": "generated/box1width",
-              "shape_height": "generated/box1height",
               "shape_corners": "cornerradius",
               "paint_color": "tc1"
             }
           },
           {
             "internal_type": "OverlapLayerModule",
-            "internal_title": "2 Rows, 3+ Devices",
+            "internal_title": "-- Background - Edit in Globals",
             "internal_toggles": {
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 2 & gv(devicecount) = 3, ALWAYS, REMOVE)))$"
+              "config_visible": "$if(gv(colors/border) = 1, ALWAYS, REMOVE)$"
             },
             "config_visible": "REMOVE",
             "viewgroup_items": [
               {
+                "internal_type": "ShapeModule",
+                "internal_title": "-- Background - Edit in Globals",
+                "internal_toggles": {
+                  "paint_color": 10,
+                  "shape_width": 100,
+                  "shape_height": 100,
+                  "position_anchor": 0,
+                  "position_padding_left": 0,
+                  "position_padding_right": 0,
+                  "position_padding_top": 0,
+                  "shape_corners": 100,
+                  "paint_stroke": 100
+                },
+                "internal_formulas": {
+                  "paint_color": "$gv(colors/bordercolor)$",
+                  "position_anchor": "$if(gv(widgetorient) = 0, CENTERRIGHT, TOP)$",
+                  "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
+                  "position_padding_right": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
+                  "position_padding_top": "$if(gv(widgetorient) = 0, 0, gv(horizontalpadding))$"
+                },
+                "shape_type": "RECT",
+                "shape_width": 135.0,
+                "shape_height": 212.0,
+                "paint_color": "#00005B66",
+                "shape_corners": 10.0,
+                "internal_globals": {
+                  "shape_width": "box1dir2percent",
+                  "shape_height": "generated/box1height",
+                  "shape_corners": "cornerradius",
+                  "paint_color": "tc2",
+                  "paint_stroke": "colors/bordersize"
+                },
+                "paint_style": "STROKE",
+                "paint_stroke": 5.0
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "2 Rows, 3+ Devices",
+            "internal_toggles": {
+              "config_visible": 10,
+              "position_padding_left": 10,
+              "position_padding_right": 10,
+              "position_padding_top": 10,
+              "position_padding_bottom": 10
+            },
+            "internal_formulas": {
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir1) = 2 & gv(devicecount) = 3, ALWAYS, REMOVE)))$",
+              "position_padding_left": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_right": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = RIGHT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
+            },
+
+            "config_visible": "REMOVE",
+            "viewgroup_items": [
+              {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(box1dir2) = 2 & gv(devicecount) = 3, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(box1dir2) = 0, [DISABLED], (if(gv(box1dir1) = 2 & gv(devicecount) = 3, \"[ENABLED]\", \"[DISABLED]\")))$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -1162,7 +1317,7 @@
                       "config_stacking": 10
                     },
                     "internal_formulas": {
-                      "config_margin": "$if(gv(widgetorient) = 0, (if(gv(colcount) = 1, 0, gv(iconpaddinginstack))), gv(iconpaddingstack))$",
+                      "config_margin": "$if(gv(widgetorient) = 0, (if(gv(formulas/colcount) = 1, 0, gv(iconpaddinginstack))), gv(iconpaddingstack))$",
                       "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER)$"
                     },
                     "internal_globals": {
@@ -1305,7 +1460,7 @@
                         },
                         "internal_formulas": {
                           "config_margin": "$if(gv(widgetorient) = 0, gv(iconpaddingstack), gv(iconpaddinginstack))$",
-                          "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$",
+                          "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$",
                           "config_stacking": "$if(gv(widgetorient) = 1, HORIZONTAL_CENTER, VERTICAL_CENTER)$"
                         },
                         "viewgroup_items": [
@@ -1491,7 +1646,7 @@
                                     "switch_list": "0"
                                   }
                                 ],
-                                "internal_title": "Rm Sel 1",
+                                "internal_title": "Room Sel 1",
                                 "icon_size": 90,
                                 "internal_toggles": {
                                   "icon_icon": 0,
@@ -1512,14 +1667,14 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
                                 "internal_type": "FontIconModule",
                                 "icon_icon": "mdi-room-desk",
                                 "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                "internal_title": "Rm Sel 3",
+                                "internal_title": "Room Sel 3",
                                 "internal_events": [
                                   {
                                     "type": "SINGLE_TAP",
@@ -1575,7 +1730,7 @@
                                     "switch_list": "2"
                                   }
                                 ],
-                                "internal_title": "Rm Sel 2",
+                                "internal_title": "Room Sel 2",
                                 "icon_size": 90,
                                 "internal_toggles": {
                                   "icon_icon": 0,
@@ -1596,14 +1751,14 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
                                 "internal_type": "FontIconModule",
                                 "icon_icon": "mdi-room-coat-rack",
                                 "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                "internal_title": "Rm Sel 4",
+                                "internal_title": "Room Sel 4",
                                 "icon_size": 90,
                                 "internal_toggles": {
                                   "icon_icon": 0,
@@ -1707,7 +1862,7 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
@@ -1753,7 +1908,7 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
@@ -1777,17 +1932,24 @@
             "internal_type": "OverlapLayerModule",
             "internal_title": "2 Rows, 2 Devices",
             "internal_toggles": {
-              "config_visible": 10
+              "config_visible": 10,
+              "position_padding_left": 10,
+              "position_padding_right": 10,
+              "position_padding_top": 10,
+              "position_padding_bottom": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 2 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir1) = 2 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n",              "position_padding_left": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_right": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = RIGHT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
             },
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(box1dir2) = 2 & gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(box1dir2) = 0, [DISABLED], (if(gv(box1dir1) = 2 & gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")))$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -1961,17 +2123,25 @@
             "internal_type": "OverlapLayerModule",
             "internal_title": "2 Rows, 1 Device",
             "internal_toggles": {
-              "config_visible": 10
+              "config_visible": 10,
+              "position_padding_left": 10,
+              "position_padding_right": 10,
+              "position_padding_top": 10,
+              "position_padding_bottom": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 2 & gv(devicecount) = 1, ALWAYS, REMOVE)))$\n"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir1) = 2 & gv(devicecount) = 1, ALWAYS, REMOVE)))$\n",
+              "position_padding_left": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_right": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = RIGHT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
             },
-            "viewgroup_items": [
+           "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(box1dir2) = 2 & gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(box1dir2) = 0, [DISABLED], (if(gv(box1dir1) = 2 & gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")))$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -2142,7 +2312,7 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
@@ -2200,7 +2370,7 @@
                                   "config_visible": 10
                                 },
                                 "internal_formulas": {
-                                  "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                                  "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                                 },
                                 "viewgroup_items": [
                                   {
@@ -2236,7 +2406,7 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
@@ -2367,7 +2537,7 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
@@ -2425,7 +2595,7 @@
                                   "config_visible": 10
                                 },
                                 "internal_formulas": {
-                                  "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                                  "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                                 },
                                 "viewgroup_items": [
                                   {
@@ -2461,7 +2631,7 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                             },
                             "viewgroup_items": [
                               {
@@ -2506,17 +2676,25 @@
             "internal_type": "OverlapLayerModule",
             "internal_title": "1 Rows, 2 Devices",
             "internal_toggles": {
-              "config_visible": 10
+              "config_visible": 10,
+              "position_padding_left": 10,
+              "position_padding_right": 10,
+              "position_padding_top": 10,
+              "position_padding_bottom": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 1 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir1) = 1 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n",
+              "position_padding_left": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_right": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = RIGHT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
             },
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(box1dir2) = 1 & gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(box1dir2) = 0, [DISABLED], (if(gv(box1dir1) = 1 & gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")))$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -2575,17 +2753,25 @@
             "internal_type": "OverlapLayerModule",
             "internal_title": "1 Rows, 1 Device",
             "internal_toggles": {
-              "config_visible": 10
+              "config_visible": 10,
+              "position_padding_left": 10,
+              "position_padding_right": 10,
+              "position_padding_top": 10,
+              "position_padding_bottom": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir2) = 1 & gv(devicecount) = 1, ALWAYS, REMOVE)))$\n"
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir1) = 1 & gv(devicecount) = 1, ALWAYS, REMOVE)))$\n",
+              "position_padding_left": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_right": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = RIGHT, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
+              "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
             },
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(box1dir2) = 1 & gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(box1dir2) = 0, [DISABLED], (if(gv(box1dir1) = 1 & gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")))$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -2760,7 +2946,7 @@
                           "config_visible": 10
                         },
                         "internal_formulas": {
-                          "config_visible": "$if(gv(colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
+                          "config_visible": "$if(gv(formulas/colcount) = 1, \"REMOVE\", \"ALWAYS\")$"
                         },
                         "viewgroup_items": [
                           {
@@ -2960,7 +3146,7 @@
         "internal_formulas": {
           "position_anchor": "$gv(formulas/boxalign)$",
           "position_offset_y": "$if(gv(widgetorient) = 0, 0, (gv(generated/box1height) + gv(verticalpadding)))$",
-          "position_offset_x": "$if(gv(widgetorient) = 0, (gv(generated/box1width) + gv(verticalpadding)), 0)$",
+          "position_offset_x": "$if(gv(widgetorient) = 0, (gv(box1dir2percent) + gv(verticalpadding)), 0)$",
           "config_visible": ""
         },
         "internal_globals": {
@@ -2982,12 +3168,12 @@
               "shape_corners": 100,
               "shape_type": 10
             },
-            "internal_title": "-- Background --",
+            "internal_title": "-- Background - Edit in Globals",
             "position_anchor": "CENTERLEFT",
             "internal_formulas": {
               "paint_color": "$ce(gv(generated/color2),alpha,75)$",
-              "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(generated/box1width)))$",
-              "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(generated/box1width)), (gv(generated/box2height) - gv(generated/box1height)))$",
+              "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1dir2percent)))$",
+              "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1dir2percent)), (gv(generated/box2height) - gv(generated/box1height)))$",
               "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
               "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$"
             },
@@ -3001,21 +3187,69 @@
           },
           {
             "internal_type": "OverlapLayerModule",
+            "internal_title": "-- Background - Edit in Globals",
+            "internal_toggles": {
+              "config_visible": 10
+            },
+            "internal_formulas": {
+              "config_visible": "$if(gv(colors/border) = 1, ALWAYS, REMOVE)$"
+            },
+            "viewgroup_items": [
+              {
+                "internal_type": "ShapeModule",
+                "shape_type": "RECT",
+                "shape_width": 545.0,
+                "shape_height": 212.0,
+                "paint_color": "#BB008F95",
+                "internal_toggles": {
+                  "paint_color": 10,
+                  "shape_width": 100,
+                  "shape_height": 100,
+                  "position_anchor": 10,
+                  "position_padding_left": 0,
+                  "shape_corners": 100,
+                  "shape_type": 10,
+                  "paint_stroke": 100
+                },
+                "internal_title": "-- Background - Edit in Globals",
+                "position_anchor": "CENTERLEFT",
+                "internal_formulas": {
+                  "paint_color": "$gv(colors/bordercolor)$",
+                  "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1dir2percent)))$",
+                  "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1dir2percent)), (gv(generated/box2height) - gv(generated/box1height)))$",
+                  "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
+                  "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$"
+                },
+                "shape_corners": 10.0,
+                "internal_globals": {
+                  "shape_width": "generated/box2width",
+                  "shape_height": "generated/box2height",
+                  "shape_corners": "cornerradius",
+                  "paint_color": "tc1",
+                  "paint_stroke": "colors/bordersize"
+                },
+                "paint_style": "STROKE",
+                "paint_stroke": 5.0
+              }
+            ]
+          },
+          {
+            "internal_type": "OverlapLayerModule",
             "internal_title": "2 Boxes, 2 Rows",
             "internal_toggles": {
               "config_visible": 10,
               "position_anchor": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(formulas/colcount) >= 1 & gv(box1dir2) = 2, ALWAYS, REMOVE)$",
-              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
+              "config_visible": "$if(gv(formulas/colcount) >= 1 & gv(box1dir1) = 2, ALWAYS, REMOVE)$",
+              "position_anchor": "$if(gv(box1dir2) = 0, CENTER, (gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER))$"
             },
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(formulas/colcount) >= 1 & gv(box1dir2) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(formulas/colcount) >= 1 & gv(box1dir1) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -3042,7 +3276,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 3, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -3080,7 +3314,7 @@
                       },
                       {
                         "internal_type": "StackLayerModule",
-                        "internal_title": "Rm 1",
+                        "internal_title": "Room 1",
                         "position_anchor": "CENTERLEFT",
                         "internal_toggles": {
                           "config_visible": 10,
@@ -3098,7 +3332,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 1, Row 1",
+                            "internal_title": "Room 1, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -3113,19 +3347,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 1, Power",
+                                "internal_title": "Room 1, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 1 Power",
+                                    "internal_title": "Room 1 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&light.bedroom_lights"
+                                        "switch_text": "toggle&$gv(entities/entity1)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3146,7 +3380,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 1, HA",
+                                "internal_title": "Room 1, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -3160,7 +3394,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 HA",
+                                    "internal_title": "Room 1 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -3173,7 +3407,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 1, Color",
+                                "internal_title": "Room 1, Row 1, Color",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -3190,7 +3424,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.bedroom_lights&brightness:125"
+                                        "switch_text": "color&$gv(entities/entity1)$&color:#FFFFFF"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3215,7 +3449,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 1, Row 2",
+                            "internal_title": "Room 1, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -3230,7 +3464,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, OFF",
+                                "internal_title": "Room 1, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -3256,7 +3490,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "off&light.bedroom_lights"
+                                        "switch_text": "off&$gv(entities/entity1)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3272,7 +3506,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 1 OFF",
+                                    "internal_title": "Room 1 OFF",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/devicestate) = off, gv(generated/color1), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/devicestate) = off, \"MULTIPLY\", \"NORMAL\")$"
@@ -3282,7 +3516,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, LOW",
+                                "internal_title": "Room 1, Row 2, LOW",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -3315,7 +3549,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.bedroom_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity1)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3331,7 +3565,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 1 LOW",
+                                    "internal_title": "Room 1 LOW",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/lightlevel) <= 75, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/lightlevel) <= 75, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -3341,7 +3575,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, MED",
+                                "internal_title": "Room 1, Row 2, MED",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -3373,7 +3607,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.bedroom_lights&brightness:125"
+                                        "switch_text": "light&$gv(entities/entity1)$&brightness:125"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3390,7 +3624,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 MED",
+                                    "internal_title": "Room 1 MED",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/lightlevel) <= 200, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/lightlevel) <= 200, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -3400,7 +3634,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, HI",
+                                "internal_title": "Room 1, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -3426,7 +3660,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.bedroom_lights&brightness:255"
+                                        "switch_text": "light&$gv(entities/entity1)$&brightness:255"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3443,7 +3677,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 HIGH",
+                                    "internal_title": "Room 1 HIGH",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 201, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.bedroom_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 201, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -3457,7 +3691,7 @@
                       },
                       {
                         "internal_type": "StackLayerModule",
-                        "internal_title": "Rm 2",
+                        "internal_title": "Room 2",
                         "config_stacking": "VERTICAL_RIGHT",
                         "position_anchor": "CENTERLEFT",
                         "internal_toggles": {
@@ -3481,7 +3715,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 2, Row 1",
+                            "internal_title": "Room 2, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -3496,19 +3730,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 1, Power",
+                                "internal_title": "Room 2, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 2 Power",
+                                    "internal_title": "Room 2 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&light.study_lights"
+                                        "switch_text": "toggle&$gv(entities/entity2)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3529,7 +3763,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 1, HA",
+                                "internal_title": "Room 2, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -3543,7 +3777,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 2 HA",
+                                    "internal_title": "Room 2 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -3553,13 +3787,52 @@
                                     ]
                                   }
                                 ]
+                              },
+                              {
+                                "internal_type": "OverlapLayerModule",
+                                "internal_title": "Room 2, Row 1, Color",
+                                "internal_toggles": {
+                                  "config_visible": 10
+                                },
+                                "internal_formulas": {
+                                  "config_visible": "$if(gv(generated/iconcount)  < 4, REMOVE, ALWAYS)$"
+                                },
+                                "viewgroup_items": [
+                                  {
+                                    "internal_type": "FontIconModule",
+                                    "icon_icon": "mdi-palette",
+                                    "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
+                                    "internal_events": [
+                                      {
+                                        "type": "SINGLE_TAP",
+                                        "action": "SWITCH_GLOBAL",
+                                        "switch": "tasker/totasker",
+                                        "switch_text": "color&$gv(entities/entity2)$&color:#FFFFFF"
+                                      },
+                                      {
+                                        "type": "SINGLE_TAP",
+                                        "action": "TRIGGER_FLOW",
+                                        "flow_id": "FblPILjW"
+                                      }
+                                    ],
+                                    "internal_toggles": {
+                                      "icon_size": 100,
+                                      "paint_color": 100
+                                    },
+                                    "internal_globals": {
+                                      "icon_size": "iconsize",
+                                      "paint_color": "colors/colico"
+                                    },
+                                    "internal_title": "Color"
+                                  }
+                                ]
                               }
                             ]
                           },
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 2, Row 2",
+                            "internal_title": "Room 2, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -3574,7 +3847,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, OFF",
+                                "internal_title": "Room 2, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -3600,7 +3873,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "off&light.study_lights"
+                                        "switch_text": "off&$gv(entities/entity2)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3617,7 +3890,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 2 OFF",
+                                    "internal_title": "Room 2 OFF",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.study_lights\")$$if(gv(formulas/devicestate) = off, gv(generated/color1), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/devicestate) = off, \"MULTIPLY\", \"NORMAL\")$"
@@ -3627,7 +3900,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, LOW",
+                                "internal_title": "Room 2, Row 2, LOW",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -3659,7 +3932,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.study_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity2)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3675,7 +3948,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 2 LOW",
+                                    "internal_title": "Room 2 LOW",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.study_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/lightlevel) <= 75, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/lightlevel) <= 75, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -3685,7 +3958,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, MED",
+                                "internal_title": "Room 2, Row 2, MED",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -3717,7 +3990,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.study_lights&brightness:125"
+                                        "switch_text": "light&$gv(entities/entity2)$&brightness:125"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3733,7 +4006,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 2 MED",
+                                    "internal_title": "Room 2 MED",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.study_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/lightlevel) <= 200, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.study_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/lightlevel) <= 200, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -3743,7 +4016,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, HI",
+                                "internal_title": "Room 2, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -3769,7 +4042,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.study_lights&brightness:255"
+                                        "switch_text": "light&$gv(entities/entity2)$&brightness:255"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3785,7 +4058,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 2 HIGH",
+                                    "internal_title": "Room 2 HIGH",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.study_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 201, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.study_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 201, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -3799,7 +4072,7 @@
                       },
                       {
                         "internal_type": "StackLayerModule",
-                        "internal_title": "Rm 3",
+                        "internal_title": "Room 3",
                         "config_stacking": "VERTICAL_RIGHT",
                         "position_anchor": "CENTERLEFT",
                         "internal_toggles": {
@@ -3823,7 +4096,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 1",
+                            "internal_title": "Room 3, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -3838,19 +4111,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 1, Power",
+                                "internal_title": "Room 3, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 3 Power",
+                                    "internal_title": "Room 3 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&switch.lr_lights"
+                                        "switch_text": "toggle&$gv(entities/entity3)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3871,7 +4144,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 1, HA",
+                                "internal_title": "Room 3, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -3885,7 +4158,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 3 HA",
+                                    "internal_title": "Room 3 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -3895,13 +4168,52 @@
                                     ]
                                   }
                                 ]
+                              },
+                              {
+                                "internal_type": "OverlapLayerModule",
+                                "internal_title": "Room 3, Row 1, Color",
+                                "internal_toggles": {
+                                  "config_visible": 10
+                                },
+                                "internal_formulas": {
+                                  "config_visible": "$if(gv(generated/iconcount)  < 4, REMOVE, ALWAYS)$"
+                                },
+                                "viewgroup_items": [
+                                  {
+                                    "internal_type": "FontIconModule",
+                                    "icon_icon": "mdi-palette",
+                                    "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
+                                    "internal_events": [
+                                      {
+                                        "type": "SINGLE_TAP",
+                                        "action": "SWITCH_GLOBAL",
+                                        "switch": "tasker/totasker",
+                                        "switch_text": "color&$gv(entities/entity3)$&color:#FFFFFF"
+                                      },
+                                      {
+                                        "type": "SINGLE_TAP",
+                                        "action": "TRIGGER_FLOW",
+                                        "flow_id": "FblPILjW"
+                                      }
+                                    ],
+                                    "internal_toggles": {
+                                      "icon_size": 100,
+                                      "paint_color": 100
+                                    },
+                                    "internal_globals": {
+                                      "icon_size": "iconsize",
+                                      "paint_color": "colors/colico"
+                                    },
+                                    "internal_title": "Color"
+                                  }
+                                ]
                               }
                             ]
                           },
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 2",
+                            "internal_title": "Room 3, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -3916,7 +4228,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, OFF",
+                                "internal_title": "Room 3, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -3942,7 +4254,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "template&light.bedroom_lights&{{ states.light.bedroom_lights.attributes.brightness }}\n"
+                                        "switch_text": "off&$gv(entities/entity3)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -3958,7 +4270,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 3 OFF",
+                                    "internal_title": "Room 3 OFF",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.lr_lights\")$$if(gv(formulas/devicestate) = off, gv(generated/color1), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.lr_lights\")$$if(gv(formulas/devicestate) = off, \"MULTIPLY\", \"NORMAL\")$"
@@ -3968,7 +4280,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, HI",
+                                "internal_title": "Room 3, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -3994,7 +4306,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "template&light.study_lights&{{ states.light.study_lights.attributes.brightness }}"
+                                        "switch_text": "on&$gv(entities/entity3)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4010,7 +4322,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 3 HIGH",
+                                    "internal_title": "Room 3 HIGH",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.lr_lights\")$$if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.lr_lights\")$$if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")$"
@@ -4024,7 +4336,7 @@
                       },
                       {
                         "internal_type": "StackLayerModule",
-                        "internal_title": "Rm 4",
+                        "internal_title": "Room 4",
                         "config_stacking": "VERTICAL_RIGHT",
                         "position_anchor": "CENTERLEFT",
                         "internal_toggles": {
@@ -4048,7 +4360,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 4, Row 1",
+                            "internal_title": "Room 4, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -4063,19 +4375,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 1, Power",
+                                "internal_title": "Room 4, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 4 Power",
+                                    "internal_title": "Room 4 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&light.foyer_lights"
+                                        "switch_text": "toggle&$gv(entities/entity4)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4096,7 +4408,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 1, HA",
+                                "internal_title": "Room 4, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -4110,7 +4422,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 HA",
+                                    "internal_title": "Room 4 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -4120,13 +4432,52 @@
                                     ]
                                   }
                                 ]
+                              },
+                              {
+                                "internal_type": "OverlapLayerModule",
+                                "internal_title": "Room 4, Row 1, Color",
+                                "internal_toggles": {
+                                  "config_visible": 10
+                                },
+                                "internal_formulas": {
+                                  "config_visible": "$if(gv(generated/iconcount)  < 4, REMOVE, ALWAYS)$"
+                                },
+                                "viewgroup_items": [
+                                  {
+                                    "internal_type": "FontIconModule",
+                                    "icon_icon": "mdi-palette",
+                                    "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
+                                    "internal_events": [
+                                      {
+                                        "type": "SINGLE_TAP",
+                                        "action": "SWITCH_GLOBAL",
+                                        "switch": "tasker/totasker",
+                                        "switch_text": "color&$gv(entities/entity4)$&color:#FFFFFF"
+                                      },
+                                      {
+                                        "type": "SINGLE_TAP",
+                                        "action": "TRIGGER_FLOW",
+                                        "flow_id": "FblPILjW"
+                                      }
+                                    ],
+                                    "internal_toggles": {
+                                      "icon_size": 100,
+                                      "paint_color": 100
+                                    },
+                                    "internal_globals": {
+                                      "icon_size": "iconsize",
+                                      "paint_color": "colors/colico"
+                                    },
+                                    "internal_title": "Color"
+                                  }
+                                ]
                               }
                             ]
                           },
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 4, Row 2",
+                            "internal_title": "Room 4, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -4141,7 +4492,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, OFF",
+                                "internal_title": "Room 4, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -4167,7 +4518,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "off&light.foyer_lights"
+                                        "switch_text": "off&$gv(entities/entity4)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4183,7 +4534,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 4 OFF",
+                                    "internal_title": "Room 4 OFF",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/devicestate) = off, gv(generated/color1), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/devicestate) = off, \"MULTIPLY\", \"NORMAL\")$"
@@ -4193,7 +4544,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, LOW",
+                                "internal_title": "Room 4, Row 2, LOW",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -4225,7 +4576,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.foyer_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity4)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4241,7 +4592,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 4 LOW",
+                                    "internal_title": "Room 4 LOW",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/lightlevel) <= 75, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 1, (if(gv(formulas/lightlevel) <= 75, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -4251,7 +4602,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, MED",
+                                "internal_title": "Room 4, Row 2, MED",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -4283,7 +4634,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.foyer_lights&brightness:125"
+                                        "switch_text": "light&$gv(entities/entity4)$&brightness:125"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4299,7 +4650,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 4 MED",
+                                    "internal_title": "Room 4 MED",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/lightlevel) <= 200, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 76, (if(gv(formulas/lightlevel) <= 200, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -4309,7 +4660,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, HI",
+                                "internal_title": "Room 4, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "ShapeModule",
@@ -4335,7 +4686,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.foyer_lights&brightness:255"
+                                        "switch_text": "light&$gv(entities/entity4)$&brightness:255"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4351,7 +4702,7 @@
                                     "internal_globals": {
                                       "icon_size": "iconsize"
                                     },
-                                    "internal_title": "Rm 4 HIGH",
+                                    "internal_title": "Room 4 HIGH",
                                     "internal_formulas": {
                                       "paint_color": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 201, (if(gv(formulas/devicestate) = on, gv(generated/color1), gv(colors/colico))), gv(colors/colico))), gv(colors/colico))$",
                                       "paint_mode": "$lv(glbname, \"light.foyer_lights\")$$if(gv(formulas/lightlevel), (if(gv(formulas/lightlevel) >= 201, (if(gv(formulas/devicestate) = on, \"MULTIPLY\", \"NORMAL\")), \"NORMAL\")), \"NORMAL\")$"
@@ -4367,7 +4718,7 @@
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "*Preset - Lighting Template",
+                    "internal_title": "*Preset - Room Control Template",
                     "config_visible": "REMOVE",
                     "viewgroup_items": [
                       {
@@ -4394,7 +4745,7 @@
                       },
                       {
                         "internal_type": "StackLayerModule",
-                        "internal_title": "Bedroom",
+                        "internal_title": "Room 1",
                         "position_anchor": "CENTERLEFT",
                         "internal_toggles": {
                           "config_visible": 10,
@@ -4403,12 +4754,7 @@
                         },
                         "internal_formulas": {
                           "config_visible": "$if(gv(generated/pagenum)=0,\"ALWAYS\",\"NEVER\")$",
-                          "config_stacking": "$gv(formulas/stackalign)$",
-                          "position_anchor": "$gv(formulas/boxalign)$",
-                          "position_padding_right": "$if(gv(box1position) = RIGHT, gv(iconpaddingbox), 0)$",
-                          "position_padding_top": "$if(gv(box1position) = TOP, gv(iconpaddingbox), 0)$",
-                          "position_padding_left": "$if(gv(box1position) = LEFT, gv(iconpaddingbox), 0)$",
-                          "position_padding_bottom": "$if(gv(box1position) = BOTTOM, gv(iconpaddingbox), 0)$"
+                          "config_stacking": "$gv(formulas/stackalign)$"
                         },
                         "internal_globals": {
                           "config_margin": "iconpaddingstack"
@@ -4417,7 +4763,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 1, Row 1",
+                            "internal_title": "Room 1, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -4432,19 +4778,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 1, Power",
+                                "internal_title": "Room 1, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 1 Power",
+                                    "internal_title": "Room 1 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light&light.bedroom_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity1)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4465,7 +4811,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 1, HA",
+                                "internal_title": "Room 1, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -4479,7 +4825,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 HA",
+                                    "internal_title": "Room 1 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -4495,7 +4841,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 1, Row 2",
+                            "internal_title": "Room 1, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -4510,7 +4856,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, OFF",
+                                "internal_title": "Room 1, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -4521,7 +4867,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "light.turn_off { \"entity_id\": \"light.bedroom_lights\" }"
+                                        "switch_text": "off&$gv(entities/entity1)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4537,13 +4883,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 OFF"
+                                    "internal_title": "Room 1 OFF"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, LOW",
+                                "internal_title": "Room 1, Row 2, LOW",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -4560,7 +4906,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.bedroom_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity1)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4576,13 +4922,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 LOW"
+                                    "internal_title": "Room 1 LOW"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, MED",
+                                "internal_title": "Room 1, Row 2, MED",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -4599,7 +4945,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.bedroom_lights&brightness:125"
+                                        "switch_text": "light&$gv(entities/entity1)$&brightness:125"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4615,13 +4961,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 MED"
+                                    "internal_title": "Room 1 MED"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 1, Row 2, HI",
+                                "internal_title": "Room 1, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -4632,7 +4978,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.bedroom_lights&brightness:255"
+                                        "switch_text": "light&$gv(entities/entity1)$&brightness:255"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4648,7 +4994,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 1 HIGH"
+                                    "internal_title": "Room 1 HIGH"
                                   }
                                 ]
                               }
@@ -4682,7 +5028,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 2, Row 1",
+                            "internal_title": "Room 2, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -4697,19 +5043,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 1, Power",
+                                "internal_title": "Room 2, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 2 Power",
+                                    "internal_title": "Room 2 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&light.study_lights"
+                                        "switch_text": "toggle&$gv(entities/entity2)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4730,7 +5076,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 1, HA",
+                                "internal_title": "Room 2, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -4744,7 +5090,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 2 HA",
+                                    "internal_title": "Room 2 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -4760,7 +5106,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 2, Row 2",
+                            "internal_title": "Room 2, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -4775,7 +5121,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, OFF",
+                                "internal_title": "Room 2, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -4786,7 +5132,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "off&light.study_lights "
+                                        "switch_text": "off&$gv(entities/entity2)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4802,13 +5148,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 2 OFF"
+                                    "internal_title": "Room 2 OFF"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, LOW",
+                                "internal_title": "Room 2, Row 2, LOW",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -4825,7 +5171,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.study_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity2)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4841,13 +5187,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 2 LOW"
+                                    "internal_title": "Room 2 LOW"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, MED",
+                                "internal_title": "Room 2, Row 2, MED",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -4864,7 +5210,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.study_lights&brightness:125"
+                                        "switch_text": "light&$gv(entities/entity2)$&brightness:125"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4880,13 +5226,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 2 MED"
+                                    "internal_title": "Room 2 MED"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 2, Row 2, HI",
+                                "internal_title": "Room 2, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -4897,7 +5243,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.study_lights&brightness:255"
+                                        "switch_text": "light&$gv(entities/entity2)$&brightness:255"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4913,7 +5259,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 2 HIGH"
+                                    "internal_title": "Room 2 HIGH"
                                   }
                                 ]
                               }
@@ -4947,7 +5293,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 1",
+                            "internal_title": "Room 3, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -4962,19 +5308,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 1, Power",
+                                "internal_title": "Room 3, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 3 Power",
+                                    "internal_title": "Room 3 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&light.lr_lights"
+                                        "switch_text": "toggle&$gv(entities/entity3)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -4995,7 +5341,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 1, HA",
+                                "internal_title": "Room 3, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5009,7 +5355,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 3 HA",
+                                    "internal_title": "Room 3 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -5025,7 +5371,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 2",
+                            "internal_title": "Room 3, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5045,7 +5391,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, OFF",
+                                "internal_title": "Room 3, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5056,7 +5402,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "off&light.lr_lights "
+                                        "switch_text": "off&$gv(entities/entity3)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5072,13 +5418,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 OFF"
+                                    "internal_title": "Room 4 OFF"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, LOW",
+                                "internal_title": "Room 3, Row 2, LOW",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -5095,7 +5441,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.lr_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity3)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5111,13 +5457,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 LOW"
+                                    "internal_title": "Room 4 LOW"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, MED",
+                                "internal_title": "Room 3, Row 2, MED",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -5134,7 +5480,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.lr_lights&brightness:125"
+                                        "switch_text": "light&$gv(entities/entity3)$&brightness:125"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5150,13 +5496,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 MED"
+                                    "internal_title": "Room 4 MED"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, HI",
+                                "internal_title": "Room 3, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5167,7 +5513,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.lr_lights&brightness:255"
+                                        "switch_text": "light&$gv(entities/entity3)$&brightness:255"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5183,7 +5529,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 HIGH"
+                                    "internal_title": "Room 4 HIGH"
                                   }
                                 ]
                               }
@@ -5217,7 +5563,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 4, Row 1",
+                            "internal_title": "Room 4, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5232,19 +5578,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 1, Power",
+                                "internal_title": "Room 4, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 4 Power",
+                                    "internal_title": "Room 4 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&light.foyer_lights"
+                                        "switch_text": "toggle&$gv(entities/entity4)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5265,7 +5611,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 1, HA",
+                                "internal_title": "Room 4, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5279,7 +5625,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 HA",
+                                    "internal_title": "Room 4 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -5295,7 +5641,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 4, Row 2",
+                            "internal_title": "Room 4, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5310,7 +5656,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, OFF",
+                                "internal_title": "Room 4, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5321,7 +5667,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "off&light.foyer_lights "
+                                        "switch_text": "off&$gv(entities/entity4)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5337,13 +5683,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 OFF"
+                                    "internal_title": "Room 4 OFF"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, LOW",
+                                "internal_title": "Room 4, Row 2, LOW",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -5360,7 +5706,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.bedroom_lights&brightness:30"
+                                        "switch_text": "light&$gv(entities/entity4)$&brightness:30"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5376,13 +5722,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 LOW"
+                                    "internal_title": "Room 4 LOW"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, MED",
+                                "internal_title": "Room 4, Row 2, MED",
                                 "internal_toggles": {
                                   "config_visible": 10
                                 },
@@ -5399,7 +5745,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.foyer_lights&brightness:125"
+                                        "switch_text": "light&$gv(entities/entity4)$&brightness:125"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5415,13 +5761,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 MED"
+                                    "internal_title": "Room 4 MED"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 4, Row 2, HI",
+                                "internal_title": "Room 4, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5432,7 +5778,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on&light.bedroom_lights&brightness:255"
+                                        "switch_text": "light&$gv(entities/entity4)$&brightness:255"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5448,7 +5794,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 4 HIGH"
+                                    "internal_title": "Room 4 HIGH"
                                   }
                                 ]
                               }
@@ -5495,7 +5841,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 1",
+                            "internal_title": "Room 3, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5510,19 +5856,19 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 1, Power",
+                                "internal_title": "Room 3, Row 1, Power",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
                                     "icon_icon": "mdi-power",
                                     "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-                                    "internal_title": "Rm 3 Power",
+                                    "internal_title": "Room 3 Power",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "toggle&switch.lr_lights"
+                                        "switch_text": "toggle&$gv(entities/entity1)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5543,7 +5889,7 @@
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 1, HA",
+                                "internal_title": "Room 3, Row 1, HA",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5557,7 +5903,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 3 HA",
+                                    "internal_title": "Room 3 HA",
                                     "internal_events": [
                                       {
                                         "type": "SINGLE_TAP",
@@ -5573,7 +5919,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 2",
+                            "internal_title": "Room 3, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5588,7 +5934,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, OFF",
+                                "internal_title": "Room 3, Row 2, OFF",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5599,7 +5945,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "off.switch.lr_lights"
+                                        "switch_text": "off&$gv(entities/entity3)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5615,13 +5961,13 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 3 OFF"
+                                    "internal_title": "Room 3 OFF"
                                   }
                                 ]
                               },
                               {
                                 "internal_type": "OverlapLayerModule",
-                                "internal_title": "Rm 3, Row 2, HI",
+                                "internal_title": "Room 3, Row 2, HI",
                                 "viewgroup_items": [
                                   {
                                     "internal_type": "FontIconModule",
@@ -5632,7 +5978,7 @@
                                         "type": "SINGLE_TAP",
                                         "action": "SWITCH_GLOBAL",
                                         "switch": "tasker/totasker",
-                                        "switch_text": "on.lr_lights"
+                                        "switch_text": "on&$gv(entities/entity3)$"
                                       },
                                       {
                                         "type": "SINGLE_TAP",
@@ -5648,7 +5994,7 @@
                                       "icon_size": "iconsize",
                                       "paint_color": "colors/colico"
                                     },
-                                    "internal_title": "Rm 3 HIGH"
+                                    "internal_title": "Room 3 HIGH"
                                   }
                                 ]
                               }
@@ -5710,7 +6056,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 1, Row 1",
+                            "internal_title": "Room 1, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5760,7 +6106,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 1, Row 2",
+                            "internal_title": "Room 1, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5835,7 +6181,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 2, Row 1",
+                            "internal_title": "Room 2, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5885,7 +6231,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 2, Row 2",
+                            "internal_title": "Room 2, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -5968,7 +6314,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 1",
+                            "internal_title": "Room 3, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -6018,7 +6364,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 3, Row 2",
+                            "internal_title": "Room 3, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -6081,7 +6427,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 4, Row 1",
+                            "internal_title": "Room 4, Row 1",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -6131,7 +6477,7 @@
                           {
                             "internal_type": "StackLayerModule",
                             "config_stacking": "HORIZONTAL_CENTER",
-                            "internal_title": "Rm 4, Row 2",
+                            "internal_title": "Room 4, Row 2",
                             "config_margin": 15,
                             "internal_toggles": {
                               "config_stacking": 10,
@@ -6208,7 +6554,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -6637,7 +6983,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -7504,15 +7850,15 @@
               "position_anchor": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(formulas/colcount) >= 1 & gv(box1dir2) = 1, ALWAYS, REMOVE)$\n",
-              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
+              "config_visible": "$if(gv(formulas/colcount) >= 1 & gv(box1dir1) = 1, ALWAYS, REMOVE)$\n",
+              "position_anchor": "$if(gv(box1dir2) = 0, CENTER, (gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER))$"
             },
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(formulas/colcount) >= 1 & gv(box1dir2) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(formulas/colcount) >= 1 & gv(box1dir1) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -7529,7 +7875,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -8141,14 +8487,16 @@
                       },
                       {
                         "internal_type": "StackLayerModule",
-                        "config_stacking": "HORIZONTAL_CENTER",
+                        "config_stacking": "VERTICAL_CENTER",
                         "internal_title": "Soundbar Controls",
                         "internal_toggles": {
                           "position_offset_x": 10,
-                          "config_margin": 100
+                          "config_margin": 100,
+                          "config_stacking": 10
                         },
                         "internal_formulas": {
-                          "position_offset_x": "$gv(devbox) + 15$"
+                          "position_offset_x": "$gv(devbox) + 15$",
+                          "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
                         },
                         "config_margin": 7.0,
                         "internal_globals": {
@@ -8162,7 +8510,7 @@
                               "config_visible": 10
                             },
                             "internal_formulas": {
-                              "config_visible": "$if(gv(colcount) = 1, \"ALWAYS\", \"REMOVE\")$"
+                              "config_visible": "$if(gv(formulas/colcount) = 1, \"ALWAYS\", \"REMOVE\")$"
                             },
                             "viewgroup_items": [
                               {
@@ -8645,7 +8993,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -8710,16 +9058,16 @@
               "position_anchor": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 2, ALWAYS, REMOVE)$",
-              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
+              "config_visible": "$if(gv(formulas/colcount) = 0 & gv(box1dir1) = 2, ALWAYS, REMOVE)$",
+              "position_anchor": "$if(gv(box1dir2) = 0, CENTER, (gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER))$"
             },
             "config_visible": "REMOVE",
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(formulas/colcount) = 0 & gv(box1dir1) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -8736,7 +9084,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -9741,7 +10089,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -9799,15 +10147,15 @@
               "position_anchor": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 1, ALWAYS, REMOVE)$\n",
-              "position_anchor": "$if(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER)$"
+              "config_visible": "$if(gv(formulas/colcount) = 0 & gv(box1dir1) = 1, ALWAYS, REMOVE)$\n",
+              "position_anchor": "$if(gv(box1dir2) = 0, CENTER, (gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign), CENTER))$"
             },
             "viewgroup_items": [
               {
                 "internal_type": "TextModule",
-                "text_expression": "$if(gv(formulas/colcount) = 0 & gv(box1dir2) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
+                "text_expression": "$if(gv(formulas/colcount) = 0 & gv(box1dir1) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
                 "paint_color": "#00FFFFFF",
-                "internal_title": "-- Folder Status (based on global settings)",
+                "internal_title": "-- Folder Status",
                 "text_size": 1.0
               },
               {
@@ -9824,7 +10172,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -10698,7 +11046,7 @@
                     "internal_type": "TextModule",
                     "text_expression": "$if(gv(devicecount) = 2, \"[ENABLED]\", \"[DISABLED]\")$",
                     "paint_color": "#00FFFFFF",
-                    "internal_title": "-- Folder Status (based on global settings)",
+                    "internal_title": "-- Folder Status",
                     "text_size": 1.0
                   },
                   {
@@ -10783,14 +11131,12 @@
           "position_anchor": 10,
           "position_offset_x": 10,
           "position_offset_y": 10,
-          "config_scale_value": 0,
           "config_visible": 10
         },
         "internal_formulas": {
           "position_anchor": "$lv(pos, if(gv(deviceiconposition) = DATA, 1, gv(deviceiconposition)))$$if(gv(box1position) = RIGHT, (if(#pos = 1, TOPLEFT, #pos = 2, CENTERRIGHT, #pos = 3, BOTTOMLEFT)),gv(box1position) = LEFT, (if(#pos = 1, TOPRIGHT, #pos = 2, CENTERLEFT, #pos = 3, BOTTOMRIGHT)),gv(box1position) = TOP, (if(#pos = 1, BOTTOMLEFT, #pos = 2, TOP, #pos = 3, BOTTOMRIGHT)),gv(box1position) = BOTTOM, (if(#pos = 1, TOPLEFT, #pos = 2, BOTTOM, #pos = 3, TOPRIGHT)))$",
-          "config_scale_value": "",
           "config_visible": "$if(gv(deviceiconposition) = 4, REMOVE, ALWAYS)$",
-          "position_offset_x": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,((gv(generated/box1width) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0)))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$",
+          "position_offset_x": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,((gv(box1dir2percent) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0)))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$",
           "position_offset_y": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 0,gv(box1position) = TOP   | gv(box1position) = BOTTOM,((gv(generated/box1height) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2)))))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(horizontalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$"
         },
         "internal_globals": {
@@ -10805,7 +11151,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 0, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 0, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -10938,7 +11284,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 1, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 1, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -11246,7 +11592,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 2, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 2, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -11360,7 +11706,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 3, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 3, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -11475,7 +11821,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 4, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 4, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -11621,7 +11967,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 5, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 5, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -11736,7 +12082,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 6, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 6, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -11820,7 +12166,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 7, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 7, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -12063,7 +12409,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceicontype) = 8, \"ALWAYS\", \"REMOVE\")$"
+              "config_visible": "$if(gv(deviceiconcat) = 8, \"ALWAYS\", \"REMOVE\")$"
             },
             "viewgroup_items": [
               {
@@ -13093,7 +13439,7 @@
                         "type": "SINGLE_TAP",
                         "action": "SWITCH_GLOBAL",
                         "switch": "tasker/totasker",
-                        "switch_text": "light&light.bedroom_lights&brightness:255"
+                        "switch_text": "light&$gv(entities/entity1)$&brightness:255"
                       },
                       {
                         "type": "SINGLE_TAP",

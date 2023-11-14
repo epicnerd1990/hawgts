@@ -14,7 +14,7 @@ Box 2 - Larger box, usually containing device controls such as volume or brightn
 
 Created by Corey Welsh to fill the need of universal Home Assistant Android widget\"
 
-// deviceicontype
+// deviceiconcat
 0##Lights,
 1##Climate,
 2##Television,
@@ -53,7 +53,7 @@ DATA##\"Select the location of the Device Icon on your Widget. \",
 4##Hidden,
 2##Inside Box 1 (ONLY for templates not using Box 1)
 
-// box1dir1
+// box1dir2
 DATA##\"Customize Box 1.\n\nSelect how many columns to display in Box 1, or \"Custom\" to enter the percentage of the widget that Box 1 fills (entered in the next list item).\",
 0##Remove (Single Box Mode),
 1##1 Column (Auto-Center),
@@ -65,15 +65,20 @@ DATA##\"Select alignment of Box 2 content. Use for:\n- Templates without icons (
 0##Beside Box 1,
 1##Centered
 
-// box1dir2
+>>> // box1dir1
 DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,
-1##1 Rows,
+1##1 Row,
 2##2 Rows
 
 // appiconhide
 DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",
 1##Show App Icons,
 0##Hide App Icons
+
+// haent
+
+// entities
+"ENTITY LIST\n\nIf you're only controlling one device, enter it in "entity1". If you're controlling more than one, enter them in the order they appear in the template. (1st device is "entity1", 2nd is "entity2", etc)"
 
 ----------------------------------------------------------------------------------------------------
 
@@ -90,6 +95,28 @@ INFO LISTS
 -- OPEN - Widget padding settings
 \"The following options work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"
 
+
+// --1. colornote
+-- OPEN - Color Options
+Edit widget colors by following through this setup
+
+// -- 2.
+        "description": "Customize the Box style and layout of the widget",
+        "entries": "-- Box Styles",
+
+// -- 3.
+        "entries": "-- Modify UI Elements",
+        "value": "-- Modify UI Elements"
+        "description": "",
+
+// -- 4.
+        "entries": "-- Padding and Spacing",
+        "value": "-- Padding and Spacing",
+        "description": "",
+
+
+
+
 // --5.
 -- OPEN - Extra Options
 \"Extra Options\n\n
@@ -100,6 +127,3 @@ Use the following settings to adjust \"Automatic\" widget functions\n\n
 - Remove Device Icon from padding and sizing calculations\n
 - Remove Device Icon touch to open editor\"
 
-// colornote
--- OPEN - Color Options
-Edit widget colors by following through this setup
