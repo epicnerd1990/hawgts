@@ -41,7 +41,7 @@ Double column mode for devices with more than 2 important functions or to displa
 - **Custom Size (Below)**  
 Select this option to manually adjust the size of Box 1. See [box1size] below for more details and [Sizing Box 1](READMEURL) for specifics about Box 1
 > Affects: iconpaddingbox
-### box1dir2percent > box1size
+### box1size > box1size
 (Set if you selected "Custom" above)  
 This is the always the current size of Box 1 in kpx. It's updated when one of the Auto-Center options in box1dir2. If Custom is selected, the current number is the auto-centered calculation from the previous setting. See the section on [Sizing Box 1](READMEURL)
 > Affects: iconpaddingbox, Box 1 > Column 2 visibility
@@ -125,7 +125,7 @@ jsondb is the widget status database. State changes that are set up in the HA Bl
 generated
 generated/widgetwidth
 generated/widgetheight
-box1dir2percent
+box1size
 generated/box1height
 generated/box2width
 generated/box2height
@@ -182,7 +182,7 @@ colors/color1fin
 -- 2.
 devicecount
 box1dir2
-box1dir2percent
+box1size
 box1dir1
 boxorder
 appiconhide

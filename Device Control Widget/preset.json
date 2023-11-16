@@ -57,7 +57,7 @@
         "max": 500,
         "value": 120.0,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1dir2percent))))$$if(#align = 0, gv(generated/widgetwidth), #size >= 0, #size, 0)$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1size))))$$if(#align = 0, gv(generated/widgetwidth), #size >= 0, #size, 0)$"
       },
       "generated/box1height": {
         "index": 5,
@@ -68,7 +68,7 @@
         "max": 500,
         "value": 120.0,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1dir2percent))))$$if(#align = 0, gv(generated/widgetheight), #size >= 0, #size, 0)$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1size))))$$if(#align = 0, gv(generated/widgetheight), #size >= 0, #size, 0)$"
       },
       "generated/box2width": {
         "index": 6,
@@ -78,7 +78,7 @@
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$if(gv(widgetorient) = 1 | gv(box1dir2) = 0,gv(generated/widgetwidth),(gv(generated/widgetwidth) - gv(box1dir2percent)))$"
+        "global_formula": "$gv(formulas/boxsize)$$if(gv(box1dir2) = 0 | #align = 1, gv(generated/widgetwidth), (#wgtdir - gv(box1size)))$"
       },
       "generated/box2height": {
         "index": 7,
@@ -88,7 +88,7 @@
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$if(gv(widgetorient) = 0, gv(generated/widgetheight), (if(gv(box1dir2) = 0, gv(generated/widgetheight), (gv(generated/widgetheight) - gv(generated/box1height)))))$"
+        "global_formula": "$gv(formulas/boxsize)$$if(gv(box1dir2) = 0 | #align = 0, gv(generated/widgetheight), (#wgtdir - gv(box1size)))$"
       },
       "generated/box2minsize": {
         "index": 8,
@@ -111,7 +111,7 @@
         "index": 10,
         "type": "NUMBER",
         "title": "iconcount",
-        "description": "GENERATED - Number of icons visible in a Box 2. Based on widget size and padding",
+        "description": "GENERATED - Number of icons visible in Box 2. Based on widget size and padding",
         "value": 4.0,
         "min": 0,
         "max": 10,
@@ -290,103 +290,43 @@
         "index": 34,
         "type": "TEXT",
         "title": "colcount",
-        "value": "$if(gv(box1dir2) = 0, 0, (if(gv(box1dir2percent) >= 20, 2, gv(box1dir2percent) = 0, 0, 1)))$"
-      },
-      "entities": {
-        "index": 35,
-        "type": "FOLDER",
-        "title": "entities",
-        "description": "Home Assistant Entity List"
-      },
-      "entities/-- 5.2": {
-        "index": 36,
-        "type": "LIST",
-        "title": "-- 5.2",
-        "entries": "DATA## Enter Entity IDs here,0##\"ENTITY LIST\\n\\nIf you're only controlling one device, enter it in \"entity1\". If you're controlling more than one, enter them in the order they appear in the template. (1st device is \"entity1\", 2nd is \"entity2\", etc)\"\n",
-        "value": "DATA"
-      },
-      "entities/entity1": {
-        "index": 37,
-        "type": "TEXT",
-        "title": "entity1",
-        "description": "Device 1 Entity ID",
-        "value": "light.bedroom_lights"
-      },
-      "entities/entity2": {
-        "index": 38,
-        "type": "TEXT",
-        "title": "entity2",
-        "description": "Device 2 Entity ID",
-        "value": "light.study_lights"
-
-      },
-      "entities/entity3": {
-        "index": 39,
-        "type": "TEXT",
-        "title": "entity3",
-        "description": "Device 3 Entity ID",
-        "value": "switch.lr_lights"
-
-      },
-      "entities/entity4": {
-        "index": 40,
-        "type": "TEXT",
-        "title": "entity4",
-        "description": "Device 4 Entity ID",
-        "value": "light.foyer_lights"
-
-      },
-      "entities/entity5": {
-        "index": 41,
-        "type": "TEXT",
-        "title": "entity5",
-        "description": "Device 5 Entity ID",
-        "value": "light.bedroom_lights"
-
-      },
-      "entities/entity6": {
-        "index": 42,
-        "type": "TEXT",
-        "title": "entity6",
-        "description": "Device 6 Entity ID",
-        "value": "light.bedroom_lights"
-
+        "value": "$if(gv(box1dir2) = 0, 0, (if(gv(box1size) >= 20, 2, gv(box1size) = 0, 0, 1)))$"
       },
       "readme": {
-        "index": 43,
+        "index": 35,
         "type": "LIST",
         "title": "README",
         "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
         "value": "OPEN - Readme"
       },
       "setupmode": {
-        "index": 44,
+        "index": 36,
         "type": "SWITCH",
         "title": "setupmode",
         "description": "MOVE TO BOTTOM - Enable showing setup data",
         "value": 0
       },
       "jsondb": {
-        "index": 45,
+        "index": 37,
         "type": "TEXT",
         "title": "jsondb",
         "value": "\n\n\n\n\n\n\n\n\n\n{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"255\",\n      \"color\": \"255,103,17\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"128\",\n      \"color\": \"255,0,0\"\n    },\n    {\n      \"entity_id\": \"sensor.watch_battery_level\",\n      \"state\": \"60\"\n    },\n    {\n      \"entity_id\": \"sensor.s23_ultra_battery_level\",\n      \"state\": \"32\"\n    },\n    {\n      \"entity_id\": \"sensor.remotephone_battery_level\",\n      \"state\": \"75\"\n    },\n  ]\n}"
       },
       "colors": {
-        "index": 46,
+        "index": 38,
         "type": "FOLDER",
         "title": "-- 1.",
         "description": "-- Select your Widget colors"
       },
       "colors/colornote": {
-        "index": 47,
+        "index": 39,
         "type": "LIST",
         "title": "COLORNOTE",
         "value": "-- OPEN - Color Options",
         "entries": "Edit widget colors by following through this setup. See Readme for details."
       },
       "colors/color1sel": {
-        "index": 48,
+        "index": 40,
         "type": "LIST",
         "title": "color1sel",
         "description": "Color 1 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -394,7 +334,7 @@
         "value": "0"
       },
       "colors/color1sysc": {
-        "index": 49,
+        "index": 41,
         "type": "LIST",
         "title": "color1sysc",
         "description": "Color 1 - System/MaterialYou Only\nSelect a color tone.",
@@ -402,7 +342,7 @@
         "value": "2"
       },
       "colors/color1fil1": {
-        "index": 50,
+        "index": 42,
         "type": "LIST",
         "title": "color1fil1",
         "description": "Color 1 - Wallpaper Only\nSelect filter.",
@@ -410,7 +350,7 @@
         "value": "2"
       },
       "colors/color1adj": {
-        "index": 51,
+        "index": 43,
         "type": "NUMBER",
         "title": "color1adj",
         "description": "Color 1 - Filter adjustment\n0 = None, 100 = Strong",
@@ -419,7 +359,7 @@
         "value": 40.0
       },
       "colors/color1fil2": {
-        "index": 52,
+        "index": 44,
         "type": "LIST",
         "title": "color1fil2",
         "description": "Color 1 - Select filter manipulation - Changes slider above from total into add/subtract from current (optional)",
@@ -427,14 +367,14 @@
         "value": "0"
       },
       "colors/color1pick": {
-        "index": 53,
+        "index": 45,
         "type": "COLOR",
         "title": "color1pick",
         "description": "Color 1 - Manual Color choice, overrides filter\nAlso used as fallback color for extracted colors",
         "value": "#FFFFFFFF"
       },
       "colors/color1alph": {
-        "index": 54,
+        "index": 46,
         "type": "NUMBER",
         "title": "color1alph",
         "description": "Color 1 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -443,7 +383,7 @@
         "value": 75.0
       },
       "colors/color2sel": {
-        "index": 55,
+        "index": 47,
         "type": "LIST",
         "title": "color2sel",
         "description": "Color 2 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -451,7 +391,7 @@
         "value": "0"
       },
       "colors/color2sysc": {
-        "index": 56,
+        "index": 48,
         "type": "LIST",
         "title": "color2sysc",
         "description": "Color 2 - System/MaterialYou Only\nSelect a color tone",
@@ -459,7 +399,7 @@
         "value": "0"
       },
       "colors/color2fil1": {
-        "index": 57,
+        "index": 49,
         "type": "LIST",
         "title": "color2fil1",
         "description": "Color 2 - Wallpaper Only\nSelect filter.",
@@ -467,7 +407,7 @@
         "value": "2"
       },
       "colors/color2adj": {
-        "index": 58,
+        "index": 50,
         "type": "NUMBER",
         "title": "color2adj",
         "description": "Color 2 - Filter adjustment\n0 = None, 100 = Strong",
@@ -476,7 +416,7 @@
         "value": 55.0
       },
       "colors/color2fil2": {
-        "index": 59,
+        "index": 51,
         "type": "LIST",
         "title": "color2fil2",
         "description": "Color 2 - Select filter manipulation - Changes number above from total into add/subtract from current (optional)",
@@ -484,14 +424,14 @@
         "value": "0"
       },
       "colors/color2pick": {
-        "index": 60,
+        "index": 52,
         "type": "COLOR",
         "title": "color2pick",
         "description": "Color 2 - Manual Color choice, overrides filter.\nAlso used as fallback color for extracted colors",
         "value": "#E7FFFFFF"
       },
       "colors/color2alph": {
-        "index": 61,
+        "index": 53,
         "type": "NUMBER",
         "title": "color2alph",
         "description": "Color 2 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -500,14 +440,14 @@
         "value": 75.0
       },
       "colors/colico": {
-        "index": 62,
+        "index": 54,
         "type": "COLOR",
         "title": "colico",
         "description": "Color of icons and text. Default: #E7FFFFFF",
         "value": "#E7FFFFFF"
       },
       "colors/colicoon": {
-        "index": 63,
+        "index": 55,
         "type": "COLOR",
         "title": "colicoon",
         "description": "Color of icons and text when device is on",
@@ -516,7 +456,7 @@
         "global_formula": "$ce(si(wpcolor1, comp), sat, 60)$"
       },
       "colors/color2fin": {
-        "index": 64,
+        "index": 56,
         "type": "COLOR",
         "title": "color2fin",
         "description": "Final output of color in Hex ARGB form",
@@ -524,20 +464,20 @@
         "value": "#BF007D8C"
       },
       "colors/color1fin": {
-        "index": 65,
+        "index": 57,
         "type": "COLOR",
         "title": "color1fin",
         "value": "#BF005B66"
       },
       "colors/border": {
-        "index": 66,
+        "index": 58,
         "type": "SWITCH",
         "title": "border",
         "description": "Turn on a border around your boxes",
         "value": 0
       },
       "colors/bordersize": {
-        "index": 67,
+        "index": 59,
         "type": "NUMBER",
         "title": "bordersize",
         "description": "Set the size of the border\\nDefault: 3kpx",
@@ -546,7 +486,7 @@
         "value": 3.0
       },
       "colors/bordercolor": {
-        "index": 68,
+        "index": 60,
         "type": "LIST",
         "title": "bordercolor",
         "description": "NOTE: Change to bordercolorlor. Set up so  this color can be completly maniplauted as well when redoing color system",
@@ -554,15 +494,15 @@
         "value": "FFFFFF"
       },
       "-- 2.": {
-        "index": 69,
+        "index": 61,
         "type": "LIST",
         "title": "-- 2.",
         "description": "Customize the Box style and layout of the widget",
-        "entries": "-- Box Styles",
+        "entries": "-- Box Style and UI Elements",
         "value": "-- Box Styles"
       },
       "devicecount": {
-        "index": 70,
+        "index": 62,
         "type": "LIST",
         "title": "devicecount",
         "description": "Select how many devices you'd like to control with this Widget",
@@ -570,7 +510,7 @@
         "value": "3"
       },
       "box1dir1": {
-        "index": 71,
+        "index": 63,
         "type": "LIST",
         "title": "box1dir1",
         "description": "Select how many Rows to display (or columns if widget is vertical)",
@@ -578,24 +518,24 @@
         "entries": "DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,1##1 Row,2##2 Rows"
       },
       "box1dir2": {
-        "index": 72,
+        "index": 64,
         "type": "LIST",
         "title": "box1dir2",
         "description": "Configure the size of Box 1",
         "entries": "DATA##\"Customize the size of Box 1 (smaller box).\n\nSelect how many columns (horizontal widget) or rows (vertical widget) to display in Box 1, or \"Custom\". \"Custom\" lets you set the percentage of the widget that Box 1 fills in the next list item.\",0##Remove (Single Box Mode),1##1 Column (Auto-Center),2##2 Columns (Auto-Center),3##Custom Size (Below)",
         "value": "2"
       },
-      "box1dir2percent": {
-        "index": 73,
+      "box1size": {
+        "index": 65,
         "type": "NUMBER",
-        "title": "box1dir2percent",
+        "title": "box1size",
         "description": "Set if you selected \"Custom\" above",
         "value": "28.055555",
         "min": 0,
-        "max": 100
+        "max": 720
       },
       "boxorder": {
-        "index": 74,
+        "index": 66,
         "type": "LIST",
         "title": "boxorder",
         "description": "Set the order of the boxes on your widget",
@@ -603,14 +543,14 @@
         "value": "1"
       },
       "-- 3.": {
-        "index": 75,
+        "index": 67,
         "type": "LIST",
         "title": "-- 3.",
         "entries": "-- Modify UI Elements",
         "value": "-- Modify UI Elements"
       },
       "deviceiconcat": {
-        "index": 76,
+        "index": 68,
         "type": "LIST",
         "title": "deviceiconcat",
         "description": "Select the device icon to display in the corner of the widget or hide it in the next option",
@@ -618,21 +558,21 @@
         "value": "0"
       },
       "deviceiconposition": {
-        "index": 77,
+        "index": 69,
         "type": "LIST",
         "title": "deviceiconposition",
         "entries": "DATA##\"Select the location of the Device Icon on your Widget\",1##Default Location,2##Inside Box 1 (for templates not using Box 1),3##Swap with settings icons,4##Hidden",
         "value": "1"
       },
       "deviceiconrotation": {
-        "index": 78,
+        "index": 70,
         "type": "LIST",
         "title": "deviceiconrotation",
         "entries": "DATA##\"Select the rotation of the Device Icon on your Widget\",NONE##0 Degrees,DEG90##90 Degrees,DEG180##180 Degrees,DEG270##180 Degrees,FLIP_X##Flip Vertically,FLIP_Y##Flip Horizontally",
         "value": "FLIP_Y"
       },
       "deviceiconsize": {
-        "index": 79,
+        "index": 71,
         "type": "NUMBER",
         "title": "deviceiconsize",
         "description": "Set the normal (default) size of the Device Icon. Auto-shrinking options avaliable below.\nDefault: 120kpx",
@@ -642,7 +582,7 @@
         "max": 450
       },
       "iconsize": {
-        "index": 80,
+        "index": 72,
         "type": "NUMBER",
         "title": "iconsize",
         "description": "Set the size of the widget icons.\nDefault: 80kpx",
@@ -651,7 +591,7 @@
         "value": 80.0
       },
       "appiconhide": {
-        "index": 81,
+        "index": 73,
         "type": "LIST",
         "title": "appiconhide",
         "description": "Hide the App Icons",
@@ -659,7 +599,7 @@
         "value": "1"
       },
       "appiconsize": {
-        "index": 82,
+        "index": 74,
         "type": "NUMBER",
         "title": "appiconsize",
         "description": "Set the size of the small app-launcher icon(s).\nDefault: 32kpx",
@@ -668,7 +608,7 @@
         "value": 32.0
       },
       "cornerradius": {
-        "index": 83,
+        "index": 75,
         "type": "NUMBER",
         "title": "cornerradius",
         "description": "Set the radius of the rounded corners.\nDefault: 10kpx",
@@ -677,14 +617,14 @@
         "value": 10.0
       },
       "-- 4.": {
-        "index": 84,
+        "index": 76,
         "type": "LIST",
         "title": "-- 4.",
         "entries": "-- Padding and Spacing",
         "value": "-- Padding and Spacing"
       },
       "iconpaddinginstack": {
-        "index": 85,
+        "index": 77,
         "type": "NUMBER",
         "title": "iconpaddinginstack",
         "description": "Set the icon padding inside each row/column. Default: 20kpx",
@@ -693,7 +633,7 @@
         "value": 10.0
       },
       "iconpaddingstack": {
-        "index": 86,
+        "index": 78,
         "type": "NUMBER",
         "title": "iconpaddingstack",
         "description": "Set the icon padding between each row/column. Default: 20kpx",
@@ -702,7 +642,7 @@
         "value": 10.0
       },
       "iconpaddingbox": {
-        "index": 87,
+        "index": 79,
         "type": "NUMBER",
         "title": "iconpaddingbox",
         "description": "Set the icon padding from the edge of Box 2. Default: 10kpx",
@@ -711,14 +651,14 @@
         "value": "\n\n\n\n\n\n16"
       },
       "paddingnote": {
-        "index": 88,
+        "index": 80,
         "type": "LIST",
         "title": "PADDINGNOTE",
         "entries": "\"The following options work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"",
         "value": "-- OPEN - Widget padding settings"
       },
       "verticalpadding": {
-        "index": 89,
+        "index": 81,
         "type": "NUMBER",
         "title": "verticalpadding",
         "description": "Select the Vertical widget padding size\nDefault: 6kpx",
@@ -727,7 +667,7 @@
         "max": 50
       },
       "horizontalpadding": {
-        "index": 90,
+        "index": 82,
         "type": "NUMBER",
         "title": "horizontalpadding",
         "description": "Select the Horizontal widget padding size\nDefault: 3kpx",
@@ -736,6 +676,66 @@
         "max": 50
       },
       "-- 5.": {
+        "index": 83,
+        "type": "FOLDER",
+        "title": "-- 5.",
+        "description": "Home Assistant Entity List"
+      },
+      "entities/-- 5.2": {
+        "index": 84,
+        "type": "LIST",
+        "title": "-- 5.2",
+        "entries": "DATA## Enter Entity IDs here,0##\"ENTITY LIST\\n\\nIf you're only controlling one device, enter it in \"entity1\". If you're controlling more than one, enter them in the order they appear in the template. (1st device is \"entity1\", 2nd is \"entity2\", etc)\"\n",
+        "value": "DATA"
+      },
+      "entities/entity1": {
+        "index": 85,
+        "type": "TEXT",
+        "title": "entity1",
+        "description": "Device 1 Entity ID",
+        "value": "light.bedroom_lights"
+      },
+      "entities/entity2": {
+        "index": 86,
+        "type": "TEXT",
+        "title": "entity2",
+        "description": "Device 2 Entity ID",
+        "value": "light.study_lights"
+
+      },
+      "entities/entity3": {
+        "index": 87,
+        "type": "TEXT",
+        "title": "entity3",
+        "description": "Device 3 Entity ID",
+        "value": "switch.lr_lights"
+
+      },
+      "entities/entity4": {
+        "index": 88,
+        "type": "TEXT",
+        "title": "entity4",
+        "description": "Device 4 Entity ID",
+        "value": "light.foyer_lights"
+
+      },
+      "entities/entity5": {
+        "index": 89,
+        "type": "TEXT",
+        "title": "entity5",
+        "description": "Device 5 Entity ID",
+        "value": "light.bedroom_lights"
+
+      },
+      "entities/entity6": {
+        "index": 90,
+        "type": "TEXT",
+        "title": "entity6",
+        "description": "Device 6 Entity ID",
+        "value": "light.bedroom_lights"
+
+      },
+      "-- 6.": {
         "index": 91,
         "type": "LIST",
         "title": "-- 5.",
@@ -1068,7 +1068,7 @@
             "id": "TALDjuUt",
             "type": "A_GLOBAL",
             "params": {
-              "global": "box1dir2percent"
+              "global": "box1size"
             }
           }
         ]
@@ -1172,27 +1172,14 @@
               "paint_color": 100,
               "shape_width": 10,
               "shape_height": 10,
-              "position_anchor": 0,
-              "position_padding_left": 0,
-              "position_padding_right": 0,
-              "position_padding_top": 0,
               "shape_corners": 100
             },
             "internal_formulas": {
-              "paint_color": "$ce(gv(generated/color1),alpha,75)$",
-              "shape_width": "$if(gv(widgetorient) = 1, gv(generated/widgetwidth), gv(box1dir2percent))$",
-              "shape_height": "$if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1dir2percent))$",
-              "position_anchor": "$if(gv(widgetorient) = 0, CENTERRIGHT, TOP)$",
-              "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
-              "position_padding_right": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
-              "position_padding_top": "$if(gv(widgetorient) = 0, 0, gv(horizontalpadding))$"
+              "shape_width": "$if(gv(widgetorient) = 1, gv(generated/widgetwidth), gv(box1size))$",
+              "shape_height": "$if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1size))$"
             },
             "shape_type": "RECT",
-            "shape_width": 135.0,
-            "shape_height": 212.0,
-            "paint_color": "#BF005B66",
             "paint_mode": "OVERLAY",
-            "shape_corners": 10.0,
             "internal_globals": {
               "shape_corners": "cornerradius",
               "paint_color": "tc1"
@@ -1216,27 +1203,15 @@
                   "paint_color": 10,
                   "shape_width": 100,
                   "shape_height": 100,
-                  "position_anchor": 0,
-                  "position_padding_left": 0,
-                  "position_padding_right": 0,
-                  "position_padding_top": 0,
                   "shape_corners": 100,
                   "paint_stroke": 100
                 },
                 "internal_formulas": {
-                  "paint_color": "$gv(colors/bordercolor)$",
-                  "position_anchor": "$if(gv(widgetorient) = 0, CENTERRIGHT, TOP)$",
-                  "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
-                  "position_padding_right": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$",
-                  "position_padding_top": "$if(gv(widgetorient) = 0, 0, gv(horizontalpadding))$"
+                  "paint_color": "$gv(colors/bordercolor)$"
                 },
                 "shape_type": "RECT",
-                "shape_width": 135.0,
-                "shape_height": 212.0,
-                "paint_color": "#00005B66",
-                "shape_corners": 10.0,
                 "internal_globals": {
-                  "shape_width": "box1dir2percent",
+                  "shape_width": "box1size",
                   "shape_height": "generated/box1height",
                   "shape_corners": "cornerradius",
                   "paint_color": "tc2",
@@ -3146,7 +3121,7 @@
         "internal_formulas": {
           "position_anchor": "$gv(formulas/boxalign)$",
           "position_offset_y": "$if(gv(widgetorient) = 0, 0, (gv(generated/box1height) + gv(verticalpadding)))$",
-          "position_offset_x": "$if(gv(widgetorient) = 0, (gv(box1dir2percent) + gv(verticalpadding)), 0)$",
+          "position_offset_x": "$if(gv(widgetorient) = 0, (gv(box1size) + gv(verticalpadding)), 0)$",
           "config_visible": ""
         },
         "internal_globals": {
@@ -3164,7 +3139,6 @@
               "shape_width": 100,
               "shape_height": 100,
               "position_anchor": 10,
-              "position_padding_left": 0,
               "shape_corners": 100,
               "shape_type": 10
             },
@@ -3172,10 +3146,9 @@
             "position_anchor": "CENTERLEFT",
             "internal_formulas": {
               "paint_color": "$ce(gv(generated/color2),alpha,75)$",
-              "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1dir2percent)))$",
-              "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1dir2percent)), (gv(generated/box2height) - gv(generated/box1height)))$",
-              "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
-              "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$"
+              "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1size)))$",
+              "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1size)), (gv(generated/box2height) - gv(generated/box1height)))$",
+              "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$"
             },
             "shape_corners": 10.0,
             "internal_globals": {
@@ -3215,8 +3188,8 @@
                 "position_anchor": "CENTERLEFT",
                 "internal_formulas": {
                   "paint_color": "$gv(colors/bordercolor)$",
-                  "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1dir2percent)))$",
-                  "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1dir2percent)), (gv(generated/box2height) - gv(generated/box1height)))$",
+                  "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1size)))$",
+                  "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1size)), (gv(generated/box2height) - gv(generated/box1height)))$",
                   "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
                   "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$"
                 },
@@ -11136,7 +11109,7 @@
         "internal_formulas": {
           "position_anchor": "$lv(pos, if(gv(deviceiconposition) = DATA, 1, gv(deviceiconposition)))$$if(gv(box1position) = RIGHT, (if(#pos = 1, TOPLEFT, #pos = 2, CENTERRIGHT, #pos = 3, BOTTOMLEFT)),gv(box1position) = LEFT, (if(#pos = 1, TOPRIGHT, #pos = 2, CENTERLEFT, #pos = 3, BOTTOMRIGHT)),gv(box1position) = TOP, (if(#pos = 1, BOTTOMLEFT, #pos = 2, TOP, #pos = 3, BOTTOMRIGHT)),gv(box1position) = BOTTOM, (if(#pos = 1, TOPLEFT, #pos = 2, BOTTOM, #pos = 3, TOPRIGHT)))$",
           "config_visible": "$if(gv(deviceiconposition) = 4, REMOVE, ALWAYS)$",
-          "position_offset_x": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,((gv(box1dir2percent) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0)))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$",
+          "position_offset_x": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,((gv(box1size) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0)))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$",
           "position_offset_y": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 0,gv(box1position) = TOP   | gv(box1position) = BOTTOM,((gv(generated/box1height) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2)))))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(horizontalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$"
         },
         "internal_globals": {

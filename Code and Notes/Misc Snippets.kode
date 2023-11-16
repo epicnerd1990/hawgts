@@ -41,7 +41,7 @@ LIGHT: $lv(col, ce(si(wpcolor1),lum,55))$$ce(#col,alpha,75)$
 
 // formulas/colcount
 V1 - SHOW/HIDE TEMPLATE FOLDERS BASED ON GLOBAL SETTINGS
-$if(gv(box1dir2percent) >= 20, 2, gv(box1dir2percent) = 0, 0, 1)$
+$if(gv(box1size) >= 20, 2, gv(box1size) = 0, 0, 1)$
 
 > Samples
 $if(gv(formulas/colcount) = 0 & gv(box1dir1) = 2, ALWAYS, REMOVE)$
@@ -68,7 +68,7 @@ $if(gv(box1position) = RIGHT, TOPLEFT, gv(box1position) = LEFT, TOPRIGHT,
 
 > Device Icon Group - X Offset
 $lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 
-            ((gv(box1dir2percent) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),
+            ((gv(box1size) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),
             gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0
 )))$
 $if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),

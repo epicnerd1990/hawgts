@@ -70,10 +70,10 @@ DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns 
 1##1 Row,
 2##2 Rows
 
-// appiconhide
-DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",
-1##Show App Icons,
-0##Hide App Icons
+>>> // appiconhide
+DATA##\"Control visbility of the App icons across from settings\",
+0##Show App Icons,
+1##Hide App Icons
 
 // haent
 

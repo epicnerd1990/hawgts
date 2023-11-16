@@ -6,25 +6,22 @@ DCW to-do lists, notes, ideas and more
 
 ### New Features/Big changes
 - Find way to reintroduce box2minsize check into box2width without loop
-- ~~"Preset" folder where you can insert your HA information for preset templates~~
-    - ~~Eg add "light.bedroom_lights" as room 1~~
-    - ~~`Core added, apply to all devices in all templates. Working test: bedroom light off`~~
-    - ~~`Add entity5 & 6`~~
-    - ~~`Rename folder "entities". Rename note in folder`~~
 - ~~Add a border option~~
 - ~~Set up new tasker pipeline for custom commands for advanced users ()~~
 - Work on Readme's
 - **TESTING** Try fixing loading problems with colors by writing colors from a flow to a global or from a global to another global to keep a fixed copy while the color gets regenerated
-    - Test note - After restart, color renders to a blue color. Add timer to start of color flow?
+    - Result 1 - After restart, color renders to a blue color. Add timer to start of color flow?
+    - Result 2 - On wall of widgets, all rendered correctly instantly
     - If test works, try setting "default" options to things like box size and icon alignment to avoid weird rendering issues while widget is loading changes
     - `Change color flows back to proper values after test`
 - `Move "Hidden" Device Icon setting from deviceiconposition to deviceiconcat`
 - Setup inital flow that sets devicecount, box1dir2, box1dir1
+    - Also a flow that adjusts things automatically. eg change to 3 devices, automatically set to 2 columns, etc.
 - Add all Device Icon types to Globals?
     - Current list = Category, New list = Category options - use global variables?
 - Add every template to Globals??
     - Could make things easier for user?
-    Add full check for how many rows are showing and show first icons accordingly in Box 2 to all templates
+    - Add full check for how many rows are showing and show first icons accordingly in Box 2 to all templates
 - Setup Mode
     - Set up "setupmode" text layout better and add a few different text options (sizing, json, etc)
     - Group in overlay groups and use visibility to display each one
@@ -33,6 +30,10 @@ DCW to-do lists, notes, ideas and more
     - temp global, get widget info, process, if different? then use, otherwise temp global??
     - Rows, Box 1 columns, Device count, etc
     - Potentially remove numbering system and give each folder a simple name with a note at the top
+    - Run iconcount calc?
+    - Maybe merge into the Box 1 size code that runs every time widget resizes? For example, if you resize from 2 rows to 1 row, change global to 1 row, etc
+
+
 
 
 
@@ -62,11 +63,33 @@ DCW to-do lists, notes, ideas and more
 - ~~Fix incorrect icon direction in 3x1 display~~
     - ~~Vertical widget > Box 2 > 2 Boxes 1 Row > 1 Device~~
 - ~~Replace wrong code in Icon Padding Flow~~
-- `Entities to go between --4 and --5?`
-- `box1dir2percent > box1dir1size`
+- ~~Verify new boxalign formulas and flows work with vertical box1size~~
+- ~~Changing box1dir2 somehow makes box1width/height grow to ~3 icons tall~~
+- ~~Fix box1size flow - outputting wrong~~
+    - ~~Working on box1size flow and global formulas - box1dir1 and box1dir2~~
+    - ~~Temp 1 column support added~~
+    - ~~Make pad calc work for 1 and 2 rows and 1 and 2 columns~~
+- ~~Fix devicosize - Change check for row 2 for a check of the height of widget and settings icon visibility. Shrink if widgetwidth <= deviceiconsize + iconpaddingstack * 2~~
+- ~~Check Box 1 hidden and mini sizes before continuing~~
+- ~~`Entities to go between --4 and --5?`~~
+- ~~`box1size > box1dir1size`~~
+- ~~"Preset" folder where you can insert your HA information for preset templates~~
+    - ~~Eg add "light.bedroom_lights" as room 1~~
+    - ~~`Core added, apply to all devices in all templates. Working test: bedroom light off`~~
+    - ~~`Add entity5 & 6`~~
+    - ~~`Rename folder "entities". Rename note in folder`~~
+    - `Apply to remaining templates as they are edited`
+    - Test to see if new code works fluently
 - `Remove box1width and box1height from formulas. Integrate box1height align calc into the few calls it has`
-- Verify new boxalign formulas and flows work with vertical box1size
-- Changing box1dir2 somehow makes box1width/height grow to ~3 icons tall
+- `Fix template alignments that contain "Vertical_left" to "Vertical_Center"`
+- `Rename appiconhide and devicosize > deviceiconcalc?`
+- `Rewrite and rename appiconhide. Show is default, 0. Reword as "app icon visibility`
+- Iconcount problems
+    - Fix iconcount boxsize2 and boxsize3 - not calculating properly - sometimes - From initial start?
+    - Try as a flow instead maybe?
+    - Returning 2 in single box mode
+- iconpadingbox not returned when box1dir2 is set to custom **CHECK - POTENTIALLY MAKE NEW**
+- Add 3+ device, 1 box mode? Could have 4 devices in a grid
 
 ### Templates
 - Look at security 2x2 - "House Security" template?
@@ -91,6 +114,8 @@ DCW to-do lists, notes, ideas and more
         - Go through all global settings item by item. Organize page to be accessible by tree (multiple depths?)
     - Create third readme "Box Heiaracy"
         - Tree view of all boxes/templates, with screenshots. Use headers for subgroups like "2 Rowss"
+- Set up [DELETE] system where once the user is complete, they can delete all marked widget items
+    - Make sure user knows to delete unused icon overlay groups from templates
 - Background color system
     - Possibly re-do based on community resources
     - Possibly re-do based on UI types and Tasker setup interface/color picker
@@ -99,10 +124,14 @@ DCW to-do lists, notes, ideas and more
 - Reorganize Globals by folders
     - **Wait until new KWGT beta available, currently flows do not always write to globals inside folders**
     - Roughly sort by numbers
+    - Merge -- 2-4. into one folder, keeping subheading list globals. Make 6 one folder
+    - JSON at bottom with setup mode toggle
+- Add code to shrink iconsize somehow if the box is smaller than the icon sizes?
+- Create Custom GPT for Widget design and global/settings layout
 
 ### Version 2.0 features*
 - Make widget a Komponent that can be added to a KWLP wallpaper
-
+- Integrate all options into the globals.
 
 
 ## TO-DO Project
