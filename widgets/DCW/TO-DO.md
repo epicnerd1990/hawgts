@@ -4,42 +4,29 @@ DCW to-do lists, notes, ideas and more
 
 ## TO-DO Current
 
-### New Features/Big changes
-- Find way to reintroduce box2minsize check into box2width without loop
+### Ongoing and Difficult
+- Loop problems to fix 
+    - box2minsize - Disabled - Fix looop with iconcount and re-add to box2width/box2height
+    - iconcount - Patched - Need to use deviceiconcalc, using deviceiconsize temporarily
 - ~~Add a border option~~
 - ~~Set up new tasker pipeline for custom commands for advanced users ()~~
 - Work on Readme's
-- **TESTING** Try fixing loading problems with colors by writing colors from a flow to a global or from a global to another global to keep a fixed copy while the color gets regenerated
-    - Result 1 - After restart, color renders to a blue color. Add timer to start of color flow?
-    - Result 2 - On wall of widgets, all rendered correctly instantly
-    - If test works, try setting "default" options to things like box size and icon alignment to avoid weird rendering issues while widget is loading changes
-    - `Change color flows back to proper values after test`
-- `Move "Hidden" Device Icon setting from deviceiconposition to deviceiconcat`
-- Setup inital flow that sets devicecount, box1dir2, box1dir1
-    - Also a flow that adjusts things automatically. eg change to 3 devices, automatically set to 2 columns, etc.
-- Add all Device Icon types to Globals?
-    - Current list = Category, New list = Category options - use global variables?
-- Add every template to Globals??
-    - Could make things easier for user?
-    - Add full check for how many rows are showing and show first icons accordingly in Box 2 to all templates
-- Setup Mode
-    - Set up "setupmode" text layout better and add a few different text options (sizing, json, etc)
-    - Group in overlay groups and use visibility to display each one
-    - Set up a note for visibility like the ones inside templates
-- Create a "first run" flow that presets globals to work based on the size of the widget
-    - temp global, get widget info, process, if different? then use, otherwise temp global??
-    - Rows, Box 1 columns, Device count, etc
-    - Potentially remove numbering system and give each folder a simple name with a note at the top
-    - Run iconcount calc?
-    - Maybe merge into the Box 1 size code that runs every time widget resizes? For example, if you resize from 2 rows to 1 row, change global to 1 row, etc
+- Flows are unable to write to globals in folders. When fixed,
+    - Reorganize Globals by folders
+        - Roughly sort by numbers
+        - Merge -- 2-4. into one folder, keeping subheading list globals. Make 6 one folder
+        - JSON at bottom with setup mode toggle
+        - Add note at the top of each folder
+    - Change iconcount flow to write to iconcount and remove "temp" global
+    - Complete color test
+        - Write directly to colors in color folder
+         - `Change color flows back to proper values after test`
+    - Set "default" options to things like box size and icon alignment to avoid weird rendering issues while widget is loading changes after successful color test
 
 
-
-
-
-### Quick Fixes/Bugs
+### Current
 - ~~`"Rm" > "Room", "bordercolor" > "bordercolorlor", "bordersize" > "bordersizeze"`~~
-- ~~`Swap 1 and 0 in appiconhide and remove duplicate`~~
+- ~~`Swap 1 and 0 in appiconvis and remove duplicate`~~
 - ~~`Remove "based on globals" from folder status text items`~~
 - ~~`Verify all mentions of "colcount" are preceeded by formulas`~~
 - ~~`Copy Box 2 > 1 Box, 2 Row code from snippets into each Box/Row type in Box 2`~~
@@ -69,7 +56,7 @@ DCW to-do lists, notes, ideas and more
     - ~~Working on box1size flow and global formulas - box1dir1 and box1dir2~~
     - ~~Temp 1 column support added~~
     - ~~Make pad calc work for 1 and 2 rows and 1 and 2 columns~~
-- ~~Fix devicosize - Change check for row 2 for a check of the height of widget and settings icon visibility. Shrink if widgetwidth <= deviceiconsize + iconpaddingstack * 2~~
+- ~~Fix deviceiconcalc - Change check for row 2 for a check of the height of widget and settings icon visibility. Shrink if widgetwidth <= deviceiconsize + iconpaddingstack * 2~~
 - ~~Check Box 1 hidden and mini sizes before continuing~~
 - ~~`Entities to go between --4 and --5?`~~
 - ~~`box1size > box1dir1size`~~
@@ -79,34 +66,21 @@ DCW to-do lists, notes, ideas and more
     - ~~`Add entity5 & 6`~~
     - ~~`Rename folder "entities". Rename note in folder`~~
     - `Apply to remaining templates as they are edited`
-    - Test to see if new code works fluently
-- `Remove box1width and box1height from formulas. Integrate box1height align calc into the few calls it has`
-- `Fix template alignments that contain "Vertical_left" to "Vertical_Center"`
-- `Rename appiconhide and devicosize > deviceiconcalc?`
-- `Rewrite and rename appiconhide. Show is default, 0. Reword as "app icon visibility`
-- Iconcount problems
-    - Fix iconcount boxsize2 and boxsize3 - not calculating properly - sometimes - From initial start?
-    - Try as a flow instead maybe?
-    - Returning 2 in single box mode
-- iconpadingbox not returned when box1dir2 is set to custom **CHECK - POTENTIALLY MAKE NEW**
-- Add 3+ device, 1 box mode? Could have 4 devices in a grid
-
-### Templates
-- Look at security 2x2 - "House Security" template?
-- Copy lock 2x2 from sample and make 1x2
-- Setup soundbar 1x4
-- Setup fan 2x2
-- Re-setup battery with new battery icon
-- Setup battery in different sizes/modes - Find way to scale?
-- Create "Komponent" Templates for different modes
-- Check every template for blanks that work with respective layout
-- Switch all Box 1 > 2 Boxes templates to have columns instead of rows. Copy from Light template
-
-## Global Changes > Readme:
-- Added haent
-### Working
-- Work on Readme's
-
+    - ~~Test to see if new code works~~
+- ~~`Remove box1width and box1height from formulas. Integrate box1height align calc into the few calls it has`~~
+- ~~`Fix template alignments that contain "Vertical_left" to "Vertical_Center" (some)`~~
+- ~~`Rename appiconvis and deviceiconcalc > deviceiconcalc?`~~
+- ~~`Rewrite and rename appiconvis. Show is default, 0. Reword as "app icon visibility"`~~
+- ~~`Update note items in lists from code database`~~
+- Test to see if you can make a whole list global `$gv(textglobalwithformula)$`
+    - This will allow us to generate a list on the fly with a flow and global database of some kind.
+- ~~Iconcount problems~~
+    - ~~Fix iconcount boxsize2 and boxsize3 - not calculating properly - sometimes - From initial start?~~
+    - ~~Try as a flow instead maybe?~~
+    - ~~Returning 2 in single box mode~~
+- ~~iconpadingbox not returned when box1dir2 is set to custom **CHECK - POTENTIALLY MAKE NEW**~~
+- Add 3+ device, 1 box mode? Could have 4 devices as toggles in a grid
+- ~~Update colcount to kpx~~
 
 ### Future
 - Work on README
@@ -121,13 +95,44 @@ DCW to-do lists, notes, ideas and more
     - Possibly re-do based on UI types and Tasker setup interface/color picker
     - Make sure it works properly if not
 - Setup auto-hiding icons where needed (After templates are complete)
-- Reorganize Globals by folders
-    - **Wait until new KWGT beta available, currently flows do not always write to globals inside folders**
-    - Roughly sort by numbers
-    - Merge -- 2-4. into one folder, keeping subheading list globals. Make 6 one folder
-    - JSON at bottom with setup mode toggle
+- Add all Device Icon types and all templates to Globals
+    - Device Icon: Current list = Category, New list = Category options - use global variables?
+    - Integrate full check for how many rows/icons are showing and show icons accordingly in Box 2 to all templates (with missing in Box 1 code)
+- Setup Mode
+    - Set up "setupmode" text layout better and add a few different text options (sizing, json, etc)
+    - Group in overlay groups and use visibility to display each one
+    - Set up a note for visibility like the ones inside templates
+- Setup inital flow that sets devicecount, box1dir2, box1dir1 
+    - Also a flow that adjusts things automatically. eg change to 3 devices, automatically set to 2 columns, etc.
+    - Check: Save temp global values, get widget info, run if different. If not, use temp global??
+    - Rows, Box 1 columns, Device count, etc
+    - Run iconcount calc?
+    - Maybe merge into the Box 1 size code that runs every time widget resizes? For example, if you resize from 2 rows to 1 row, change global to 1 row, etc
+    - Merge colcount into this
 - Add code to shrink iconsize somehow if the box is smaller than the icon sizes?
+- Create a 
 - Create Custom GPT for Widget design and global/settings layout
+- Convert kode files into md files
+    - Also, create a single "working" kode file to use syntax highlighting in
+    - Make tree with links to each section of code
+- `Move "Hidden" Device Icon setting from deviceiconposition to deviceiconcat?`
+
+
+### Templates
+- Look at security 2x2 - "House Security" template?
+- Copy lock 2x2 from sample and make 1x2
+- Setup soundbar 1x4
+- Setup fan 2x2
+- Re-setup battery with new battery icon
+- Setup battery in different sizes/modes - Find way to scale?
+- Create "Komponent" Templates for different modes
+- Check every template for blanks that work with respective layout
+- Switch all Box 1 > 2 Boxes templates to have columns instead of rows. Copy from Light template
+
+### Global Changes > Readme:
+- Added haent
+### Working
+- Work on Readme's
 
 ### Version 2.0 features*
 - Make widget a Komponent that can be added to a KWLP wallpaper
@@ -201,6 +206,12 @@ DCW to-do lists, notes, ideas and more
     $tc(json, #json, "['light.bedroom_lights']['state']")$\
     ```
 
+## VS Code terminal commands
+- Commands:
+    - `kwgt_reorder` - Reorder index count in separate JSON
+    - `kwgt_check` - Checks for JSON errors
+    - `kwgt_globals` - Output global list in the order they appear in the JSON. Terminal Output
+
 ## Kodine Tricks
 - //? = tc(utf) for many characters like "':;()<>
 
@@ -210,3 +221,32 @@ DCW to-do lists, notes, ideas and more
 - `This item is done in preset.json`
 
 - ~~This item is complete~~
+
+### Chat GPT Changes
+
+## Folder reorganizing
+Certainly! Based on your repository's structure and the provided details, here's an exhaustive restructuring:
+
+### Root Level
+- `.vscode` (Configuration files for Visual Studio Code)
+- `.resources` (Images specifically for the README)
+- `README.md` (Main project overview)
+- `fave_formulas.json` (To be deleted as mentioned)
+- `index-reordering.tmp.json` (To be deleted as mentioned)
+
+### Folders and Their Contents
+- `docs/`
+  - `setup/` (Setup instructions and related documentation)
+  - `snippets_and_notes/` (Code snippets and to-do lists)
+- `widgets/`
+  - `dcw/` (Main app code for the Device Control Widget)
+- `scripts/` (Scripting and automation files)
+
+### Proposed Actions
+- Create `docs/` and within it, `setup/` and `snippets_and_notes/`.
+- Rename and move `Device Control Widget` to `widgets/dcw/`.
+- Rename `Editing Scripts` to `scripts/`.
+- Leave `.vscode`, `.resources`, and `README.md` at the root level.
+- Delete `fave_formulas.json` and `index-reordering.tmp.json` as they are orphan files.
+
+This structure aligns with the functional approach and organizes files based on their purpose and content, offering a clearer and more maintainable repository layout.

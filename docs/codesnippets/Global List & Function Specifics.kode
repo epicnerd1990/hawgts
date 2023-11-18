@@ -65,16 +65,16 @@ DATA##\"Select alignment of Box 2 content. Use for:\n- Templates without icons (
 0##Beside Box 1,
 1##Centered
 
->>> // box1dir1
+// box1dir1
 DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,
 1##1 Row,
 2##2 Rows
 
->>> // appiconhide
-DATA##\"Control visbility of the App icons across from settings\",
+// appiconvis
+DATA##\"Set visbility of App Icons. Hiding these when using one row will make the device icon to fit the widget height.\",
 0##Show App Icons,
 1##Hide App Icons
-
+ 
 // haent
 
 // entities

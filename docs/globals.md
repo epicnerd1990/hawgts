@@ -47,7 +47,7 @@ This is the always the current size of Box 1 in kpx. It's updated when one of th
 > Affects: iconpaddingbox, Box 1 > Column 2 visibility
 ### boxorder
 *Set the order of the boxes on your widget
-### appiconhide
+### appiconvis
 Hide the App Icons
 #### deviceiconcat
 *Select the device icon to display in the corner of the widget or hide it in the next option
@@ -132,7 +132,7 @@ generated/box2height
 generated/box2minsize
 generated/widgetratio
 generated/iconcount
-generated/devicosize
+generated/deviceiconcalc
 generated/pagenum
 generated/status
 generated/statusti
@@ -185,7 +185,7 @@ box1dir2
 box1size
 box1dir1
 boxorder
-appiconhide
+appiconvis
 deviceiconcat
 deviceiconposition
 deviceiconrotation

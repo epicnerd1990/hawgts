@@ -1,14 +1,14 @@
 {
   "preset_info": {
     "version": 13,
-    "title": "Device Control Widget 0.5.3 Alpha",
+    "title": "Device Control Widget 0.5.4 Alpha",
     "description": "Home Assistant Device Control Widget",
     "author": "Corey Welsh",
     "email": "coreyw2000@gmail.com",
     "width": 1080,
     "height": 321,
     "features": "WEATHER DOWNLOAD SHELL",
-    "release": 374328615,
+    "release": 374331712,
     "locked": false,
     "pflags": 0
   },
@@ -48,58 +48,36 @@
         "toggles": 10,
         "global_formula": "$si(rheight) - (gv(horizontalpadding) * 2)$"
       },
-      "generated/box1width": {
-        "index": 4,
-        "type": "NUMBER",
-        "title": "box1width",
-        "description": "DEPRECATED - GENERATED - Width of Box 1",
-        "min": 0,
-        "max": 500,
-        "value": 120.0,
-        "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1size))))$$if(#align = 0, gv(generated/widgetwidth), #size >= 0, #size, 0)$"
-      },
-      "generated/box1height": {
-        "index": 5,
-        "type": "NUMBER",
-        "title": "box1height",
-        "description": "GENERATED - Height of Box 1",
-        "min": 0,
-        "max": 500,
-        "value": 120.0,
-        "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1, gv(box1size))))$$if(#align = 0, gv(generated/widgetheight), #size >= 0, #size, 0)$"
-      },
       "generated/box2width": {
-        "index": 6,
+        "index": 4,
         "type": "NUMBER",
         "title": "box2width",
         "description": "GENERATED - Width of Box 2",
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$if(gv(box1dir2) = 0 | #align = 1, gv(generated/widgetwidth), (#wgtdir - gv(box1size)))$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(wgtdirop, (if(#align = 0, gv(generated/widgetwidth), gv(generated/widgetheight))))$$if(gv(box1dir2) = 0 | #align = 1, gv(generated/widgetwidth), (#wgtdirop - gv(box1size)))$"
       },
       "generated/box2height": {
-        "index": 7,
+        "index": 5,
         "type": "NUMBER",
         "title": "box2height",
         "description": "GENERATED - Height of Box 2",
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$gv(formulas/boxsize)$$if(gv(box1dir2) = 0 | #align = 0, gv(generated/widgetheight), (#wgtdir - gv(box1size)))$"
+        "global_formula": "$gv(formulas/boxsize)$$lv(wgtdirop, (if(#align = 0, gv(generated/widgetwidth), gv(generated/widgetheight))))$$if(gv(box1dir2) = 0 | #align = 0, gv(generated/widgetheight), (#wgtdirop - gv(box1size)))$"
       },
       "generated/box2minsize": {
-        "index": 8,
+        "index": 6,
         "type": "TEXT",
         "title": "box2minsize",
         "description": "GENERATED - Minimum size of Box 2. Based on 2 icons and padding",
         "toggles": 10,
-        "global_formula": "$lv(devico, (if(gv(deviceiconposition) = 2 | gv(deviceiconposition) = 4 | gv(deviceappiconpadding) = 0, 0, gv(generated/devicosize))))$$((gv(iconsize) * 2) +(gv(iconpaddinginstack) * 2) +#devico +(gv(iconpaddingbox) * 2))$"
+        "global_formula": "$lv(devico, (if(gv(deviceiconposition) = 2 | gv(deviceiconposition) = 4 | gv(deviceappiconpadding) = 0, 0, gv(generated/deviceiconcalc))))$$(gv(iconsize) * 2) +(gv(iconpaddinginstack) * 2) +#devico +(gv(iconpaddingbox) * 2)$"
       },
       "generated/widgetratio": {
-        "index": 9,
+        "index": 7,
         "type": "NUMBER",
         "title": "widgetratio",
         "description": "Copy of Widget ratio to check against. *All reading code should also update when complete*",
@@ -108,7 +86,7 @@
         "value": 0.0
       },
       "generated/iconcount": {
-        "index": 10,
+        "index": 8,
         "type": "NUMBER",
         "title": "iconcount",
         "description": "GENERATED - Number of icons visible in Box 2. Based on widget size and padding",
@@ -116,20 +94,20 @@
         "min": 0,
         "max": 10,
         "toggles": 10,
-        "global_formula": "$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(boxsize1, (if(gv(box1dir2) <= 0, 0, (if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height))))))$$lv(boxsize2, (#boxsize1 - gv(deviceiconsize)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize3, (#boxsize1 - gv(appiconsize)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize, (if(#boxsize2 < 4, #boxsize3, #boxsize2)))$$if(#boxsize <= 2, 2, (tc(cut, mu(abs,#boxsize), 1)))$"
+        "global_formula": "$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(boxsize1, (if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height))))$$lv(boxsize2, (#boxsize1 - gv(deviceiconsize)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize3, (#boxsize1 - gv(appiconsize)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize, (if(#boxsize2 < 4, #boxsize3, #boxsize2)))$$if(#boxsize <= 2, 2, tc(split, #boxsize, \".\", 0))$"
       },
-      "generated/devicosize": {
-        "index": 11,
+      "generated/deviceiconcalc": {
+        "index": 9,
         "type": "NUMBER",
-        "title": "devicosize",
+        "title": "deviceiconcalc",
         "description": "GENERATED - Shrink Device icon. Uses app icon size and padding to align outside edge of icons",
         "min": 0,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$if(gv(deviceiconshrink) = 1 | gv(box1dir1) = 1, (gv(appiconsize) + gv(iconpaddinginstack)),gv(generated/iconcount) < 4 & gv(deviceiconshrink) = 2, (gv(appiconsize) + gv(iconpaddinginstack)),gv(deviceiconsize))$"
+        "global_formula": "$gv(formulas/boxsize)$$if(gv(deviceiconshrink) = 0,gv(deviceiconsize),gv(deviceiconshrink) = 1,(gv(appiconsize) + gv(iconpaddinginstack)),gv(deviceiconshrink) = 2,(if(gv(box1dir1) = 1,(if(gv(appiconvis) = 1,#wgtdir,(gv(appiconsize) + gv(iconpaddinginstack)))),gv(generated/iconcount) < 4,(gv(appiconsize) + gv(iconpaddinginstack)),gv(deviceiconsize))),gv(deviceiconsize))$"
       },
       "generated/pagenum": {
-        "index": 12,
+        "index": 10,
         "type": "LIST",
         "title": "pagenum",
         "description": "GENERATED - Number of current page for paging templates",
@@ -137,14 +115,14 @@
         "value": "1"
       },
       "generated/status": {
-        "index": 13,
+        "index": 11,
         "type": "TEXT",
         "title": "status",
         "description": "Live Status Update",
         "value": "$if(#status = \"#status\", \"\", gv(generated/statuslist, #status))$"
       },
       "generated/statusti": {
-        "index": 14,
+        "index": 12,
         "type": "SWITCH",
         "title": "statusti",
         "description": "Time to display Status message",
@@ -153,7 +131,7 @@
         "value": 1
       },
       "generated/statuslist": {
-        "index": 15,
+        "index": 13,
         "type": "LIST",
         "title": "statuslist",
         "description": "GENERATED - List of errors to output",
@@ -161,7 +139,7 @@
         "value": "1"
       },
       "generated/color1": {
-        "index": 16,
+        "index": 14,
         "type": "COLOR",
         "title": "color1",
         "description": "GENERATED - Background color generated from user settings for Box 1",
@@ -169,7 +147,7 @@
         "global_formula": "$lv(source, (if(gv(colors/color1sel) = 0, \"wpcolor1\", gv(colors/color1sel) = 1, \"wpcolor2\", gv(colors/color1sel) = 2, \"sys\", \"0\")))$$lv(filter, (if(gv(colors/color1fil1) = 1, \"sat\", gv(colors/color1fil1) = 2, \"lum\", gv(colors/color1fil1) = 3, \"comp\", \"sat\")))$$lv(coltone, (if(gv(colors/color1sysc) = 0, \"sysca1\", gv(colors/color1sysc) = 1, \"sysca2\", gv(colors/color1sysc) = 2, \"sysca3\", gv(colors/color1sysc) = 3, \"syscn1\", gv(colors/color1sysc) = 4, \"syscn2\", gv(colors/color1sysc) = 5, \"syscn3\", \"sysca1\")))$$lv(addsub, (if(gv(colors/color1fil2) = 0, \"\", gv(colors/color1fil2) = 1, \"a\", gv(colors/color1fil2) = 2, \"r\", \"\")))$$if(gv(colors/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$$if(gv(colors/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color1adj))))$$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$$#final$"
       },
       "generated/color2": {
-        "index": 17,
+        "index": 15,
         "type": "COLOR",
         "title": "color2",
         "description": "GENERATED - Background color generated from user settings for Box 2",
@@ -177,156 +155,156 @@
         "global_formula": "$lv(source, (if(gv(colors/color2sel) = 0, \"wpcolor1\", gv(colors/color2sel) = 1, \"wpcolor2\", gv(colors/color2sel) = 2, \"sys\", \"0\")))$$lv(filter, (if(gv(colors/color2fil1) = 1, \"sat\", gv(colors/color2fil1) = 2, \"lum\", gv(colors/color2fil1) = 3, \"comp\", \"sat\")))$$lv(coltone, (if(gv(colors/color2sysc) = 0, \"sysca1\", gv(colors/color2sysc) = 1, \"sysca2\", gv(colors/color2sysc) = 2, \"sysca3\", gv(colors/color2sysc) = 3, \"syscn1\", gv(colors/color2sysc) = 4, \"syscn2\", gv(colors/color2sysc) = 5, \"syscn3\", \"sysca1\")))$$lv(addsub, (if(gv(colors/color2fil2) = 0, \"\", gv(colors/color2fil2) = 1, \"a\", gv(colors/color2fil2) = 2, \"r\", \"\")))$$if(gv(colors/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color2adj))))$$if(gv(colors/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color2adj))))$$if(gv(colors/color2fil1) = 0 | gv(colors/color2sel) = 3, lv(col3, gv(colors/color2pick)))$$lv(color, (if(gv(colors/color2sel) <= 1, #color1, gv(colors/color2sel) = 2, #color2, gv(colors/color2sel) = 3, #col3)))$$lv(final, ce(#color, alpha, mu(round, gv(colors/color2alph), 0)))$$#final$"
       },
       "tasker": {
-        "index": 18,
+        "index": 16,
         "type": "FOLDER",
         "title": "tasker",
         "description": "LOCKED - Tasker Globals"
       },
       "tasker/data": {
-        "index": 19,
+        "index": 17,
         "type": "LIST",
         "title": "DATA",
         "entries": "-- Live data - Do not edit!",
         "value": "-- Date sent and received from Tasker & HA"
       },
       "tasker/totasker": {
-        "index": 20,
+        "index": 18,
         "type": "TEXT",
         "title": "totasker",
         "description": "TASKER - Device control data to send to tasker from button click",
         "value": "light&light.bedroom_lights&brightness:255"
       },
       "tasker/fromtasker": {
-        "index": 21,
+        "index": 19,
         "type": "TEXT",
         "title": "fromtasker",
         "description": "State information sent from tasker to apply to \"tasker/statedat\". Only entitites listed in HA Tasker blueprint are sent.",
         "value": "$br(tasker, states)$"
       },
       "tasker/fromcolorpic": {
-        "index": 22,
+        "index": 20,
         "type": "TEXT",
         "title": "fromcolorpic",
         "description": "Return from tasker Color Picker",
         "value": "$br(tasker, fromcolorpic)$"
       },
       "formulas": {
-        "index": 23,
+        "index": 21,
         "type": "FOLDER",
         "title": "formulas",
         "description": "LOCKED - Global Formulas"
       },
       "formulas/devicestate": {
-        "index": 24,
+        "index": 22,
         "type": "TEXT",
         "title": "devicestate",
         "description": "FORMULA - Code used to determine device state",
         "value": "  $if(\n    tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n      tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].state\")\n  )$"
       },
       "formulas/lightlevel": {
-        "index": 25,
+        "index": 23,
         "type": "TEXT",
         "title": "lightlevel",
         "description": "FORMULA - Code used to determine light brightness level",
         "value": "$if(\n  tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n    tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].brightness\")\n)$"
       },
       "formulas/lightcolor": {
-        "index": 26,
+        "index": 24,
         "type": "TEXT",
         "title": "lightcolor",
         "description": "FORMULA - Code used to determine light color",
         "value": "$if(\n  tc(reg, gv(jsondb), #glbname, #glbname) != \"\",\n    tc(json, gv(jsondb), \".device_states[?(@.entity_id == '\" + #glbname + \"')].color\")\n)$"
       },
       "formulas/jsonrementity": {
-        "index": 27,
+        "index": 25,
         "type": "TEXT",
         "title": "jsonrementity",
         "description": "Remove specified entity from JSON",
         "value": "$tc(reg, \n  #datawipe \n  (\"\\{\\\" + tc(utf, 22) + \"entity_id\" + \"\\\" + tc(utf, 22) + \":\\\" + tc(utf, 22) + \n  #entity + \"\\\" + tc(utf, 22) + \".*?\\},\"), \n  \"\"\n)$"
       },
       "formulas/jsonaddentity": {
-        "index": 28,
+        "index": 26,
         "type": "TEXT",
         "title": "jsonaddentity",
         "description": "Add new entry to JSON",
         "value": "$tc(reg, #jsonrem, \"\\},\\]\\}\", (\"\\},\" + #jsonwipe + \"\\]\\}\"))$"
       },
       "formulas/jsonaddnewline": {
-        "index": 29,
+        "index": 27,
         "type": "TEXT",
         "title": "jsonaddnewline",
         "description": "Add new lines and in-line spaces to JSON to make it human-readable",
         "value": "$tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, tc(reg, #jsonout, \"\\},\", \"\\},\" + tc(utf, 0A)), \":\", \": \"), \"\\\" + tc(utf, 22) + \",\", \"\\\" + tc(utf, 22) + \",\" + tc(utf, 0A)), \"\\{\", \"\\{\" + tc(utf, 0A)), \"\\}\", tc(utf, 0A) + \"\\}\"), \"\\[\", \"\\[\" + tc(utf, 0A)), \"\\\" + tc(utf, 22) + \"device_states\\\" + tc(utf, 22) + \".*\", \"$0\"), \"\\]\", \"  ]\")$"
       },
       "formulas/jsonaddindents": {
-        "index": 30,
+        "index": 28,
         "type": "TEXT",
         "title": "jsonaddindents",
         "description": "Add corret indentation inside the JSON array to make it human-readable",
         "value": "$tc(reg, tc(reg, #jsonline, (\"(?<=\\[)[^\\[\\]]*(?=\\])\"), tc(utf, 0A) + \"    \" + #jarredit + tc(utf, 0A) + \"  \"), (\"(?<!\\[)(?<=\\n|^)\\s*(\" + tc(utf, 22) + \".*)\"), \"  $0\")$"
       },
       "formulas/stackalign": {
-        "index": 31,
+        "index": 29,
         "type": "TEXT",
         "title": "stackalign",
         "description": "FORMULA - Box 2 stack group - icon positioning (if not centered)",
         "value": "$if(gv(box1position) = RIGHT, VERTICAL_RIGHT, gv(box1position) = LEFT, VERTICAL_LEFT,  gv(box1position) = TOP, HORIZONTAL_TOP,  gv(box1position) = BOTTOM, HORIZONTAL_BOTTOM)$"
       },
       "formulas/boxalign": {
-        "index": 32,
+        "index": 30,
         "type": "TEXT",
         "title": "boxalign",
         "description": "FORMULA - Box 1 Positioning",
         "value": "$if(gv(box1position) = RIGHT, CENTERRIGHT, gv(box1position) = LEFT, CENTERLEFT,  gv(box1position) = TOP, TOP,  gv(box1position) = BOTTOM, BOTTOM)$"
       },
       "formulas/boxsize": {
-        "index": 33,
+        "index": 31,
         "type": "TEXT",
         "title": "boxsize",
         "description": "FORMULA - Box Size",
-        "value": "$gv(formulas/boxsize)$$lv(boxsize2, (#pad + #iconsize))$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) >= 1 | gv(box1dir2) = DATA, (if((#iconsize / #wgtdir) >= 0.90 | (#iconsize / #wgtdir) <= 1.10, #wgtdir, #boxsize2)),#boxsize2)))$$if(#size >= 0, tc(split, #size, \".\", 0), 0)$"
+        "value": "$lv(align, gv(widgetorient))$$lv(wgtdir, if(#align = 0, gv(generated/widgetheight), gv(generated/widgetwidth)))$$lv(iconsize, (if(gv(box1dir2) = 1, gv(iconsize), gv(box1dir2) = 2, ((gv(iconsize) * 2) + gv(iconpaddingstack)))))$$lv(pad, (#wgtdir - #iconsize))$"
       },
       "formulas/colcount": {
-        "index": 34,
+        "index": 32,
         "type": "TEXT",
         "title": "colcount",
-        "value": "$if(gv(box1dir2) = 0, 0, (if(gv(box1size) >= 20, 2, gv(box1size) = 0, 0, 1)))$"
+        "value": "$gv(formulas/boxsize)$$if(gv(box1dir2) = 0, 0, (if(gv(box1size) >= #iconsize, 2, gv(box1size) = 0, 0, 1)))$"
       },
       "readme": {
-        "index": 35,
+        "index": 33,
         "type": "LIST",
         "title": "README",
         "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
         "value": "OPEN - Readme"
       },
       "setupmode": {
-        "index": 36,
+        "index": 34,
         "type": "SWITCH",
         "title": "setupmode",
         "description": "MOVE TO BOTTOM - Enable showing setup data",
         "value": 0
       },
       "jsondb": {
-        "index": 37,
+        "index": 35,
         "type": "TEXT",
         "title": "jsondb",
-        "value": "\n\n\n\n\n\n\n\n\n\n{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"255\",\n      \"color\": \"255,103,17\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"128\",\n      \"color\": \"255,0,0\"\n    },\n    {\n      \"entity_id\": \"sensor.watch_battery_level\",\n      \"state\": \"60\"\n    },\n    {\n      \"entity_id\": \"sensor.s23_ultra_battery_level\",\n      \"state\": \"32\"\n    },\n    {\n      \"entity_id\": \"sensor.remotephone_battery_level\",\n      \"state\": \"75\"\n    },\n  ]\n}"
+        "value": "\n\n\n\n\n\n\n\n\n\n{\n  \"device_states\": [\n    {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": 125,\"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": 200,\"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"sensor.watch_battery_level\",\n      \"state\": \"31\"\n    },\n    {\n      \"entity_id\": \"sensor.remotephone_battery_level\",\n      \"state\": \"61\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"233\",\n      \"color\": \"32,12,255\"\n    },\n    {\n      \"entity_id\": \"sensor.s23_ultra_battery_level\",\n      \"state\": \"17\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,0,0\"\n    },\n  ]\n}"
       },
       "colors": {
-        "index": 38,
+        "index": 36,
         "type": "FOLDER",
         "title": "-- 1.",
         "description": "-- Select your Widget colors"
       },
       "colors/colornote": {
-        "index": 39,
+        "index": 37,
         "type": "LIST",
         "title": "COLORNOTE",
         "value": "-- OPEN - Color Options",
         "entries": "Edit widget colors by following through this setup. See Readme for details."
       },
       "colors/color1sel": {
-        "index": 40,
+        "index": 38,
         "type": "LIST",
         "title": "color1sel",
         "description": "Color 1 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -334,7 +312,7 @@
         "value": "0"
       },
       "colors/color1sysc": {
-        "index": 41,
+        "index": 39,
         "type": "LIST",
         "title": "color1sysc",
         "description": "Color 1 - System/MaterialYou Only\nSelect a color tone.",
@@ -342,7 +320,7 @@
         "value": "2"
       },
       "colors/color1fil1": {
-        "index": 42,
+        "index": 40,
         "type": "LIST",
         "title": "color1fil1",
         "description": "Color 1 - Wallpaper Only\nSelect filter.",
@@ -350,7 +328,7 @@
         "value": "2"
       },
       "colors/color1adj": {
-        "index": 43,
+        "index": 41,
         "type": "NUMBER",
         "title": "color1adj",
         "description": "Color 1 - Filter adjustment\n0 = None, 100 = Strong",
@@ -359,7 +337,7 @@
         "value": 40.0
       },
       "colors/color1fil2": {
-        "index": 44,
+        "index": 42,
         "type": "LIST",
         "title": "color1fil2",
         "description": "Color 1 - Select filter manipulation - Changes slider above from total into add/subtract from current (optional)",
@@ -367,14 +345,14 @@
         "value": "0"
       },
       "colors/color1pick": {
-        "index": 45,
+        "index": 43,
         "type": "COLOR",
         "title": "color1pick",
         "description": "Color 1 - Manual Color choice, overrides filter\nAlso used as fallback color for extracted colors",
         "value": "#FFFFFFFF"
       },
       "colors/color1alph": {
-        "index": 46,
+        "index": 44,
         "type": "NUMBER",
         "title": "color1alph",
         "description": "Color 1 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -383,7 +361,7 @@
         "value": 75.0
       },
       "colors/color2sel": {
-        "index": 47,
+        "index": 45,
         "type": "LIST",
         "title": "color2sel",
         "description": "Color 2 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
@@ -391,7 +369,7 @@
         "value": "0"
       },
       "colors/color2sysc": {
-        "index": 48,
+        "index": 46,
         "type": "LIST",
         "title": "color2sysc",
         "description": "Color 2 - System/MaterialYou Only\nSelect a color tone",
@@ -399,7 +377,7 @@
         "value": "0"
       },
       "colors/color2fil1": {
-        "index": 49,
+        "index": 47,
         "type": "LIST",
         "title": "color2fil1",
         "description": "Color 2 - Wallpaper Only\nSelect filter.",
@@ -407,7 +385,7 @@
         "value": "2"
       },
       "colors/color2adj": {
-        "index": 50,
+        "index": 48,
         "type": "NUMBER",
         "title": "color2adj",
         "description": "Color 2 - Filter adjustment\n0 = None, 100 = Strong",
@@ -416,7 +394,7 @@
         "value": 55.0
       },
       "colors/color2fil2": {
-        "index": 51,
+        "index": 49,
         "type": "LIST",
         "title": "color2fil2",
         "description": "Color 2 - Select filter manipulation - Changes number above from total into add/subtract from current (optional)",
@@ -424,14 +402,14 @@
         "value": "0"
       },
       "colors/color2pick": {
-        "index": 52,
+        "index": 50,
         "type": "COLOR",
         "title": "color2pick",
         "description": "Color 2 - Manual Color choice, overrides filter.\nAlso used as fallback color for extracted colors",
         "value": "#E7FFFFFF"
       },
       "colors/color2alph": {
-        "index": 53,
+        "index": 51,
         "type": "NUMBER",
         "title": "color2alph",
         "description": "Color 2 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
@@ -440,14 +418,14 @@
         "value": 75.0
       },
       "colors/colico": {
-        "index": 54,
+        "index": 52,
         "type": "COLOR",
         "title": "colico",
         "description": "Color of icons and text. Default: #E7FFFFFF",
         "value": "#E7FFFFFF"
       },
       "colors/colicoon": {
-        "index": 55,
+        "index": 53,
         "type": "COLOR",
         "title": "colicoon",
         "description": "Color of icons and text when device is on",
@@ -456,7 +434,7 @@
         "global_formula": "$ce(si(wpcolor1, comp), sat, 60)$"
       },
       "colors/color2fin": {
-        "index": 56,
+        "index": 54,
         "type": "COLOR",
         "title": "color2fin",
         "description": "Final output of color in Hex ARGB form",
@@ -464,20 +442,20 @@
         "value": "#BF007D8C"
       },
       "colors/color1fin": {
-        "index": 57,
+        "index": 55,
         "type": "COLOR",
         "title": "color1fin",
         "value": "#BF005B66"
       },
       "colors/border": {
-        "index": 58,
+        "index": 56,
         "type": "SWITCH",
         "title": "border",
         "description": "Turn on a border around your boxes",
         "value": 0
       },
       "colors/bordersize": {
-        "index": 59,
+        "index": 57,
         "type": "NUMBER",
         "title": "bordersize",
         "description": "Set the size of the border\\nDefault: 3kpx",
@@ -486,7 +464,7 @@
         "value": 3.0
       },
       "colors/bordercolor": {
-        "index": 60,
+        "index": 58,
         "type": "LIST",
         "title": "bordercolor",
         "description": "NOTE: Change to bordercolorlor. Set up so  this color can be completly maniplauted as well when redoing color system",
@@ -494,7 +472,7 @@
         "value": "FFFFFF"
       },
       "-- 2.": {
-        "index": 61,
+        "index": 59,
         "type": "LIST",
         "title": "-- 2.",
         "description": "Customize the Box style and layout of the widget",
@@ -502,7 +480,7 @@
         "value": "-- Box Styles"
       },
       "devicecount": {
-        "index": 62,
+        "index": 60,
         "type": "LIST",
         "title": "devicecount",
         "description": "Select how many devices you'd like to control with this Widget",
@@ -510,7 +488,7 @@
         "value": "3"
       },
       "box1dir1": {
-        "index": 63,
+        "index": 61,
         "type": "LIST",
         "title": "box1dir1",
         "description": "Select how many Rows to display (or columns if widget is vertical)",
@@ -518,7 +496,7 @@
         "entries": "DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,1##1 Row,2##2 Rows"
       },
       "box1dir2": {
-        "index": 64,
+        "index": 62,
         "type": "LIST",
         "title": "box1dir2",
         "description": "Configure the size of Box 1",
@@ -526,16 +504,16 @@
         "value": "2"
       },
       "box1size": {
-        "index": 65,
+        "index": 63,
         "type": "NUMBER",
         "title": "box1size",
         "description": "Set if you selected \"Custom\" above",
-        "value": "28.055555",
+        "value": "202",
         "min": 0,
         "max": 720
       },
       "boxorder": {
-        "index": 66,
+        "index": 64,
         "type": "LIST",
         "title": "boxorder",
         "description": "Set the order of the boxes on your widget",
@@ -543,14 +521,14 @@
         "value": "1"
       },
       "-- 3.": {
-        "index": 67,
+        "index": 65,
         "type": "LIST",
         "title": "-- 3.",
         "entries": "-- Modify UI Elements",
         "value": "-- Modify UI Elements"
       },
       "deviceiconcat": {
-        "index": 68,
+        "index": 66,
         "type": "LIST",
         "title": "deviceiconcat",
         "description": "Select the device icon to display in the corner of the widget or hide it in the next option",
@@ -558,31 +536,31 @@
         "value": "0"
       },
       "deviceiconposition": {
-        "index": 69,
+        "index": 67,
         "type": "LIST",
         "title": "deviceiconposition",
-        "entries": "DATA##\"Select the location of the Device Icon on your Widget\",1##Default Location,2##Inside Box 1 (for templates not using Box 1),3##Swap with settings icons,4##Hidden",
+        "entries": "DATA##\"Select the location of the Device Icon on your Widget. \",1##Default Corner,2##Inside Box 1,3##Swap with App Icons,4##Hidden",
         "value": "1"
       },
       "deviceiconrotation": {
-        "index": 70,
+        "index": 68,
         "type": "LIST",
         "title": "deviceiconrotation",
         "entries": "DATA##\"Select the rotation of the Device Icon on your Widget\",NONE##0 Degrees,DEG90##90 Degrees,DEG180##180 Degrees,DEG270##180 Degrees,FLIP_X##Flip Vertically,FLIP_Y##Flip Horizontally",
         "value": "FLIP_Y"
       },
       "deviceiconsize": {
-        "index": 71,
+        "index": 69,
         "type": "NUMBER",
         "title": "deviceiconsize",
-        "description": "Set the normal (default) size of the Device Icon. Auto-shrinking options avaliable below.\nDefault: 120kpx",
+        "description": "Set the normal (default) size of the Device Icon.\nDefault: 120kpx",
         "global_formula": "120",
         "value": 120.0,
         "min": 0,
         "max": 450
       },
       "iconsize": {
-        "index": 72,
+        "index": 70,
         "type": "NUMBER",
         "title": "iconsize",
         "description": "Set the size of the widget icons.\nDefault: 80kpx",
@@ -590,16 +568,16 @@
         "max": 120,
         "value": 80.0
       },
-      "appiconhide": {
-        "index": 73,
+      "appiconvis": {
+        "index": 71,
         "type": "LIST",
-        "title": "appiconhide",
-        "description": "Hide the App Icons",
-        "entries": "DATA##\"Hide the App Icons (smaller icons across from the Device icon)\",0##Show App Icons,1##Hide App Icons",
+        "title": "appiconvis",
+        "description": "Set visbility of App Icons",
+        "entries": "DATA##\"Set visbility of App Icons. Hiding these when using one row will make the device icon to fit the widget height.\",0##Show App Icons,1##Hide App Icons",
         "value": "1"
       },
       "appiconsize": {
-        "index": 74,
+        "index": 72,
         "type": "NUMBER",
         "title": "appiconsize",
         "description": "Set the size of the small app-launcher icon(s).\nDefault: 32kpx",
@@ -608,7 +586,7 @@
         "value": 32.0
       },
       "cornerradius": {
-        "index": 75,
+        "index": 73,
         "type": "NUMBER",
         "title": "cornerradius",
         "description": "Set the radius of the rounded corners.\nDefault: 10kpx",
@@ -617,14 +595,14 @@
         "value": 10.0
       },
       "-- 4.": {
-        "index": 76,
+        "index": 74,
         "type": "LIST",
         "title": "-- 4.",
         "entries": "-- Padding and Spacing",
         "value": "-- Padding and Spacing"
       },
       "iconpaddinginstack": {
-        "index": 77,
+        "index": 75,
         "type": "NUMBER",
         "title": "iconpaddinginstack",
         "description": "Set the icon padding inside each row/column. Default: 20kpx",
@@ -633,7 +611,7 @@
         "value": 10.0
       },
       "iconpaddingstack": {
-        "index": 78,
+        "index": 76,
         "type": "NUMBER",
         "title": "iconpaddingstack",
         "description": "Set the icon padding between each row/column. Default: 20kpx",
@@ -642,23 +620,23 @@
         "value": 10.0
       },
       "iconpaddingbox": {
-        "index": 79,
+        "index": 77,
         "type": "NUMBER",
         "title": "iconpaddingbox",
         "description": "Set the icon padding from the edge of Box 2. Default: 10kpx",
         "min": 0,
         "max": 50,
-        "value": "\n\n\n\n\n\n16"
+        "value": "\n\n12"
       },
       "paddingnote": {
-        "index": 80,
+        "index": 78,
         "type": "LIST",
         "title": "PADDINGNOTE",
         "entries": "\"The following options work best when your launchers \"Remove Padding\" option is set on this widget. This will allow near-seamless boundaries if you have multiple widgets.\"",
         "value": "-- OPEN - Widget padding settings"
       },
       "verticalpadding": {
-        "index": 81,
+        "index": 79,
         "type": "NUMBER",
         "title": "verticalpadding",
         "description": "Select the Vertical widget padding size\nDefault: 6kpx",
@@ -667,7 +645,7 @@
         "max": 50
       },
       "horizontalpadding": {
-        "index": 82,
+        "index": 80,
         "type": "NUMBER",
         "title": "horizontalpadding",
         "description": "Select the Horizontal widget padding size\nDefault: 3kpx",
@@ -676,67 +654,62 @@
         "max": 50
       },
       "-- 5.": {
-        "index": 83,
+        "index": 81,
         "type": "FOLDER",
         "title": "-- 5.",
         "description": "Home Assistant Entity List"
       },
       "entities/-- 5.2": {
-        "index": 84,
+        "index": 82,
         "type": "LIST",
         "title": "-- 5.2",
         "entries": "DATA## Enter Entity IDs here,0##\"ENTITY LIST\\n\\nIf you're only controlling one device, enter it in \"entity1\". If you're controlling more than one, enter them in the order they appear in the template. (1st device is \"entity1\", 2nd is \"entity2\", etc)\"\n",
         "value": "DATA"
       },
       "entities/entity1": {
-        "index": 85,
+        "index": 83,
         "type": "TEXT",
         "title": "entity1",
         "description": "Device 1 Entity ID",
         "value": "light.bedroom_lights"
       },
       "entities/entity2": {
-        "index": 86,
+        "index": 84,
         "type": "TEXT",
         "title": "entity2",
         "description": "Device 2 Entity ID",
         "value": "light.study_lights"
-
       },
       "entities/entity3": {
-        "index": 87,
+        "index": 85,
         "type": "TEXT",
         "title": "entity3",
         "description": "Device 3 Entity ID",
         "value": "switch.lr_lights"
-
       },
       "entities/entity4": {
-        "index": 88,
+        "index": 86,
         "type": "TEXT",
         "title": "entity4",
         "description": "Device 4 Entity ID",
         "value": "light.foyer_lights"
-
       },
       "entities/entity5": {
-        "index": 89,
+        "index": 87,
         "type": "TEXT",
         "title": "entity5",
         "description": "Device 5 Entity ID",
         "value": "light.bedroom_lights"
-
       },
       "entities/entity6": {
-        "index": 90,
+        "index": 88,
         "type": "TEXT",
         "title": "entity6",
         "description": "Device 6 Entity ID",
         "value": "light.bedroom_lights"
-
       },
       "-- 6.": {
-        "index": 91,
+        "index": 89,
         "type": "LIST",
         "title": "-- 5.",
         "description": "",
@@ -744,14 +717,14 @@
         "value": "-- OPEN - Extra Options"
       },
       "autoalign": {
-        "index": 92,
+        "index": 90,
         "type": "SWITCH",
         "title": "autoalign",
         "description": "Auto-align On/Off. Use next 2 options to manually set alignment",
         "value": 1
       },
       "widgetorient": {
-        "index": 93,
+        "index": 91,
         "type": "SWITCH",
         "title": "widgetorient",
         "description": "Set horizontal or vertical orientation of widget. Off = Horizontal, On = Vertical",
@@ -759,18 +732,18 @@
         "on_formula": "$if(gv(autoalign) = 1, (si(rratio) < 0.8, 0))$",
         "off_mode": "MANUAL_FORMULA",
         "off_formula": "$if(gv(autoalign) = 1, (si(rratio) > 0.8, 0))$",
-        "value": 0
+        "value": 1
       },
       "box1position": {
-        "index": 94,
+        "index": 92,
         "type": "LIST",
         "title": "box1position",
         "description": "Set position of Box 1",
         "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout",
-        "value": "BOTTOM"
+        "value": "LEFT"
       },
       "box2align": {
-        "index": 95,
+        "index": 93,
         "type": "LIST",
         "title": "box2align",
         "description": "Select alignment of Box 2 content",
@@ -778,7 +751,7 @@
         "value": "0"
       },
       "deviceiconshrink": {
-        "index": 96,
+        "index": 94,
         "type": "LIST",
         "title": "deviceiconshrink",
         "description": "Select Shrinking options for the Device Icon.\nDefault: Auto-Shrink",
@@ -786,30 +759,36 @@
         "entries": "DATA##\"Select Shrinking options for the Device Icon. Shrinking will allow more space for icons to fit. You can also remove the space that Device icon takes up on the widget to allow the icon to stay while making more room for icons\",0##Default size,2##Default Size & Auto-Shrink For Space,1##Manually Shrink For Space"
       },
       "deviceappiconpadding": {
-        "index": 97,
+        "index": 95,
         "type": "SWITCH",
         "title": "deviceappiconpadding",
         "description": "Use padding of Device/App icons from Box 2 in \"Icon Count\" calculation. Disable to allow more icons to fit in Box 2. Overlap may occur",
-        "value": 1
+        "value": 0
       },
       "deviceopeneditor": {
-        "index": 98,
+        "index": 96,
         "type": "SWITCH",
         "title": "deviceopeneditor",
         "description": "Enable device icon click to open KWGT Editor. Diable once widget is set up",
         "value": 1
       },
       "tc1": {
-        "index": 99,
+        "index": 97,
         "type": "COLOR",
         "title": "tc1",
         "value": "\n\n\n\n\n\n\n\n\n\n\n#BF005A66"
       },
       "tc2": {
-        "index": 100,
+        "index": 98,
         "type": "COLOR",
         "title": "tc2",
         "value": "\n\n\n\n\n\n\n\n\n\n\n\n#BF007C8C"
+      },
+      "test": {
+        "index": 99,
+        "type": "TEXT",
+        "title": "test",
+        "value": "2"
       }
     },
     "internal_flows": [
@@ -1028,14 +1007,14 @@
             "id": "TAm4ULru",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(align, gv(widgetorient))$\n$lv(row, gv(box1dir1))$\n$lv(wgtdir, if(#align = 0, gv(generated/widgetheight), gv(generated/widgetwidth)))$\n$lv(pad, (#wgtdir - (if(#row = 1, gv(iconsize), #row = 2, ((gv(iconsize) * 2) + gv(iconpaddingstack))))))$\n$gv(formulas/boxsize)$\n$lv(size, (if(gv(box1dir2) = 1 | gv(box1dir2) = 2 | gv(box1dir2) = DATA, (#pad / 2), 0)))$\n$lv(out, if(#size >= 1 & #size <= 40, #size, 0))$$#out$"
+              "formula": "$gv(formulas/boxsize)$\n$lv(size, (if(gv(box1dir2) = 1 | gv(box1dir2) = 2 | gv(box1dir2) = DATA, (#pad / 2), gv(iconpaddinginstack))))$\n$lv(out, if(#size >= 1 & #size <= 40, #size, gv(iconpaddinginstack)))$$#out$"
             }
           },
           {
             "id": "TAaYv5Dl",
             "type": "A_GLOBAL",
             "params": {
-              "global": "iconpaddingbox"
+              "global": "test"
             }
           }
         ]
@@ -1052,7 +1031,7 @@
             "id": "TT0gENXP",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(box1dir2)$"
+              "formula": "$gv(box1dir2)$$gv(widgetorient)$"
             }
           }
         ],
@@ -1061,7 +1040,7 @@
             "id": "TAdp5TwR",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(formulas/boxsize)$$lv(boxsize, (#pad + #iconsize))$$lv(size, (if(gv(box1dir2) = 0, 0,gv(box1dir2) = 1, (if((#iconsize / #wgtdir) >= 0.90 | (#iconsize / #wgtdir) <= 1.10, #wgtdir, #boxsize)),gv(box1dir2) = 2 | gv(box1dir2) = DATA, (if((#iconsize / #wgtdir) >= 0.90 | (#iconsize / #wgtdir) <= 1.10, #wgtdir, #boxsize)),#boxsize)))$$if(#size >= 0, tc(split, #size, \".\", 1), 0)$"
+              "formula": "$gv(formulas/boxsize)$$lv(boxsize2, (#pad + #iconsize))$$lv(boxsize3, (#iconsize + (gv(iconpaddinginstack) * 2)))$$lv(size,(if(gv(box1dir2) = 0, 0,gv(box1dir1) = 2 & gv(box1dir2) = 2, #boxsize2,#boxsize3)))$$if(#size >= 0, #size, 0)$"
             }
           },
           {
@@ -1138,6 +1117,35 @@
             }
           }
         ]
+      },
+      {
+        "id": "FWZ7fvwy",
+        "name": "Icon Count",
+        "t": [
+          {
+            "id": "TTFgRMGB",
+            "type": "T_FORMULA",
+            "params": {
+              "formula": "$gv(widgetorient)$$gv(generated/deviceiconcalc) $$gv(generated/widgetheight)$$gv(generated/widgetwidth)$$gv(iconsize)$$gv(iconpaddinginstack)$$gv(iconpaddingbox)$"
+            }
+          }
+        ],
+        "a": [
+          {
+            "id": "TAmhLrGO",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "$lv(icon, gv(iconsize) + gv(iconpaddinginstack))$$lv(boxsize1, (if(gv(widgetorient) = 0, gv(generated/box2width), gv(generated/box2height))))$$lv(boxsize2, (#boxsize1 - gv(generated/deviceiconcalc)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize3, (#boxsize1 - gv(appiconsize)) / (#icon + gv(iconpaddingbox)))$$lv(boxsize, (if(#boxsize2 < 4, #boxsize3, #boxsize2)))$$if(#boxsize <= 2, 2, tc(split, #boxsize, \".\", 0))$"
+            }
+          },
+          {
+            "id": "TA6e8ZBC",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "test"
+            }
+          }
+        ]
       }
     ],
     "config_scale_value": 99.06542,
@@ -1152,7 +1160,7 @@
           "config_visible": 10
         },
         "internal_formulas": {
-          "position_anchor": "$gv(formulas/boxalign)$",
+          "position_anchor": "$if(gv(box1dir2) = 0, CENTER,(gv(box2align) = 0 | gv(box2align) = DATA, gv(formulas/boxalign),CENTER))$",
           "position_offset_x": "$if(gv(widgetorient) = 0, gv(horizontalpadding), 0 )$",
           "position_offset_y": "$if(gv(widgetorient) = 0, 0, gv(verticalpadding))$",
           "config_visible": "$if(gv(formulas/colcount) = 0, REMOVE, ALWAYS)$"
@@ -1201,18 +1209,18 @@
                 "internal_title": "-- Background - Edit in Globals",
                 "internal_toggles": {
                   "paint_color": 10,
-                  "shape_width": 100,
-                  "shape_height": 100,
+                  "shape_width": 10,
+                  "shape_height": 10,
                   "shape_corners": 100,
                   "paint_stroke": 100
                 },
                 "internal_formulas": {
+                  "shape_width": "$if(gv(widgetorient) = 1, gv(generated/widgetwidth), gv(box1size))$",
+                  "shape_height": "$if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1size))$",
                   "paint_color": "$gv(colors/bordercolor)$"
                 },
                 "shape_type": "RECT",
                 "internal_globals": {
-                  "shape_width": "box1size",
-                  "shape_height": "generated/box1height",
                   "shape_corners": "cornerradius",
                   "paint_color": "tc2",
                   "paint_stroke": "colors/bordersize"
@@ -1239,7 +1247,6 @@
               "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
               "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
             },
-
             "config_visible": "REMOVE",
             "viewgroup_items": [
               {
@@ -1914,7 +1921,8 @@
               "position_padding_bottom": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir1) = 2 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n",              "position_padding_left": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
+              "config_visible": "$if(gv(deviceiconposition) = 2, REMOVE, (if(gv(box1dir1) = 2 & gv(devicecount) = 2, ALWAYS, REMOVE)))$\n",
+              "position_padding_left": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
               "position_padding_right": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = RIGHT, gv(horizontalpadding), 0)), 0)$",
               "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
               "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
@@ -1977,7 +1985,7 @@
                       "config_visible": 0
                     },
                     "internal_formulas": {
-                      "config_stacking": "$if(gv(widgetorient) = 0, VERTICAL_LEFT, HORIZONTAL_CENTER)$",
+                      "config_stacking": "$if(gv(widgetorient) = 0, VERTICAL_CENTER, HORIZONTAL_CENTER)$",
                       "config_visible": ""
                     },
                     "internal_globals": {
@@ -2111,7 +2119,7 @@
               "position_padding_top": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
               "position_padding_bottom": "$if(gv(box1dir2) = 1 & gv(formulas/colcount) <= 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
             },
-           "viewgroup_items": [
+            "viewgroup_items": [
               {
                 "internal_type": "TextModule",
                 "text_expression": "$if(gv(box1dir2) = 0, [DISABLED], (if(gv(box1dir1) = 2 & gv(devicecount) = 1, \"[ENABLED]\", \"[DISABLED]\")))$",
@@ -2809,7 +2817,6 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Preset - A/C Power",
-                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "TextModule",
@@ -2859,6 +2866,7 @@
               {
                 "internal_type": "OverlapLayerModule",
                 "internal_title": "Preset - Soundbar",
+                "config_visible": "REMOVE",
                 "viewgroup_items": [
                   {
                     "internal_type": "TextModule",
@@ -2880,10 +2888,14 @@
                     "config_stacking": "HORIZONTAL_CENTER",
                     "internal_title": "Soundbar Controls",
                     "internal_toggles": {
-                      "config_margin": 100
+                      "config_margin": 100,
+                      "config_stacking": 10
                     },
                     "internal_globals": {
                       "config_margin": "iconpaddinginstack"
+                    },
+                    "internal_formulas": {
+                      "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER)$"
                     },
                     "viewgroup_items": [
                       {
@@ -3120,8 +3132,8 @@
         },
         "internal_formulas": {
           "position_anchor": "$gv(formulas/boxalign)$",
-          "position_offset_y": "$if(gv(widgetorient) = 0, 0, (gv(generated/box1height) + gv(verticalpadding)))$",
-          "position_offset_x": "$if(gv(widgetorient) = 0, (gv(box1size) + gv(verticalpadding)), 0)$",
+          "position_offset_y": "$if(gv(widgetorient) = 0, 0, (gv(box1size) + gv(verticalpadding)))$",
+          "position_offset_x": "$if(gv(widgetorient) = 0, (gv(box1size) + gv(horizontalpadding)), 0)$",
           "config_visible": ""
         },
         "internal_globals": {
@@ -3140,15 +3152,17 @@
               "shape_height": 100,
               "position_anchor": 10,
               "shape_corners": 100,
-              "shape_type": 10
+              "shape_type": 10,
+              "position_padding_left": 0
             },
             "internal_title": "-- Background - Edit in Globals",
             "position_anchor": "CENTERLEFT",
             "internal_formulas": {
               "paint_color": "$ce(gv(generated/color2),alpha,75)$",
               "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1size)))$",
-              "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1size)), (gv(generated/box2height) - gv(generated/box1height)))$",
-              "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$"
+              "shape_height": "$if(gv(widgetorient) = 0, gv(generated/box2height), (gv(generated/box2height) - gv(box1size)))$",
+              "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
+              "position_padding_left": ""
             },
             "shape_corners": 10.0,
             "internal_globals": {
@@ -3189,7 +3203,7 @@
                 "internal_formulas": {
                   "paint_color": "$gv(colors/bordercolor)$",
                   "shape_width": "$if(gv(widgetorient) = 1, gv(generated/box2width), (gv(generated/box2width) - gv(box1size)))$",
-                  "shape_height": "$if(gv(widgetorient) = 0, (gv(generated/box2height) - gv(box1size)), (gv(generated/box2height) - gv(generated/box1height)))$",
+                  "shape_height": "$if(gv(widgetorient) = 0, gv(generated/box2height), (gv(generated/box2height) - gv(box1size)))$",
                   "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
                   "position_padding_left": "$if(gv(widgetorient) = 0, gv(verticalpadding), 0 )$"
                 },
@@ -7861,6 +7875,7 @@
                   {
                     "internal_type": "OverlapLayerModule",
                     "internal_title": "Testing",
+                    "config_visible": "REMOVE",
                     "viewgroup_items": [
                       {
                         "internal_type": "TextModule",
@@ -8197,7 +8212,6 @@
                   {
                     "internal_type": "OverlapLayerModule",
                     "internal_title": "Preset - A/C Controller",
-                    "config_visible": "REMOVE",
                     "viewgroup_items": [
                       {
                         "internal_type": "TextModule",
@@ -9063,6 +9077,7 @@
                   {
                     "internal_type": "OverlapLayerModule",
                     "internal_title": "Preset - Battery Levels",
+                    "config_visible": "REMOVE",
                     "viewgroup_items": [
                       {
                         "internal_type": "TextModule",
@@ -9668,7 +9683,6 @@
                     "internal_formulas": {
                       "position_anchor": "$gv(formulas/boxalign)$"
                     },
-                    "config_visible": "REMOVE",
                     "viewgroup_items": [
                       {
                         "internal_type": "TextModule",
@@ -10301,7 +10315,6 @@
                   {
                     "internal_type": "OverlapLayerModule",
                     "internal_title": "*Preset - Door Locks",
-                    "config_visible": "REMOVE",
                     "viewgroup_items": [
                       {
                         "internal_type": "TextModule",
@@ -10345,7 +10358,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "FontIconModule",
-                                "icon_icon": "mdi-lock-open",
+                                "icon_icon": "mdi-lock-open-variant",
                                 "internal_title": "Unlock Door",
                                 "position_anchor": "BOTTOMRIGHT",
                                 "internal_toggles": {
@@ -10368,7 +10381,8 @@
                                     "switch": "tasker/totasker",
                                     "switch_text": "on&script.ir_ac_power"
                                   }
-                                ]
+                                ],
+                                "icon_set": "kfile://org.kustom.provider/widgets/Device_Control_Widget_053_Alpha.kwgt/icons/hawgts2.ttf"
                               }
                             ]
                           },
@@ -10378,7 +10392,7 @@
                             "viewgroup_items": [
                               {
                                 "internal_type": "FontIconModule",
-                                "icon_icon": "mdi-dev-lock",
+                                "icon_icon": "mdi-lock",
                                 "internal_title": "Lock Door",
                                 "position_anchor": "BOTTOMRIGHT",
                                 "internal_toggles": {
@@ -10402,13 +10416,14 @@
                                     "switch_text": "on&script.ir_ac_power"
                                   }
                                 ],
-                                "icon_set": "kfile://org.kustom.provider/icons/hawgts1.tff"
+                                "icon_set": "kfile://org.kustom.provider/widgets/Device_Control_Widget_053_Alpha.kwgt/icons/hawgts2.ttf"
                               }
                             ]
                           },
                           {
                             "internal_type": "OverlapLayerModule",
                             "internal_title": "Icon 1",
+                            "config_visible": "REMOVE",
                             "viewgroup_items": [
                               {
                                 "internal_type": "FontIconModule",
@@ -11090,7 +11105,7 @@
               },
               {
                 "internal_type": "TextModule",
-                "text_expression": "$gv(generated/status)$",
+                "text_expression": "$gv(generated/status)$$if(gv(box1dir1) = DATA | gv(box1dir2) = DATA, \"Error - One or more global list variables incorrectly set\")$",
                 "position_padding_left": 5.0
               }
             ]
@@ -11109,8 +11124,8 @@
         "internal_formulas": {
           "position_anchor": "$lv(pos, if(gv(deviceiconposition) = DATA, 1, gv(deviceiconposition)))$$if(gv(box1position) = RIGHT, (if(#pos = 1, TOPLEFT, #pos = 2, CENTERRIGHT, #pos = 3, BOTTOMLEFT)),gv(box1position) = LEFT, (if(#pos = 1, TOPRIGHT, #pos = 2, CENTERLEFT, #pos = 3, BOTTOMRIGHT)),gv(box1position) = TOP, (if(#pos = 1, BOTTOMLEFT, #pos = 2, TOP, #pos = 3, BOTTOMRIGHT)),gv(box1position) = BOTTOM, (if(#pos = 1, TOPLEFT, #pos = 2, BOTTOM, #pos = 3, TOPRIGHT)))$",
           "config_visible": "$if(gv(deviceiconposition) = 4, REMOVE, ALWAYS)$",
-          "position_offset_x": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,((gv(box1size) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0)))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$",
-          "position_offset_y": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 0,gv(box1position) = TOP   | gv(box1position) = BOTTOM,((gv(generated/box1height) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2)))))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(horizontalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$"
+          "position_offset_x": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,(((if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1size))) / 2)+ gv(verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP    | gv(box1position) = BOTTOM, 0)))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$",
+          "position_offset_y": "$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,0,gv(box1position) = TOP   | gv(box1position) = BOTTOM,(((if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1size))) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2)))))$$if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(horizontalpadding),gv(deviceiconposition) = DATA, 1,gv(deviceiconposition) = 2, #pos)$"
         },
         "internal_globals": {
           "position_offset_x": "verticalpadding",
@@ -11167,7 +11182,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "DEG270"
                   }
@@ -11206,7 +11221,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11243,7 +11258,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11294,7 +11309,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11326,7 +11341,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11357,7 +11372,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "DEG270"
                   }
@@ -11390,7 +11405,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11423,7 +11438,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11455,7 +11470,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11487,7 +11502,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11519,7 +11534,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11551,7 +11566,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11602,7 +11617,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11634,7 +11649,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11665,7 +11680,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11715,7 +11730,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "DEG270"
                   }
@@ -11748,7 +11763,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11780,7 +11795,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11831,7 +11846,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11863,7 +11878,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11894,7 +11909,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11926,7 +11941,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -11977,7 +11992,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "FLIP_X"
                   }
@@ -12010,7 +12025,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12041,7 +12056,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12091,7 +12106,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "MANUAL"
                   }
@@ -12124,7 +12139,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "MANUAL"
                   }
@@ -12176,7 +12191,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "MANUAL"
                   }
@@ -12209,7 +12224,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12241,7 +12256,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12273,7 +12288,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12304,7 +12319,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12336,7 +12351,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12368,7 +12383,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12462,7 +12477,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12494,7 +12509,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12526,7 +12541,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12558,7 +12573,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12590,7 +12605,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12622,7 +12637,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12654,7 +12669,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12686,7 +12701,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12718,7 +12733,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12750,7 +12765,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12782,7 +12797,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12814,7 +12829,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12846,7 +12861,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12878,7 +12893,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12910,7 +12925,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12942,7 +12957,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -12974,7 +12989,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     },
                     "icon_rotate_mode": "FLIP_X"
                   }
@@ -13007,7 +13022,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -13039,7 +13054,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -13103,7 +13118,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -13135,7 +13150,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -13167,7 +13182,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -13199,7 +13214,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -13231,7 +13246,7 @@
                     "internal_globals": {
                       "position_offset_y": "horizontalpadding",
                       "position_offset_x": "verticalpadding",
-                      "icon_size": "generated/devicosize"
+                      "icon_size": "generated/deviceiconcalc"
                     }
                   }
                 ]
@@ -13261,7 +13276,7 @@
                       "shape_width": "$gv(deviceiconsize) - (gv(deviceiconsize) * 0.2)$"
                     },
                     "internal_globals": {
-                      "shape_width": "generated/devicosize"
+                      "shape_width": "generated/deviceiconcalc"
                     },
                     "paint_color": "#00FFFFFF",
                     "internal_events": [
@@ -13293,7 +13308,7 @@
                       "shape_width": "$gv(deviceiconsize) - (gv(deviceiconsize) * 0.2)$"
                     },
                     "internal_globals": {
-                      "shape_width": "generated/devicosize"
+                      "shape_width": "generated/deviceiconcalc"
                     },
                     "paint_color": "#00FFFFFF",
                     "internal_events": [
@@ -13458,7 +13473,7 @@
         "config_margin": 10.0,
         "internal_formulas": {
           "position_anchor": "$if(gv(deviceiconposition) = 3,(if(gv(box1position) = RIGHT, TOPLEFT,gv(box1position) = LEFT, TOPRIGHT,gv(box1position) = TOP, BOTTOMLEFT,gv(box1position) = BOTTOM, TOPLEFT)),(if(gv(box1position) = RIGHT, BOTTOMLEFT,gv(box1position) = LEFT, BOTTOMRIGHT,gv(box1position) = TOP, BOTTOMRIGHT,gv(box1position) = BOTTOM, TOPRIGHT)))$",
-          "config_visible": "$if(gv(appiconhide) = 0, ALWAYS, REMOVE)$"
+          "config_visible": "$if(gv(appiconvis) = 0, ALWAYS, REMOVE)$"
         },
         "position_offset_x": 10.0,
         "position_offset_y": 10.0,
@@ -13487,7 +13502,7 @@
               "position_offset_y": 10
             },
             "internal_formulas": {
-              "paint_color": "$if(gv(appiconhide) = 0, ce(gv(colors/colico),alpha,20), #00FFFFFF)$",
+              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(colors/colico),alpha,20), #00FFFFFF)$",
               "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
               "position_offset_x": "$gv(verticalpadding) +(gv(iconpaddinginstack) * 2) +  gv(appiconsize)$",
               "position_offset_y": "$gv(horizontalpadding) + gv(iconpaddinginstack)$"
@@ -13521,7 +13536,7 @@
               "position_offset_y": 10
             },
             "internal_formulas": {
-              "paint_color": "$if(gv(appiconhide) = 0, ce(gv(colors/colico),alpha,20), #00FFFFFF)$",
+              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(colors/colico),alpha,20), #00FFFFFF)$",
               "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
               "position_offset_x": "$gv(verticalpadding) + gv(iconpaddinginstack)$",
               "position_offset_y": "$gv(horizontalpadding) + gv(iconpaddinginstack)$"
