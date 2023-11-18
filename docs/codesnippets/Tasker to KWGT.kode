@@ -1,0 +1,510 @@
+$TASKER > KWGT FLOWS AND FUNCTIONS$
+
+$TEST JSON DATA$
+
+# KWGT preset default
+{
+  "device_states": [
+    {
+      "entity_id": "placeholder",
+      "state": "on"
+    },
+  ]
+}
+
+# Sample populated database
+{
+  "device_states": [
+    {
+      "entity_id": "light.bedroom_lights",
+      "state": "on",
+      "brightness": "255",
+      "color": "255, 255, 128, 75"
+    },
+    {
+      "entity_id": "light.study_lights",
+      "state": "on",
+      "brightness": "125",
+      "color": "255, 255, 128, 75"
+    },
+    {
+      "entity_id": "light.lr_lights",
+      "state": "off",
+      "brightness": "200",
+      "color": "255, 200, 128, 80"
+    },
+    {
+      "entity_id": "light.foyer_lights",
+      "state": "on",
+      "brightness": "200",
+      "color": "255, 200, 128, 80"
+    },
+    {
+      "entity_id": "sensor.hallway_temperature",
+      "state": "20C",
+      "last_updated": "10:30 AM"
+    },
+  ]
+}
+
+# Sanitized populated database
+{"device_states":[{"entity_id":"light.bedroom_lights","state":"on","brightness":255,"color":"255,255,128,75"},{"entity_id":"light.study_lights","state":"on","brightness":125,"color":"255,255,128,75"},{"entity_id":"light.kitchen_lights","state":"off","brightness":200,"color":"255,200,128,80"},{"entity_id":"sensor.hallway_temperature","state":"20C","last_updated":"10:30AM"},]}
+
+# State update sample from tasker
+    {
+      "entity_id": "light.bedroom_lights",
+      "state": "on",
+      "brightness": 125,
+      "color": "255, 255, 128, 65"
+    },
+
+
+
+ESCAPING NOTES
+UTF Hex       REGEX, KWGT
+7B {        - Escape literal with \, no utf
+7D }        - Escape literal with \, no utf
+5B [        - Escape literal with \, no utf
+5D ]        - Escape literal with \, no utf
+22 "        - Escape literal with \, use utf
+24 $$       - Double, None
+0A New Line - \n, use utf
+
+----------------------------------------
+
+TASKER > KWGT FLOW (build database)
+
+V11 - WORKING - Zero formatting to fully human-readable JSON output (extra whitespace at top)
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(datawipe, tc(reg, tc(reg, gv(jsondb), "\n", ""), "\s", ""))$
+$lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
+$lv(jsonrem, (if(#exists = 1, gv(formulas/jsonrementity), #datawipe)))$
+$lv(jsonout, gv(formulas/jsonaddentity))$
+$lv(jsonline, gv(formulas/jsonaddnewline))$
+$lv(jarrcut, tc(split, tc(split, #jsonline, "[", 1), "]", 0))$
+$lv(jarredit, tc(reg,#jarrcut, "\n", tc(utf, 0A) + "    "))$
+$lv(jaddspc, gv(formulas/jsonaddindents))$
+$lv(jremblnk, tc(reg, #jaddspc, "\s\n", ""))$$#jremblnk$
+
+
+V11 Formulas
+
+$formulas/jsonrementity$
+// Remove entity from array
+// .*\{\"entity_id\":\"#entity\"[^\}].*\},
+// \{"entity_id":"#entity".*?\},
+$tc(reg, 
+  #datawipe 
+  ("\s+\{\" + tc(utf, 22) + "entity_id" + "\" + tc(utf, 22) + ":\" + tc(utf, 22) + #entity + "\" + tc(utf, 22) + "[^\}]*\},"), 
+  ""
+)$
+$tc(reg, 
+  #datawipe 
+  ("\{\" + tc(utf, 22) + "entity_id" + "\" + tc(utf, 22) + ":\" + tc(utf, 22) + 
+  #entity + "\" + tc(utf, 22) + ".*?\},"), 
+  ""
+)$
+
+// JSONOUT - Add new entity to JSON
+// \},\]\} - MATCH
+// \},#jsonwipe\]\} - REPLACE
+
+$formulas/jsonaddnewline$
+// Add new lines and in-line spaces to JSON
+// \}, > \},\n
+// : > ": "
+// \", > \",\n
+// \{ > \{\n
+// \} > \n\}
+// \] > \]\n
+$tc(reg, 
+  tc(reg, 
+    tc(reg, 
+      tc(reg, 
+        tc(reg, 
+          tc(reg, 
+            tc(reg, 
+              tc(reg, 
+                #jremblnk, 
+                "\},", 
+                "\}," + tc(utf, 0A)
+              ), 
+              ":", 
+              ": "
+            ), 
+            "\" + tc(utf, 22) + ",", 
+            "\" + tc(utf, 22) + "," + tc(utf, 0A)
+          ), 
+          "\{", 
+          "\{" + tc(utf, 0A)
+        ), 
+        "\}", 
+        tc(utf, 0A) + "\}"
+      ), 
+      "\[", 
+      "\[" + tc(utf, 0A)
+    ), 
+    "\" + tc(utf, 22) + "device_states\" + tc(utf, 22) + ".*", 
+    "$0"
+  ), 
+  "\]", 
+  "  ]"
+)$
+
+$formulas/jsonaddindents$
+// Add array intendation
+// (?<=\[)[^\[\]]*(?=\]) - Match contents of array & replace with jarredit
+// (?<!\[)(?<=\n|^)\s*("".*) - Add indentation for array content inside each object
+$tc(reg, 
+  tc(reg, 
+    #jsonline, 
+    ("(?<=\[)[^\[\]]*(?=\])"), 
+    tc(utf, 0A) + "    " + #jarredit + tc(utf, 0A) + "  "
+  ), 
+  ("(?<!\[)(?<=\n|^)\s*(" + tc(utf, 22) + ".*)"), 
+  "  $0"
+)$
+
+// \s+\{\"entity_id\":\"#entity\"[^\}]*\},
+// \},\]\} - MATCH
+// \},#jsonwipe\]\} - REPLACE
+// \}, > \},\n
+// : > ": "
+// \", > \",\n
+// \{ > \{\n
+// \} > \n\}
+// \] > \]\n
+// (?<=\[)[^\[\]]*(?=\]) - Match contents of array & replace with edited array
+// (?<!\[)(?<=\n|^)\s*("".*) - Add indentation for array content inside each object
+
+
+EDITING
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(datawipe, tc(reg, tc(reg, gv(jsondb), "\n", ""), "\s", ""))$
+$lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
+$lv(jsonrem, (if(#exists = 1, gv(formulas/jsonrementity), #datawipe)))$
+$lv(jsonout, (tc(reg, #jsonrem, "\},\]\}", ("\}," + #jsonwipe + "\]\}"))))$
+$lv(jremblnk, tc(reg, #jsonout, "\s\n", ""))$
+$lv(jsonline, gv(formulas/jsonaddnewline))$
+$lv(jarrcut, tc(split, tc(split, #jsonline, "[", 1), "]", 0))$
+$lv(jarredit, tc(reg,#jarrcut, "\n", tc(utf, 0A) + "    "))$
+$lv(jaddspc, gv(formulas/jsonaddindents))$$#jaddspc$
+
+----------------------------------------
+
+$PREVIOUS VERSIONS$
+
+V10 - WORKING - TASKER DATA > HUMAN READABLE (Extra whitespace at top)
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(datawipe, tc(reg, tc(reg, gv(jsondb), "\n", ""), "\s", ""))$
+$lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
+$lv(jsonrem, (if(#exists = 1, gv(formulas/jsonrementity), #datawipe)))$
+$lv(jsonout, gv(formulas/jsonaddentity))$
+$lv(jsonline, gv(formulas/jsonaddnewline))$
+$lv(jarrcut, tc(split, tc(split, #jsonline, "[", 1), "]", 0))$
+$lv(jarredit, tc(reg,#jarrcut, "\n", tc(utf, 0A) + "    "))$
+$lv(jaddspc, gv(formulas/jsonaddindents))$
+$lv(jremblnk, tc(reg, #jaddspc, "\s\n", ""))$$#jremblnk$
+
+V10 - REQUIRED GLOBAL FORMULAS
+
+$formulas/jsonrementity$
+// Remove entity from array
+// \s+\{\"entity_id\":\"#entity\"[^\}]*\},
+$tc(reg, 
+  (#datawipe), 
+  ("\s+\{\" + tc(utf, 22) + "entity_id" + "\" + tc(utf, 22) + ":\" + tc(utf, 22) + #entity + "\" + tc(utf, 22) + "[^\}]*\},"), 
+  ""
+)$
+
+$formulas/jsonaddentity$
+// Add new entity to JSON
+// \},]\} - MATCH
+// \},#jsonwipe]\} - REPLACE
+$tc(reg, #jsonrem, "\},\]\}", ("\}," + #jsonwipe + "\]\}"))$
+
+$formulas/jsonaddnewline$
+// Add new lines and in-line spaces to JSON
+// \}, > \},\n
+// : > ": "
+// \", > \",\n
+// \{ > \{\n
+// \} > \n\}
+// \[ > \[\n
+$tc(reg, 
+  tc(reg, 
+    tc(reg, 
+      tc(reg, 
+        tc(reg, 
+          tc(reg, 
+            tc(reg, 
+              tc(reg, 
+                #jsonout, 
+                "\},", 
+                "\}," + tc(utf, 0A)
+              ), 
+              ":", 
+              ": "
+            ), 
+            "\" + tc(utf, 22) + ",", 
+            "\" + tc(utf, 22) + "," + tc(utf, 0A)
+          ), 
+          "\{", 
+          "\{" + tc(utf, 0A)
+        ), 
+        "\}", 
+        tc(utf, 0A) + "\}"
+      ), 
+      "\[", 
+      "\[" + tc(utf, 0A)
+    ), 
+    "\" + tc(utf, 22) + "device_states\" + tc(utf, 22) + ".*", 
+    "$0"
+  ), 
+  "\]", 
+  "  ]"
+)$
+
+$formulas/jsonaddindents$
+// Add array intendation
+// (?<=\[)[^\[\]]*(?=\]) - Match contents of array & replace with jarredit
+// (?<!\[)(?<=\n|^)\s*("".*) - Add indentation for array content inside each object
+$tc(reg, 
+  tc(reg, 
+    #jsonline, 
+    ("(?<=\[)[^\[\]]*(?=\])"), 
+    tc(utf, 0A) + "    " + #jarredit + tc(utf, 0A) + "  "
+  ), 
+  ("(?<!\[)(?<=\n|^)\s*(" + tc(utf, 22) + ".*)"), 
+  "  $0"
+)$
+
+V9 - WORKS - NO SPACING/LINES
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(datawipe, tc(reg, tc(reg, gv(jsondb), "\n", ""), "\s", ""))$
+$lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
+$lv(jsonrem, (if(#exists = 1, tc(reg, #datawipe, gv(formulas/test1) + #entity + gv(formulas/test2), ""), #datawipe)))$
+$lv(jsonout, tc(reg, #jsonrem, ("\" + tc(utf, 7D) + tc(utf, 2C) + tc(utf, 5D) + "\" + tc(utf, 7D)), ("\" + tc(utf, 7D) + tc(utf, 2C) + " " + #jsonwipe + tc(utf, 5D) + "\" + tc(utf, 7D))))$
+$#jsonout$
+
+V9 Testing
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(datawipe, tc(reg, tc(reg, gv(jsondb), "\n", ""), "\s", ""))$
+$lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
+$lv(jsonrem, (if(#exists = 1, tc(reg, #datawipe, gv(formulas/test1) + #entity + gv(formulas/test2), ""), #datawipe)))$
+ $lv(jsonout, tc(reg, #jsonrem, ("\" + tc(utf, 7D) + tc(utf, 2C) + tc(utf, 5D) + "\" + tc(utf, 7D)), "\" + (tc(utf, 7D) + tc(utf, 2C) + " " + #jsonwipe + tc(utf, 5D) + "\" + tc(utf, 7D))))$
+$#jsonout$
+
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(data, gv(jsondb))$
+$lv(update, gv(tasker/fromtasker))$
+$lv(jsonrem, if(#exists = 1, tc(reg, #data, (tc(utf, 22) + "\\{[^\\}]*?\" + tc(utf, 22) + "entity_id" + "\" + tc(utf, 22) + "\\s*:\\s*\" + tc(utf, 22) + #entity + "\" + tc(utf, 22) + "[^\\}]*\\},"), tc(utf, 22) + ""), #data))$$#jsonrem$
+$lv(jsonout, tc(reg, #jsonrem, "\\]", ", " + #update + "]"))$
+
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(data, gv(jsondb))$
+$lv(update, gv(tasker/fromtasker))$
+$lv(jsonrem, if(#exists = 1, tc(reg, #data, (tc(utf, 22) + "\\\" + tc(utf, 7D) + "[^\\\" + tc(utf, 7D) + "]*?\" + tc(utf, 22) + "entity_id" + "\" + tc(utf, 22) + "\\s*:\\s*\" + tc(utf, 22) + #entity + "\" + tc(utf, 22) + "[^\\\" + tc(utf, 7D) + "]*\\\" + tc(utf, 7D) + ","), tc(utf, 22) + ""), #data))$
+$lv(jsonout, tc(reg, #jsonrem, "\\]", ", " + #update + "]"))$
+$#jsonout$
+
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(data, gv(jsondb))$
+$lv(update, gv(tasker/fromtasker))$
+$lv(jsonrem, if(#exists = 1, tc(reg, #data, (tc(utf, 22) + "\\\" + tc(utf, 7B) + "\[^\\\" + tc(utf, 7D) + "\]*?\" + tc(utf, 22) + "entity_id" + "\" + tc(utf, 22) + "\\s*:\\s*\" + tc(utf, 22) + #entity + "\" + tc(utf, 22) + "\[^\\\" + tc(utf, 7D) + "\]*\\\" + tc(utf, 7D) + ","), tc(utf, 22) + ""), #data))$
+$lv(jsonout, tc(reg, #jsonrem, "\}\,\]\}", "\}, " + #update + "\]\}"))$
+$#jsonout$
+$lv(jsonout, tc(reg, #jsonrem, "\\\]", ", " + #update + "]"))$
+
+WORKING WEIRDLY
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(data, gv(jsondb))$
+$lv(update, gv(tasker/fromtasker))$
+$lv(jsonrem, if(#exists = 1, tc(reg, #data, (tc(utf, 22) + "\\{[^\\}]*?\" + tc(utf, 22) + "entity_id" + "\" + tc(utf, 22) + "\\s*:\\s*\" + tc(utf, 22) + #entity + "\" + tc(utf, 22) + "[^\\}]*\\},"), tc(utf, 22) + ""), #data))$
+$lv(jsonout, tc(reg, #jsonrem, "\\]$", ", " + tc(reg, #update, "\", tc(utf, 22)) + "]"))$$#jsonout$
+
+UTF FREE OUTPUT
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(data, gv(jsondb))$
+$lv(update, gv(tasker/fromtasker))$
+$lv(jsonrem, if(#exists = 1, tc(reg, #data, "\\{[^\\}]*?\"entity_id\"\\s*:\\s*\"" + #entity + "\"[^\\}]*\\},", ""), #data))$
+$lv(jsonout, tc(reg, #jsonrem, "\\]", ", " + #update + "]"))$
+
+V8 - Working completly but with shell delay problems
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(datawipe, sh("echo '" + gv(jsondb) + "' | tr -d '\n' | sed 's/ //g'", 1/60))$
+$lv(jsonwipe, sh("echo '" + gv(tasker/fromtasker) + "' | tr -d '\n' | sed 's/ //g'", 1/60))$
+$lv(jsonrem, (if(#exists = 1, sh("echo '" + #datawipe + "' | sed 's/{" + tc(utf, 22) + "entity_id" + tc(utf, 22) + ":" + tc(utf, 22) + #entity + tc(utf, 22) + "[^}]*},//'", 1/60), #datawipe)))$
+$lv(jsonout, sh("echo '" + #jsonrem + "' | sed 's/},]}/}, " + #jsonwipe + "]}/'", 1/60))$
+$#jsonout$
+
+V7 - TESTING
+$lv(jsonout, sh("echo '" + gv(jsondb) + "' | sed 's/},]}/}, " + gv(tasker/fromtasker) +                                                                          "/'"))$
+                                                      sed 's/},]}/}, {"entity_id": "light.bedroom_lights","state": "on","brightness": 255,"color": "255, 255, 128, 75"}]}/'
+$lv(jsonout, sh("echo '" + gv(jsondb) + "' | awk '/\]/{print " + tc(utf, 34) + "    {\n      \"entity_id\": \"" + #entity + "\",\n      \"state\": \"on\",\n      \"brightness\": 255,\n      \"color\": \"255, 255, 128, 75\"\n    }" + tc(utf, 34) + "; print; next}1'"))$
+$lv(jsonrem, (if(#exists = 1, sh("echo '" + #jsonwipe + "' | sed 's/{[^{]*" + tc(utf, 22) + "entity_id" + tc(utf, 22) + ": " + tc(utf, 22) + #entity + tc(utf, 22) + "[^}]*},//'"))))$
+
+$lv(jsonrem, (if(#exists = 1, sh("echo '" + gv(jsondb) + "' | awk '/{/{b=$0; next} /" + tc(utf, 22) + "entity_id" + tc(utf, 22) + ": " + tc(utf, 22) + #entity + tc(utf, 22) + 
+  "/ {getline; while($0 !~ /}/) getline; getline; next} {if(b) {print b; b=" + tc(utf, 22) + tc(utf, 22) + ";} print}'"))))$$#jsonrem$
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(jsonrem, 
+(sh("echo '" + gv(jsondb) + "' | awk '/{/{b=$0; next} /" + tc(utf, 22) + "entity_id" + tc(utf, 22) + ": " + tc(utf, 22) + #entity + tc(utf, 22) + 
+  "/ {getline; while($0 !~ /}/) getline; getline; next} {if(b) {print b; b=" + tc(utf, 22) + tc(utf, 22) + ";} print}'")))$$#jsonrem$
+
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(jsonrem, (sh("echo '" + gv(jsondb) + "' | awk '/{/{b=" + tc(utf, 24) + "0; next} /" + tc(utf, 22) + "entity_id" + tc(utf, 22) + ": " + tc(utf, 22) + #entity + tc(utf, 22) + 
+  "/ {getline; while(" + tc(utf, 24) + "0 !~ /}/) getline; getline; next} {if(b) {print b; b=" + tc(utf, 22) + tc(utf, 22) + ";} print}'")))$$#jsonrem$
+
+$sh("echo '" + gv(jsondb) + "' | 
+sed 's/{[^{]*" + tc(utf, 22) + "entity_id" + tc(utf, 22) + ": " + tc(utf, 22) + 
+"light.bedroom_lights" + tc(utf, 22) + "[^}]*},//'")$
+
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$$#entity$ WORKS
+
+$lv(jsonout, if(#exists = 1, tc(reg, gv(jsondb), '{\\s*"entity_id"\\s*:\\s*"'+ #entity +'"\\s*,\\s*.*?},'),
+ gv(jsondb)))$
+$lv(jsonout, if(#exists = 1, tc(reg, gv(jsondb), "{\\s*\"entity_id\":\\s*\"" + #entity + "\".*?},", ""),
+$lv(jsonout, if(#exists = 1, tc(reg, gv(jsondb), "{\\s*'entity_id'\\s*:\\s*'" + #entity + "'\\s*,\\s*.*?},", ""), gv(jsondb)))$
+ gv(jsondb)))$
+$lv(jsonout, if(#exists = 1, tc(reg, gv(jsondb), "{\\s*'entity_id'\\s*:\\s*'" + #entity + "'\\s*,\\s*.*?},", ""), gv(jsondb)))$
+
+V7 - WORKINGish (sh() problems)
+$lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+$lv(exists, if(tc(json, gv(jsondb), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+$lv(jsonwipe, sh("echo '" + gv(jsondb) + "' | tr -d '\n' | sed 's/ //g'"))$
+$lv(jsonrem, (if(#exists = 1, sh("echo '" + gv(jsondb) + "' | sed 's/{[^{]*" + tc(utf, 22) + "entity_id" + tc(utf, 22) + ": " + tc(utf, 22) + #entity + tc(utf, 22) + "[^}]*},//'"))))$
+$lv(jsonout, sh("echo '" + #jsonrem + "' | sed 's/},]}/}, " + gv(tasker/fromtasker) + "/'"))$
+$#jsonout$
+
+V6 - Current before JSON switch
+
+MAIN CODE
+$lv(newstate, gv(tasker/fromtasker))$
+$lv(allstate, gv(tasker/statedat))$
+$lv(entityid, tc(split, #newstate, ":", 0))$
+$lv(exists, sh("echo '" + #allstate + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'"))$
+$lv(writesta, if(#exists != "",(tc(reg, #allstate, #entityid + ":.*", (#newstate + ";;")), #allstate + "
+" + #newstate + ";;")))$$#writesta$ 
+
+EDITING
+$lv(newstate, gv(tasker/fromtasker))$
+$lv(allstate, gv(tasker/statedat))$
+$lv(entityid, tc(split, #newstate, ":", 0))$
+$lv(exists, sh("echo '" + #allstate + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'"))$
+$lv(writesta, if(#exists != "",(tc(reg, #allstate, #entityid + ":.*", (#newstate + ";;")), #allstate + "
+" + #newstate + ";;")))$
+$lv(dedupe, sh("echo '" + #last + "' | tr ';;' '\n' | awk -F':' 'NF && !/^;;$/ && !seen[$1]++ {print $0 " + tc(utf, 22) + ";;" + tc(utf, 22) + "}'"))$
+$tc(reg, #dedupe, "/(\\n|\s)/g", "")$
+
+WORKING SHELL vDEDUPE CODES?
+$lv(dedupe,(sh("echo '" + #writesta  + "' | tr ';;' '\n' | awk -F':' '!seen[$1]++ {print $0 " + tc(utf, 22) + ";;" + tc(utf, 22) + "}'")))$$#dedupe$
+$lv(dedupe, sh("echo '" + #writesta + "' | tr ';;' '\n' | awk -F':' 'NF && !/^;;$/ && !seen[$1]++ {print $0 " + tc(utf, 22) + ";;" + tc(utf, 22) + "}'"))$$#dedupe$
+
+TEST SHELL DEDUPE
+$lv(dedupe, ("echo '" + CODE + "' | tr ';;' '\n' | awk -F':' 'NF && !/^;;$/ && !seen[$1]++ {print $0 " + tc(utf, 22) + ";;" + tc(utf, 22) + "}'"))$
+$lv(dedupe, sh("echo '" + #writesta + "' | tr ';;' '\n' | awk -F':' '!/^;;$/ && !seen[$1]++ {print $0 " + tc(utf, 22) + ";;" + tc(utf, 22) + "}'"))$$#dedupe$
+$lv(dedupe,(sh("echo '" + #writesta  + "' | tr ';;' '\n' | awk -F':' '!seen[$1]++ {print $0 " + tc(utf, 22) + ";;" + tc(utf, 22) + "}'")))$$#dedupe$
+$lv(dedupe, sh("echo '" + #writesta + "' | tr ';;' '\n' | awk -F':' '!seen[$1]++' | paste -s -d ';;\n'"))$$#dedupe$
+$sh("echo '" + #adddata + "' | tr ';;' '\n' | awk -F':' '!seen[$1]++' | tr '\n' ';;'")$
+
+V5
+$lv(newstate, gv(tasker/fromtasker))$
+$lv(allstate, gv(tasker/statedat))$
+$lv(entityid, tc(split, #newstate, ":", 0))$
+$lv(exists, sh("echo '" + #allstate + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'"))$
+$lv(writesta, if(#exists != "",(tc(reg, #allstate, #entityid + ":.*", (#newstate + ";;")), #allstate + "
+" + #newstate + ";;")))$$#writesta$
+
+V4
+$lv(entityid, tc(split, gv(tasker/fromtasker), ":", 0))$
+$lv(state, tc(split, gv(tasker/fromtasker), ":", 1))$
+$if(tc(reg, gv(tasker/statedat), #entityid, #entityid) != "",
+ tc(reg, gv(tasker/statedat), #entityid + ".*", gv(tasker/fromtasker) + ";;"), gv(tasker/statedat) + "
+" + gv(tasker/fromtasker) + ";;")$
+
+$sh("echo '" + gv(tasker/statedat) + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'")$
+$lv(newstate, gv(tasker/fromtasker))$$lv(allstate, gv(tasker/statedat))$$lv(entityid, tc(split, #newstate, ":", 0))$$lv(exists, sh("echo '" + #allstate + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'"))$$if(#exists != "",(tc(reg, #allstate, #entityid + ".*", (#newstate + ";;")), #allstate + "
+" + #newstate + ";;"))$
+
+$lv(exists, sh("echo '" + #allstate + "' | tr ';;' '\n' | awk -F':' '!seen[$1]++' | awk -F':' '/^" + #entityid + ":/ {print \"exists\"; exit}'"))$
+$lv(entityid, tc(split, gv(tasker/fromtasker), ":", 0))$
+$lv(state, tc(split, gv(tasker/fromtasker), ":", 1))$
+$if(tc(reg, gv(tasker/statedat), #entityid, #entityid) != "",
+ tc(reg, gv(tasker/statedat), #entityid + ".*", gv(tasker/fromtasker) + ";;"), gv(tasker/statedat) + "
+" + gv(tasker/fromtasker) + ";;")$
+
+$lv(entityid, tc(split, gv(tasker/fromtasker), ":", 0))$
+$lv(state, tc(split, gv(tasker/fromtasker), ":", 1))$
+$lv(temp, sh("echo '" + gv(tasker/statedat) + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'"))$$#temp$
+
+$if(tc(reg, gv(tasker/statedat), #entityid, #entityid) != "",
+ (tc(reg, gv(tasker/statedat), #entityid + ".*", gv(tasker/fromtasker) + ";;")), (+ "
+" + gv(tasker/fromtasker) + ";;"))$
+
+$lv(newstate, gv(tasker/fromtasker))$$lv(allstate, gv(tasker/statedat))$$lv(entityid, tc(split, #newstate, ":", 0))$
+$lv(exists, sh("echo '" + #allstate + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'"))$
+$if(#exists != "",(tc(reg, #allstate, #entityid + ":.*", (#newstate + ";;")), #allstate + "
+" + #newstate + ";;"))$
+
+$lv(newstate, gv(tasker/fromtasker))$$lv(allstate, gv(tasker/statedat))$$lv(entityid, tc(split, #newstate, ":", 0))$
+$lv(exists, sh("echo '" + #allstate + "' | tr ';;' '\n' | awk -F':' '/^" + #entityid + ":/ {print $1}'"))$
+$lv(adddata, if(#exists != "",(tc(reg, #allstate, #entityid + ":.*", (#newstate + ";;")), #allstate + "
+" + #newstate + ";;")))$
+$lv(dedup, sh("echo '" + #adddata + "' | tr ';;' '\n' | awk -F':' '!seen[$1]++' | tr '\n' ';;'"))$
+
+V3
+$lv(entityid, tc(split, gv(tasker/fromtasker), ":", 0))$
+$lv(state, tc(split, gv(tasker/fromtasker), ":", 1))$
+$if(tc(reg, gv(tasker/statedat), #entityid, #entityid) != "", tc(reg, gv(tasker/statedat), #entityid + ".*", gv(tasker/fromtasker) + ";;"), gv(tasker/statedat) + "
+" + gv(tasker/fromtasker) + ";;")$
+
+V2
+$lv(entityid, tc(split, gv(tasker/fromtasker), ":", 0))$
+$lv(state, tc(split, gv(tasker/fromtasker), ":", 1))$
+$lv(count, tc(count, gv(tasker/statedat), #entityid))$
+$if(#count > 0, tc(reg, gv(tasker/statedat), #entityid + ".*", gv(tasker/fromtasker)), gv(tasker/statedat) + ";;
+" + gv(tasker/fromtasker))$
+
+V1.5
+$lv(entityid, tc(split, gv(tasker/states), ":", 0))$
+$lv(state, tc(split, gv(tasker/states), ":", 1))$
+$lv(level, tc(split, gv(tasker/states), ":", 2))$
+$lv(count, tc(count, gv(haentnam), #entityid))$
+$if(#count > 0, 
+    tc(reg, gv(haentnam), #entityid + " \S+", #entityid + " " + #state + " " + #level), 
+    gv(haentnam) + "\n" + #entityid + " " + #state + " " + #level
+)$
+
+V1
+$lv(entityid, tc(split, gv(tasker/fromtasker), ":", 0))$
+$lv(state, tc(split, gv(tasker/fromtasker), ":", 1))$
+$lv(level, tc(split, gv(tasker/fromtasker), ":", 2))$
+$lv(count, tc(count, gv(tasker/statedat), #entityid))$
+$if(#count > 0, tc(reg, gv(tasker/statedat), #entityid + " \S+", #entityid + " " + #state + " " + #level),
+gv(tasker/statedat) + "\n" + #entityid + " " + #state + " " + #level)$
+
+PREJSON STATEDAT GLOBAL FORMAT
+
+TEST TASKER/STATEDAT CONTENT
+light.bedroom_lights:on:255;;
+light.study_lights:on:255;;
+light.foyer_lights:on:125;;
+light.lr_lights:on;;
+sensor.s23_ultra_battery_level:92;;
+
+light.bedroom_lights:on:255;;
+light.study_lights:on:255;;
+light.foyer_lights:on:125;;
+light.lr_lights:on;;
+sensor.s23_ultra_battery_level:92;;
