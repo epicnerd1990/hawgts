@@ -68,8 +68,9 @@ $if(gv(box1position) = RIGHT, TOPLEFT, gv(box1position) = LEFT, TOPRIGHT,
 
 > Device Icon Group - X Offset
 $lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 
-            ((gv(box1size) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),
-            gv(box1position) = TOP   | gv(box1position) = BOTTOM, 0
+            (((if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1size))) / 2) 
+                + gv(verticalpadding) - (gv(deviceiconsize) / 2)),
+            gv(box1position) = TOP    | gv(box1position) = BOTTOM, 0
 )))$
 $if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding),
     gv(deviceiconposition) = DATA, 1,
@@ -79,15 +80,15 @@ $if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(verticalpadding)
 ----------------------------------------
 
 > Device Icon Group - Y Offset
-$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 0,
+$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT, 
+             0,
              gv(box1position) = TOP   | gv(box1position) = BOTTOM,
-              ((gv(generated/box1height) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2))
-)))$
+             (((if(gv(widgetorient) = 0, gv(generated/widgetheight), gv(box1size))) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2)))
+         ))$
 $if(gv(deviceiconposition) = 1 | gv(deviceiconposition) = 3, gv(horizontalpadding),
     gv(deviceiconposition) = DATA, 1,
     gv(deviceiconposition) = 2, #pos
 )$
-
 ----------------------------------------
 
 DEVICE ICON POSITION
