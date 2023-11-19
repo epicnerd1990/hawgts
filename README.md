@@ -120,11 +120,6 @@ template& {{ states.light.bedroom_lights.attributes.brightness }}
 Explain devname and how to add a new device (HA Blueprint and change state once)
 
 
-
-
-
-## (1) Using templates for cus
-
 ### Helpful Information
 
 
@@ -159,7 +154,24 @@ generated/pagenum            Number of current page if using a "pages" template
 
 
 
-## (1) Using templates for more customizability
+## (1) Using templates for more customization 
+
+# Pre-made templates
+
+# Komponents 
+To make the widgets as customizable as possible, you can put a Kustom Komponent in Box 2 as an alternative to HA icons. This is useful for those using this widget in page format, as you can easily add other device widgets to match the interface. 
+
+> Kompnents require advanced setup to link into HAWGTS globals
+
+Awesome Komponents to try out:
+- 1
+- 2
+- 3
+
+HAWGTS HA Komponents:
+- Battery Meter
+- 
+
 
 
 ## (1) Add more icons to rows in Device Control Widget
