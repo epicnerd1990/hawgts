@@ -82,7 +82,7 @@ Stage 4: Complete (beta)
 3. Click on the widget to configure. This will open KWGT's preset selection mode. Choose the widget you'd like to start with (this setup assumes you've chosen DCW)
 4. You will be presented with the DCW preset in KWGT. Hit the save button at the top to complete the widget setup
 5. Find the "Globals" tab in the bottom section and select it. This is where all of the widget configuration is done, its essentially a "settings" page.
-6. View the [Globals reference](/setup/globals.md) to walk through the settings and configure your widget how you like it. Return here after you've configured the widgets style to continue setting up
+6. View the [Globals reference](/docs/globals.md) to walk through the settings and configure your widget how you like it. Return here after you've configured the widgets style to continue setting up
 
 
 ## (1) Getting your software to talk to each other - Configuration and testing
