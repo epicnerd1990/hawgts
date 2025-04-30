@@ -9,6 +9,7 @@ Stage 1: Basic layout - Title and maybe some data
 Stage 2: Started - may need reformatting and more data added  
 Stage 3: Mostly complete - add new data as needed  
 Stage 4: Complete (beta)
+Stage 5: Incorrect data - review thouroughly
 
 
 ## (3) Widget features:
@@ -41,46 +42,29 @@ Stage 4: Complete (beta)
     - TV remote replacement controls and 2-way streaming service data (only Samsung Tizen TV's so far)
     - Local Device mode with media controls, status widgets of smart devices and (advanced) Android device controls using Tasker (see [Advanced]<#URL>)
 
-## (3) Pre-requisites
-#### Required
-- A Home Assistant setup configured with the devices you'd like to control
-- [Tasker](<GPLAYURL>), a long-standing and powerful device customization software installed on the device you'd like to use this widget on
-    - [HAWGT Plugin](<URL>) - Tasker plugin designed specifically for this widget with everything already set up inside. Parts of this are from other plugins, credits and sources at bottom
-    - [KWGT Plugin](<URL>) - Tasker plugin by the developer of the Kustom apps to allow Tasker and KWGT to communicate with each other
-- [KWGT](<GPLAYURL>) or [KLWP](<GPLAYURL>). [Kustom](<URL>) software is also long-standing and and offers very advanced android customization of the interface of your device. If unsure, install KWGT.
-    - [HAWGT Widgets](<URL>)
-- [HA Blueprint](<URL>) - Plugin by the developer of Tasker to allow Tasker and HA to communicate with each other
+## (3) Setup and installation of software
+This widget will take a bit of time to set up initially, as it requires as bit of configuration, but once its set up, you can make as many widgets as you like and even your own! It will also help to have a second devie available with your entities page open in home assistant
+1. Install [Tasker](<GPURL>) and [KWGT](<GPURL>) or [KLWP](<GPLAYURL>) on your device if you don't have them already. If you haven't used these apps before, open each one up and follow the configuration process. This involves asking for system permissions and setting working folders for the applications. In Tasker, choose to use the full version, not Tasky. For Kustom create a new folder for it to work in on newer Android versions
 
+2. Get your API key from HA. It's located in your user settings under the security tab. At the bottom of the page is the option to generated a new long-lived access key. WARNING: It's only displayed once, so keep it open in a tab until you've tested the connection!
 
-#### Recommended
-- Previous experience using Kustom and Tasker software will significantly speed up your setup process
-- Use of a second screen/device (your android device + computer/laptop is ideal) for easy transfer of information (one to read, one to work on)
-- Time to get the inital setup complete. The first widget will take the longest as it requires setup between KWGT, Tasker and HA. Subsequent widgets will be significantly faster to set up.
-
-## (2) Setup and installation of software
-1. Install the following applications on your device if you don't have them already:
-    - [Tasker](<GPURL>)
-    - [KWGT](<GPURL>) (Pro recommended)
-
-2. If you haven't used these apps before, open each one up and follow the intital startup process. This usually involves asking for system permissions and setting working folders for the applications **VERIFY**. In Tasker, choose to use the full version, not Tasky.
-
-3. Install the two tasker plugins above. Clicking the links on your Android device should open them directly in Tasker **VERIFY**. When installing the HAWGT plugin, you'll be asked **VERIFY** for your Home Assistant server information and API key. You have 3 options for your server information:
+3. Install the [KWGT Plugin](<URL>) for tasker. Clicking the link on your Android device should open it directly in Tasker **VERIFY**. You'll be asked for the API key you just got and your HA address information. You have 3 options for your adress information:
     - [Nabu Casa](<HAURL>) account - HA service offering a custom secure URL to your HA Server
     - Custom URL - For advanced users who have already set up a public URL
-    - Local IP - You can use the IP of the HA server, however these controls will only work when your device is within range of your WiFi network
+    - Local IP - You can use the address you use locally, however it will only work when your device connected to your WiFi network.
 
-    To get your API key, open Home Assistant and click on your user settings. At the bottom of the page is the option to generated a new long-lived access key. Enter this key and your Server URL into the Tasker plugin setup
+4. Next, log into Home Assistant and install the [HA Blueprint](<URL>), following the instructions from the Tasker developer. Use the same info you used in the taskernet setup and add your server information **VERIFY**.
 
-4. Next, log into Home Assistant and install the HA Blueprint, following the instructions from the Tasker developer. Use the same info you used in the taskernet setup and add your server information **VERIFY**.
+5. Last, download the hawgts.kwgt file above and install it in < your-kwgt-folder >/widgets/hawgts.kwgt. This must be done after configuring KWGT for the first time!
 
 
 ## (2) Set up your widget Interface (beginners guide)
 > Installing a custom Android launcher is highly recommended for this widget. If using a default launcher, support will be limited. Common launchers include Apex, Nova and Niagara.
 
 1. Configure your launcher to support removing padding from widgets and half-grid placement (if possible) **VERIFY** to allow maximum customizability
-2. Create a new KWGT widget on your home screen and size it however you want. A recommended starting layout is 2x5 (2 spaces high and the width of your device screen when upright). Remove padding from the widget if your launcher supports it
-3. Click on the widget to configure. This will open KWGT's preset selection mode. Choose the widget you'd like to start with (this setup assumes you've chosen DCW)
-4. You will be presented with the DCW preset in KWGT. Hit the save button at the top to complete the widget setup
+2. Create a new 2x4 KWGT widget on your home screen. Remove padding from the widget if your launcher supports it
+3. Click on the widget to set it uo. This will open KWGT's preset selection mode. Choose the widget you'd like to start with (this setup assumes you've chosen DCW)
+4. You will be presented with the HAWGTS preset in KWGT. Hit the save button at the top to complete the widget setup
 5. Find the "Globals" tab in the bottom section and select it. This is where all of the widget configuration is done, its essentially a "settings" page.
 6. View the [Globals reference](/setup/globals.md) to walk through the settings and configure your widget how you like it. Return here after you've configured the widgets style to continue setting up
 
@@ -91,7 +75,7 @@ Stage 4: Complete (beta)
 - Many preset templates will "drop" icons that don't have room to display
 
 
-## (1) Linking tasker commands to KWGT
+## (5) Linking tasker commands to KWGT
 
 You'll need the following information from Home Assistant for each of the devices you want to control
 - [Entity ID](<HAURL>) (eg. light.living_room)
@@ -125,7 +109,7 @@ Explain devname and how to add a new device (HA Blueprint and change state once)
 
 Formatting commands - KWGT touch event
 Switching from Yaml to JSON [link](https://www.json2yaml.com/convert-yaml-to-json) & removing lines
-(haservicecall)&(hatemplatejson)
+(haservicecall)&(hajson/template)
 light.turn_on&{ "entity_id": "light.bedroom_lights", "brightness": 30 }
 
 ## Testing all controls
@@ -145,18 +129,34 @@ Copy the "Device Highlight" template from dev templates into the group(s) where 
 - Customize your icon & other details
 
 
-If you want to make custom changes, you can create a local variable called "glbname" and set its value to your entity id. Once done, you can use the following global variables. "glbname" will be used in their formulas to return the result.
+If you want to make custom changes, you can create a local variable called "glbname" and set its stset to your entity id. Once done, you can use the following global variables. "glbname" will be used in their formulas to return the result.
 Global variable     |       Returns
-formulas/state              Device state
-formulas/lgtlevel           Light Brightness (out of 255)
-formulas/lgtcolor           Light Color
-generated/pagenum            Number of current page if using a "pages" template
+func/state              Device state
+func/lgtlevel           Light Brightness (out of 255)
+func/lgtcolor           Light Color
+core/curpage            Number of current page if using a "pages" template
 
 
 
 ## (1) Using templates for more customization 
 
 # Pre-made templates
+
+
+2025:
+- Make note about overriding any UI item by turning off formula mode. Eg. the device icon can be changed with the icon selector by removing the formula
+- Also make note of which flows can be disabled to customize which features, eg auto-align and such. Could use to remove toggle for auto-align
+
+
+To set up your template,
+1. Select the number of devices you'd like to control
+2. Select type of device (select multiple for more than one device type)
+3. Scroll through the list of templates until you find one close to what you're looking for
+4. Choose "Edit JSON" to edit the template to open the templates JSON.
+
+In the JSON, the group of objects in the "controllist" key are the names of the icons that are available to use in the widget. Go to the keys "box_1" and :box_2". In the "row" sub-keys, you can put the names of the icons you'd like to use from "controllist" to link them to specific icons on the widget.You can then customize the icon to set the HA command, state status and other details as shows in the following section.
+
+
 
 # Komponents 
 To make the widgets as customizable as possible, you can put a Kustom Komponent in Box 2 as an alternative to HA icons. This is useful for those using this widget in page format, as you can easily add other device widgets to match the interface. 
@@ -176,7 +176,7 @@ HAWGTS HA Komponents:
 
 ## (1) Add more icons to rows in Device Control Widget
 Create a new Overlay Group and place it in the list where you'd like it. If this is the third (or higher) control in the row, you have to make sure the groups visibility is set to the following formula:
-```$if(gv(generated/icocount)  < #, REMOVE, ALWAYS)$```
+```$if(gv(core/icocount)  < #, REMOVE, ALWAYS)$```
 Where # is the number of this icon lists in the order. This is used to hide the last icons first when the widget is sized smaller.
 
 Name your Overlay Group to your device name and place a control icon inside the group

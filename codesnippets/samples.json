@@ -1,0 +1,664 @@
+//////////////////////////////////////
+// HAWGTS JSON information and data
+//////////////////////////////////////
+
+
+//////////////////////////////////////
+// TEMPLATE JSON
+//////////////////////////////////////
+
+// Template versions: - Deprecate? Use Name for descripion instead?
+{
+  "3": "1 Device,    1 Row,  Box1 Sm-Lg",
+  "2": "1 Device,    2 Rows, Box1 Icon",
+  "5": "2 Device,    2 Rows, Box1 Icon",
+  "4": "2 Device,    2 Row,  Box1 lg",
+  "1": "2-4 Devices, 2 Rows, Box1 Lg",
+  "6": ""
+},
+
+//////////////////////////////////////
+// Sample JSON - V3
+{
+  "device_type": {                                // Device category
+    "objects": {                                  // "objects" - list of controls/commands
+      "control_namea": {                          // Name of control/command
+        "icon": "icon-name",                      // Icon name from hawgts icon pack
+        "type": "action,page",                    // Type of control - Internal "page" or external "action"
+        "onstate": "#>#,on,off,page#",            // Matches "active" Device state from HA or `curpage`
+        "action": "light,on,off,toggle,template", // Indicate which action to run when activated
+        "cmd": "",                                // Used internally for light control (brightness and color)
+        "data": "1"                               // Internal light control data or HA template command
+      },
+      "control_nameb": {                          // Name of control/command
+      }
+    },
+    "light1": {                                   // Device category + Template#
+      "name": "Light - 2-4 Page/Device, 2 Row",   // e.g., "Room Light Controls"
+      "note": "Testing Template V3",              // Internal notes, remove for V1
+      "icon": "icon-name",                        // Icon name from hawgts icon pack
+      "page": 1,                                  // 0 = no paging    1 = use pages (page1, page2, …)
+      "box1_size": 2,                             // 0 = Hidden,      1 = 1 "column",   2 = 2 "columns"
+      "row_count": 2,                             // 0 = Hidden,      1 = 1 "row",      2 = 2 "rows"
+      "device_icon_pos": 1,                       // 1 = Corner,      2 = Box 1,        3 = Hidden
+      "device_count": "2-4",                      // 1 = one,       2-4 = Paging,     1-2 = ??
+      "page1": {                                  // If page = 0, no "page#" key
+        "box1": {                                 // Remove Box 1 when not applicable
+          "row1": {                               // Max 2 per row in Box 1
+            "0": "controlnamea",
+            "1": "controlnameb"
+          },
+          "row2": {                               // Remove Row 2 when not applicable
+            "0": "controlnamec",
+            "1": "controlnamed"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "controlnamee",
+            "1": "controlnamef",
+            "2": "controlnameg"
+          },
+          "row2": {                               // Remove Row 2 when not applicable
+            "0": "controlnameh",
+            "1": "controlnamei",
+            "2": "controlnamej",
+            "3": "controlnamek"
+          }
+        }
+      },
+      "page2": {
+      }
+    },
+    "light2": {
+      "name": "Light - 0 Page, 1 Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 1,
+      "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+      }
+    }
+  }
+}
+
+//////////////////////////////////////
+// Sample JSON - V2
+{
+  "devicetype1": {                           // Device category
+    "name": "Device Name",                   // e.g., "Room Light Controls"
+    "type": "devicetype",                    // light, climate, etc.
+    "page": "#",                             // 0 = no paging; 1 = use pages (page1, page2, …)
+    "style": {
+        "icon": "icon_name",
+        "box1_size": "#",                    // 1 = 
+        "row_count": "#",                    // 1 = 
+        "device_icon_pos": "#",              // 1 = Normal, 2 = Box 1?
+        "device_count": "#"                  // 1 = 
+    },
+
+    // List of controls available for use by widget
+
+    // if page = 0, no "page" object
+  "page#": {},
+    "controllist": {                         // "controllist" is actual title of this object, not a filler
+      "controlnamea": {
+        "icon": "control_icon",
+        "type": "action,page",      // all - "action" or "page"
+        "stateon": "#>#,on,off,page#",       // all - devicestate that indicates device is on
+        "action": "light,on,off,toggle,template",     // action - indicate which action to run when run
+        "entity": "entity_id",               // action - which enitity to control
+        "cmd1": "brightness",                // action - 
+        "data1": "page#,{hatemplate}"        // page#,template - data used for page changing and HA Templates
+      },
+      "controlnameb": {
+      }
+    },
+
+    // Locations of the controls on the widget
+  "box_1": {
+    "row_1": {
+      "0": "controlname",
+      "1": "..."
+    },
+    "row_2": {
+      "0": "controlname",
+      "1": "..."
+    }
+  },
+  "box_2": {
+    "row_1": {
+      "0": "controlname",
+      "1": "..."
+    },
+    "row_2": {
+      "0": "controlname",
+      "1": "..."
+    }
+  }
+},
+
+//////////////////////////////////////
+// Testing Template JSON - V3
+  "light": {
+    "objects": {
+      "bedroom": {
+        "icon": "mdi-room-king-bed",
+        "type": "page",
+        "onstate": "page1",
+        "action": "page",
+        "cmd": "",
+        "data": "1"
+      },
+      "office": {
+        "icon": "mdi-room-desk",
+        "type": "page",
+        "onstate": "page2",
+        "action": "page",
+        "cmd": "",
+        "data": "2"
+      },
+      "livingroom": {
+        "icon": "mdi-room-sofa-single-outline",
+        "type": "page",
+        "onstate": "page3",
+        "action": "page",
+        "cmd": "",
+        "data": "3"
+      },
+      "foyer": {
+        "icon": "mdi-room-coat-rack",
+        "type": "page",
+        "onstate": "page4",
+        "action": "page",
+        "cmd": "",
+        "data": "4"
+      },
+      "power": {
+        "icon": "mdi-power",
+        "type": "action",
+        "onstate": "",
+        "action": "toggle",
+        "cmd": "",
+        "data": ""
+      },
+      "controlapp": {
+        "icon": "mdi-room-king-bed",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "color": {
+        "icon": "mdi-palette",
+        "type": "action",
+        "onstate": "",
+        "action": "color",
+        "cmd": "color",
+        "data": "#FFFFFF"
+      },
+      "off": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "action",
+        "onstate": "off",
+        "action": "off",
+        "cmd": "",
+        "data": ""
+      },
+      "low": {
+        "icon": "mdi-lightbulb-on-30",
+        "type": "action",
+        "onstate": "1>75",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "74"
+      },
+      "med": {
+        "icon": "mdi-lightbulb-on-60",
+        "type": "action",
+        "onstate": "76>200",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "150"
+      },
+      "high": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "200>255",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255"
+      },
+      "on": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "on",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255"
+      }
+    },
+    "light1": {
+      "name": "Light - 2-4 Page/Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 1,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": "2-4",
+      "page1": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page2": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page3": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page4": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      }
+    },
+    "light2": {
+      "name": "Light - 0 Page, 1 Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 1,
+      "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+      }
+    },
+    "light3": {
+      "name": "Light - 0 page, 1 Device, 1 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 1,
+      "device_icon_pos": 1,
+      "device_count": 1,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+      }
+    },
+    "light4": {
+      "name": "Light - 0 page, 2 Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "page": 0,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      }
+    }
+
+//////////////////////////////////////
+// Testing template JSON - V2
+
+{  "light1": {
+    "name": "Light Power",
+    "type": "light",
+    "note": "Current Testing Template",
+    "page": 0,
+    "style": {
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "off1": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "action",
+        "stateon": "off",
+        "action": "off",
+        "entity": "entity1",
+        "cmd1": "",
+        "data1": "",
+        "device": 1
+      },
+      "high1": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "stateon": "200>255",
+        "action": "light",
+        "entity": "entity1",
+        "cmd1": "brightness",
+        "data1": "255",
+        "device": 1
+      },
+      "off2": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "action",
+        "stateon": "off",
+        "action": "off",
+        "entity": "entity2",
+        "cmd1": "",
+        "data1": "",
+        "device": 2
+      },
+      "high2": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "stateon": "200>255",
+        "action": "light",
+        "entity": "entity2",
+        "cmd1": "brightness",
+        "data1": "255",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "off1",
+        "1": "high1"
+      },
+      "row_2": {
+        "0": "off2",
+        "1": "high2"
+      }
+    }
+  }
+} 
+
+//////////////////////////////////////
+// Device JSON
+//////////////////////////////////////
+{
+  "device_states": [
+    {
+      "entity_id": "light.bedroom_lights",
+      "state": "on",
+      "brightness": "255",
+      "color": "255, 255, 128, 75"
+    },
+    {
+      "entity_id": "light.study_lights",
+      "state": "on",
+      "brightness": "125",
+      "color": "255, 255, 128, 75"
+    },
+    {
+      "entity_id": "light.lr_lights",
+      "state": "off",
+      "brightness": "200",
+      "color": "255, 200, 128, 80"
+    },
+    {
+      "entity_id": "light.foyer_lights",
+      "state": "on",
+      "brightness": "200",
+      "color": "255, 200, 128, 80"
+    },
+    {
+      "entity_id": "sensor.hallway_temperature",
+      "state": "20C",
+      "last_updated": "10:30 AM"
+    },
+  ]
+}
+
+{
+  "device_states": [
+    {
+      "entity_id": "light.lr_lights",
+      "state": "off",
+      "brightness": 200,"color": "255,200,128,80"
+    },
+    {
+      "entity_id": "sensor.hallway_temperature",
+      "state": "20C",
+      "last_updated": "10: 30AM"
+    },
+    {
+      "entity_id": "light.foyer_lights",
+      "state": "on",
+      "brightness": "125",
+      "color": "255,0,0"
+    },
+    {
+      "entity_id": "light.study_lights",
+      "state": "unavailable"
+    },
+    {
+      "entity_id": "sensor.watch_battery_level",
+      "state": "19"
+    },
+    {
+      "entity_id": "sensor.s23_ultra_battery_level",
+      "state": "30"
+    },
+    {
+      "entity_id": "light.bedroom_lights",
+      "state": "on",
+      "brightness": "130",
+      "color": "255,205,166"
+    },
+    {
+      "entity_id": "sensor.remotephone_battery_level",
+      "state": "100"
+    }
+  ]
+}
+
+//////////////////////////////////////
+/// Devices states syntax change 2025??
+//////////////////////////////////////
+
+{
+"light.bedroom_lights": {
+  "state": "on",
+  "brightness": 255,
+  "color": "255, 255, 128, 75"
+},
+  "light.study_lights": {
+    "state": "on",
+    "brightness": 125,
+    "color": "255, 255, 128, 75"
+  }
+}
+//////////////////////////////////////
+// Template data returned from Home assistant to tasker
+//////////////////////////////////////
+{
+  'device_id'':'light.ensuite_light',
+  'device_name:'ensuite lights',
+  'from':'on',
+  'to':'off'
+}
+
+{
+  "entity_id": "%entity_id",
+  "state": "%state",
+  "brightness": "%brightness",
+  "color": "$color"
+},
+
+//////////////////////////////////////
+/// Status JSON (system not complete)
+//////////////////////////////////////
+{
+  "status": {
+    "01": {
+    "error_name": "error01",
+    "error_content": "Could not communicate with HA"
+    },
+    "02": {
+    "error_name": "error02",
+    "error_content": "Template Error - Please check JSON"
+    },
+    "03": {
+    "error_name": "error03",
+    "error_content": "Error 1"
+    },
+    "04": {
+    "error_name": "error04",
+    "error_content": "Error 1"
+    },
+    "05": {
+    "error_name": "error05",
+    "error_content": "Error 1"
+    },
+    "06": {
+    "error_name": "error06",
+    "error_content": "Error 1"
+    },
+    "07": {
+    "error_name": "error07",
+    "error_content": "Error 1"
+    }
+  }
+}

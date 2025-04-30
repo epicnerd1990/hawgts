@@ -1,0 +1,2883 @@
+{
+// V3 template - Blank slate
+  "<type>": {
+    "objects": {
+      "<name>": {
+        "icon": "",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+    },
+    "<type>1": {
+      "name": "",
+      "note": "",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1,
+      "box1": {
+        "row1": {
+          "0": "",
+          "1": ""
+        },
+        "row2": {
+          "0": "",
+          "1": ""
+        }
+      },
+      "box2": {
+        "row1": {
+          "0": "",
+          "1": "",
+          "2": "",
+          "3": ""
+        },
+        "row2": {
+          "0": "",
+          "1": "",
+          "2": "",
+          "3": ""
+        }
+      }
+    }
+  },
+
+// light - 50% complete - 1-4 are working. 5-6 are dummy
+  "light": {
+    "objects": {
+      "bedroom": {
+        "icon": "mdi-room-king-bed",
+        "type": "page",
+        "onstate": "page1",
+        "action": "page",
+        "cmd": "",
+        "data": "1"
+      },
+      "office": {
+        "icon": "mdi-room-desk",
+        "type": "page",
+        "onstate": "page2",
+        "action": "page",
+        "cmd": "",
+        "data": "2"
+      },
+      "livingroom": {
+        "icon": "mdi-room-sofa-single-outline",
+        "type": "page",
+        "onstate": "page3",
+        "action": "page",
+        "cmd": "",
+        "data": "3"
+      },
+      "foyer": {
+        "icon": "mdi-room-coat-rack",
+        "type": "page",
+        "onstate": "page4",
+        "action": "page",
+        "cmd": "",
+        "data": "4"
+      },
+      "power": {
+        "icon": "mdi-power",
+        "type": "action",
+        "onstate": "",
+        "action": "toggle",
+        "cmd": "",
+        "data": ""
+      },
+      "controlapp": {
+        "icon": "mdi-room-king-bed",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "color": {
+        "icon": "mdi-palette",
+        "type": "action",
+        "onstate": "",
+        "action": "color",
+        "cmd": "color",
+        "data": "#FFFFFF"
+      },
+      "off": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "action",
+        "onstate": "off",
+        "action": "off",
+        "cmd": "",
+        "data": ""
+      },
+      "low": {
+        "icon": "mdi-lightbulb-on-30",
+        "type": "action",
+        "onstate": "1>75",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "74"
+      },
+      "med": {
+        "icon": "mdi-lightbulb-on-60",
+        "type": "action",
+        "onstate": "76>200",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "150"
+      },
+      "high": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "200>255",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255"
+      },
+      "on": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "on",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255"
+      }
+    },
+    "light1": {
+      "name": "Light - 2-4 Page/Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 1,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": "2-4",
+      "page1": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page2": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page3": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page4": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      }
+    },
+    "light2": {
+      "name": "Light - 0 Page, 1 Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 1,
+      "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+      }
+    },
+    "light3": {
+      "name": "Light - 0 page, 1 Device, 1 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 1,
+      "device_icon_pos": 1,
+      "device_count": 1,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+      }
+    },
+    "light4": {
+      "name": "Blank",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "page": 0,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      }
+    },
+    "light5": {
+      "name": "Blank",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "page": 0,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      }
+    },
+    "light6": {
+      "name": "Light - 0 page, 2 Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "page": 0,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      }
+    }
+  },
+
+
+// climate - 15% complete
+  "climate": {
+    "objects": {
+      // device-specific objects
+      "fanpower": {
+        "icon": "mdi-fan-power-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanspeed": {
+        "icon": "mdi-plus-minus-variant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanoscillation": {
+        "icon": "mdi-fan-oscillation-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acpower": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acspeed": {
+        "icon": "mdi-plus-minus-variant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acmode": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      // general climate objects
+      "tempdown": {
+        "icon": "mdi-thermometer-minus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "tempup": {
+        "icon": "mdi-thermometer-plus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "schedule": {
+        "icon": "mdi-schedule",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "heat": {
+        "icon": "material-dev-mode-heat",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "cool": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "mode": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      // power climate objects
+      "acpoweron": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acpoweroff": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanpoweron": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanpoweroff": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "climate3": {
+      "name": "Air Conditioner (LG)",
+      "note": "Climate - 0 Page, 2 Device, 2 Row",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "",
+            "1": ""
+          },
+          "row2": {
+            "0": "",
+            "1": ""
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "",
+            "1": "",
+            "2": "",
+            "3": ""
+          },
+          "row2": {
+            "0": "",
+            "1": "",
+            "2": "",
+            "3": ""
+          }
+      }
+    },
+    "climate4": {
+      "name": "Air Conditioner (LG)",
+      "note": "Climate - 0 Page, 2 Device, 2 Row",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 2,
+    "box_1": {
+      "row_1": {
+        "0": "acpower"
+      },
+      "row_2": {
+        "0": "acmode"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "acmode",
+        "1": "schedule"
+      },
+      "row_2": {
+        "0": "acspeed",
+        "1": "acdown",
+        "2": "acup"
+      }
+    }
+    },
+    "climate5": {
+      "name": "Power toggle 2 devices (SM)",
+      "note": "Climate - 1 Box, 0 Page, 2 Device, 2 Row",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box_2": {
+        "row_1": {
+          "0": "acpoweron",
+          "1": "acpoweroff"
+        },
+        "row_2": {
+          "0": "fanpoweron",
+          "1": "fanpoweroff"
+        }
+      }
+    }
+  },
+  },
+
+
+  "climate0": {
+    "name": "Fan Control",
+    "type": "climate",
+    "page": 0,
+    "style": {
+      "icon": "",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "controllist": {
+      "fanpower": {
+        "icon": "mdi-fan-power-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanspeed": {
+        "icon": "mdi-plus-minus-variant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanoscillation": {
+        "icon": "mdi-fan-oscillation-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "fanpower"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "fanspeed",
+        "1": "fanoscillation"
+      }
+    }
+  },
+  "climate1": {
+    "name": "Climate Power",
+    "type": "climate",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "poweroff1": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "poweron1": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "poweroff2": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "poweron2": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "poweroff1",
+        "1": "poweron1"
+      },
+      "row_2": {
+        "0": "poweroff2",
+        "1": "poweron2"
+      }
+    }
+  },
+  "climate2": {
+    "name": "Air Conditioner",
+    "type": "climate",
+    "page": 0,
+    "style": {
+      "icon": "mdi-ico-climate-ac-cus",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "controllist": {
+      "tempdown": {
+        "icon": "mdi-thermometer-minus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "tempup": {
+        "icon": "mdi-thermometer-plus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "schedule": {
+        "icon": "mdi-schedule",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "heat": {
+        "icon": "material-dev-mode-heat",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "cool": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "mode": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acpower": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acspeed": {
+        "icon": "mdi-plus-minus-variant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acmode": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acdown": {
+        "icon": "mdi-thermometer-minus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acup": {
+        "icon": "mdi-thermometer-plus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acpower1": {
+        "icon": "mdi-air-conditioner-power-mod",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "acpower1"
+      },
+      "row_2": {
+        "0": "acmode"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "acmode",
+        "1": "schedule"
+      },
+      "row_2": {
+        "0": "acspeed",
+        "1": "acdown",
+        "2": "acup"
+      }
+    }
+  },
+  
+  "other1": {
+    "name": "Generic Device Control",
+    "type": "generic",
+    "page": 0,
+    "style": {
+      "icon": "mdi-home",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "controllist": {
+      "voldown": {
+        "icon": "mdi-volume-minus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "volup": {
+        "icon": "mdi-volume-plus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "play": {
+        "icon": "mdi-play-circle",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "power": {
+        "icon": "mdi-power",
+        "type": "action",
+        "onstate": "",
+        "action": "toggle",
+        "cmd": "",
+        "data": ""
+      },
+      "tempdown": {
+        "icon": "mdi-thermometer-minus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "tempup": {
+        "icon": "mdi-thermometer-plus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "schedule": {
+        "icon": "mdi-schedule",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "arm": {
+        "icon": "mdi-dev-shield-lock",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "disarm": {
+        "icon": "mdi-shield-lock-open",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "unlock": {
+        "icon": "mdi-lock-open-variant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "lock": {
+        "icon": "mdi-lock",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "lightoff": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "action",
+        "onstate": "off",
+        "action": "off",
+        "cmd": "",
+        "data": ""
+      },
+      "lightlow": {
+        "icon": "mdi-lightbulb-on-30",
+        "type": "action",
+        "onstate": "1>75",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "74"
+      },
+      "lightmed": {
+        "icon": "mdi-lightbulb-on-60",
+        "type": "action",
+        "onstate": "76>200",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "150"
+      },
+      "lighthigh": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "200>255",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255"
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "power",
+        "1": "schedule"
+      },
+      "row_2": {
+        "0": "",
+        "1": ""
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "volup",
+        "1": "tempup",
+        "2": "arm",
+        "3": "lock",
+        "4": "lighthigh"
+      },
+      "row_2": {
+        "0": "voldown",
+        "1": "tempdown",
+        "2": "disarm",
+        "3": "unlock",
+        "4": "lightoff"
+      }
+    }
+  },
+  "generic_page": {
+    "name": "Generic Page-based Device Control",
+    "type": "generic",
+    "page": 1,
+    "style": {
+      "icon": "",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "page1": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "mdi-power",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "mdi-room-king-bed",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "mdi-palette",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      },
+      "box_1": {
+        "row_1": {
+          "0": "bedroom",
+          "1": "office"
+        },
+        "row_2": {
+          "0": "livingroom",
+          "1": "office"
+        }
+      },
+      "box_2": {
+        "row_1": {
+          "0": "power",
+          "1": "controlapp",
+          "2": "color"
+        },
+        "row_2": {
+          "0": "off",
+          "1": "low",
+          "2": "med",
+          "3": "high"
+        }
+      }
+    },
+    "page2": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "mdi-power",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "mdi-room-king-bed",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "mdi-palette",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      },
+      "box_1": {
+        "row_1": {
+          "0": "bedroom",
+          "1": "office"
+        },
+        "row_2": {
+          "0": "livingroom",
+          "1": "office"
+        }
+      },
+      "box_2": {
+        "row_1": {
+          "0": "power",
+          "1": "controlapp",
+          "2": "color"
+       },
+        "row_2": {
+          "0": "off",
+          "1": "low",
+          "2": "med",
+          "3": "high"
+        }
+      }
+    },
+    "page3": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "mdi-power",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "mdi-room-king-bed",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "mdi-palette",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      },
+      "box_1": {
+        "row_1": {
+          "0": "bedroom",
+          "1": "office"
+        },
+        "row_2": {
+          "0": "livingroom",
+          "1": "office"
+        }
+      },
+      "box_2": {
+        "row_1": {
+          "0": "power",
+          "1": "controlapp",
+          "2": "color"
+        },
+        "row_2": {
+          "0": "off",
+          "1": "low",
+          "2": "med",
+          "3": "high"
+        }
+      }
+    },
+    "page4": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "mdi-power",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "mdi-room-king-bed",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "mdi-palette",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      },
+      "box_1": {
+        "row_1": {
+          "0": "bedroom",
+          "1": "office"
+        },
+        "row_2": {
+          "0": "livingroom",
+          "1": "office"
+        }
+      },
+      "box_2": {
+        "row_1": {
+          "0": "power",
+          "1": "controlapp",
+          "2": "color"
+        },
+        "row_2": {
+          "1": "off",
+          "2": "low",
+          "3": "med",
+          "4": "high"
+        }
+      }
+    }
+  },
+  "climatecontrolsbox00": {
+    "name": "Climate Controls",
+    "type": "climate",
+    "page": 0,
+    "style": {
+      "icon": "",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "controllist": {
+      "fanpower": {
+        "icon": "mdi-fan-power-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acpower": {
+        "icon": "mdi-air-conditioner-power-mod",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "fanpower"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "acpower"
+      }
+    }
+  },
+  "custom": {
+    "name": "Blank Template (custom)",
+    "type": "custom",
+    "page": 0,
+    "style": {
+      "icon": "",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "controllist": {
+      "icon1": {
+        "icon": "",
+        "type": "",
+        "onstate": "",
+        "action": "",
+        "entity": "",
+        "cmd": "",
+        "data": ""
+      },
+      "icon2": {
+        "icon": "",
+        "type": "",
+        "onstate": "",
+        "action": "",
+        "entity": "",
+        "cmd": "",
+        "data": ""
+      },
+      "icon3": {
+        "icon": "",
+        "type": "",
+        "onstate": "",
+        "action": "",
+        "entity": "",
+        "cmd": "",
+        "data": ""
+      },
+      "icon4": {
+        "icon": "",
+        "type": "",
+        "onstate": "",
+        "action": "",
+        "entity": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "icon1",
+        "1": ""
+      },
+      "row_2": {
+        "0": "icon2",
+        "1": ""
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "icon3",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": ""
+      },
+      "row_2": {
+        "0": "icon4",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": ""
+      }
+    }
+  },
+  "light2": {
+    "name": "Room Light Controls",
+    "type": "light",
+    "page": 1,
+    "style": {
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "page1": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "mdi-power",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "mdi-room-king-bed",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "mdi-palette",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      }
+    },
+    "page2": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "mdi-room-king-bed",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "mdi-palette",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      }
+    },
+    "page3": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "mdi-power",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "mdi-palette",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      }
+    },
+    "page4": {
+      "controllist": {
+        "bedroom": {
+          "icon": "mdi-room-king-bed",
+          "type": "page",
+          "onstate": "page1",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "1"
+        },
+        "office": {
+          "icon": "mdi-room-desk",
+          "type": "page",
+          "onstate": "page2",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "2"
+        },
+        "livingroom": {
+          "icon": "mdi-room-sofa-single-outline",
+          "type": "page",
+          "onstate": "page3",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "3"
+        },
+        "foyer": {
+          "icon": "mdi-room-coat-rack",
+          "type": "page",
+          "onstate": "page4",
+          "action": "page",
+          "entity": "",
+          "cmd": "",
+          "data": "4"
+        },
+        "power": {
+          "icon": "mdi-power",
+          "type": "action",
+          "onstate": "",
+          "action": "toggle",
+            "cmd": "",
+          "data": ""
+        },
+        "controlapp": {
+          "icon": "mdi-room-king-bed",
+          "type": "action",
+          "onstate": "",
+          "action": "",
+          "entity": "",
+          "cmd": "",
+          "data": ""
+        },
+        "color": {
+          "icon": "",
+          "type": "action",
+          "onstate": "",
+          "action": "color",
+            "cmd": "color",
+          "data": "#FFFFFF"
+        },
+        "off": {
+          "icon": "mdi-lightbulb-off-outline",
+          "type": "action",
+          "onstate": "off",
+          "action": "off",
+            "cmd": "",
+          "data": ""
+        },
+        "low": {
+          "icon": "mdi-lightbulb-on-30",
+          "type": "action",
+          "onstate": "1>75",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "74"
+        },
+        "med": {
+          "icon": "mdi-lightbulb-on-60",
+          "type": "action",
+          "onstate": "76>200",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "150"
+        },
+        "high": {
+          "icon": "mdi-lightbulb-on",
+          "type": "action",
+          "onstate": "200>255",
+          "action": "light",
+            "cmd": "brightness",
+          "data": "255"
+        }
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "bedroom",
+        "1": "office"
+      },
+      "row_2": {
+        "0": "livingroom",
+        "1": "foyer"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "power",
+        "1": "controlapp",
+        "2": "color"
+      },
+      "row_2": {
+        "0": "off",
+        "1": "low",
+        "2": "med",
+        "3": "high"
+      }
+    }
+  },
+  "entertainment0": {
+    "name": "Sound Control",
+    "type": "sound",
+    "page": 0,
+    "style": {
+      "icon": "",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "controllist": {
+      "volumedown": {
+        "icon": "mdi-volume-minus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "volumeup": {
+        "icon": "mdi-volume-plus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "wooferdown": {
+        "icon": "mdi-woofer-volume-minus-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "wooferup": {
+        "icon": "mdi-woofer-volume-plus-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "playpause": {
+        "icon": "mdi-play-circle",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "soundmode": {
+        "icon": "mdi-dev-soundbar",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "settings": {
+        "icon": "mdi-cog",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "tonecontrol": {
+        "icon": "mdi-add-alert",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "source": {
+        "icon": "material-input",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "mute": {
+        "icon": "mdi-volume-mute",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "power": {
+        "icon": "mdi-dev-soundbar",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "pairbluetooth": {
+        "icon": "mdi-bluetooth-searching",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "power",
+        "1": "source"
+      },
+      "row_2": {
+        "0": "mute",
+        "1": "pairbluetooth"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "volumedown",
+        "1": "volumeup",
+        "2": "wooferdown",
+        "3": "wooferup"
+      },
+      "row_2": {
+        "0": "soundmode",
+        "1": "settings",
+        "2": "tonecontrol",
+        "3": "playpause"
+      }
+    }
+  },
+  "security0": {
+    "name": "Security Control",
+    "type": "security",
+    "page": 0,
+    "style": {
+      "icon": "",
+      "box1_size": 1,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1
+    },
+    "controllist": {
+      "armsystem": {
+        "icon": "mdi-dev-shield-lock",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "disarmsystem": {
+        "icon": "mdi-shield-lock-open",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "cctv": {
+        "icon": "mdi-ico-cctv-mod",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "box_1": {
+      "row_1": {
+        "0": "armsystem",
+        "1": "disarmsystem"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "cctv"
+      }
+    }
+  },
+  "blank0": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": 1
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  },
+  "light1": {
+    "name": "Light Power",
+    "type": "light",
+    "note": "Current Testing Template",
+    "page": 0,
+    "style": {
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "off1": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "template",
+        "onstate": "off",
+        "action": "off",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "high1": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "200>255",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255",
+        "device": 1
+      },
+      "off2": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "action",
+        "onstate": "off",
+        "action": "off",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "high2": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "200>255",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "off1",
+        "1": "high1"
+      },
+      "row_2": {
+        "0": "off2",
+        "1": "high2"
+      }
+    }
+  },
+  "entertainment1": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  },
+  "sound1": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  },
+  "security1": {
+    "name": "Security - Lock",
+    "type": "security",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi-dev-lock-smart",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "lock1": {
+        "icon": "mdi-lock",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "unlock1": {
+        "icon": "mdi-lock-open",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "lock2": {
+        "icon": "mdi-lock",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "unlock2": {
+        "icon": "mdi-lock-open",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "lock1",
+        "1": "unlock1"
+      },
+      "row_2": {
+        "0": "lock2",
+        "1": "unlock2"
+      }
+    }
+  },
+  "power1": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  },
+  "appliance1": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  },
+  "home1": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  },
+  "electronics1": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  },
+  "plug1": {
+    "name": "Blank",
+    "type": "blank",
+    "note": "Box 1: Icon, Box 2: Controls",
+    "page": 0,
+    "style": {
+      "icon": "mdi",
+      "box1_size": 0,
+      "row_count": "1-2",
+      "device_icon_pos": 2,
+      "device_count": "1-2"
+    },
+    "controllist": {
+      "blank1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blanker1": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 1
+      },
+      "blank2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      },
+      "blanker2": {
+        "icon": "mdi",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": "",
+        "device": 2
+      }
+    },
+    "box_1": {
+      "icon": "1"
+    },
+    "box_2": {
+      "row_1": {
+        "0": "blank1",
+        "1": "blank1"
+      },
+      "row_2": {
+        "0": "blank2",
+        "1": "blank2"
+      }
+    }
+  }
+}
