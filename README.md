@@ -1,3 +1,5 @@
+Please note this README is extremely outdated, and was written at an earlier stage of the development process. It will be updated once the widget is feature-complete
+
 # Home Assistant control widgets for Android devices (HAWGT)
 
 These widgets were built to fill a need for a customizable, nice-looking android widget for controlling Smart home devices and TV's without opening the Home Assistant app. The original concept was nice-looking device controls for a wall-mounted android device, so they are primarily designed to be used in a page layout, stacked on a single Android launcher page as a Control Hub. However, the smaller widgets are designed to also work on your regular launcher pages, and on a larger device like a tablet, all widgets should work well with your layout.

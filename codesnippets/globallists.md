@@ -1,11 +1,13 @@
-# Global List and function specifics
+# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
 
-######
-###    All Global "list" objects in KWGT in editable format
-######
+# This file contains snippets of code formatted for easy editing. This code is syncronized to "preset.json" values after each edit. Related data also included
+
+###### #####################################
+###### All Global "list" objects in KWGT in editable format
+###### #####################################
 
 
-## readme
+###### readme
 ```
 \"Thanks for downloading HA Device Control Widget! Setup:\n
 1. Use following settings to configure the UI for the style you want\n
@@ -20,7 +22,7 @@ Created by Corey Welsh to fill the need of universal Home Assistant Android widg
 ```
 
 
-## `deviceicons`
+###### `deviceicons`
 ```
 DATA##"Select the icon that best matches your device. The number next to your device type is how many icons of that category are available",
 1##Icon 1,
@@ -32,7 +34,7 @@ DATA##"Select the icon that best matches your device. The number next to your de
 0##Custom Icon from pack
 ```
 
-## ``
+###### ``
 ```
 DATA##\"Select how many devices to control with this widget\",
 1##1 Device,
@@ -40,7 +42,7 @@ DATA##\"Select how many devices to control with this widget\",
 3##3 Devices
 ```
 
-## `deviceiconshrink`
+###### `deviceiconshrink`
 ```
 DATA##\"Select Shrinking options for the Device Icon. Shrinking will allow more space for icons to fit. You can also remove the space that Device icon takes up on the widget to allow the icon to stay while making more room for icons\",
 0##Default size,
@@ -48,7 +50,7 @@ DATA##\"Select Shrinking options for the Device Icon. Shrinking will allow more 
 1##Manually Shrink For Space
 ```
 
-## `deviceiconrotation` 
+###### `deviceiconrotation` 
 DATA##\"Select the rotation of the Device Icon on your Widget\",
 NONE##0 Degrees,
 DEG90##90 Degrees,
@@ -59,7 +61,7 @@ FLIP_Y##Flip Horizontally
 ```
 ```
 
-## `core/deviceiconposition` > Set by template file now
+###### `core/deviceiconposition` > Set by template file now
 ```
 DATA##\"Select the location of the Device Icon on your Widget. \",
 1##Default Location,
@@ -67,7 +69,7 @@ DATA##\"Select the location of the Device Icon on your Widget. \",
 3##Hidden,
 ```
 
-## `core/box1dir2` > `core/box1vis`
+###### `core/box1dir2` > `core/box1vis`
 Changed to be 0 = Remove, 1 = Show
 
 **V1**
@@ -79,38 +81,38 @@ DATA##\"Customize Box 1.\n\nSelect how many columns to display in Box 1, or \"Cu
 3##Custom Size (Below)
 ```
 
-## `box2align`
+###### `box2align`
 ```
 DATA##\"Select alignment of Box 2 content. Use for:\n- Templates without icons (like komponents)\n- Single box mode\",
 0##Beside Box 1,
 1##Centered
 ```
 
-## `boxdir1`
+###### `boxdir1`
 ```
 DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,
 1##1 Row,
 2##2 Rows
 ```
 
-## `appiconvis`
+###### `appiconvis`
 ```
 DATA##\"Set visbility of App Icons. Hiding these when using one row will make the device icon to fit the widget height.\",
 0##Show App Icons,
 1##Hide App Icons
 ```
 
-## `entitynote`
+###### `entitynote`
 
 `"ENTITY LIST\n\nIf you're only controlling one device, enter it in "entity1". If you're controlling more than one, enter them in the order they appear in the template. (1st device is "entity1", 2nd is "entity2", etc)"`
 
 
 
-######
-###    Template-specfic Global Lists
-######
+###### #####################################
+###### Template-specfic Global Lists
+###### #####################################
 
-## `templateselect`
+###### `templateselect`
 ```
 DATA##"Select the template you'd like to use for the device selected above",
 1##Regular,
@@ -147,7 +149,7 @@ DATA##"Select the template you'd like to use for the device selected above",
 ```
 
 
-## `deviceicons`
+###### `deviceicons`
 ```
 DATA##"Select the icon that best matches your device.",
 1##Icon 1,
@@ -159,7 +161,7 @@ DATA##"Select the icon that best matches your device.",
 0##Custom Icon from pack
 ```
 
-## `devicetype`
+###### `devicetype`
 ```
 DATA##"Select the type of device you'd like to control",
 light##Lights,
@@ -194,7 +196,7 @@ custom##Custom -Set icon manually in object icon browser\nDevice Icon > Device I
 ```
 
 
-## ``
+###### ``
 ```
 DATA##\"Select the location of the Device Icon on your Widget. \",
 1##Default Location,
@@ -204,14 +206,14 @@ DATA##\"Select the location of the Device Icon on your Widget. \",
 ```
 
 
-######
-###    Main Icon List
-######
+###### #####################################
+###### Main Icon List
+###### #####################################
 
 I believe that this icon list is not used with the template system anymore,
 which is why it was converted to be easy to read.
 
-## Schemea
+###### Schemea
 
 ```
   DATA##"Select an alternative icon for your widget.",
@@ -407,7 +409,7 @@ Tune Vertical                      mdi-tune-vertical-variant
 Water Percent                      mdi-water-percent
 
 
-## APP ICONS
+###### APP ICONS
 app-alexa
 app-amazon-prime
 app-apple-tv

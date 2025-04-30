@@ -1,21 +1,24 @@
-# TASKER > KWGT FLOWS Flows and details
+# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
 
-######
-###    Process
-######
+# This file contains snippets of code formatted for easy editing. This code is syncronized to "preset.json" values after each edit. Related data also included
+
+###### #####################################
+###### Tasker > KWGT Flows and related globals
+###### #####################################
+
+###### #####################################
+###### Process
+###### #####################################
 - Tasker HA blueprint pushes state change from HA to Tasker
   - Tasker pushes state change to HA using `tasker/stateupd`
   - `Tasker > KWGT` flow activates when `tasker/stateupd` is updated and adds the state data to `json/device`
   - Widget reloads all status indicators each time `json/template` is updated?
 
+###### #####################################
+###### Schemea
+###### #####################################
 
-
-######
-###    Schemea
-######
-
-
-### Syntax - See json.json for full example
+###### Syntax - See json.json for full example
 ```
 {
   "device_states": [
@@ -27,7 +30,7 @@
 }
 ```
 
-### State update sample from tasker
+###### State update sample from tasker
 ```
 {
   "entity_id": "light.bedroom_lights",
@@ -38,9 +41,9 @@
 ```
 
 
-######
-###    Flow: "Current Template Global Set" (TASKER > KWGT)
-######
+###### #####################################
+###### Flow: Tasker > KWGT
+###### #####################################
 
 This is the flow that adds new state data into `json/device`.
 Zero formatting to fully human-readable JSON output (extra whitespace at top)
@@ -50,7 +53,8 @@ This flow uses 4 globals to run
 **Trigger:** `On Change` of `$gv(tasker/fromtasker)$`
 
 **Action**
-### 1 - Formula
+
+###### 1 - Formula
 ```
   $lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
   $lv(exists, if(tc(json, gv(json/device), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
@@ -65,17 +69,51 @@ This flow uses 4 globals to run
   $lv(jremblnk, tc(reg, #jaddspc, "\s\n", ""))$$#jremblnk$
 ```
 
-### 2 - Set Global Variable: `json/device`
+###### 2 - Set Global Variable: `json/device`
 
+###### #####################################
+###### Old versions of flow and functions
+###### #####################################
 
-V11 Functions
+**V11** - Last original from before rebuilding Tasker> KWGT 2025
+```
+  $lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+  $lv(exists, if(tc(json, gv(json/device), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+  $lv(datawipe, tc(reg, tc(reg, gv(json/device), "\n", ""), "\s", ""))$
+  $lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
+  $lv(jsonrem, (if(#exists = 1, gv(func/devjsonrem), #datawipe)))$
+  $lv(jsonout, tc(reg, #jsonrem, "\},\]\}", ("\}," + #jsonwipe + "\]\}")))$
+  $lv(jsonline, gv(func/devjsonadd))$
+  $lv(jarrcut, tc(split, tc(split, #jsonline, "[", 1), "]", 0))$
+  $lv(jarredit, tc(reg,#jarrcut, "\n", tc(utf, 0A) + "    "))$
+  $lv(jaddspc, gv(func/devjsonindent))$
+  $lv(jremblnk, tc(reg, #jaddspc, "\s\n", ""))$$#jremblnk$
+```
 
->>> Copy code from widget and verify it is correct. Prefer widget code
+**V10** - WORKING - TASKER DATA > HUMAN READABLE (Extra whitespace at top)
+```
+  $lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
+  $lv(exists, if(tc(json, gv(json/device), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
+  $lv(datawipe, tc(reg, tc(reg, gv(json/device), "\n", ""), "\s", ""))$
+  $lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
+  $lv(jsonrem, (if(#exists = 1, gv(func/devjsonrem), #datawipe)))$
+  $lv(jsonout, gv(func/devjsonadd))$
+  $lv(jsonline, gv(func/devjsonnewline))$
+  $lv(jarrcut, tc(split, tc(split, #jsonline, "[", 1), "]", 0))$
+  $lv(jarredit, tc(reg,#jarrcut, "\n", tc(utf, 0A) + "    "))$
+  $lv(jaddspc, gv(func/devdevjsonindentent))$
+  $lv(jremblnk, tc(reg, #jaddspc, "\s\n", ""))$$#jremblnk$
+```
+**V10** - GLOBAL functions
 
-## func/devjsonrem
+###### #####################################
+###### Global Functions - Tasker > KWGT
+###### #####################################
+
+###### func/devjsonrem
 This is the function used by the Tasker > KWGT flow to remove an entity from `json/device`
 
-#### Regex Match
+###### Regex Match
   `.*\{\"entity_id\":\"#entity\"[^\}].*\},`
   `\{"entity_id":"#entity".*?\},`
 
@@ -87,20 +125,20 @@ This is the function used by the Tasker > KWGT flow to remove an entity from `js
 ```
 
 
-## func/devjsonnew **DEPRECEATED?**
+###### func/devjsonnew
 This is the function used by the Tasker > KWGT flow to add a new entity to`json/device`
 
-#### Regex Match
+###### Regex Match
 `},\]\}` - MATCH
 `\},#jsonwipe\]\}` - REPLACE
 
 `$tc(reg, #jsonrem, "\},\]\}", ("\}," + #jsonwipe + "\]\}"))$`
 
 
-## func/devjsonadd
+###### func/devjsonadd
 This is the function used by the Tasker > KWGT flow to add new lines and in-line spaces to `json/device`
 
-#### Regex Match
+###### Regex Match
 ```
   \}, > \},\n
   : > ": "
@@ -146,10 +184,10 @@ This is the function used by the Tasker > KWGT flow to add new lines and in-line
   )$
 ```
 
-# func/devjsonindent
+###### func/devjsonindent
 This is the function used by the Tasker > KWGT flow to add array indentation to`json/device`
 
-#### Regex Match
+###### Regex Match
 ```
   \s+\{\"entity_id\":\"#entity\"[^\}]*\},
   \},\]\} - MATCH
@@ -175,42 +213,8 @@ This is the function used by the Tasker > KWGT flow to add array indentation to`
   ))$
 ```
 
-######
-###    Old versions of flow and functions
-######
 
-**V11** - Last original from before rebuilding Tasker> KWGT 2025
-```
-  $lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
-  $lv(exists, if(tc(json, gv(json/device), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
-  $lv(datawipe, tc(reg, tc(reg, gv(json/device), "\n", ""), "\s", ""))$
-  $lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
-  $lv(jsonrem, (if(#exists = 1, gv(func/devjsonrem), #datawipe)))$
-  $lv(jsonout, tc(reg, #jsonrem, "\},\]\}", ("\}," + #jsonwipe + "\]\}")))$
-  $lv(jsonline, gv(func/devjsonadd))$
-  $lv(jarrcut, tc(split, tc(split, #jsonline, "[", 1), "]", 0))$
-  $lv(jarredit, tc(reg,#jarrcut, "\n", tc(utf, 0A) + "    "))$
-  $lv(jaddspc, gv(func/devjsonindent))$
-  $lv(jremblnk, tc(reg, #jaddspc, "\s\n", ""))$$#jremblnk$
-```
-
-**V10** - WORKING - TASKER DATA > HUMAN READABLE (Extra whitespace at top)
-```
-  $lv(entity, tc(json, gv(tasker/fromtasker), ".entity_id"))$
-  $lv(exists, if(tc(json, gv(json/device), "$.device_states[?(@.entity_id == '" + #entity + "')].entity_id") != "", 1, 0))$
-  $lv(datawipe, tc(reg, tc(reg, gv(json/device), "\n", ""), "\s", ""))$
-  $lv(jsonwipe, tc(reg, tc(reg, gv(tasker/fromtasker), "\n", ""), "\s", ""))$
-  $lv(jsonrem, (if(#exists = 1, gv(func/devjsonrem), #datawipe)))$
-  $lv(jsonout, gv(func/devjsonadd))$
-  $lv(jsonline, gv(func/devjsonnewline))$
-  $lv(jarrcut, tc(split, tc(split, #jsonline, "[", 1), "]", 0))$
-  $lv(jarredit, tc(reg,#jarrcut, "\n", tc(utf, 0A) + "    "))$
-  $lv(jaddspc, gv(func/devdevjsonindentent))$
-  $lv(jremblnk, tc(reg, #jaddspc, "\s\n", ""))$$#jremblnk$
-```
-**V10** - GLOBAL functions
-
-### $func/devjsonrem$
+###### $func/devjsonrem$
 Remove entity from array
 Regex: `\s+\{\"entity_id\":\"#entity\"[^\}]*\},`
 ```
@@ -221,7 +225,7 @@ Regex: `\s+\{\"entity_id\":\"#entity\"[^\}]*\},`
   )$
 ```
 
-### $func/devjsonadd$
+###### $func/devjsonadd$
 Add new entity to JSON
 Regex:
 `\},]\}` - MATCH
@@ -229,10 +233,10 @@ Regex:
 
 `$tc(reg, #jsonrem, "\},\]\}", ("\}," + #jsonwipe + "\]\}"))$`
 
-### $func/devjsonnewline$
+###### $func/devjsonnewline$
 Add new lines and in-line spaces to JSON
 
-#### Regex Match
+###### Regex Match
 ```
   // \}, > \},\n
   // : > ": "
@@ -277,7 +281,7 @@ Add new lines and in-line spaces to JSON
   )$
 ```
 
-### $func/devdevjsonindentent$
+###### $func/devdevjsonindentent$
 Add array intendation
 Regex:
 `(?<=\[)[^\[\]]*(?=\])` - Match contents of array & replace with jarredit
@@ -371,7 +375,7 @@ Regex:
   gv(tasker/statedat) + "\n" + #entityid + " " + #state + " " + #level)$
 ```
 
-## PREJSON STATEDATA GLOBAL FORMAT
+###### PREJSON STATEDATA GLOBAL FORMAT
 
 TEST TASKER/STATEDAT CONTENT
 light.bedroom_lights:on:255;;

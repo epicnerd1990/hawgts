@@ -1,5 +1,10 @@
-# KWGT Globals
+# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
 
+# This file contains snippets of code formatted for easy editing. This code is syncronized to "preset.json" values after each edit. Related data also included
+
+###### #####################################
+###### KWGT Backend
+###### #####################################
 - Backend KWGT Flows and Functions
 - Autosizing Code
 - Colors

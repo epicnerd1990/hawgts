@@ -1,10 +1,14 @@
-# Global Template code sets
+# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
+
+###### #####################################
+###### Global Template code sets
+###### #####################################
 See samples.json for json samples and examples
 
 
-######
-###    Widget loading process
-######
+###### #####################################
+###### Widget loading process
+###### #####################################
 - Widget Activate
   - Auto-set data based on widget size
   - User select Device Count, Device Type and Template #
@@ -18,16 +22,17 @@ See samples.json for json samples and examples
     - If yes, adjust template 
     - If no, reset devicetype and ask user to restart
 
-######
-###    KWGT Global template flow - `templateinfo`
-######
+###### #####################################
+###### KWGT Global template flow - `templateinfo`
+###### #####################################
 
 "Light - 1 Device, 2 Rows, 2 Boxes"
 
 **Trigger:** `OnChange` forumla: `$gv(templateselect)`
 
 **Action**
-### 1- Formula - 
+
+###### 1- Formula - 
 ```
   $lv(objfit, gv(core/size/box2iconmax))$
   $lv(posid, (".box2.row1." + (#objfit - 1)))$
@@ -59,22 +64,19 @@ See samples.json for json samples and examples
 
 ```
 
-### 2 - Set Global Variable: `templateinfo`
+###### 2 - Set Global Variable: `templateinfo`
 
+###### #####################################
+###### KWGT Global template functions
+###### #####################################
 
-
-######
-###    KWGT Global template functions
-######
-
-## func/jsonmain  - "Template JSON Keys" - JSON Call
+###### func/jsonmain  - "Template JSON Keys" - JSON Call
 
 This is the main function called by `func/jsonobj` and `func/jsonstate`.
 It does the actual database calls for both `json/template` and `json/device`
 
 Example usage: `$gv(func/jsonmain)$ $lv(posid, ".box2.row1.0")$`
 `tc(json)` syntax: `templatename1.controllist.iconname.action` returns value of `action`
-
 
 Function return definitions:
 - 
@@ -206,7 +208,7 @@ light.light1.page1.box1.row1.0
       tc(json, gv(json/device), ".device_states[?(@.entity_id == '" + #obaction + "')]"))))$
 ```
 
-## func/jsontemp  - "JSON Template - Main"
+###### func/jsontemp  - "JSON Template - Main"
 
 This is the function called by the widget items. It's used for general template data
 No #posid required
@@ -237,7 +239,7 @@ Example usage: `$gv(func/jsontemp)$`
   $lv(tdevct,   (tc(json, #dbtemp, (#tstyle  + ".device_count"))))$
 ```
 
-## func/jsonobj  - "JSON Template - Objects"
+###### func/jsonobj  - "JSON Template - Objects"
 
 This is the function called by the widget items. It's used for object-specific template data
 
@@ -298,7 +300,7 @@ Example usage: `$gv(func/jsonobj)$ $lv(posid, ".box2.row1.0")$`
 ```
 
 
-## func/jsonstate  - "JSON State" - JSON Device States
+###### func/jsonstate  - "JSON State" - JSON Device States
 
 This is the function called by the widget items. It's used for all the device states
 
@@ -470,10 +472,9 @@ $lv(stcurr, (if(#sobaction ~= "\d+>\d+", "range",#sobaction ~= "page\d",   "page
   )))$
 ```
 
-
-######
-###    Flow: "Template DB & Device Icon Set" **NOT WORKING**
-######
+###### #####################################
+###### Flow: "Template DB & Device Icon Set" **NOT WORKING**
+###### #####################################
 
 This is the flow that writes the name of the current selected template to `currenttemplate`
 and sets the device icon from `jsontemplate`. It merges the flows for consolidation
@@ -481,23 +482,24 @@ and sets the device icon from `jsontemplate`. It merges the flows for consolidat
 **Trigger:** `On Change` of `$gv(devicetype)$$gv(templateselect)$`
 
 **Action**
-### 1 - Formula
+
+###### 1 - Formula
 ```
   $lv(template, gv(devicetype) + gv(templateselect))$
   $lv(current, (tc(json, gv(json/template), ("." + #template))))$
   $#current$
 ```
 
-### 2 - Set Global Variable: `currenttemplate`
+###### 2 - Set Global Variable: `currenttemplate`
 
-### 3 - Formula
+###### 3 - Formula
 ```
   $lv(template, gv(devicetype) + gv(templateselect))$
   $lv(current, (tc(json, gv(json/template), ("." + #template + ".icon"))))$
   $#current$
 ```
 
-### 4 - Set Global Variable: `deviceicon`
+###### 4 - Set Global Variable: `deviceicon`
 
 
 **V2**
@@ -529,12 +531,11 @@ Set `currenttemplate`
 ```
 
 
-######
-###    KWGT Template Icon code examples
-######
+###### #####################################
+###### KWGT Template Icon code examples
+###### #####################################
 
-
-## Icon name formula - Box 2, Row 2, Icon 0
+###### Icon name formula - Box 2, Row 2, Icon 0
 **Find better way to see if icon is available then checking for an iconid**
 
 ```
@@ -552,7 +553,7 @@ Set `currenttemplate`
 **V1**
   `$tc(json, gv(json/template), ("." + gv(core/tempname) + ".box_2.row_1[0].icon"))$`
 
-## Icon visiblity formula - Box 2, Row 2, Icon 2
+###### Icon visiblity formula - Box 2, Row 2, Icon 2
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
@@ -578,7 +579,7 @@ $if(#objkey = "", REMOVE, ALWAYS)$
 **V1**  
   `$if(gv(core/size/box2iconmax)  < 2, REMOVE, ALWAYS)$`
 
-## Circle Paint Color Formula
+###### Circle Paint Color Formula
 ```
   $lv(posid, ".box2.row2.1")$
   $gv(func/jsonstate)$
@@ -591,21 +592,21 @@ $if(#objkey = "", REMOVE, ALWAYS)$
   $if(gv(func/devicestate) = off, gv(core/colico), #00FFFFFF)$
 ```
 
-## Icon Paint Color Formula
+###### Icon Paint Color Formula
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
   $if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$
 ```
 
-## Icon Color Filter Formula
+###### Icon Color Filter Formula
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
   $if(#stoutput = 1, "MULTIPLY", "NORMAL")$
 ```
 
-# Old Device states
+###### Old Device states
 
 ROOM SELECT (CIRCLE COLOR)
 `$if(gv(core/curpage) = 1, gv(core/colico), #00FFFFFF)$`
@@ -614,13 +615,7 @@ ICON COLOR
 FILTER
 `$if(gv(core/curpage) = 3, "MULTIPLY", "NORMAL")$`
 
-## unknown - old template?
-
-```
-        "value": "\n\n{name=Light Power, type=light, note=Box 1: Icon, Box 2: Controls, page=0, style={icon=mdi, box1_size=0, row_count=1-2, device_icon_pos=2, device_count=1-2}, controllist={off1={icon=mdi-lightbulb-off-outline, type=action, stateon=off, action=off, entity=entity1, cmd1=, data1=, device=1}, high1={icon=mdi-lightbulb-on, type=action, stateon=200>255, action=light, entity=entity1, cmd1=brightness, data1=255, device=1}, off2={icon=mdi-lightbulb-off-outline, type=action, stateon=off, action=off, entity=entity2, cmd1=, data1=, device=2}, high2={icon=mdi-lightbulb-on, type=action, stateon=200>255, action=light, entity=entity2, cmd1=brightness, data1=255, device=2}}, box_1={icon=1}, box_2={row_1={0=off1, 1=high1}, row_2={0=off2, 1=high2}}}"
-
-```
-## Box 1 Type
+###### Box 1 Type
 
 ```
 $if(gv() = 2, REMOVE, if(gv(devicecount) = 1, ALWAYS, REMOVE))$
