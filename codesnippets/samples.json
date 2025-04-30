@@ -1,7 +1,32 @@
 //////////////////////////////////////
 // HAWGTS JSON information and data
 //////////////////////////////////////
-
+{
+    "preset_info": {
+    },
+    "preset_root": {
+          "globals_list": {
+            "globalname1": {
+              "index": 1,
+              "type": "string",
+              "title": "string",
+              "description": "string",
+              "value": "1"
+            },
+            "globalname2": {
+              "index": 2,
+              "type": "string",
+              "title": "string",
+              "description": "string",
+              "value": "1"
+            }
+          },
+          "internal_flows": [
+          ],
+          "viewgroup_items": [
+          ]
+    }
+}
 
 //////////////////////////////////////
 // TEMPLATE JSON
