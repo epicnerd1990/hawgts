@@ -26,7 +26,7 @@
           "viewgroup_items": [
           ]
     }
-}
+},
 
 //////////////////////////////////////
 // TEMPLATE JSON
@@ -42,8 +42,7 @@
   "6": ""
 },
 
-//////////////////////////////////////
-// Sample JSON - V3
+// Sample JSON
 {
   "device_type": {                                // Device category
     "objects": {                                  // "objects" - list of controls/commands
@@ -119,67 +118,10 @@
       }
     }
   }
-}
-
-//////////////////////////////////////
-// Sample JSON - V2
-{
-  "devicetype1": {                           // Device category
-    "name": "Device Name",                   // e.g., "Room Light Controls"
-    "type": "devicetype",                    // light, climate, etc.
-    "page": "#",                             // 0 = no paging; 1 = use pages (page1, page2, …)
-    "style": {
-        "icon": "icon_name",
-        "box1_size": "#",                    // 1 = 
-        "row_count": "#",                    // 1 = 
-        "device_icon_pos": "#",              // 1 = Normal, 2 = Box 1?
-        "device_count": "#"                  // 1 = 
-    },
-
-    // List of controls available for use by widget
-
-    // if page = 0, no "page" object
-  "page#": {},
-    "controllist": {                         // "controllist" is actual title of this object, not a filler
-      "controlnamea": {
-        "icon": "control_icon",
-        "type": "action,page",      // all - "action" or "page"
-        "stateon": "#>#,on,off,page#",       // all - devicestate that indicates device is on
-        "action": "light,on,off,toggle,template",     // action - indicate which action to run when run
-        "entity": "entity_id",               // action - which enitity to control
-        "cmd1": "brightness",                // action - 
-        "data1": "page#,{hatemplate}"        // page#,template - data used for page changing and HA Templates
-      },
-      "controlnameb": {
-      }
-    },
-
-    // Locations of the controls on the widget
-  "box_1": {
-    "row_1": {
-      "0": "controlname",
-      "1": "..."
-    },
-    "row_2": {
-      "0": "controlname",
-      "1": "..."
-    }
-  },
-  "box_2": {
-    "row_1": {
-      "0": "controlname",
-      "1": "..."
-    },
-    "row_2": {
-      "0": "controlname",
-      "1": "..."
-    }
-  }
 },
 
-//////////////////////////////////////
-// Testing Template JSON - V3
-  "light": {
+// Testing Template JSON
+{  "light": {
     "objects": {
       "bedroom": {
         "icon": "mdi-room-king-bed",
@@ -465,79 +407,8 @@
           }
       }
     }
+}
 
-//////////////////////////////////////
-// Testing template JSON - V2
-
-{  "light1": {
-    "name": "Light Power",
-    "type": "light",
-    "note": "Current Testing Template",
-    "page": 0,
-    "style": {
-      "icon": "material-ico-wb-incandescent-mod",
-      "box1_size": 0,
-      "row_count": "1-2",
-      "device_icon_pos": 2,
-      "device_count": "1-2"
-    },
-    "controllist": {
-      "off1": {
-        "icon": "mdi-lightbulb-off-outline",
-        "type": "action",
-        "stateon": "off",
-        "action": "off",
-        "entity": "entity1",
-        "cmd1": "",
-        "data1": "",
-        "device": 1
-      },
-      "high1": {
-        "icon": "mdi-lightbulb-on",
-        "type": "action",
-        "stateon": "200>255",
-        "action": "light",
-        "entity": "entity1",
-        "cmd1": "brightness",
-        "data1": "255",
-        "device": 1
-      },
-      "off2": {
-        "icon": "mdi-lightbulb-off-outline",
-        "type": "action",
-        "stateon": "off",
-        "action": "off",
-        "entity": "entity2",
-        "cmd1": "",
-        "data1": "",
-        "device": 2
-      },
-      "high2": {
-        "icon": "mdi-lightbulb-on",
-        "type": "action",
-        "stateon": "200>255",
-        "action": "light",
-        "entity": "entity2",
-        "cmd1": "brightness",
-        "data1": "255",
-        "device": 2
-      }
-    },
-    "box_1": {
-      "icon": "1"
-    },
-    "box_2": {
-      "row_1": {
-        "0": "off1",
-        "1": "high1"
-      },
-      "row_2": {
-        "0": "off2",
-        "1": "high2"
-      }
-    }
-  }
-} 
 
 //////////////////////////////////////
 // Device JSON
@@ -619,22 +490,6 @@
   ]
 }
 
-//////////////////////////////////////
-/// Devices states syntax change 2025??
-//////////////////////////////////////
-
-{
-"light.bedroom_lights": {
-  "state": "on",
-  "brightness": 255,
-  "color": "255, 255, 128, 75"
-},
-  "light.study_lights": {
-    "state": "on",
-    "brightness": 125,
-    "color": "255, 255, 128, 75"
-  }
-}
 //////////////////////////////////////
 // Template data returned from Home assistant to tasker
 //////////////////////////////////////

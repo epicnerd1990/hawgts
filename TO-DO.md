@@ -162,7 +162,7 @@ UTF Hex       REGEX                  KWGT
 - Tasker - "toggle" error
 - `#curpage1` > `curpage` after confirming it works
 - `"lock" in devicetype > "security"`
-
+- `core/size/box2width` does not include box2minsize
 - Template system V2 > V3 - Last major revision **90%**
     - **Changes made from V2 - Notes only**:
         - light.light1{ box1{} box2{} }
@@ -199,6 +199,7 @@ UTF Hex       REGEX                  KWGT
         - Test widget in all alignments and different template styles before signing off on alignment system completion
             - Find out whats happening with widget width - how is it going above 720? Is that simply from scaling?
         - Flow for setting `widgetalign` is no longer there - recover?
+        - Code in support for notification if widget is resized after setting template
     - Figure out how to allow user to change page icons - iconname in `entities/*`? Check editor
     - Create a for loop for `ntwgtsize` in `templateinfo` flow
     - Complete all versions of "light" template and maybe start "climate"?

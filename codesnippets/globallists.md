@@ -21,36 +21,8 @@ Box 2 - Larger box, usually containing device controls such as volume or brightn
 Created by Corey Welsh to fill the need of universal Home Assistant Android widget\"
 ```
 
-
-###### `deviceicons`
-```
-DATA##"Select the icon that best matches your device. The number next to your device type is how many icons of that category are available",
-1##Icon 1,
-2##Icon 2,
-3##Icon 3,
-4##Icon 4,
-5##Icon 5,
-6##Icon 6,
-0##Custom Icon from pack
-```
-
-###### ``
-```
-DATA##\"Select how many devices to control with this widget\",
-1##1 Device,
-2##2 Devices,
-3##3 Devices
-```
-
-###### `deviceiconshrink`
-```
-DATA##\"Select Shrinking options for the Device Icon. Shrinking will allow more space for icons to fit. You can also remove the space that Device icon takes up on the widget to allow the icon to stay while making more room for icons\",
-0##Default size,
-2##Default Size & Auto-Shrink For Space,
-1##Manually Shrink For Space
-```
-
 ###### `deviceiconrotation` 
+```
 DATA##\"Select the rotation of the Device Icon on your Widget\",
 NONE##0 Degrees,
 DEG90##90 Degrees,
@@ -58,7 +30,6 @@ DEG180##180 Degrees,
 DEG270##180 Degrees,
 FLIP_X##Flip Vertically,
 FLIP_Y##Flip Horizontally
-```
 ```
 
 ###### `core/deviceiconposition` > Set by template file now
@@ -69,32 +40,6 @@ DATA##\"Select the location of the Device Icon on your Widget. \",
 3##Hidden,
 ```
 
-###### `core/box1dir2` > `core/box1vis`
-Changed to be 0 = Remove, 1 = Show
-
-**V1**
-```
-DATA##\"Customize Box 1.\n\nSelect how many columns to display in Box 1, or \"Custom\" to enter the percentage of the widget that Box 1 fills (entered in the next list item).\",
-0##Remove (Single Box Mode),
-1##1 Column (Auto-Center),
-2##2 Column (Auto-Center),
-3##Custom Size (Below)
-```
-
-###### `box2align`
-```
-DATA##\"Select alignment of Box 2 content. Use for:\n- Templates without icons (like komponents)\n- Single box mode\",
-0##Beside Box 1,
-1##Centered
-```
-
-###### `boxdir1`
-```
-DATA##\"Customize Box 1.\n\nSelect how many rows (horizontal widget) or columns (vertical widget) to display in Box 1.\" ,
-1##1 Row,
-2##2 Rows
-```
-
 ###### `appiconvis`
 ```
 DATA##\"Set visbility of App Icons. Hiding these when using one row will make the device icon to fit the widget height.\",
@@ -102,29 +47,11 @@ DATA##\"Set visbility of App Icons. Hiding these when using one row will make th
 1##Hide App Icons
 ```
 
-###### `entitynote`
-
-`"ENTITY LIST\n\nIf you're only controlling one device, enter it in "entity1". If you're controlling more than one, enter them in the order they appear in the template. (1st device is "entity1", 2nd is "entity2", etc)"`
-
-
-
 ###### #####################################
 ###### Template-specfic Global Lists
 ###### #####################################
 
 ###### `templateselect`
-```
-DATA##"Select the template you'd like to use for the device selected above",
-1##Regular,
-2##(2) 1 Device per row,
-3##(3) Pages, 1 per device,
-4##(4) Pages, 1 per device
-5##Single Row,
-6##Device Icon > Box 1,
-0##Custom Template
-```
-
-**V2** - Pre-2025
 ```
 DATA##"Select the template you'd like to use for the device selected above",
 1##Template 1,
@@ -134,31 +61,6 @@ DATA##"Select the template you'd like to use for the device selected above",
 5##Template 5,
 6##Template 6,
 0##Custom Template
-```
-
-**V1**
-```
-DATA##"Select the template you'd like to use for the device selected above",
-1##1-2 - Toggle On/Off or Open/Closed,
-2##Level Up/Down,
-3##Template 3,
-4##Template 4,
-5##2 Dev - Toggle On/Off,
-6##Template 6,
-0##Custom Template
-```
-
-
-###### `deviceicons`
-```
-DATA##"Select the icon that best matches your device.",
-1##Icon 1,
-2##Icon 2,
-3##Icon 3,
-4##Icon 4,
-5##Icon 5,
-6##Icon 6,
-0##Custom Icon from pack
 ```
 
 ###### `devicetype`
@@ -179,51 +81,11 @@ maintence##Home Maintence,
 other##Others
 ```
 
-**V1**
-```
-generic##Multiple types of devices,
-light##Lighting,
-climate##Climate Control,
-entertainment##Entertainment and Media,
-sound##Sound & Media Control,
-lock##Locks and Security,
-power##Batteries and Power,
-appliance##Home Appliances,
-home##Home Automation & Maintenance,
-electronics##Personal Electronics,
-plug##Wall Plugs and Switches,
-custom##Custom -Set icon manually in object icon browser\nDevice Icon > Device Icon > \"Icon\" setting
-```
-
-
-###### ``
-```
-DATA##\"Select the location of the Device Icon on your Widget. \",
-1##Default Location,
-2##Inside Box 1 (ONLY for templates not using Box 1),
-3##Swap with settings icons,
-4##Hidden,
-```
-
-
 ###### #####################################
-###### Main Icon List
+###### Main Icon List for "fonticon"
 ###### #####################################
 
-I believe that this icon list is not used with the template system anymore,
-which is why it was converted to be easy to read.
-
-###### Schemea
-
-```
-  DATA##"Select an alternative icon for your widget.",
-
-  light##-- Lighting --,
-  material-ico-wb-incandescent-mod##Light Bulb,
-  mdi-dev-desk-lamp##Desk Lamp,
-  mdi-dev-string-lights##String Lights On,
-  mdi-dev-string-lights-off##String Lights Off,
-```
+This icon list is for reference only
 
 -- Lighting --
 Light Bulb                         material-ico-wb-incandescent-mod
