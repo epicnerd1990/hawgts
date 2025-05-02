@@ -39,43 +39,61 @@ Example: `tasker://secondary?service_call=light&entity_id=light.bedroom_lights&p
   {{ state_attr('device_tracker.paulus', 'battery') }}
 ```
 
-
 ###### #####################################
-###### Flow: KWGT > Tasker
+###### Flow: Obj - Activate
 ###### #####################################
-This is the new flow used to send the signal to tasker from the widget
-It takes the location data sent to the flow and matches it with the command from "action" in the JSON
+This is the flow activated from the touch event
+It outputs either the tasker URI info or the page number for changing the page
+This cannot be merged into following flows due to problems with writing more than one global
 
-**Trigger:** `Manual` by touch command
+**Trigger:** `Manual` by touch command, `.box2.row1.0` sent via #last
 
 **Action**
 
 ###### 1- Formula - Do all calls except template 
 ```
-  $lv(posid, gv(core/tasker/temp))$
+  $lv(posid, #last)$
   $gv(func/jsonobj)$
 
-  $lv(combine, (if(#obtype = "template",
+  $lv(uri, (if(#obtype = "template",
                    ("tasker://secondary?service_call=" + #obaction + "&parameters=" + #obparam),
                    #obtype = "action",
                    ("tasker://secondary?service_call=" + #obaction + "&entity_id=" + #entity + "&parameters=" + #obparam),
                    "")))$
-  $#combine$
+  $if(#uri = "" & #obtype = "page", #obdata, #uri)$
 ```
 
-Example output: `tasker://secondary?service_call=light&entity_id=light.bedroom_lights&parameters=brightness:125`
+###### 2 - Set Global Variable: `$gv(core/tasker/temp)$`
 
-###### 2 - Intent URI - Output tasker command
+###### #####################################
+###### Flow: Obj - KWGT > Tasker
+###### #####################################
+Send command URI to tasker from the widget
+
+**Trigger:** `On Change` of `$gv(core/tasker/temp)$`
+
+**Action**
+
+###### 1 - Intent URI - Output tasker command
 ```
-  $#last$
+  $lv(uri, gv(core/tasker/temp))$
+  $if(#uri ~= "\b\d\b", "", #uri)$
 ```
 
-###### 3 - Formula - Change Page
-```
-  $lv(posid, gv(core/tasker/temp))$
-  $gv(func/jsonobj)$
-  $#obdata$
+###### #####################################
+###### Flow: Obj - Page Change
+###### #####################################
+Change current page
 
+**Trigger:** `On Change` of `$gv(core/tasker/temp)$`
+
+**Action**
+
+###### 1 - Formula - Change Page
+```
+  $lv(uri, gv(core/tasker/temp))$
+  $lv(page, gv(core/curpage))$
+  $if(#uri ~= "\d", #uri, #page)$
 ```
 
-###### 4 - Set Global Variable: `core/curpage`
+###### 2 - Set Global Variable: `core/curpage`

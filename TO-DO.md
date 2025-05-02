@@ -4,13 +4,14 @@
 ###### TO-DO to get to V1 release
 ###### #####################################
 This is a floating list used to keep track of where everything is at while developing the core of the widget.
+It contains lists, resources, plans and data lists
 
 
 ###### Legend for to-do list
 - This task is done in KWGT Editor or both
 - `This task is done in preset.json`
 - ~~This task is complete~~
-- `globalname` `localvarname`
+- `globalname` `localvarname` `flowname`
 - "jsonkeyname"
 - **Notes** **10% complete**
 
@@ -90,13 +91,8 @@ UTF Hex       REGEX                  KWGT
 ###### TO-DO - V1 General Tasks
 ###### #####################################
 - Complete Readme
-- Work on Github - update repo and organize correctly
-- Look over TO-DO.md and get data and information from that
+    - Readme = basic, wiki = advanced use?
 - Continue to work on Codex AI programming
-- Create script for pushing to device:
-    > Take my copy of preset.json and add it to a *.kwgt file
-    > Push using KDE Connect to dev phone
-- Clean up codesnippets/* files. Make title areas collapsable in the correct way
 - Create Template database
     - Specific templates to make:
         - "House Security" template
@@ -104,9 +100,7 @@ UTF Hex       REGEX                  KWGT
         - Battery - Complete
             - Setup battery in different sizes/modes - Find way to scale?
         - Create "Komponent" Templates for different modes
-- Fix and set up favourite formulas in KWGT before starting Media Control Widget
-
-
+- Fix and set up favourite formulas in KWGT before starting Media Control Widget **50%**
 
 ###### #####################################
 ###### TO-DO - Features to complete for V1
@@ -124,14 +118,19 @@ UTF Hex       REGEX                  KWGT
     - Could use "Send Data" option in flows or WebGet()
     - File permissions?
 
+- Confirm icon pack is up to date with latest icon list
 - Group configuration options in folders/subfolders more
 - KWGT > TASKER - Create "custom" service call **0%**
-- Device Icon option - click to open editor or open Home Assistant directly to your device
-    - For paged items, open entity associated with the current page
+- Device and App icons
+    - Confirm all code works
+    - Device Icon: click to open editor or open Home Assistant directly to your device
+    - Show/hide app icon, 1st = HA, 2nd = Custom
+    - Look at "Shortcuts" next to "Flows" in editor
 - Make state updates more effective and work in more situations
     - The state does not update when lights are turned from one brightness to another
     - Is this because of the way the Tasker HA blueprint works?
     - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
+- Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - Add "Setup" button that is in Box 2 when first opened. Clicking it goes to the github readme
 - Set up and build Tasker plugin **0%**
     - Simply merge everything into one downloadable group?
@@ -157,12 +156,16 @@ UTF Hex       REGEX                  KWGT
 ###### #####################################
 ###### TO-DO - Current
 ###### #####################################
-- Verify icon padding works for double row widgets
-- Confirm icon pack is up to date with latest icon list
 - Tasker - "toggle" error
-- `#curpage1` > `curpage` after confirming it works
 - `"lock" in devicetype > "security"`
-- `core/size/box2width` does not include box2minsize
+- `templateinfo` Flow
+    - Create a for loop for `ntwgtsize`?
+    - Connect to status system?
+- Complete all versions of "light" template and maybe start "climate"
+
+###### #####################################
+###### Completed Tasks
+###### #####################################
 - Template system V2 > V3 - Last major revision **90%**
     - **Changes made from V2 - Notes only**:
         - light.light1{ box1{} box2{} }
@@ -187,27 +190,35 @@ UTF Hex       REGEX                  KWGT
         - "tbox1" -       0 = hidden, 1 = single,    2 = double
         - "dev_ico_pos" - 1 = Corner, 2 = Box 1,     3 = Hidden
         - "row_count" -   0 = none,   1 = 1 objects, 2 = 2 objects????
-    - `rowswap`: global toggle? Swaps Box 1 rows and columns. Removes need for row#? Pair with `widgetalign` **Unsure**
-    - V3 and alignment update test problems
-        - Examine `box1size` flow - it seems to resize small when playing with 1 row. #box1obj?
-            - box1size flow very fragile - **Minor tweaks made - Check in editor**
-            - Examine `box2iconmax` - regular sized widget only allows 3 icons
-        - Pages still not working
-            - Flow works correctly - it writes the correct number to curpage
-            - ~~`curpage` > number global~~ **Check to see if fix works**
-            - Will page template with 3 entities only show 3 pages?
+- Alignment system tweaks
         - Test widget in all alignments and different template styles before signing off on alignment system completion
-            - Find out whats happening with widget width - how is it going above 720? Is that simply from scaling?
-        - Flow for setting `widgetalign` is no longer there - recover?
-        - Code in support for notification if widget is resized after setting template
-    - Figure out how to allow user to change page icons - iconname in `entities/*`? Check editor
-    - Create a for loop for `ntwgtsize` in `templateinfo` flow
-    - Complete all versions of "light" template and maybe start "climate"?
-
-
-###### #####################################
-###### Completed Tasks
-###### #####################################
+            - Code notification if widget is resized after setting template - Status system?
+    - ~~Pages still not working~~ **Odd flow process to bypass global writing issues**
+        - ~~Flow works correctly - it writes the correct number to curpage~~
+        - ~~`curpage` > number global~~ **Check to see if fix works**
+        - ~~Will page template with 3 entities only show 3 pages?~~ **Changed code to allow**
+        - Figure out how to allow user to change page icons - iconname in `entities/*`? Check editor **User can edit in KWGT editor using Icon Picker - too complicated otherwise**
+    - ~~Fix padding issues when switching from horizontal to vertical~~
+    - ~~Find out whats happening with widget width - how is it going above 720?~~
+        - Is that simply from scaling? **Critical**
+        - Unsure why, but adjusted widget direction code to use `wgtwidth` instead of `720`
+        - Appears to be a scaling glitch in KWGT **Cannot fix, work around**
+    - ~~Flow for setting `widgetalign` is no longer there - recover?~~ **No need**
+    - Examine `box1size` flow - it seems to resize small when playing with 1 row. #box1obj?
+        - ~~box1size flow very fragile~~
+        - ~~Examine `box2iconmax` - regular sized widget only allows 3 icons~~
+    - ~~`core/size/box2width` does not include box2minsize~~
+    - ~~Verify new "position_padding_left" on Icon 0 in Box 1 works in vertical alignment~~
+    - Verify icon padding works for double row widgets
+    - After adjusting box1size flow, widget is padded correctly but looks odd
+        - Add option to "normalize" box 1 size? Switch global used in `func/alignment`?
+- `#curpage1` > `curpage` after confirming it works
+- ~~Work on Github - update repo and organize correctly~~
+- ~~Look over TO-DO.md and get data and information from that~~
+- ~~Create script for pushing to device:~~
+    > Take my copy of preset.json and add it to a *.kwgt file
+    > Push using KDE Connect to dev phone
+- ~~Clean up codesnippets/* files. Make title areas collapsable in the correct way~~
 
 
 ###### #####################################

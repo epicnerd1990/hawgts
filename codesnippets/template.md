@@ -56,7 +56,7 @@ See samples.json for json samples and examples
 ```
 
 ###### 2 - Set Global Variable: `templateinfo`
-
+ 
 ###### #####################################
 ###### KWGT Global template functions
 ###### #####################################
@@ -86,10 +86,10 @@ light.light1.page1.box1.row1.0
   $lv(template, ("." + gv(devicetype) + "." + (gv(devicetype) + gv(templateselect))))$
   $lv(tpageon, (tc(json, #dbtemp, (#template + ".page"))))$
   $lv(obj, "." + gv(devicetype) + ".objects")$
-  $lv(curpage1, gv(core/curpage))$
+  $lv(curpage, gv(core/curpage))$
   $lv(objfindkey, 
         (if(#tpageon = 0, (#template + #posid),
-                         (#template + ".page" + #curpage1 + #posid)
+                         (#template + ".page" + #curpage + #posid)
         ))
   )$
   $lv(objkey, (if((tc(json, #dbtemp, #objfindkey)) = "", "", 
@@ -97,7 +97,7 @@ light.light1.page1.box1.row1.0
                )))$
   $lv(entity,
     (if(#tpageon = 0, gv(entities/entity1),
-                     gv(entities/("entity" + #curpage1))
+                     gv(entities/("entity" + #curpage))
     ))
   )$
   $lv(entitykey, (if(#entity != "",
@@ -107,7 +107,7 @@ light.light1.page1.box1.row1.0
   $lv(box1obj, 
       (tc(json, #dbtemp, 
         (if(#tpageon = 0, (#template + ".box1.row1.1"),
-                         (#template + ".page" + #curpage1 + ".box1.row1.1")
+                         (#template + ".page" + #curpage + ".box1.row1.1")
         ))
       ))
   )$
@@ -217,11 +217,22 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
   $if(#objid != "0", #icon, #tempicon)$
 ```
 
-###### Icon visiblity formula - Box 2, Row 2, Icon 2
+###### Icon visiblity formula - Box 2, Row 2, Icon 2 (auto-hide)
 ```
   $lv(posid, ".box2.row2.0")$
-  $gv(func/jsonstate)$
-  $if(#objkey = "" | gv(core/size/box2iconmax) < 3, REMOVE, ALWAYS)$
+  $gv(func/jsonobj)$
+  $if(#objid = "" | gv(core/size/box2iconmax) < 3, REMOVE, ALWAYS)$
+```
+
+###### Icon visiblity formula - Box 1, Row 2, Icon 1 (pages)
+```
+  $lv(posid, ".box1.row2.0")$
+  $gv(func/jsonobj)$
+  $lv(entity, "entities/entity" + #obdata)$
+
+  $if(#obid = "0", REMOVE,
+      #obid = "1" & #obtype = "page" & gv(#entity) = "", REMOVE, ALWAYS)$
+
 ```
 
 ###### Circle Paint Color Formula
@@ -243,6 +254,40 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
   $if(#stoutput = 1, "MULTIPLY", "NORMAL")$
+```
+
+###### Box 1, Icon 1 padding override
+"position_padding_left"
+```
+  $lv(posid, ".box1.row2.1")$
+  $gv(func/jsonobj)$
+  $gv(func/alignment)$
+
+  $if(#obid = "0" & #align = 0, "10", "0")$
+
+```
+"position_padding_top"
+```
+  $lv(posid, ".box1.row2.1")$
+  $gv(func/jsonobj)$
+  $gv(func/alignment)$
+
+  $if(#obid = "0" & #align = 1, "10", "0")$
+
+```
+
+###### Stack group Alignment (Level 1)
+```
+  $gv(func/alignment)$
+  $#boxcenter$
+```
+
+###### Stack group Margins (Level 1 + 2)
+```
+$gv(func/alignment)$$#margin2$
+```
+```
+$gv(func/alignment)$$#margin1$
 ```
 
 ###### Device Icon properties

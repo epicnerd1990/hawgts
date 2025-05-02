@@ -8,11 +8,11 @@
     "pflags": 0,
     "hash": null,
     "height": 378,
-    "id": "df6cb0c8-ff63-4c1f-8555-2bf660814083",
+    "id": "673930df-7820-4cb4-88a5-b1bcff814214",
     "locked": false,
     "release": 378511712,
-    "ts": 1746221818536,
-    "title": "0.6.5A",
+    "ts": 1745813648727,
+    "title": "0.6.4A",
     "version": 13,
     "width": 1080,
     "xscreens": 0,
@@ -87,7 +87,7 @@
         "title": "box2iconmax",
         "description": "Number of icons that will fit in Box 2 (per row). Based on widget size and padding",
         "toggles": 10,
-        "global_formula": "$gv(func/alignment)$$lv(box2dir, (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$$lv(icon, gv(iconsize) + #objpad1)$$lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #objpad1))$$if(gv(fitmoreobj) = 0,(if(#boxsize <= 2, 2, mu(round, #boxsize))),10)$"
+        "global_formula": "$gv(func/alignment)$$lv(box2dir, (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$$lv(icon,gv(iconsize)+#objpad1)$$lv(boxsize,(#box2dir-gv(deviceiconsize))/(#icon+#objboxpad2))$$if(gv(fitmoreobj)=0,(if(#boxsize<=2,2,tc(split,#boxsize,\".\",0))),10)$"
       },
       "core/tasker": {
         "index": 9,
@@ -106,7 +106,7 @@
         "index": 11,
         "type": "TEXT",
         "title": "temp",
-        "value": "tasker://secondary?service_call=light&entity_id=light.bedroom_lights&parameters=brightness:150"
+        "value": ".box2.row2.2"
       },
       "core/tasker/fromcolorpic": {
         "index": 12,
@@ -155,14 +155,14 @@
         "type": "TEXT",
         "title": "jsonmain",
         "description": "Load JSON data for following global variables",
-        "value": "$lv(dbtemp, gv(json/template))$$lv(dbdev, gv(json/device))$$lv(template, (\".\" + gv(devicetype) + \".\" + (gv(devicetype) + gv(templateselect))))$$lv(tpageon, (tc(json, #dbtemp, (#template + \".page\"))))$$lv(obj, \".\" + gv(devicetype) + \".objects\")$$lv(curpage, gv(core/curpage))$$lv(objfindkey,(if(#tpageon = 0, (#template + #posid),(#template + \".page\" + #curpage + #posid))))$$lv(objkey, (if((tc(json, #dbtemp, #objfindkey)) = \"\", \"\",(#obj + \".\" + (tc(json, #dbtemp, #objfindkey))))))$$lv(entity,(if(#tpageon = 0, gv(entities/entity1),gv(entities/(\"entity\" + #curpage)))))$$lv(entitykey, (if(#entity != \"\",\".device_states[?(@.entity_id == '\" + #entity + \"')]\")))$$lv(box1obj,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row1.1\"))))))$"
+        "value": "$lv(dbtemp, gv(json/template))$$lv(dbdev, gv(json/device))$$lv(template, (\".\" + gv(devicetype) + \".\" + (gv(devicetype) + gv(templateselect))))$$lv(tpageon, (tc(json, #dbtemp, (#template + \".page\"))))$$lv(obj, \".\" + gv(devicetype) + \".objects\")$$lv(curpage1, gv(core/curpage))$$lv(objfindkey,(if(#tpageon = 0, (#template + #posid),(#template + \".page\" + #curpage1 + #posid))))$$lv(objkey, (if((tc(json, #dbtemp, #objfindkey)) = \"\", \"\",(#obj + \".\" + (tc(json, #dbtemp, #objfindkey))))))$$lv(entity,(if(#tpageon = 0, gv(entities/entity1),gv(entities/(\"entity\" + #curpage1)))))$$lv(entitykey, (if(#entity != \"\",\".device_states[?(@.entity_id == '\" + #entity + \"')]\")))$$lv(box1obj,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage1 + \".box1.row1.1\"))))))$"
       },
       "func/jsonstate": {
         "index": 19,
         "type": "TEXT",
         "title": "jsonstate",
         "description": "Get the current state of devices connected to the widget. Call with \".box1.row2.0\"",
-        "value": "$gv(func/jsonmain)$$lv(obtype,\t(tc(json,#dbtemp,(#objkey+\".type\"))))$$lv(obonstate,\t(tc(json,#dbtemp,(#objkey+\".onstate\"))))$$lv(oblevelh,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",1)))))$$lv(oblevell,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",0)))))$$lv(ststate,\t(tc(json,#dbdev,(#entitykey+\".state\"))))$$lv(stlevelv,(tc(json,#dbdev,(#entitykey+\".brightness\"))))$$lv(stlevel,\t(if(#stlevelv!=\"\",#stlevelv,0)))$$lv(stcolor,\t(tc(json,#dbdev,(#entitykey+\".color\"))))$$lv(stcustom,\t(tc(json,#dbdev,(#entitykey+\".\"+#keyname))))$$lv(stobtype,(if(#obonstate~=\"\\d+>\\d+\"&#obtype=\"action\"&#ststate!=\"off\",\"range\",#obonstate~=\"page\\d\"&#obtype=\"page\",\t\t\t\t\t\t\t\t\t\t\"page\",#obonstate=\"off\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"0\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"on\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"on\",#obonstate=\"\"|#obtype=\"\",\t\t\t\t\t\t\t\t\t\t\"nostate\",#obonstate)))$$lv(stoutput,(if(#stobtype!=\"range\",(if(#ststate!=\"\",if(#stobtype=\"page\"&#tpageon=1&(\"page\"+#curpage)=#obonstate,1,#stobtype=\"on\"&#ststate=\"on\",1,#stobtype=\"off\"&#ststate=\"off\",1,#stobtype=\"nostate\",0,0),0)),(if(#stobtype=\"range\"&#stlevel>=#oblevell&#stlevel<=#oblevelh,1,0)))))$"
+        "value": "$gv(func/jsonmain)$$lv(obtype,\t(tc(json,#dbtemp,(#objkey+\".type\"))))$$lv(obonstate,\t(tc(json,#dbtemp,(#objkey+\".onstate\"))))$$lv(oblevelh,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",1)))))$$lv(oblevell,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",0)))))$$lv(ststate,\t(tc(json,#dbdev,(#entitykey+\".state\"))))$$lv(stlevelv,(tc(json,#dbdev,(#entitykey+\".brightness\"))))$$lv(stlevel,\t(if(#stlevelv!=\"\",#stlevelv,0)))$$lv(stcolor,\t(tc(json,#dbdev,(#entitykey+\".color\"))))$$lv(stcustom,\t(tc(json,#dbdev,(#entitykey+\".\"+#keyname))))$$lv(stobtype,(if(#obonstate~=\"\\d+>\\d+\"&#obtype=\"action\"&#ststate!=\"off\",\"range\",#obonstate~=\"page\\d\"&#obtype=\"page\",\t\t\t\t\t\t\t\t\t\t\"page\",#obonstate=\"off\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"0\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"on\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"on\",#obonstate=\"\"|#obtype=\"\",\t\t\t\t\t\t\t\t\t\t\"nostate\",#obonstate)))$$lv(stoutput,(if(#stobtype!=\"range\",(if(#ststate!=\"\",if(#stobtype=\"page\"&#tpageon=1&(\"page\"+#curpage1)=#obonstate,1,#stobtype=\"on\"&#ststate=\"on\",1,#stobtype=\"off\"&#ststate=\"off\",1,#stobtype=\"nostate\",0,0),0)),(if(#stobtype=\"range\"&#stlevel>=#oblevell&#stlevel<=#oblevelh,1,0)))))$"
       },
       "func/jsonobj": {
         "index": 20,
@@ -183,7 +183,7 @@
         "type": "TEXT",
         "title": "alignment",
         "description": "General Variables for use in alignment globals and objects",
-        "value": "$lv(align, gv(widgetorient))$$lv(override, gv(autoalign))$$lv(invert, gv(boxtoggle))$$lv(objpad1, gv(objpadding))$$lv(objpad2, gv(objpadding2))$$lv(objboxpad2, gv(objpaddingbox2))$$lv(wgtwidth1, (if(#align = 0, si(rheight), si(rwidth))))$$lv(wgtdir, (if(#align = 0, gv(core/size/wgtheight), gv(core/size/wgtwidth ))))$$lv(wgtdirop, (if(#align = 0, gv(core/size/wgtwidth), gv(core/size/wgtheight ))))$$lv(iconcalc, (gv(iconsize) * 2) + #objpad1)$$lv(pad, (#wgtdir - #iconcalc))$$lv(box1sm, (gv(iconsize) + (#objboxpad2 * 2) * 100 / #wgtwidth1))$$lv(box1lg, (((#objboxpad2 * 2) + #iconcalc)))$$lv(boxalign, (if(gv(box1position) = RIGHT, CENTERRIGHT,gv(box1position) = LEFT, CENTERLEFT,gv(box1position) = TOP, TOP,gv(box1position) = BOTTOM, BOTTOM)))$$lv(boxcenter, (if(gv(box1position) = RIGHT, VERTICAL_RIGHT,gv(box1position) = LEFT, VERTICAL_LEFT,gv(box1position) = TOP, HORIZONTAL_TOP,gv(box1position) = BOTTOM, HORIZONTAL_BOTTOM)))$$lv(margin1, if(#align = 0, \"#objpad2\" , \"#objpad1\"))$$lv(margin2, if(#align = 0, \"#objpad1\" , \"#objpad2\"))$"
+        "value": "$lv(align,gv(widgetorient))$$lv(override,gv(autoalign))$$lv(invert,gv(boxtoggle))$$lv(objpad1,gv(objpadding))$$lv(objpad2,gv(objpadding2))$$lv(objboxpad2,gv(objpaddingbox2))$$lv(wgtdir,(if(#align=0,gv(core/size/wgtheight),gv(core/size/wgtwidth))))$$lv(wgtdirop,(if(#align=0,gv(core/size/wgtwidth),gv(core/size/wgtheight))))$$lv(iconcalc,(gv(iconsize)*2)+#objboxpad2)$$lv(pad,(#wgtdir-#iconcalc))$$lv(box1sm,(gv(iconsize)+(#objpad1*2)*100/720))$$lv(box1lg,((#pad+#iconcalc)))$$lv(boxalign,(if(gv(box1position)=RIGHT,CENTERRIGHT,gv(box1position)=LEFT,CENTERLEFT,gv(box1position)=TOP,TOP,gv(box1position)=BOTTOM,BOTTOM)))$"
       },
       "func/devjsonrem": {
         "index": 23,
@@ -223,14 +223,14 @@
         "index": 28,
         "type": "TEXT",
         "title": "devicejson",
-        "value": "{\n  \"device_states\": [\n       {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.closet_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"150\",\n      \"color\": \"color\"\n    },\n    {\n      \"entity_id\": \"light.ensuite_light\",\n      \"state\": \"on\",\n      \"brightness\": \"75\",\n      \"color\": \"color\"\n    },\n       ]\n}"
+        "value": "{\n  \"device_states\": [\n       {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.ensuite_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.closet_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"150\",\n      \"color\": \"color\"\n    },\n       ]\n}"
       },
       "json/template": {
         "index": 29,
         "type": "TEXT",
         "title": "templatejson",
         "description": "Template Database",
-        "value": "{  \"light\": {\n    \"objects\": {\n      \"bedroom\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"page\",\n        \"onstate\": \"page1\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"1\"\n      },\n      \"office\": {\n        \"icon\": \"mdi-room-desk\",\n        \"type\": \"page\",\n        \"onstate\": \"page2\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"2\"\n      },\n      \"livingroom\": {\n        \"icon\": \"mdi-room-sofa-single-outline\",\n        \"type\": \"page\",\n        \"onstate\": \"page3\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"3\"\n      },\n      \"foyer\": {\n        \"icon\": \"mdi-room-coat-rack\",\n        \"type\": \"page\",\n        \"onstate\": \"page4\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"4\"\n      },\n      \"power\": {\n        \"icon\": \"mdi-power\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"toggle\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"controlapp\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"color\": {\n        \"icon\": \"mdi-palette\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"color\",\n        \"cmd\": \"color\",\n        \"data\": \"#FFFFFF\"\n      },\n      \"off\": {\n        \"icon\": \"mdi-lightbulb-off-outline\",\n        \"type\": \"action\",\n        \"onstate\": \"off\",\n        \"action\": \"off\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"low\": {\n        \"icon\": \"mdi-lightbulb-on-30\",\n        \"type\": \"action\",\n        \"onstate\": \"1>75\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"74\"\n      },\n      \"med\": {\n        \"icon\": \"mdi-lightbulb-on-60\",\n        \"type\": \"action\",\n        \"onstate\": \"76>200\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"150\"\n      },\n      \"high\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"200>255\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      },\n      \"on\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"on\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      }\n    },\n    \"light1\": {\n      \"name\": \"Light - 2-4 Page/Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 1,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 1,\n      \"device_count\": \"2-4\",\n      \"page1\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page2\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page3\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page4\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      }\n    },\n    \"light2\": {\n      \"name\": \"Light - 0 Page, 1 Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 2,\n      \"device_count\": 1,\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n    },\n    \"light3\": {\n      \"name\": \"Light - 0 page, 1 Device, 1 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 1,\n      \"device_icon_pos\": 1,\n      \"device_count\": 1,\n      \"box1\": {\n          \"row1\": {\n            \"0\": \"controlapp\"\n          }\n      },\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n   }\n  }\n} "
+        "value": "{  \"light\": {\n    \"objects\": {\n      \"bedroom\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"page\",\n        \"onstate\": \"page1\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"1\"\n      },\n      \"office\": {\n        \"icon\": \"mdi-room-desk\",\n        \"type\": \"page\",\n        \"onstate\": \"page2\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"2\"\n      },\n      \"livingroom\": {\n        \"icon\": \"mdi-room-sofa-single-outline\",\n        \"type\": \"page\",\n        \"onstate\": \"page3\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"3\"\n      },\n      \"foyer\": {\n        \"icon\": \"mdi-room-coat-rack\",\n        \"type\": \"page\",\n        \"onstate\": \"page4\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"4\"\n      },\n      \"power\": {\n        \"icon\": \"mdi-power\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"toggle\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"controlapp\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"color\": {\n        \"icon\": \"mdi-palette\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"color\",\n        \"cmd\": \"color\",\n        \"data\": \"#FFFFFF\"\n      },\n      \"off\": {\n        \"icon\": \"mdi-lightbulb-off-outline\",\n        \"type\": \"action\",\n        \"onstate\": \"off\",\n        \"action\": \"off\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"low\": {\n        \"icon\": \"mdi-lightbulb-on-30\",\n        \"type\": \"action\",\n        \"onstate\": \"1>75\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"74\"\n      },\n      \"med\": {\n        \"icon\": \"mdi-lightbulb-on-60\",\n        \"type\": \"action\",\n        \"onstate\": \"76>200\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"150\"\n      },\n      \"high\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"200>255\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      },\n      \"on\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"on\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      }\n    },\n    \"light1\": {\n      \"name\": \"Light - 2-4 Page/Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 1,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 1,\n      \"device_count\": \"2-4\",\n      \"page1\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page2\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page3\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page4\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      }\n    },\n    \"light2\": {\n      \"name\": \"Light - 0 Page, 1 Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 2,\n      \"device_count\": 1,\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n    },\n    \"light3\": {\n      \"name\": \"Light - 0 page, 1 Device, 1 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 1,\n      \"device_icon_pos\": 1,\n      \"device_count\": 1,\n      \"box1\": {\n          \"row1\": {\n            \"0\": \"controlapp\",\n            \"1\": \"color\"\n          }\n      },\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n    },\n    \"light4\": {\n      \"name\": \"Light - 0 page, 2 Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"box1_size\": 0,\n      \"page\": 0,\n      \"row_count\": 2,\n      \"device_icon_pos\": 2,\n      \"device_count\": 2,\n      \"box1\": {\n          \"row1\": {\n            \"0\": \"controlapp\",\n            \"1\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"on\"\n          }\n      },\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"controlapp\",\n            \"1\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"on\"\n          }\n      }\n    }\n\n  }\n} "
       },
       "json/error": {
         "index": 30,
@@ -522,7 +522,7 @@
         "type": "TEXT",
         "title": "templateselect",
         "description": "Template Discription via flow",
-        "value": "light - 2-4 Device(s), 1 Row(s), 2 Boxes\nConnect 2-4 light entities for this template\nThis widget is incorrectly sized for this template. \\nEither make the widget larger or choose a different template. \\nAdvanced users see README for alternative options"
+        "value": "light - 2-4 Device(s), 2 Row(s), 2 Boxes\n Connect 2-4 light entities for this template\n This widget is incorrectly sized for this template. \nEither make the widget larger or choose a different template. \nAdvanced users see README for alternative options"
       },
       "-- 2.": {
         "index": 69,
@@ -536,7 +536,7 @@
         "type": "SWITCH",
         "title": "fitmoreobj",
         "description": "Disable widget object count restrictions to use templates that are close to fitting. May cause overlap",
-        "value": 0
+        "value": 1
       },
       "deviceiconrotation": {
         "index": 71,
@@ -604,7 +604,7 @@
         "description": "Set the object padding from the edge of Box 2. Default: 10kpx",
         "min": 0,
         "max": 50,
-        "value": 20.0
+        "value": 12
       },
       "verticalpadding": {
         "index": 79,
@@ -678,15 +678,15 @@
         "type": "LIST",
         "title": "box1position",
         "description": "Set position of Box 1",
-        "value": "LEFT",
-        "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout"
+        "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout",
+        "value": "LEFT"
       },
       "box1size": {
         "index": 88,
         "type": "NUMBER",
         "title": "box1size",
         "description": "Override Box 1 size set from Flow. Disable flow before changing",
-        "value": "210",
+        "value": "242",
         "min": 0,
         "max": 720
       },
@@ -696,19 +696,12 @@
         "title": "setupmode",
         "description": "Debugging - Enable showing setup data",
         "value": 0
-      },
-      "box1sq": {
-        "index": 90,
-        "type": "SWITCH",
-        "title": "box1sq",
-        "description": "Make Box 1 a perfect square",
-        "value": 0
       }
     },
     "internal_flows": [
       {
         "id": "FYLSQy37",
-        "name": "Obj - Activate",
+        "name": "KWGT > Tasker",
         "t": [
           {
             "id": "TTkijwxj",
@@ -717,14 +710,60 @@
         ],
         "a": [
           {
+            "id": "TAicHzV2",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "$#last$"
+            }
+          },
+          {
+            "id": "TAjqvBrQ",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "core/tasker/temp"
+            }
+          },
+          {
             "id": "TAZDuMgg",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(posid, #last)$$gv(func/jsonobj)$$lv(uri, (if(#obtype = \"template\",(\"tasker://secondary?service_call=\" + #obaction + \"&parameters=\" + #obparam),#obtype = \"action\",(\"tasker://secondary?service_call=\" + #obaction + \"&entity_id=\" + #entity + \"&parameters=\" + #obparam),\"\")))$$if(#uri = \"\" & #obtype = \"page\", #obdata, #uri)$"
+              "formula": "$lv(posid, gv(core/tasker/temp))$$gv(func/jsonobj)$$lv(combine, (if(#obtype = \"template\",(\"tasker://secondary?service_call=\" + #obaction + \"&parameters=\" + #obparam),#obtype = \"action\",(\"tasker://secondary?service_call=\" + #obaction + \"&entity_id=\" + #entity + \"&parameters=\" + #obparam),\"\")))$$#combine$"
+            }
+          },
+          {
+            "id": "TAxKSEpu",
+            "type": "A_INTENT_URI",
+            "params": {
+              "uri": "$#last$"
+            }
+          },
+          {
+            "id": "TAKQvmXQ",
+            "type": "A_STOP_IF",
+            "params": {
+              "formula": "$lv(posid, gv(core/tasker/temp))$$gv(func/jsonobj)$$if(#obtype = \"page\", 1, 0)$"
+            }
+          },
+          {
+            "id": "TAJdKkBn",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "$lv(posid, gv(core/tasker/temp))$$gv(func/jsonobj)$$#obdata$"
             }
           },
           {
             "id": "TA2ERzP2",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "core/curpage"
+            }
+          },
+          {
+            "id": "TAJxQgfU",
+            "type": "A_FORMULA"
+          },
+          {
+            "id": "TACxK0z1",
             "type": "A_GLOBAL",
             "params": {
               "global": "core/tasker/temp"
@@ -845,7 +884,7 @@
             "id": "TT0gENXP",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(widgetorient)$$gv(devicetype)$$gv(templateselect)$$gv(box1sq)$"
+              "formula": "$gv(widgetorient)$$gv(devicetype)$$gv(templateselect)$"
             }
           }
         ],
@@ -861,7 +900,7 @@
             "id": "TAdp5TwR",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(func/jsontemp)$$gv(func/alignment)$$lv(box1col1,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row1.1\"))))))$$lv(box1col2,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row2.1\"))))))$$lv(box1col, if(#box1col1 = \"\" & #box1col2 = \"\", 0, 1))$$lv(size, (if(gv(box1sq) = 1, #wgtdir,(if(#tbox1 = 0, 0,#tbox1 = 1, #box1sm,#tbox1 = 2 & #box1col = 0, #box1sm,#tbox1 = 2 & #box1col = 1, #box1lg,#ticopos = 2 & #tbox1 = 2, #wgtdir,#ticopos = 2 & #tbox1 = 1, #box1sm,#wgtdir)))))$$#size$"
+              "formula": "$gv(func/jsontemp)$$gv(func/alignment)$$lv(box1col1,(tc(json,#dbtemp,(if(#tpageon=0,(#template+\".box1.row1.1\"),(#template+\".page\"+#curpage1+\".box1.row1.1\"))))))$$lv(box1col2,(tc(json,#dbtemp,(if(#tpageon=0,(#template+\".box1.row1.1\"),(#template+\".page\"+#curpage1+\".box1.row2.1\"))))))$$lv(box1col,if(#box1col1=\"\"&#box1col2=\"\",0,1))$lv(size,(if(#tbox1=0,0,#tbox1=1,#box1sm,#tbox1=2&#box1col=\"0\",#box1sm,#tbox1=2&#box1col=\"1\",#box1lg,#ticopos=2&#tbox1=2,#wgtdir,#wgtdir)))$$#size$"
             }
           },
           {
@@ -982,63 +1021,9 @@
             }
           }
         ]
-      },
-      {
-        "id": "F4NQE1cc",
-        "name": "Obj - KWGT > Tasker",
-        "t": [
-          {
-            "id": "TTFlKZRj",
-            "type": "T_MANUAL"
-          },
-          {
-            "id": "TTuZQfrZ",
-            "type": "T_FORMULA",
-            "params": {
-              "formula": "$gv(core/tasker/temp)$"
-            }
-          }
-        ],
-        "a": [
-          {
-            "id": "TAbN51Tx",
-            "type": "A_INTENT_URI",
-            "params": {
-              "uri": "$lv(uri, gv(core/tasker/temp))$$if(#uri ~= \"\\b\\d\\b\", \"\", #uri)$"
-            }
-          }
-        ]
-      },
-      {
-        "id": "FyyE9xL4",
-        "name": "Obj - Page Change",
-        "t": [
-          {
-            "id": "TTvxrRaE",
-            "type": "T_FORMULA",
-            "params": {
-              "formula": "$gv(core/tasker/temp)$"
-            }
-          }
-        ],
-        "a": [
-          {
-            "id": "TA3scV0x",
-            "type": "A_FORMULA",
-            "params": {
-              "formula": "$lv(uri, gv(core/tasker/temp))$$lv(page, gv(core/curpage))$$if(#uri ~= \"\\b\\d\\b\", #uri, #page)$"
-            }
-          },
-          {
-            "id": "TAmLKvF4",
-            "type": "A_GLOBAL",
-            "params": {
-              "global": "core/curpage"
-            }
-          }
-        ]
       }
     ],
+    "config_scale_value": 99.06542,
     "viewgroup_items": [
       {
         "internal_type": "OverlapLayerModule",
@@ -1120,23 +1105,15 @@
               "position_padding_left": 10,
               "position_padding_right": 10,
               "position_padding_top": 10,
-              "position_padding_bottom": 10,
-              "config_stacking": 10,
-              "config_margin": 10
+              "position_padding_bottom": 10
             },
             "internal_formulas": {
               "config_visible": "$gv(func/jsonobj)$$if(#ticonpos = \"2\", REMOVE, ALWAYS)$",
               "position_padding_left": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = LEFT, gv(horizontalpadding), 0)), 0)$",
               "position_padding_right": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = RIGHT, gv(horizontalpadding), 0)), 0)$",
               "position_padding_top": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = TOP, gv(horizontalpadding), 0)), 0)$",
-              "position_padding_bottom": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$",
-              "config_stacking": "$if(gv(widgetorient) = 0, VERTICAL_CENTER, HORIZONTAL_CENTER)$",
-              "config_margin": "$gv(func/alignment)$$#margin1$"
+              "position_padding_bottom": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = BOTTOM, gv(horizontalpadding), 0)), 0)$"
             },
-            "internal_globals": {
-              "config_margin": "objpadding2"
-            },
-            "config_stacking": "HORIZONTAL_CENTER",
             "viewgroup_items": [
               {
                 "internal_type": "StackLayerModule",
@@ -1144,11 +1121,10 @@
                 "internal_title": "Row 1",
                 "internal_toggles": {
                   "config_stacking": 10,
-                  "config_margin": 10
+                  "config_margin": 100
                 },
                 "internal_formulas": {
-                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
+                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
                 },
                 "internal_globals": {
                   "config_margin": "objpadding"
@@ -1158,14 +1134,10 @@
                     "internal_type": "OverlapLayerModule",
                     "internal_title": "Icon 0",
                     "internal_toggles": {
-                      "config_visible": 10,
-                      "position_padding_left": 10,
-                      "position_padding_top": 10
+                      "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonobj)$$if(#obid = \"0\", REMOVE, ALWAYS)$",
-                      "position_padding_left": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" & #align = 0, \"10\", \"0\")$",
-                      "position_padding_top": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" & #align = 1, \"10\", \"0\")$"
+                      "config_visible": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonobj)$$if(#obid = \"0\", REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1175,7 +1147,6 @@
                         "switch_text": ".box1.row1.0"
                       }
                     ],
-                    "position_padding_left": 10.0,
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
@@ -1220,7 +1191,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonobj)$$lv(entity, \"entities/entity\" + #obdata)$$if(#obid = \"0\", REMOVE,#obid = \"1\" & #obtype = \"page\" & gv(#entity) = \"\", REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonobj)$$if(#obid = \"0\", REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1276,12 +1247,11 @@
                 "internal_toggles": {
                   "config_stacking": 10,
                   "config_visible": 10,
-                  "config_margin": 10
+                  "config_margin": 100
                 },
                 "internal_formulas": {
                   "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
-                  "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
+                  "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$"
                 },
                 "internal_globals": {
                   "config_margin": "objpadding"
@@ -1291,14 +1261,10 @@
                     "internal_type": "OverlapLayerModule",
                     "internal_title": "Icon 0",
                     "internal_toggles": {
-                      "config_visible": 10,
-                      "position_padding_left": 10,
-                      "position_padding_top": 10
+                      "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonobj)$$lv(entity, \"entities/entity\" + #obdata)$$if(#obid = \"0\", REMOVE,#obid = \"1\" & #obtype = \"page\" & gv(#entity) = \"\", REMOVE, ALWAYS)$",
-                      "position_padding_left": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" & #align = 0, \"10\", \"0\")$",
-                      "position_padding_top": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" & #align = 1, \"10\", \"0\")$"
+                      "config_visible": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonobj)$$if(#obid = \"0\", REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1352,7 +1318,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$lv(entity, \"entities/entity\" + #obdata)$$if(#obid = \"0\", REMOVE,#obid = \"1\" & #obtype = \"page\" & gv(#entity) = \"\", REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$if(#obid = \"0\", REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1593,20 +1559,15 @@
               "position_padding_left": 10,
               "position_padding_right": 10,
               "position_padding_top": 10,
-              "position_padding_bottom": 10,
-              "config_stacking": 10,
-              "config_margin": 10
+              "position_padding_bottom": 10
             },
             "internal_formulas": {
               "position_anchor": "$gv(func/alignment)$$#boxalign$",
               "position_padding_left": "$if(gv(box1position) = LEFT, gv(objpaddingbox2), 0)$",
               "position_padding_right": "$if(gv(box1position) = RIGHT, gv(objpaddingbox2), 0)$",
               "position_padding_top": "$if(gv(box1position) = TOP, gv(objpaddingbox2), 0)$",
-              "position_padding_bottom": "$if(gv(box1position) = BOTTOM, gv(objpaddingbox2), 0)$",
-              "config_stacking": "$gv(func/alignment)$$#boxcenter$",
-              "config_margin": "$gv(func/alignment)$$#margin1$"
+              "position_padding_bottom": "$if(gv(box1position) = BOTTOM, gv(objpaddingbox2), 0)$"
             },
-            "config_stacking": "VERTICAL_CENTER",
             "viewgroup_items": [
               {
                 "internal_type": "StackLayerModule",
@@ -1614,11 +1575,10 @@
                 "internal_title": "Row 1",
                 "internal_toggles": {
                   "config_stacking": 10,
-                  "config_margin": 10
+                  "config_margin": 100
                 },
                 "internal_formulas": {
-                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
+                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$"
                 },
                 "internal_globals": {
                   "config_margin": "objpadding"
@@ -1956,13 +1916,12 @@
                 "internal_title": "Row 2",
                 "internal_toggles": {
                   "config_stacking": 10,
-                  "config_margin": 10,
+                  "config_margin": 100,
                   "config_visible": 10
                 },
                 "internal_formulas": {
                   "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
-                  "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
+                  "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$"
                 },
                 "internal_globals": {
                   "config_margin": "objpadding"
@@ -2534,7 +2493,7 @@
       },
       {
         "internal_type": "OverlapLayerModule",
-        "internal_title": "Debugging Data",
+        "internal_title": "SETUP DATA - DO NOT DELETE",
         "internal_toggles": {
           "config_visible": 10
         },
@@ -2601,8 +2560,7 @@
             ]
           },
           {
-            "internal_type": "TextModule",
-            "text_expression": "$gv(curpage)$"
+            "internal_type": "TextModule"
           }
         ]
       },

@@ -91,7 +91,7 @@
         "data": ""
       },
       "controlapp": {
-        "icon": "mdi-room-king-bed",
+        "icon": "app-home-assistant",
         "type": "action",
         "onstate": "",
         "action": "",

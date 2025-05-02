@@ -38,9 +38,9 @@
 
 **Action**
 
-###### 1 - Formula - Write to the template
-ADD "Stop If" in Flow UI
-if `autoalign` = 0, dont proceed
+###### 1 - `Stop IF`: `autoalign` = 0
+
+###### 2 - Formula - Write to the template
 ```
   $gv(func/jsontemp)$
   $gv(func/alignment)$
@@ -48,31 +48,33 @@ if `autoalign` = 0, dont proceed
   $lv(box1col1, 
       (tc(json, #dbtemp, 
         (if(#tpageon = 0, (#template + ".box1.row1.1"),
-                         (#template + ".page" + #curpage1 + ".box1.row1.1")
+                         (#template + ".page" + #curpage + ".box1.row1.1")
         ))
       ))
   )$
   $lv(box1col2, 
       (tc(json, #dbtemp, 
         (if(#tpageon = 0, (#template + ".box1.row1.1"),
-                         (#template + ".page" + #curpage1 + ".box1.row2.1")
+                         (#template + ".page" + #curpage + ".box1.row2.1")
         ))
       ))
   )$
-  $lv(box1col, if(#box1col1 = "" & #box1col2 = "", 0, 1))
+  $lv(box1col, if(#box1col1 = "" & #box1col2 = "", 0, 1))$
 
-  $lv(size, (if(#tbox1    = 0,                   0,
-                #tbox1    = 1,                   #box1sm,
-                #tbox1    = 2 & #box1col  = "0", #box1sm,
-                #tbox1    = 2 & #box1col  = "1", #box1lg,
-                #ticopos  = 2 & #tbox1    = 2,   #wgtdir,
-                #wgtdir
+  $lv(size, (if(gv(box1sq)  = 1,  #wgtdir, 
+              (if(#tbox1    = 0,                   0,
+                  #tbox1    = 1,                   #box1sm,
+                  #tbox1    = 2 & #box1col  = 0,   #box1sm,
+                  #tbox1    = 2 & #box1col  = 1,   #box1lg,
+                  #ticopos  = 2 & #tbox1    = 2,   #wgtdir,
+                  #ticopos  = 2 & #tbox1    = 1,   #box1sm,
+                  #wgtdir
+              ))
             )))$
   $#size$
-
 ```
 
-###### 2 - Set Global Variable: `box1size`
+###### 3 - Set Global Variable: `box1size`
 
 ###### #####################################
 ###### Autosizing Global Function
@@ -89,29 +91,38 @@ if `autoalign` = 0, dont proceed
   $lv(objpad2,    gv(objpadding2))$
   $lv(objboxpad2, gv(objpaddingbox2))$
 
+  $lv(wgtwidth1, (if(#align = 0, si(rheight), si(rwidth))))$
   $lv(wgtdir,   (if(#align = 0, gv(core/size/wgtheight), gv(core/size/wgtwidth  ))))$
   $lv(wgtdirop, (if(#align = 0, gv(core/size/wgtwidth),  gv(core/size/wgtheight ))))$
-  $lv(iconcalc, (gv(iconsize) * 2) + #objboxpad2)$
+  $lv(iconcalc, (gv(iconsize) * 2) + #objpad1)$
   $lv(pad,      (#wgtdir - #iconcalc))$
 
-  $lv(box1sm, (gv(iconsize) + (#objpad1 * 2) * 100 / 720))$
-  $lv(box1lg, ((#pad + #iconcalc)))$
-  $lv(boxalign, (if(gv(box1position) = RIGHT, CENTERRIGHT,
+  $lv(box1sm, (gv(iconsize) + (#objboxpad2 * 2) * 100 / #wgtwidth1))$
+  $lv(box1lg, (((#objboxpad2 * 2) + #iconcalc)))$
+  $lv(boxalign, (if(gv(box1position) = RIGHT,  CENTERRIGHT,
                     gv(box1position) = LEFT,   CENTERLEFT,
                     gv(box1position) = TOP,    TOP,
                     gv(box1position) = BOTTOM, BOTTOM
   )))$
+  $lv(boxcenter, (if(gv(box1position) = RIGHT,  VERTICAL_RIGHT,
+                     gv(box1position) = LEFT,   VERTICAL_LEFT,
+                     gv(box1position) = TOP,    HORIZONTAL_TOP,
+                     gv(box1position) = BOTTOM, HORIZONTAL_BOTTOM
+  )))$
+
+  $lv(margin1, if(#align = 0, "#objpad2" , "#objpad1"))$
+  $lv(margin2, if(#align = 0, "#objpad1" , "#objpad2"))$
 ```
 
 ###### #####################################
 ###### Autosizing Global Variables
 ###### #####################################
 
-###### core/size/widgetwidth
-`$si(rwidth) - (gv(horizontaldevicopd) * 2)$`
+###### core/size/wgtwidth
+`$si(rwidth) - (gv(horizontalpadding) * 2)$`
 
-###### core/size/widgetheight
-`$si(rheight) - (gv(verticaldevicopd) * 2)$`
+###### core/size/wgtheight
+`$si(rwidth) - (gv(verticalpadding) * 2)$`
 
 ###### core/size/box2width
 ```
@@ -130,11 +141,9 @@ if `autoalign` = 0, dont proceed
   $gv(func/alignment)$
   $lv(box2dir,  (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$
   $lv(icon, gv(iconsize) + #objpad1)$
-  $lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #objboxpad2))$
+  $lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #objpad1))$
   $if(gv(fitmoreobj) = 0,
-        (if(#boxsize <= 2, 2,
-         tc(split, #boxsize, ".", 0
-        ))),
+        (if(#boxsize <= 2, 2, mu(round, #boxsize))),
         10
      )$
 ```
