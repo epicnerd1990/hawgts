@@ -93,6 +93,7 @@ UTF Hex       REGEX                  KWGT
 - Complete Readme
     - Readme = basic, wiki = advanced use?
 - Continue to work on Codex AI programming
+- Look at YAML for lists?
 - Create Template database
     - Specific templates to make:
         - "House Security" template
@@ -108,8 +109,9 @@ UTF Hex       REGEX                  KWGT
 
 - Finish implementing Templates V3 and alignment system cleanup **90%**
     - Complete templates for all devices **10%**
-    - Fix remaining glitches and alignment issues **90%**
+    - ~~Fix remaining glitches and alignment issues~~ **100%**
     - Add support for battery items?
+    - Add support for custom dials and displays - or just make these komponents?
 - JSON System completion **70%**
     - Look into file-based JSON template
     - Allow user to select their own custom JSON using flow and file picker? Flow could remove whitespace and write to `json/template`?
@@ -117,23 +119,35 @@ UTF Hex       REGEX                  KWGT
         - Provide basic samples and a copy of template.json for reference
     - Could use "Send Data" option in flows or WebGet()
     - File permissions?
-
 - Confirm icon pack is up to date with latest icon list
 - Group configuration options in folders/subfolders more
 - KWGT > TASKER - Create "custom" service call **0%**
+    - Use HA templates for simplicity?
+- Set up and build Tasker plugin **0%**
+    - Simply merge everything into one downloadable group?
+    - Tasker - "toggle" error
+    - Make state updates more effective and work in more situations
+        - The state does not update when lights are turned from one brightness to another
+        - Is this because of the way the Tasker HA blueprint works?
+        - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
+
+- Should have a flow for each global thats updated with content from the template that is ONLY activated when the template changes. This will maintain user overrides of template settings until they change the template, which will then reset everything.
+
+
+###### #####################################
+###### TO-DO - Current
+###### #####################################
+- `templateinfo` Flow
+    - Create a for loop for `ntwgtsize`?
+    - Connect to status system?
+- Complete all versions of "light" template and maybe start "climate"
+
+- Add "Setup" button that is in Box 2 when first opened. Clicking it goes to the github readme
 - Device and App icons
     - Confirm all code works
     - Device Icon: click to open editor or open Home Assistant directly to your device
     - Show/hide app icon, 1st = HA, 2nd = Custom
     - Look at "Shortcuts" next to "Flows" in editor
-- Make state updates more effective and work in more situations
-    - The state does not update when lights are turned from one brightness to another
-    - Is this because of the way the Tasker HA blueprint works?
-    - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
-- Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
-- Add "Setup" button that is in Box 2 when first opened. Clicking it goes to the github readme
-- Set up and build Tasker plugin **0%**
-    - Simply merge everything into one downloadable group?
 - "Status" system completion **10%**
     - Or use status bar? KWGT code complete, send string to kwgt br: "error" once status is working
     - Use following errors:
@@ -150,75 +164,89 @@ UTF Hex       REGEX                  KWGT
     - Possibly re-do based on UI types and Tasker setup interface/color picker
     - Utilize lists to make the UI user-friendly?
     - Flows temporarily disabled in 6.3
-- Should have a flow for each global thats updated with content from the template that is ONLY activated when the template changes. This will maintain user overrides of template settings until they change the template, which will then reset everything.
+- Theme system notes:
+    - User Options
+        > System dark mode - write to global, override with toggle?
+        > Choose theme style
+            > If not "Custom", set all attributes
+            > If "Custom", use existing globals to configure (Make --3 "theme globals"?)
+            - Do not allow custom attributes to be overwritten by flows unless user selects factory theme
+    - Existing code:
+        > User select color src (wallpaper, material, etc)
+        > User select color accent `$si(sysca1, 50)$`
+        > User select color filter `$ce(#FF0000, sat, 50)$`
+        > User set filter strength and mask
+        > User overide color/manual input
+        > User set color transparency `$ce(#FF0000, alpha, 50)$`
+    - New code: `theme/`
+        > User selects theme style
+        - Custom options `theme/colors`
+            > User select color accent (allow adjustment of sysca# tone) and filter
+            > User set filter strength and mask
+            > User overide color/manual input for all colors
+            > User set color transparency
+            > User set border size and on/off
+            > User set color transparency
+    - Dark/light mode?
+        - `$si(darkmode)$` System Dark mode
+        - `$si(darkwp)$`   Dark colored wallpaper
+        - `$si(wpcolor1)$` Primary wallpaper color extracted
+        - `$si(wpcolor2)$` Secondary wallpaper color extracted
+        - `$si(sysca1, 50)$` Material/OneUI Accent  #1 @ 50% tone (0=white, 100=black)
+        - `$si(sysca2, 80)$` Material/OneUI Accent  #2 @ 80% tone
+        - `$si(syscn1, 20)$` Material/OneUI Neutral #1 @ 50% tone
+    - Colors:
+        - Primary: Box 1, State active obj, device icon ball color, 
+        - Secondary: Box 2, state off obj, 
+        - Neutral: Box border, Box 1 + 2, , device icon color, object icon color
 
 
-###### #####################################
-###### TO-DO - Current
-###### #####################################
-- Tasker - "toggle" error
-- `"lock" in devicetype > "security"`
-- `templateinfo` Flow
-    - Create a for loop for `ntwgtsize`?
-    - Connect to status system?
-- Complete all versions of "light" template and maybe start "climate"
+    - Use existing code where possible but remove duplicates - no need for color1 and color2
+    - Look into removing `theme/color#fil2`, `theme/color#fil1`, `theme/color#adj`
+    - `theme/settheme` > `theme/settheme`
+    - Merge `theme/color1sync` & `theme/color2sync`
+    - Merge `theme/color1alph` & `theme/color2alph`
+    - Create `theme/color#` x 4, paired to theme
+    - Write theme json code in templates.md
+    - Look at material color spec to understand color tone in ".OneUI.colors{}"
+
+__Attributes         One UI                 HA/Material            Basic                 Custom__
+Color 1 (Primary):   Material Accent #1     Material Accent #1     Wallpaper             Color Picker
+Color 2 (Secondary):.Material Accent #2     Material Accent #2     Wallpaper             Color Picker
+Color 3 (Contrast):  Material Neutral #3    Material Neutral #3    White/Black           Color Picker
+Border width:        1dp                    0                      0                     `theme/bordersize`
+Padding - Outside:   16dp                   10dp                   10kpx                 `horizontalpadding`, `verticalpadding`
+Padding - Icons:     4dp                                                                 `objpadding`, `objpadding2`
+Padding - Edges:     16dp                   16dp                   10kpx                 `objpaddingbox2`
+Corner Radius:                                                                           `cornerradius`
+Icon Color:          All icons pastel       Only active coloredd   White/Black           `color/color1`, `color/color2`
+Device Icon border:  None                   Corner ball            None                  New
+
+> Globals to move into `theme`
+`theme/color1`, `theme/color2`, `theme/*`, `horizontalpadding`, `verticalpadding`, `objpadding`, `objpadding2`,
+`objpaddingbox2`, `cornerradius`,
+
+> Globals in theme/
+`theme/settheme`, `theme/color2sel`, `theme/color1sysc`, `theme/color2sysc`, `theme/color1fil1`, `theme/color2fil1`,
+`theme/color1adj`, `theme/color2adj`, `theme/color1fil2`, `theme/color2fil2`, `theme/color1pick`, `theme/color1pick`,
+`theme/color1alph`, `theme/color1alph`, `theme/color1fin`, `theme/color2fin`
+
+`theme/colico`, `theme/colicoon`
+`theme/border`, `theme/bordercolor`
+
+```
+// Theme JSON database
+
+// See `samples.json` for active building
+```
+
 
 ###### #####################################
 ###### Completed Tasks
 ###### #####################################
-- Template system V2 > V3 - Last major revision **90%**
-    - **Changes made from V2 - Notes only**:
-        - light.light1{ box1{} box2{} }
-        - light.light1{ page1{ box1{} box2{} } }
-        - `entity` tag is gone. page 1-4 = entity 1-4
-        - `ttype` is now "light"
-        - `tname` is now "light.light1"
-        - "stateon" > "onstate"  "box_#" = "box#"  "row_#" = "row#"  
-        - "cmd1" "data1" = "cmd" "data"
-        - "controllist" > "objects", is now always at "light.light1.objects"
-        - "style" tag is now gone, merged into "light.light1"
-        - If paging, device_count will always be 2-4. If not paging, widget is always 1-2
-        - If paging, page# = entity#. If not paging & entity2 is set, box# = entity#
-        - If "device_icon_pos" = 2 or box_1 = 0, "box_1" is ignored and can be removed from JSON
-        - If "row_count" = 1, "row_2" is ignored and can be removed from JSON
-        - New order of control for template settings.
-            - Device count: Template only. If pages (2-4), then # of `entities/entity#` filled in
-            - Box 1 size: Template
-            - Row Count: Template, if "1-2" then by widget size and style?
-            - Device Icon Positon: Template only
-            - Device Icon choice: Template only, user can override in widget editor with font picker
-        - "tbox1" -       0 = hidden, 1 = single,    2 = double
-        - "dev_ico_pos" - 1 = Corner, 2 = Box 1,     3 = Hidden
-        - "row_count" -   0 = none,   1 = 1 objects, 2 = 2 objects????
-- Alignment system tweaks
-        - Test widget in all alignments and different template styles before signing off on alignment system completion
-            - Code notification if widget is resized after setting template - Status system?
-    - ~~Pages still not working~~ **Odd flow process to bypass global writing issues**
-        - ~~Flow works correctly - it writes the correct number to curpage~~
-        - ~~`curpage` > number global~~ **Check to see if fix works**
-        - ~~Will page template with 3 entities only show 3 pages?~~ **Changed code to allow**
-        - Figure out how to allow user to change page icons - iconname in `entities/*`? Check editor **User can edit in KWGT editor using Icon Picker - too complicated otherwise**
-    - ~~Fix padding issues when switching from horizontal to vertical~~
-    - ~~Find out whats happening with widget width - how is it going above 720?~~
-        - Is that simply from scaling? **Critical**
-        - Unsure why, but adjusted widget direction code to use `wgtwidth` instead of `720`
-        - Appears to be a scaling glitch in KWGT **Cannot fix, work around**
-    - ~~Flow for setting `widgetalign` is no longer there - recover?~~ **No need**
-    - Examine `box1size` flow - it seems to resize small when playing with 1 row. #box1obj?
-        - ~~box1size flow very fragile~~
-        - ~~Examine `box2iconmax` - regular sized widget only allows 3 icons~~
-    - ~~`core/size/box2width` does not include box2minsize~~
-    - ~~Verify new "position_padding_left" on Icon 0 in Box 1 works in vertical alignment~~
-    - Verify icon padding works for double row widgets
-    - After adjusting box1size flow, widget is padded correctly but looks odd
-        - Add option to "normalize" box 1 size? Switch global used in `func/alignment`?
-- `#curpage1` > `curpage` after confirming it works
-- ~~Work on Github - update repo and organize correctly~~
-- ~~Look over TO-DO.md and get data and information from that~~
-- ~~Create script for pushing to device:~~
-    > Take my copy of preset.json and add it to a *.kwgt file
-    > Push using KDE Connect to dev phone
-- ~~Clean up codesnippets/* files. Make title areas collapsable in the correct way~~
+- Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
+- `"lock" in devicetype > "security"`
+
 
 
 ###### #####################################
@@ -299,30 +327,30 @@ readme
 setupmode                       setupmde                Display JSON data for debugging             DEBUGGING
 -- 1.
 colors
-    colors/colornote
-    colors/color1sel
-    colors/color1sysc
-    colors/color1fil1
-    colors/color1adj
-    colors/color1fil2
-    colors/color1pick
-    colors/color1alph
-    colors/color2sel
-    colors/color2sysc
-    colors/color2fil1
-    colors/color2adj
-    colors/color2fil2
-    colors/color2pick
-    colors/color2alph
-    colors/colico
-    colors/colicoon
-    colors/color2fin
-    colors/color1fin
-    colors/border
-    colors/bordersize
-    colors/bordercolor
-    colors/color1
-    colors/color2
+    theme/colornote
+    theme/settheme
+    theme/color1sysc
+    theme/color1fil1
+    theme/color1adj
+    theme/color1fil2
+    theme/color1pick
+    theme/color1alph
+    theme/color2sel
+    theme/color2sysc
+    theme/color2fil1
+    theme/color2adj
+    theme/color2fil2
+    theme/color2pick
+    theme/color2alph
+    theme/colico
+    theme/colicoon
+    theme/color2fin
+    theme/color1fin
+    theme/border
+    theme/bordersize
+    theme/bordercolor
+    theme/color1
+    theme/color2
                      devcount                Op: Select # of devices to control
                                 1-device                1 device style options (rows, etc)          DEPRECATED
                                 2-device                2 device style options (rows, etc)          DEPRECATED

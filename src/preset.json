@@ -43,7 +43,7 @@
       "core/size/wgtwidth": {
         "index": 4,
         "type": "NUMBER",
-        "title": "widgetwidth",
+        "title": "wgtwidth",
         "description": "Widget width - padding",
         "min": 100,
         "max": 300,
@@ -53,7 +53,7 @@
       "core/size/wgtheight": {
         "index": 5,
         "type": "NUMBER",
-        "title": "widgetheight",
+        "title": "wgtheight",
         "description": "Widget height - padding",
         "value": 690,
         "min": 500,
@@ -246,28 +246,28 @@
         "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
         "value": "OPEN - Readme"
       },
-      "colors": {
+      "themes": {
         "index": 32,
         "type": "FOLDER",
-        "title": "colors",
+        "title": "themes",
         "description": "Set Widget colors"
       },
-      "colors/colornote": {
+      "theme/colornote": {
         "index": 33,
         "type": "LIST",
         "title": "COLORNOTE",
         "value": "-- OPEN - Color Options",
         "entries": "Edit widget colors by following through this setup. See Readme for details."
       },
-      "colors/color1sel": {
+      "theme/settheme": {
         "index": 34,
         "type": "LIST",
-        "title": "color1sel",
-        "description": "Color 1 - Select the color source for Box 2 background. If you dont use the color picker, set a color you like, and it will be used as a fallback",
-        "entries": "0##Wallpaper #1, 1##Wallpaper #2, 2##System (MaterialYou), 3##Manual (Color picker)",
+        "title": "settheme",
+        "description": "Select the theme you'd like to use on this widget. You can also select a style, then hit custom to modify it",
+        "entries": "0##Material,1##OneUI,2##Basic,3##Custom",
         "value": "0"
       },
-      "colors/color1sysc": {
+      "theme/color1sysc": {
         "index": 35,
         "type": "LIST",
         "title": "color1sysc",
@@ -275,7 +275,7 @@
         "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Neutral #3",
         "value": "2"
       },
-      "colors/color1fil1": {
+      "theme/color1fil1": {
         "index": 36,
         "type": "LIST",
         "title": "color1fil1",
@@ -283,7 +283,7 @@
         "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
         "value": "2"
       },
-      "colors/color1adj": {
+      "theme/color1adj": {
         "index": 37,
         "type": "NUMBER",
         "title": "color1adj",
@@ -292,7 +292,7 @@
         "max": 100,
         "value": 40.0
       },
-      "colors/color1fil2": {
+      "theme/color1fil2": {
         "index": 38,
         "type": "LIST",
         "title": "color1fil2",
@@ -300,14 +300,14 @@
         "entries": "0##None, 1##Add, 2##Remove",
         "value": "0"
       },
-      "colors/color1pick": {
+      "theme/color1pick": {
         "index": 39,
         "type": "COLOR",
         "title": "color1pick",
         "description": "Color 1 - Manual Color choice, overrides filter\nAlso used as fallback color for extracted colors",
         "value": "#FFFFFFFF"
       },
-      "colors/color1alph": {
+      "theme/color1alph": {
         "index": 40,
         "type": "NUMBER",
         "title": "color1alph",
@@ -316,7 +316,7 @@
         "max": 100,
         "value": 75.0
       },
-      "colors/color2sel": {
+      "theme/color2sel": {
         "index": 41,
         "type": "LIST",
         "title": "color2sel",
@@ -324,7 +324,7 @@
         "entries": "0##Wallpaper #1, 1##Wallpaper #2, 2##System (MaterialYou), 3##Manual (Color picker)",
         "value": "0"
       },
-      "colors/color2sysc": {
+      "theme/color2sysc": {
         "index": 42,
         "type": "LIST",
         "title": "color2sysc",
@@ -332,7 +332,7 @@
         "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Shade Level",
         "value": "0"
       },
-      "colors/color2fil1": {
+      "theme/color2fil1": {
         "index": 43,
         "type": "LIST",
         "title": "color2fil1",
@@ -340,7 +340,7 @@
         "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
         "value": "2"
       },
-      "colors/color2adj": {
+      "theme/color2adj": {
         "index": 44,
         "type": "NUMBER",
         "title": "color2adj",
@@ -349,7 +349,7 @@
         "max": 100,
         "value": 55.0
       },
-      "colors/color2fil2": {
+      "theme/color2fil2": {
         "index": 45,
         "type": "LIST",
         "title": "color2fil2",
@@ -357,14 +357,14 @@
         "entries": "0##None, 1##Add, 2##Remove",
         "value": "0"
       },
-      "colors/color2pick": {
+      "theme/color2pick": {
         "index": 46,
         "type": "COLOR",
         "title": "color2pick",
         "description": "Color 2 - Manual Color choice, overrides filter.\nAlso used as fallback color for extracted colors",
         "value": "#E7FFFFFF"
       },
-      "colors/color2alph": {
+      "theme/color2alph": {
         "index": 47,
         "type": "NUMBER",
         "title": "color2alph",
@@ -373,14 +373,14 @@
         "max": 100,
         "value": 75.0
       },
-      "colors/colico": {
+      "theme/colico": {
         "index": 48,
         "type": "COLOR",
         "title": "colico",
         "description": "Color of icons and text. Default: #E7FFFFFF",
         "value": "#E7FFFFFF"
       },
-      "colors/colicoon": {
+      "theme/colicoon": {
         "index": 49,
         "type": "COLOR",
         "title": "colicoon",
@@ -389,28 +389,28 @@
         "toggles": 10,
         "global_formula": "$ce(si(wpcolor1, comp), sat, 60)$"
       },
-      "colors/color2fin": {
+      "theme/color2fin": {
         "index": 50,
         "type": "COLOR",
         "title": "color2fin",
         "description": "Final output of color in Hex ARGB form",
-        "global_formula": "$ce(gv(colors/color2), gv(colors/color2), 50)$",
+        "global_formula": "$ce(gv(theme/color2), gv(theme/color2), 50)$",
         "value": "#BF007D8C"
       },
-      "colors/color1fin": {
+      "theme/color1fin": {
         "index": 51,
         "type": "COLOR",
         "title": "color1fin",
         "value": "#BF005B66"
       },
-      "colors/border": {
+      "theme/border": {
         "index": 52,
         "type": "SWITCH",
         "title": "border",
         "description": "Turn on a border around your boxes",
         "value": 0
       },
-      "colors/bordersize": {
+      "theme/bordersize": {
         "index": 53,
         "type": "NUMBER",
         "title": "bordersize",
@@ -419,7 +419,7 @@
         "max": 50,
         "value": 3.0
       },
-      "colors/bordercolor": {
+      "theme/bordercolor": {
         "index": 54,
         "type": "LIST",
         "title": "bordercolor",
@@ -427,13 +427,13 @@
         "entries": "#FFFFFF",
         "value": "FFFFFF"
       },
-      "colors/color1": {
+      "theme/color1": {
         "index": 55,
         "type": "COLOR",
         "title": "color1",
         "value": "#BF005B66"
       },
-      "colors/color2": {
+      "theme/color2": {
         "index": 56,
         "type": "COLOR",
         "title": "color2",
@@ -647,6 +647,13 @@
         "entries": "--Advanced customization and tweaks",
         "value": "--Advanced customization and tweaks"
       },
+      "box1sq": {
+        "index": 90,
+        "type": "SWITCH",
+        "title": "box1sq",
+        "description": "Make Box 1 a perfect square",
+        "value": 0
+      },
       "boxtoggle": {
         "index": 84,
         "type": "LIST",
@@ -695,13 +702,6 @@
         "type": "SWITCH",
         "title": "setupmode",
         "description": "Debugging - Enable showing setup data",
-        "value": 0
-      },
-      "box1sq": {
-        "index": 90,
-        "type": "SWITCH",
-        "title": "box1sq",
-        "description": "Make Box 1 a perfect square",
         "value": 0
       }
     },
@@ -881,7 +881,7 @@
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(colors/color1sel)$$gv(colors/color1sync)$$gv(colors/color1fill)$$gv(colors/color1adj)$$gv(colors/color1fil2)$$gv(colors/color1pick)$"
+              "formula": "$gv(theme/settheme)$$gv(theme/color1sync)$$gv(theme/color1fill)$$gv(theme/color1adj)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
             }
           },
           {
@@ -894,7 +894,7 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(source, (if(gv(colors/color1sel) = 0, \"wpcolor1\", gv(colors/color1sel) = 1, \"wpcolor2\", gv(colors/color1sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(colors/color1fil1) = 1, \"sat\", gv(colors/color1fil1) = 2, \"lum\", gv(colors/color1fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(colors/color1sysc) = 0, \"sysca1\", gv(colors/color1sysc) = 1, \"sysca2\", gv(colors/color1sysc) = 2, \"sysca3\", gv(colors/color1sysc) = 3, \"syscn1\", gv(colors/color1sysc) = 4, \"syscn2\", gv(colors/color1sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(colors/color1fil2) = 0, \"\", gv(colors/color1fil2) = 1, \"a\", gv(colors/color1fil2) = 2, \"r\", \"\")))$\n\n$if(gv(colors/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color1adj))))$\n$if(gv(colors/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color1adj))))$\n$if(gv(colors/color1fil1) = 0 | gv(colors/color1sel) = 3, lv(col3, gv(colors/color1pick)))$\n\n$lv(color, (if(gv(colors/color1sel) <= 1, #color1, gv(colors/color1sel) = 2, #color2, gv(colors/color1sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(colors/color1alph), 0)))$\n$#final$"
+              "formula": "$lv(source, (if(gv(theme/settheme) = 0, \"wpcolor1\", gv(theme/settheme) = 1, \"wpcolor2\", gv(theme/settheme) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color1fil1) = 1, \"sat\", gv(theme/color1fil1) = 2, \"lum\", gv(theme/color1fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/color1sysc) = 0, \"sysca1\", gv(theme/color1sysc) = 1, \"sysca2\", gv(theme/color1sysc) = 2, \"sysca3\", gv(theme/color1sysc) = 3, \"syscn1\", gv(theme/color1sysc) = 4, \"syscn2\", gv(theme/color1sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color1fil2) = 0, \"\", gv(theme/color1fil2) = 1, \"a\", gv(theme/color1fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/color1adj))))$\n$if(gv(theme/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/color1adj))))$\n$if(gv(theme/color1fil1) = 0 | gv(theme/settheme) = 3, lv(col3, gv(theme/color1pick)))$\n\n$lv(color, (if(gv(theme/settheme) <= 1, #color1, gv(theme/settheme) = 2, #color2, gv(theme/settheme) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/color1alph), 0)))$\n$#final$"
             }
           }
         ]
@@ -907,7 +907,7 @@
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(colors/color1sel)$$gv(colors/color1sync)$$gv(colors/color1fill)$$gv(colors/color1adj)$$gv(colors/color1fil2)$$gv(colors/color1pick)$"
+              "formula": "$gv(theme/settheme)$$gv(theme/color1sync)$$gv(theme/color1fill)$$gv(theme/color1adj)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
             }
           },
           {
@@ -920,7 +920,7 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(source, (if(gv(colors/color2sel) = 0, \"wpcolor1\", gv(colors/color2sel) = 1, \"wpcolor2\", gv(colors/color2sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(colors/color2fil1) = 1, \"sat\", gv(colors/color2fil1) = 2, \"lum\", gv(colors/color2fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(colors/color2sysc) = 0, \"sysca1\", gv(colors/color2sysc) = 1, \"sysca2\", gv(colors/color2sysc) = 2, \"sysca3\", gv(colors/color2sysc) = 3, \"syscn1\", gv(colors/color2sysc) = 4, \"syscn2\", gv(colors/color2sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(colors/color2fil2) = 0, \"\", gv(colors/color2fil2) = 1, \"a\", gv(colors/color2fil2) = 2, \"r\", \"\")))$\n\n$if(gv(colors/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(colors/color2adj))))$\n$if(gv(colors/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(colors/color2adj))))$\n$if(gv(colors/color2fil1) = 0 | gv(colors/color2sel) = 3, lv(col3, gv(colors/color2pick)))$\n\n\n$lv(color, (if(gv(colors/color2sel) <= 1, #color1, gv(colors/color2sel) = 2, #color2, gv(colors/color2sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(colors/color2alph), 0)))$\n$#final$"
+              "formula": "$lv(source, (if(gv(theme/color2sel) = 0, \"wpcolor1\", gv(theme/color2sel) = 1, \"wpcolor2\", gv(theme/color2sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color2fil1) = 1, \"sat\", gv(theme/color2fil1) = 2, \"lum\", gv(theme/color2fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/color2sysc) = 0, \"sysca1\", gv(theme/color2sysc) = 1, \"sysca2\", gv(theme/color2sysc) = 2, \"sysca3\", gv(theme/color2sysc) = 3, \"syscn1\", gv(theme/color2sysc) = 4, \"syscn2\", gv(theme/color2sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color2fil2) = 0, \"\", gv(theme/color2fil2) = 1, \"a\", gv(theme/color2fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/color2adj))))$\n$if(gv(theme/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/color2adj))))$\n$if(gv(theme/color2fil1) = 0 | gv(theme/color2sel) = 3, lv(col3, gv(theme/color2pick)))$\n\n\n$lv(color, (if(gv(theme/color2sel) <= 1, #color1, gv(theme/color2sel) = 2, #color2, gv(theme/color2sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/color2alph), 0)))$\n$#final$"
             }
           }
         ]
@@ -1073,7 +1073,7 @@
             "paint_mode": "OVERLAY",
             "internal_globals": {
               "shape_corners": "cornerradius",
-              "paint_color": "colors/color1"
+              "paint_color": "theme/color1"
             }
           },
           {
@@ -1083,7 +1083,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(colors/border) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(theme/border) = 1, ALWAYS, REMOVE)$"
             },
             "viewgroup_items": [
               {
@@ -1099,13 +1099,13 @@
                 "internal_formulas": {
                   "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/wgtwidth), gv(box1size))$",
                   "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))$",
-                  "paint_color": "$gv(colors/bordercolor)$"
+                  "paint_color": "$gv(theme/bordercolor)$"
                 },
                 "shape_type": "RECT",
                 "internal_globals": {
                   "shape_corners": "cornerradius",
-                  "paint_color": "colors/color2",
-                  "paint_stroke": "colors/bordersize"
+                  "paint_color": "theme/color2",
+                  "paint_stroke": "theme/bordersize"
                 },
                 "paint_style": "STROKE",
                 "paint_stroke": 5.0
@@ -1188,7 +1188,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1207,7 +1207,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1242,7 +1242,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1261,7 +1261,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1320,7 +1320,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1339,7 +1339,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1374,7 +1374,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         }
                       },
                       {
@@ -1392,7 +1392,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1465,7 +1465,7 @@
                 },
                 "internal_globals": {
                   "icon_size": "iconsize",
-                  "paint_color": "colors/colico"
+                  "paint_color": "theme/colico"
                 },
                 "internal_title": "Security Status",
                 "paint_color": "#FF44FF01"
@@ -1480,7 +1480,7 @@
                 },
                 "internal_globals": {
                   "icon_size": "iconsize",
-                  "paint_color": "colors/colico"
+                  "paint_color": "theme/colico"
                 },
                 "internal_title": "Security Status",
                 "paint_color": "#FF1AFF1F",
@@ -1523,7 +1523,7 @@
             "internal_title": "-- Background - Edit in Globals",
             "position_anchor": "CENTERLEFT",
             "internal_formulas": {
-              "paint_color": "$ce(gv(colors/color2),alpha,75)$",
+              "paint_color": "$ce(gv(theme/color2),alpha,75)$",
               "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/box2width), (gv(core/size/box2width) - gv(box1size)))$",
               "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/box2height), (gv(core/size/box2height) - gv(box1size)))$",
               "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
@@ -1534,7 +1534,7 @@
               "shape_width": "core/size/box2width",
               "shape_height": "core/size/box2height",
               "shape_corners": "cornerradius",
-              "paint_color": "colors/color2"
+              "paint_color": "theme/color2"
             }
           },
           {
@@ -1544,7 +1544,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(colors/border) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(theme/border) = 1, ALWAYS, REMOVE)$"
             },
             "viewgroup_items": [
               {
@@ -1566,7 +1566,7 @@
                 "internal_title": "-- Background - Edit in Globals",
                 "position_anchor": "CENTERLEFT",
                 "internal_formulas": {
-                  "paint_color": "$gv(colors/bordercolor)$",
+                  "paint_color": "$gv(theme/bordercolor)$",
                   "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/box2width), (gv(core/size/box2width) - gv(box1size)))$",
                   "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/box2height), (gv(core/size/box2height) - gv(box1size)))$",
                   "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
@@ -1578,7 +1578,7 @@
                   "shape_height": "core/size/box2height",
                   "shape_corners": "cornerradius",
                   "paint_color": "color1",
-                  "paint_stroke": "colors/bordersize"
+                  "paint_stroke": "theme/bordersize"
                 },
                 "paint_style": "STROKE",
                 "paint_stroke": 5.0
@@ -1653,7 +1653,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1672,7 +1672,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1707,7 +1707,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1726,7 +1726,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1761,7 +1761,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1780,7 +1780,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1815,7 +1815,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1834,7 +1834,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1869,7 +1869,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1888,7 +1888,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1923,7 +1923,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -1942,7 +1942,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -1997,7 +1997,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         },
                         "internal_title": "State"
                       },
@@ -2016,7 +2016,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -2051,7 +2051,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         }
                       },
                       {
@@ -2069,7 +2069,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -2105,7 +2105,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         }
                       },
                       {
@@ -2123,7 +2123,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -2158,7 +2158,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         }
                       },
                       {
@@ -2176,7 +2176,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       }
@@ -2215,7 +2215,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       },
@@ -2230,7 +2230,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         }
                       }
                     ]
@@ -2268,7 +2268,7 @@
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$",
+                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$",
                           "paint_mode": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
                         }
                       },
@@ -2283,7 +2283,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$"
                         }
                       }
                     ]
@@ -2351,7 +2351,7 @@
               "icon_icon": 10
             },
             "internal_formulas": {
-              "paint_color": "$ce(gv(colors/colico),alpha,20)$",
+              "paint_color": "$ce(gv(theme/colico),alpha,20)$",
               "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$",
               "icon_icon": "$gv(func/jsontemp)$$#ticon$"
             },
@@ -2485,7 +2485,7 @@
               "position_offset_y": 10
             },
             "internal_formulas": {
-              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(colors/colico),alpha,20), #00FFFFFF)$",
+              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(theme/colico),alpha,20), #00FFFFFF)$",
               "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
               "position_offset_x": "$gv(verticalpadding) +(gv(objpadding) * 2) +  gv(appiconsize)$",
               "position_offset_y": "$gv(horizontalpadding) + gv(objpadding)$"
@@ -2519,7 +2519,7 @@
               "position_offset_y": 10
             },
             "internal_formulas": {
-              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(colors/colico),alpha,20), #00FFFFFF)$",
+              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(theme/colico),alpha,20), #00FFFFFF)$",
               "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
               "position_offset_x": "$gv(verticalpadding) + gv(objpadding)$",
               "position_offset_y": "$gv(horizontalpadding) + gv(objpadding)$"

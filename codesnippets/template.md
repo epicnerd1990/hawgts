@@ -239,14 +239,14 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
 ```
   $lv(posid, ".box2.row2.1")$
   $gv(func/jsonstate)$
-  $if(#stoutput = 1, gv(colors/colico), #00FFFFFF)$
+  $if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$
 ```
 
 ###### Icon Paint Color Formula
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
-  $if(#stoutput = 1, gv(colors/color1), gv(colors/colico))$
+  $if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$
 ```
 
 ###### Icon Color Filter Formula

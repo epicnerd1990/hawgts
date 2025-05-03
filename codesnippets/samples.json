@@ -491,6 +491,78 @@
 }
 
 //////////////////////////////////////
+// Color JSON
+//////////////////////////////////////
+{
+  "OneUI": {
+    "border_width": 1dp,
+    "pad_widget": 16dp,
+    "pad_obj": 10dp,
+    "pad_sides": 16dp,
+    "dev_ico_ring": 0,
+    "wgt_opacity": 50,
+    "shadow": 0,
+    "colors": {
+      // Look at material color spec to understand color tone
+      "light_1": "$si(sysca1, 50)$",
+      "light_2": "$si(sysca2, 50)$",
+      "light_3": "$si(syscn1, 50)$",
+      "light_4": "$si(sysca1, 50)$",
+      "dark_1":  "$si(sysca1, 50)$",
+      "dark_2":  "$si(sysca2, 50)$",
+      "dark_3":  "$si(syscn1, 50)$",
+      "dark_4":  "$si(sysca1, 50)$"
+    }
+  },
+  "Material": {
+    "border_width": 0dp,
+    "pad_widget": 10dp,
+    "pad_obj": 10dp,
+    "pad_sides": 16dp,
+    "dev_ico_ring": 1,
+    "wgt_opacity": 50,
+    "shadow": 1,
+    "colors": {
+      // Look at material color spec to understand color tone
+      "light_1": "$si(sysca1, 50)$",
+      "light_2": "$si(sysca2, 50)$",
+      "light_3": "$si(syscn1, 50)$",
+      "light_4": "$si(sysca1, 50)$",
+      "dark_1":  "$si(sysca1, 50)$",
+      "dark_2":  "$si(sysca2, 50)$",
+      "dark_3":  "$si(syscn1, 50)$",
+      "dark_4":  "$si(sysca1, 50)$"
+    }
+  },
+  "Basic": {
+    "border_width": 1dp,
+    "pad_widget": 6dp,
+    "pad_obj": 10dp,
+    "pad_sides": 12dp,
+    "dev_ico_ring": 0,
+    "wgt_opacity": 75,
+    "colors": {
+      // Look at material color spec to understand color tone
+      "light_1": "$si(wpcolor1)$",
+      "light_2": "$si(wpcolor2)$",
+      "light_3": "$si(wpcolor1)$",
+      "light_4": "$si(wpcolor1)$",
+      "dark_1":  "$si(wpcolor1)$",
+      "dark_2":  "$si(wpcolor2)$",
+      "dark_3":  "$si(wpcolor1)$",
+      "dark_4":  "$si(wpcolor1)$"
+    }
+  },
+  "Custom": {
+    "border_width": 1dp,
+    "pad_widget": 16dp,
+  },
+
+
+
+}
+
+//////////////////////////////////////
 // Template data returned from Home assistant to tasker
 //////////////////////////////////////
 {
