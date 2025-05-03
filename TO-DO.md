@@ -140,8 +140,6 @@ UTF Hex       REGEX                  KWGT
 - `templateinfo` Flow
     - Create a for loop for `ntwgtsize`?
     - Connect to status system?
-- Complete all versions of "light" template and maybe start "climate"
-
 - Add "Setup" button that is in Box 2 when first opened. Clicking it goes to the github readme
 - Device and App icons
     - Confirm all code works
@@ -156,6 +154,8 @@ UTF Hex       REGEX                  KWGT
         - State not returned after change
         - JSON Error
         - Tasker Error
+- Complete all versions of "light" template and maybe start "climate"
+
 - Go over color system - Create "themes"
     - Implement Tasker color picker?
     - Create "themes" like One UI, material, HA card, etc. Template independant
@@ -188,7 +188,7 @@ UTF Hex       REGEX                  KWGT
             > User set border size and on/off
             > User set color transparency
     - Dark/light mode?
-        - `$si(darkmode)$` System Dark mode
+        - `$si(darkmode)$` System Dark mode (1 = dark)
         - `$si(darkwp)$`   Dark colored wallpaper
         - `$si(wpcolor1)$` Primary wallpaper color extracted
         - `$si(wpcolor2)$` Secondary wallpaper color extracted
@@ -196,18 +196,25 @@ UTF Hex       REGEX                  KWGT
         - `$si(sysca2, 80)$` Material/OneUI Accent  #2 @ 80% tone
         - `$si(syscn1, 20)$` Material/OneUI Neutral #1 @ 50% tone
     - Colors:
-        - Primary: Box 1, State active obj, device icon ball color, 
-        - Secondary: Box 2, state off obj, 
-        - Neutral: Box border, Box 1 + 2, , device icon color, object icon color
-
+        - OneUI: 
+            - Background: white/black
+            - Icons: Colorful rings (off), "blue" ring (on), 
+            - White icon outline - black where no rings are, Squirgle shape
+        - Material: 
+            - Background: white/black,
+            - Icons: no ring (off), color ring (on), white/black icon, circle shape, device icon ring
+        - Basic: 
+            - Background: wallpaper,
+            - Icons: no ring (off), white ring (on), white/black icon, circle shape
+    - Current style uses filter inside KWGT editor
 
     - Use existing code where possible but remove duplicates - no need for color1 and color2
     - Look into removing `theme/color#fil2`, `theme/color#fil1`, `theme/color#adj`
     - `theme/settheme` > `theme/settheme`
     - Merge `theme/color1sync` & `theme/color2sync`
     - Merge `theme/color1alph` & `theme/color2alph`
-    - Create `theme/color#` x 4, paired to theme
-    - Write theme json code in templates.md
+    - ~~Create `theme/color#` x 4, paired to theme~~
+    - ~~Write theme json code in templates.md~~
     - Look at material color spec to understand color tone in ".OneUI.colors{}"
 
 __Attributes         One UI                 HA/Material            Basic                 Custom__
@@ -215,24 +222,24 @@ Color 1 (Primary):   Material Accent #1     Material Accent #1     Wallpaper    
 Color 2 (Secondary):.Material Accent #2     Material Accent #2     Wallpaper             Color Picker
 Color 3 (Contrast):  Material Neutral #3    Material Neutral #3    White/Black           Color Picker
 Border width:        1dp                    0                      0                     `theme/bordersize`
-Padding - Outside:   16dp                   10dp                   10kpx                 `horizontalpadding`, `verticalpadding`
-Padding - Icons:     4dp                                                                 `objpadding`, `objpadding2`
-Padding - Edges:     16dp                   16dp                   10kpx                 `objpaddingbox2`
-Corner Radius:                                                                           `cornerradius`
+Padding - Outside:   16dp                   10dp                   10kpx                 `theme/horizontalpadding`, `theme/verticalpadding`
+Padding - Icons:     4dp                                                                 `theme/objpadding`, `theme/objpadding2`
+Padding - Edges:     16dp                   16dp                   10kpx                 `theme/objpaddingbox2`
+Corner Radius:                                                                           `theme/cornerradius`
 Icon Color:          All icons pastel       Only active coloredd   White/Black           `color/color1`, `color/color2`
 Device Icon border:  None                   Corner ball            None                  New
 
 > Globals to move into `theme`
-`theme/color1`, `theme/color2`, `theme/*`, `horizontalpadding`, `verticalpadding`, `objpadding`, `objpadding2`,
-`objpaddingbox2`, `cornerradius`,
+`theme/colors/back1`, `theme/colors/back2`, `theme/*`, `theme/horizontalpadding`, `theme/verticalpadding`, `theme/objpadding`, `theme/objpadding2`,
+`theme/objpaddingbox2`, `theme/cornerradius`,
 
 > Globals in theme/
 `theme/settheme`, `theme/color2sel`, `theme/color1sysc`, `theme/color2sysc`, `theme/color1fil1`, `theme/color2fil1`,
 `theme/color1adj`, `theme/color2adj`, `theme/color1fil2`, `theme/color2fil2`, `theme/color1pick`, `theme/color1pick`,
 `theme/color1alph`, `theme/color1alph`, `theme/color1fin`, `theme/color2fin`
 
-`theme/colico`, `theme/colicoon`
-`theme/border`, `theme/bordercolor`
+`theme/colors/objiconon`, `theme/colicoon`
+`theme/border`, `theme/colors/border`
 
 ```
 // Theme JSON database
@@ -342,15 +349,15 @@ colors
     theme/color2fil2
     theme/color2pick
     theme/color2alph
-    theme/colico
+    theme/colors/objiconon
     theme/colicoon
     theme/color2fin
     theme/color1fin
     theme/border
     theme/bordersize
-    theme/bordercolor
-    theme/color1
-    theme/color2
+    theme/colors/border
+    theme/colors/back1
+    theme/colors/back2
                      devcount                Op: Select # of devices to control
                                 1-device                1 device style options (rows, etc)          DEPRECATED
                                 2-device                2 device style options (rows, etc)          DEPRECATED
@@ -377,14 +384,14 @@ box2align                       box2alig                Op: Align custom content
 iconsize                        icosize                 Op: Choose main icon size
 appiconvis                      appicovi                Op: Choose app icon visibility
 appiconsize                     appico                  Op: Choose app icon size
-cornerradius                    boxrad                  Op: Widget corner radius
-objpadding              icopad                  Op: Icon padding
-objpadding2                icopad                  Op: Icon padding
-objpaddingbox2                                          Op: Icon padding to Box 1
+theme/cornerradius                    boxrad                  Op: Widget corner radius
+theme/objpadding              icopad                  Op: Icon padding
+theme/objpadding2                icopad                  Op: Icon padding
+theme/objpaddingbox2                                          Op: Icon padding to Box 1
                                 icodevszsc
                                 icodevsz
-verticalpadding                 verpad                  Op: Widget vertical padding
-horizontalpadding               horpad                  Op: Widget horizontal padding
+theme/verticalpadding                 verpad                  Op: Widget vertical padding
+theme/horizontalpadding               horpad                  Op: Widget horizontal padding
 -- 3.
 currenttemplate                                         Display the name of the current template
 boxdir1

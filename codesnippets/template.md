@@ -206,6 +206,80 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
   )$
 ```
 
+###### func/theme 
+
+
+```
+  $lv(dbtheme, gv(json/theme))$
+  $lv(darkmode, gv(theme/darkmode))$
+
+  $lv(settheme, gv(theme/settheme))$
+  $lv(theme, (if(#settheme = 0, "OneUI",
+                 #settheme = 1, "Material",
+                 #settheme = 2, "Basic",
+                 #settheme = 3, "Custom",
+                 "0"
+              ))
+  )$
+  $lv(colors, if(#darkmode = 0, (#theme + ".colors.light"),
+                                (#theme + ".colors.dark")
+  ))$
+
+
+  $lv(tname,    (tc(json, #dbtheme, ("." + #theme))))$                         // Theme Title
+  $lv(tborder,  (tc(json, #dbtheme, ("." + #theme + ".border_width"))))$       // Border width
+  $lv(tradius,  (tc(json, #dbtheme, ("." + #theme + ".corner_radius"))))$      // Corner Radius
+  $lv(tpadwgt,  (tc(json, #dbtheme, ("." + #theme + ".pad_widget"))))$         // Widget Padding
+  $lv(tpadobj,  (tc(json, #dbtheme, ("." + #theme + ".pad_object"))))$         // Object Padding
+  $lv(tpadside, (tc(json, #dbtheme, ("." + #theme + ".pad_sides"))))$          // Padding on box sides
+  $lv(tdevico,  (tc(json, #dbtheme, ("." + #theme + ".dev_ico_ring"))))$       // Ring behind Device Icon
+  $lv(tshad,    (tc(json, #dbtheme, ("." + #theme + ".shadow"))))$             // Widget Shadow
+
+  $lv(cwgtop,      (tc(json, #dbtheme, ("." + #theme + ".wgt_opacity"))))$     // Widget opacity
+  $lv(cborder,     (tc(json, #dbtheme, ("." + #colors + ".border"))))$         // Border Color
+  $lv(cback1,      (tc(json, #dbtheme, ("." + #colors + ".back_1"))))$         // Background 1
+  $lv(cback2,      (tc(json, #dbtheme, ("." + #colors + ".back_2"))))$         // Background 2
+  $lv(cobjicooff,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_off"))))$   // Icon Off
+  $lv(cobjringoff, (tc(json, #dbtheme, ("." + #colors + ".obj_ring_off"))))$   // Ring Off
+  $lv(cobjicoon,   (tc(json, #dbtheme, ("." + #colors + ".obj_icon_on"))))$    // Icon On
+  $lv(cobjringon,  (tc(json, #dbtheme, ("." + #colors + ".obj_ring_on"))))$    // Ring On
+
+
+
+
+
+// OLD
+  $lv(template, ("." + gv(devicetype) + "." + (gv(devicetype) + gv(templateselect))))$
+  $lv(tpageon, (tc(json, #dbtemp, (#template + ".page"))))$
+  $lv(obj, "." + gv(devicetype) + ".objects")$
+  $lv(curpage, gv(core/curpage))$
+  $lv(objfindkey, 
+        (if(#tpageon = 0, (#template + #posid),
+                         (#template + ".page" + #curpage + #posid)
+        ))
+  )$
+  $lv(objkey, (if((tc(json, #dbtemp, #objfindkey)) = "", "", 
+                  (#obj + "." + (tc(json, #dbtemp, #objfindkey)))
+               )))$
+  $lv(entity,
+    (if(#tpageon = 0, gv(entities/entity1),
+                     gv(entities/("entity" + #curpage))
+    ))
+  )$
+  $lv(entitykey, (if(#entity != "",
+                     ".device_states[?(@.entity_id == '" + #entity + "')]"
+              ))
+  )$
+  $lv(box1obj, 
+      (tc(json, #dbtemp, 
+        (if(#tpageon = 0, (#template + ".box1.row1.1"),
+                         (#template + ".page" + #curpage + ".box1.row1.1")
+        ))
+      ))
+  )$
+
+```
+
 ###### #####################################
 ###### KWGT Template Icon code examples
 ###### #####################################
@@ -239,14 +313,14 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
 ```
   $lv(posid, ".box2.row2.1")$
   $gv(func/jsonstate)$
-  $if(#stoutput = 1, gv(theme/colico), #00FFFFFF)$
+  $if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$
 ```
 
 ###### Icon Paint Color Formula
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
-  $if(#stoutput = 1, gv(theme/color1), gv(theme/colico))$
+  $if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$
 ```
 
 ###### Icon Color Filter Formula
@@ -323,12 +397,12 @@ $gv(func/alignment)$$#margin1$
   $gv(func/jsontemp)$
 
   $lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,
-                (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) + gv(verticalpadding) - (gv(deviceiconsize) / 2)),
+                (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) + gv(theme/verticalpadding) - (gv(deviceiconsize) / 2)),
                gv(box1position) = TOP   | gv(box1position) = BOTTOM,
                0
            ))
   )$
-  $if(#ticopos = 1 | #ticopos = 3, gv(verticalpadding), #ticopos = 2, #pos)$
+  $if(#ticopos = 1 | #ticopos = 3, gv(theme/verticalpadding), #ticopos = 2, #pos)$
 ```
 
 "position_offset_x"
@@ -338,9 +412,9 @@ $gv(func/alignment)$$#margin1$
   $lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,
                0,
                gv(box1position) = TOP   | gv(box1position) = BOTTOM,
-                 (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) + gv(horizontalpadding) - (gv(deviceiconsize) / 2))
+                 (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) + gv(theme/horizontalpadding) - (gv(deviceiconsize) / 2))
             ))
   )$
-  $if(#ticopos = 1 | #ticopos = 3, gv(horizontalpadding),#ticopos = 2, #pos)$
+  $if(#ticopos = 1 | #ticopos = 3, gv(theme/horizontalpadding),#ticopos = 2, #pos)$
 ```
 

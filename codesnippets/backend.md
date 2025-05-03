@@ -87,9 +87,9 @@
   $lv(override, gv(autoalign))$
   $lv(invert,   gv(boxtoggle))$
 
-  $lv(objpad1,    gv(objpadding))$
-  $lv(objpad2,    gv(objpadding2))$
-  $lv(objboxpad2, gv(objpaddingbox2))$
+  $lv(objpad1,    gv(theme/objpadding))$
+  $lv(objpad2,    gv(theme/objpadding2))$
+  $lv(objboxpad2, gv(theme/objpaddingbox2))$
 
   $lv(wgtwidth1, (if(#align = 0, si(rheight), si(rwidth))))$
   $lv(wgtdir,   (if(#align = 0, gv(core/size/wgtheight), gv(core/size/wgtwidth  ))))$
@@ -119,10 +119,10 @@
 ###### #####################################
 
 ###### core/size/wgtwidth
-`$si(rwidth) - (gv(horizontalpadding) * 2)$`
+`$si(rwidth) - (gv(theme/horizontalpadding) * 2)$`
 
 ###### core/size/wgtheight
-`$si(rwidth) - (gv(verticalpadding) * 2)$`
+`$si(rwidth) - (gv(theme/verticalpadding) * 2)$`
 
 ###### core/size/box2width
 ```
@@ -165,14 +165,15 @@ TEST 2 - Change to JSON
 ###### Color System **60%**
 ###### #####################################
 
-###### theme/color1
+###### theme/colors/back1
 ```
-  $lv(source, (if(gv(theme/settheme) = 0, "wpcolor1",
-                  gv(theme/settheme) = 1, "wpcolor2",
-                  gv(theme/settheme) = 2, "sys",
-                  "0"
+  $lv(theme, (if(#ctheme = 0, "OneUI",
+                 #ctheme = 1, "Material",
+                 #ctheme = 2, "Basic",
+                 #ctheme = 3, "Custom",
+                 "0"
               )))$
-  Source: $#source$
+  Source: $#theme$
 
   $lv(filter, (if(gv(theme/color1fil1) = 1, "sat",
                   gv(theme/color1fil1) = 2, "lum",
@@ -198,12 +199,13 @@ TEST 2 - Change to JSON
               )))$
   Addsub: $#addsub$
 
-  $if(gv(theme/color1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), 
-        lv(color1, ce(si(#source), #filter, gv(theme/color1adj)
+// Use `#filter` and `theme/color#adj` to change color
+  $if(gv(theme/color1fil1) > 0 & (#theme = "wpcolor1" | #theme = "wpcolor2"), 
+        lv(color1, ce(si(#theme), #filter, gv(theme/color1adj)
       )))$
   Wallpaper Color: $#color1$
 
-  $if(gv(theme/color1fil1) > 0 & #source = "sys",
+  $if(gv(theme/color1fil1) > 0 & #theme = "sys",
         lv(color2, si(#coltone, gv(theme/color1adj)
       )))$
   Sysui: $#color2$
@@ -278,7 +280,7 @@ TEST 2 - Change to JSON
 ```
 
 
-###### theme/color2
+###### theme/colors/back2
 ```
 $lv(source, (if(gv(theme/color2sel) = 0, "wpcolor1", gv(theme/color2sel) = 1, "wpcolor2", gv(theme/color2sel) = 2, "sys", "0")))$
 $lv(filter, (if(gv(theme/color2fil1) = 1, "sat", gv(theme/color2fil1) = 2, "lum", gv(theme/color2fil1) = 3, "comp", "sat")))$
@@ -350,7 +352,7 @@ System and Material UI only
 - Adjust set color opacity
 - 0 - 255
 
-###### theme/colico
+###### theme/colors/objiconon
 - Icon color - KWGT picker
 
 ###### theme/colicoon
@@ -365,5 +367,5 @@ System and Material UI only
 ###### theme/border
 - Toggle On/Off
 
-###### theme/bordercolor
+###### theme/colors/border
 - Border  color - KWGT picker (fix)
