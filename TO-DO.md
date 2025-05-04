@@ -156,21 +156,12 @@ UTF Hex       REGEX                  KWGT
         - Tasker Error
 - Complete all versions of "light" template and maybe start "climate"
 
-- Go over color system - Create "themes"
-    - Implement Tasker color picker?
-    - Create "themes" like One UI, material, HA card, etc. Template independant
-    - Store data in JSON
-    - Possibly re-do based on community resources
-    - Possibly re-do based on UI types and Tasker setup interface/color picker
-    - Utilize lists to make the UI user-friendly?
-    - Flows temporarily disabled in 6.3
 - Theme system notes:
     - User Options
         > System dark mode - write to global, override with toggle?
         > Choose theme style
             > If not "Custom", set all attributes
             > If "Custom", use existing globals to configure (Make --3 "theme globals"?)
-            - Do not allow custom attributes to be overwritten by flows unless user selects factory theme
     - Existing code:
         > User select color src (wallpaper, material, etc)
         > User select color accent `$si(sysca1, 50)$`
@@ -187,7 +178,8 @@ UTF Hex       REGEX                  KWGT
             > User set color transparency
             > User set border size and on/off
             > User set color transparency
-    - Dark/light mode?
+        - Custom options always override theme options
+    - Kustom color resources
         - `$si(darkmode)$` System Dark mode (1 = dark)
         - `$si(darkwp)$`   Dark colored wallpaper
         - `$si(wpcolor1)$` Primary wallpaper color extracted
@@ -206,16 +198,14 @@ UTF Hex       REGEX                  KWGT
         - Basic: 
             - Background: wallpaper,
             - Icons: no ring (off), white ring (on), white/black icon, circle shape
-    - Current style uses filter inside KWGT editor
-
-    - Use existing code where possible but remove duplicates - no need for color1 and color2
-    - Look into removing `theme/color#fil2`, `theme/color#fil1`, `theme/color#adj`
-    - `theme/settheme` > `theme/settheme`
-    - Merge `theme/color1sync` & `theme/color2sync`
-    - Merge `theme/color1alph` & `theme/color2alph`
-    - ~~Create `theme/color#` x 4, paired to theme~~
-    - ~~Write theme json code in templates.md~~
+- Go over color system - Create "themes"
     - Look at material color spec to understand color tone in ".OneUI.colors{}"
+    - Write flow for `theme/coloreditor`
+    - Finish setting theme values directly from json in preset.json
+    - "Fill In" "custom" theme values from theme to global?
+        - On "Custom" select? If user goes back to regular theme, settings would persist
+        - Switch at top of `theme/coloreditor`?
+- `theme/objpaddingbox2` > `theme/objpaddingside`
 
 __Attributes         One UI                 HA/Material            Basic                 Custom__
 Color 1 (Primary):   Material Accent #1     Material Accent #1     Wallpaper             Color Picker
@@ -229,30 +219,25 @@ Corner Radius:                                                                  
 Icon Color:          All icons pastel       Only active coloredd   White/Black           `color/color1`, `color/color2`
 Device Icon border:  None                   Corner ball            None                  New
 
-> Globals to move into `theme`
-`theme/colors/back1`, `theme/colors/back2`, `theme/*`, `theme/horizontalpadding`, `theme/verticalpadding`, `theme/objpadding`, `theme/objpadding2`,
-`theme/objpaddingbox2`, `theme/cornerradius`,
-
-> Globals in theme/
-`theme/settheme`, `theme/color2sel`, `theme/color1sysc`, `theme/color2sysc`, `theme/color1fil1`, `theme/color2fil1`,
-`theme/color1adj`, `theme/color2adj`, `theme/color1fil2`, `theme/color2fil2`, `theme/color1pick`, `theme/color1pick`,
-`theme/color1alph`, `theme/color1alph`, `theme/color1fin`, `theme/color2fin`
-
-`theme/colors/objiconon`, `theme/colicoon`
-`theme/border`, `theme/colors/border`
-
-```
-// Theme JSON database
-
-// See `samples.json` for active building
-```
-
 
 ###### #####################################
 ###### Completed Tasks
 ###### #####################################
+- Theme system overhaul and upgrade
+    - Implement Tasker color picker? **NO**
+    - Create "themes" like One UI, material, HA card, etc. Template independant
+    - Store data in JSON
+    - Possibly re-do based on community resources
+    - Possibly re-do based on UI types and Tasker setup interface/color picker
+    - Utilize lists to make the UI user-friendly?
+    - ~~Use existing code where possible but remove duplicates - no need for color1 and color2~~
+    - ~~Merge `theme/color1sync` & `theme/color2sync`~~
+    - ~~Merge `theme/coloreditor/opacity` & `theme/color2alph~~`
+    - ~~Create `theme/color#` x 4, paired to theme~~
+    - ~~Write theme json code in templates.md~~
 - Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - `"lock" in devicetype > "security"`
+- ~~`"Icon #" > "Object #" in editor`~~
 
 
 
@@ -335,17 +320,17 @@ setupmode                       setupmde                Display JSON data for de
 -- 1.
 colors
     theme/colornote
-    theme/settheme
-    theme/color1sysc
+    settheme
+    theme/coloreditor/syscolorset
     theme/color1fil1
-    theme/color1adj
+    theme/coloreditor/adjcolor
     theme/color1fil2
     theme/color1pick
-    theme/color1alph
+    theme/coloreditor/opacity
     theme/color2sel
     theme/color2sysc
     theme/color2fil1
-    theme/color2adj
+    theme/coloreditor/adjcolor
     theme/color2fil2
     theme/color2pick
     theme/color2alph

@@ -206,78 +206,122 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
   )$
 ```
 
-###### func/theme 
-
-
+###### Flow: Custom Colors > Globals
 ```
-  $lv(dbtheme, gv(json/theme))$
-  $lv(darkmode, gv(theme/darkmode))$
-
-  $lv(settheme, gv(theme/settheme))$
-  $lv(theme, (if(#settheme = 0, "OneUI",
-                 #settheme = 1, "Material",
-                 #settheme = 2, "Basic",
-                 #settheme = 3, "Custom",
-                 "0"
-              ))
-  )$
-  $lv(colors, if(#darkmode = 0, (#theme + ".colors.light"),
-                                (#theme + ".colors.dark")
-  ))$
 
 
-  $lv(tname,    (tc(json, #dbtheme, ("." + #theme))))$                         // Theme Title
-  $lv(tborder,  (tc(json, #dbtheme, ("." + #theme + ".border_width"))))$       // Border width
-  $lv(tradius,  (tc(json, #dbtheme, ("." + #theme + ".corner_radius"))))$      // Corner Radius
-  $lv(tpadwgt,  (tc(json, #dbtheme, ("." + #theme + ".pad_widget"))))$         // Widget Padding
-  $lv(tpadobj,  (tc(json, #dbtheme, ("." + #theme + ".pad_object"))))$         // Object Padding
-  $lv(tpadside, (tc(json, #dbtheme, ("." + #theme + ".pad_sides"))))$          // Padding on box sides
-  $lv(tdevico,  (tc(json, #dbtheme, ("." + #theme + ".dev_ico_ring"))))$       // Ring behind Device Icon
-  $lv(tshad,    (tc(json, #dbtheme, ("." + #theme + ".shadow"))))$             // Widget Shadow
 
-  $lv(cwgtop,      (tc(json, #dbtheme, ("." + #theme + ".wgt_opacity"))))$     // Widget opacity
+// Use `#wallfilter` and `theme/color#adj` to change color
+  $if(gv(theme/color1fil1) > 0 & (#theme = "wpcolor1" | #theme = "wpcolor2"), 
+        lv(color1, ce(si(#theme), #wallfilter, gv(theme/coloreditor/adjcolor)
+     // lv(color1, ce(si(wpcolor1), sat, ##))
+      )))$
+  Wallpaper Color: $#color1$
+
+  $if(gv(theme/color1fil1) > 0 & #theme = "sys",
+        lv(color2, si(#systone, gv(theme/coloreditor/adjcolor)
+     // lv(color2, si(sysca1, ##))
+      )))$
+  Sysui: $#color2$
+
+  $if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
+  Colpick: $#col3$
+
+  $lv(color, (if(gv(settheme) <= 1, #color1,
+                 gv(settheme)  = 2, #color2,
+                 gv(settheme) = 3, #col3
+              )))$
+  $#color$
+
+  $lv(final, ce(#color, alpha, gv(theme/coloreditor/opacity)))$
+  Final color: $#final$
+```
+###### func/themecolors
+Use: `$gv(func/themecolors)$`
+```
+  $gv(func/theme)$
+
+// JSON data
   $lv(cborder,     (tc(json, #dbtheme, ("." + #colors + ".border"))))$         // Border Color
   $lv(cback1,      (tc(json, #dbtheme, ("." + #colors + ".back_1"))))$         // Background 1
   $lv(cback2,      (tc(json, #dbtheme, ("." + #colors + ".back_2"))))$         // Background 2
   $lv(cobjicooff,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_off"))))$   // Icon Off
   $lv(cobjringoff, (tc(json, #dbtheme, ("." + #colors + ".obj_ring_off"))))$   // Ring Off
-  $lv(cobjicoon,   (tc(json, #dbtheme, ("." + #colors + ".obj_icon_on"))))$    // Icon On
+  $lv(cobjiconon,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_on"))))$    // Icon On
   $lv(cobjringon,  (tc(json, #dbtheme, ("." + #colors + ".obj_ring_on"))))$    // Ring On
 
+// Output data
+  $lv(back1,       (if(gv(theme/colors/back1)      != "", gv(theme/colors/back1),      #cback1)))$
+  $lv(back2,       (if(gv(theme/colors/back2)      != "", gv(theme/colors/back2),      #cback2)))$
+  $lv(objiconon,   (if(gv(theme/colors/objiconon)  != "", gv(theme/colors/objiconon),  #cobjiconon)))$
+  $lv(objiconoff,  (if(gv(theme/colors/objiconoff) != "", gv(theme/colors/objiconoff), #cobjiconoff)))$
+  $lv(objringon,   (if(gv(theme/colors/objringon)  != "", gv(theme/colors/objringon),  #cobjringon)))$
+  $lv(objringoff,  (if(gv(theme/colors/objringoff) != "", gv(theme/colors/objringoff), #cobjringoff)))$
+  $lv(border,      (if(gv(theme/colors/border)     != "", gv(theme/colors/border),     #cborder)))$
+```
+###### func/theme 
+Use: `$gv(func/theme)$`
 
+```
+  $lv(dbtheme, gv(json/theme))$
+  $lv(darkmode, gv(theme/darkmode))$
 
+// Set editor globals > locals
+  $lv(editcolor, gv(theme/coloreditor/editcolor))$
+  $lv(adjcolor, gv(theme/coloreditor/adjcolor))$
+  $lv(opacity, gv(theme/coloreditor/opacity))$
 
+// Set editor list globals > temp locals
+  $lv(gsettheme, gv(settheme))$
+  $lv(gsyscolorset, gv(theme/coloreditor/syscolorset))$
+  $lv(gwallcolorset, gv(theme/coloreditor/wallcolorset))$
 
-// OLD
-  $lv(template, ("." + gv(devicetype) + "." + (gv(devicetype) + gv(templateselect))))$
-  $lv(tpageon, (tc(json, #dbtemp, (#template + ".page"))))$
-  $lv(obj, "." + gv(devicetype) + ".objects")$
-  $lv(curpage, gv(core/curpage))$
-  $lv(objfindkey, 
-        (if(#tpageon = 0, (#template + #posid),
-                         (#template + ".page" + #curpage + #posid)
-        ))
-  )$
-  $lv(objkey, (if((tc(json, #dbtemp, #objfindkey)) = "", "", 
-                  (#obj + "." + (tc(json, #dbtemp, #objfindkey)))
-               )))$
-  $lv(entity,
-    (if(#tpageon = 0, gv(entities/entity1),
-                     gv(entities/("entity" + #curpage))
-    ))
-  )$
-  $lv(entitykey, (if(#entity != "",
-                     ".device_states[?(@.entity_id == '" + #entity + "')]"
-              ))
-  )$
-  $lv(box1obj, 
-      (tc(json, #dbtemp, 
-        (if(#tpageon = 0, (#template + ".box1.row1.1"),
-                         (#template + ".page" + #curpage + ".box1.row1.1")
-        ))
-      ))
-  )$
+// Set Lists to locals
+  $lv(settheme, (if(#gsettheme = 0, "OneUI",
+                    #gsettheme = 1, "Material",
+                    #gsettheme = 2, "Basic",
+                    #gsettheme = 3, "Custom",
+                    "0")
+  ))$
+  $lv(syscolorset, (if(#gsyscolorset = 0, "sysca1",
+                       #gsyscolorset = 1, "sysca2",
+                       #gsyscolorset = 2, "sysca3",
+                       #gsyscolorset = 3, "syscn1",
+                       #gsyscolorset = 4, "syscn2",
+                       #gsyscolorset = 5, "syscn3",
+                       "sysca1")
+  ))$
+  $lv(wallcolorset, (if(#gwallcolorset = 1, "sat",
+                        #gwallcolorset = 2, "lum",
+                        #gwallcolorset = 3, "comp",
+                        "sat")
+  ))$
 
+// Set correct color key location based on mode
+  $lv(colors, if(#darkmode = 0, (#settheme + ".colors.light"),
+                                (#settheme + ".colors.dark")
+  ))$
+
+// JSON data
+  $lv(themename,(tc(json, #dbtheme, ("." + #settheme))))$                         // Theme Title
+  $lv(tborder,  (tc(json, #dbtheme, ("." + #settheme + ".border_width"))))$       // Border width
+  $lv(tradius,  (tc(json, #dbtheme, ("." + #settheme + ".corner_radius"))))$      // Corner Radius
+  $lv(tpadwgt,  (tc(json, #dbtheme, ("." + #settheme + ".pad_widget"))))$         // Widget Padding
+  $lv(tpadobj,  (tc(json, #dbtheme, ("." + #settheme + ".pad_object"))))$         // Object Padding
+  $lv(tpadside, (tc(json, #dbtheme, ("." + #settheme + ".pad_sides"))))$          // Padding on box sides
+  $lv(tdevico,  (tc(json, #dbtheme, ("." + #settheme + ".dev_ico_ring"))))$       // Ring behind Device Icon
+  $lv(tshad,    (tc(json, #dbtheme, ("." + #settheme + ".shadow"))))$             // Widget Shadow
+  $lv(twgtopa,  (tc(json, #dbtheme, ("." + #settheme  + ".wgt_opacity"))))$       // Widget opacity
+
+// Output data
+  $lv(border,      (if(gv(theme/bordersize)         != "", gv(theme/bordersize),          #tborder)))$
+  $lv(radius,      (if(gv(theme/cornerradius)       != "", gv(theme/cornerradius),        #tradius)))$
+  $lv(padwgthor,   (if(gv(theme/verticalpadding)    != "", gv(theme/verticalpadding),     #tpadwgt)))$
+  $lv(padwgtver,   (if(gv(theme/horizontalpadding)  != "", gv(theme/horizontalpadding),   #tpadwgt)))$
+  $lv(padobjhor,   (if(gv(theme/objpadding)         != "", gv(theme/objpadding),          #tpadobj)))$
+  $lv(padobjver,   (if(gv(theme/objpadding2)        != "", gv(theme/objpadding2),         #tpadobj)))$
+  $lv(padobjver,   (if(gv(theme/objpaddingbox2)     != "", gv(theme/objpaddingbox2),      #tpadside)))$
+  $lv(wgtopa,      (if(gv(theme/coloreditor/opacity)!= "", gv(theme/coloreditor/opacity), #twgtopa)))$
 ```
 
 ###### #####################################
@@ -311,12 +355,28 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
 
 ###### Circle Paint Color Formula
 ```
-  $lv(posid, ".box2.row2.1")$
+  $lv(posid, ".box2.row2.0")$
+  $gv(func/jsonstate)$
+  $gv(func/themecolors)$
+  $if(#stoutput = 1, #objringon, #objringoff)$
+```
+
+**V1**
+```
+  $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
   $if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$
 ```
 
 ###### Icon Paint Color Formula
+```
+  $lv(posid, ".box2.row2.0")$
+  $gv(func/jsonstate)$
+  $gv(func/themecolors)$
+  $if(#stoutput = 1, #objiconon, #objiconoff)$
+```
+
+**V1**
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$

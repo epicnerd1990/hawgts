@@ -229,7 +229,7 @@
         "index": 28,
         "type": "TEXT",
         "title": "theme",
-        "value": ""
+        "value": "{\"OneUI\":{\"border_width\":1dp,\"corner_radius\":1dp,\"pad_widget\":16dp,\"pad_obj\":10dp,\"pad_sides\":16dp,\"dev_ico_ring\":0,\"wgt_opacity\":150,\"shadow\":0,\"colors\":{\"light\":{\"back_1\":\"#FFFFFF\",\"back_2\":\"#F5F4F4\",\"obj_icon_off\":\"#EBEBEB\",\"obj_ring_off\":\"$si(sysca1,5)$\",\"obj_icon_on\":\"#FFFFFF\",\"obj_ring_on\":\"pastels\",\"border\":\"#EBEBEB\"},\"dark\":{\"back_1\":\"#000000\",\"back_2\":\"$si(syscn2,90)$\",\"obj_icon_off\":\"#EBEBEB\",\"obj_ring_off\":\"$si(sysca1,15)$\",\"obj_icon_on\":\"#FFFFFF\",\"obj_ring_on\":\"pastels\",\"border\":\"#EBEBEB\"}}},\"Material\":{\"border_width\":0,\"corner_radius\":1dp,\"pad_widget\":10dp,\"pad_obj\":10dp,\"pad_sides\":16dp,\"dev_ico_ring\":1,\"wgt_opacity\":50,\"shadow\":1,\"colors\":{\"light\":{\"back_1\":\"$si(sysca1,40)$\",\"back_2\":\"$si(sysca1,10)$\",\"obj_icon_off\":\"$si(syscn1,50)$\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$si(syscn1,50)$\",\"obj_ring_on\":\"$si(sysca1,50)$\",\"border\":\"#79747E\"},\"dark\":{\"back_1\":\"$si(sysca1,90)$\",\"back_2\":\"$si(sysca2,60)$\",\"obj_icon_off\":\"$si(syscn1,50)$\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$si(syscn1,50)$\",\"obj_ring_on\":\"$si(sysca1,50)$\",\"border\":\"#79747E\"}}},\"Basic\":{\"border_width\":0,\"corner_radius\":10kpx,\"pad_widget\":6dp,\"pad_obj\":10dp,\"pad_sides\":12dp,\"dev_ico_ring\":0,\"wgt_opacity\":75,\"colors\":{\"light\":{\"back_1\":\"$si(wpcolor1)$\",\"back_2\":\"$si(wpcolor2)$\",\"obj_icon_off\":\"#E7FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$ce(si(wpcolor1,comp),sat,60)$\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"},\"dark\":{\"back_1\":\"$si(wpcolor1)$\",\"back_2\":\"$si(wpcolor2)$\",\"obj_icon_off\":\"#FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$ce(si(wpcolor1,comp),sat,60)$\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"}}}}"
       },
       "json/template": {
         "index": 29,
@@ -252,6 +252,14 @@
         "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
         "value": "OPEN - Readme"
       },
+      "settheme": {
+        "index": 34,
+        "type": "LIST",
+        "title": "settheme",
+        "description": "Select the theme you'd like to use on this widget. You can also select a style, then hit custom to modify it",
+        "entries": "0##Material,1##OneUI,2##Basic,3##Custom",
+        "value": "0"
+      },
       "themes": {
         "index": 32,
         "type": "FOLDER",
@@ -265,54 +273,121 @@
         "value": "-- OPEN - Color Options",
         "entries": "Edit widget colors by following through this setup. See Readme for details."
       },
-      "theme/settheme": {
-        "index": 34,
+      "theme/colors": {
+        "index": 32,
+        "type": "FOLDER",
+        "title": "colors",
+        "description": "Widget Colors"
+      },
+      "theme/colors/back1": {
+        "index": 49,
+        "type": "COLOR",
+        "title": "back1",
+        "description": "Background color 1",
+        "value": "#BF005B66",
+        "toggles": 10,
+        "global_formula": "$gv(func/theme)$$#cback1$"
+      },
+      "theme/colors/back2": {
+        "index": 49,
+        "type": "COLOR",
+        "title": "back2",
+        "description": "Background color 2",
+        "value": "#BF007D8C",
+        "toggles": 10,
+        "global_formula": "$gv(func/theme)$$#cback2$"
+      },
+      "theme/colors/objiconon": {
+        "index": 49,
+        "type": "COLOR",
+        "title": "objiconon",
+        "description": "Object Icon On",
+        "value": "#E7FFFFFF",
+        "toggles": 10,
+        "global_formula": "$gv(func/theme)$$#cobjiconon$"
+      },
+      "theme/colors/objiconoff": {
+        "index": 49,
+        "type": "COLOR",
+        "title": "objiconoff",
+        "description": "Object Icon Off",
+        "value": "#FF00DEFF",
+        "toggles": 10,
+        "global_formula": "$gv(func/theme)$$#cobjicooff$"
+      },
+      "theme/colors/objringon": {
+        "index": 49,
+        "type": "COLOR",
+        "title": "objringon",
+        "description": "Object Ring On",
+        "value": "#FF00DEFF",
+        "toggles": 10,
+        "global_formula": "$gv(func/theme)$$#cobjringon$"
+      },
+      "theme/colors/objringoff": {
+        "index": 49,
+        "type": "COLOR",
+        "title": "objringoff",
+        "description": "Object Ring Off",
+        "value": "#FF00DEFF",
+        "toggles": 10,
+        "global_formula": "$gv(func/theme)$$#cobjringoff$"
+      },
+      "theme/colors/border": {
+        "index": 54,
+        "type": "COLOR",
+        "title": "border",
+        "description": "Border color",
+        "value": "FFFFFF",
+        "toggles": 10,
+        "global_formula": "$gv(func/theme)$$#cborder$"
+      },
+      "theme/coloreditor": {
+        "index": 32,
+        "type": "FOLDER",
+        "title": "coloreditor",
+        "description": "Edit colors when using \"custom\" theme. Changes will be reset on theme change"
+      },
+      "theme/coloreditor/editcolor": {
+        "index": 38,
         "type": "LIST",
-        "title": "settheme",
-        "description": "Select the theme you'd like to use on this widget. You can also select a style, then hit custom to modify it",
-        "entries": "0##Material,1##OneUI,2##Basic,3##Custom",
+        "title": "edit",
+        "description": "Select the color to edit",
+        "entries": "0##Background 1,1##Background 2,2##Icon Off,3##Icon On,4##Ring Off,5##Ring On,6##Border Color",
         "value": "0"
       },
-      "theme/color1sysc": {
+      "theme/coloreditor/syscolorset": {
         "index": 35,
         "type": "LIST",
-        "title": "color1sysc",
-        "description": "Color 1 - System/MaterialYou Only\nSelect a color tone.",
+        "title": "syscolorset",
+        "description": "(OneUI/Material Theme) Select a color tone to adjust",
         "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Neutral #3",
         "value": "2"
       },
-      "theme/color1fil1": {
+      "theme/coloreditor/wallcolorset": {
         "index": 36,
         "type": "LIST",
-        "title": "color1fil1",
-        "description": "Color 1 - Wallpaper Only\nSelect filter.",
+        "title": "wallcolorset",
+        "description": "(Basic/Custom Theme) Select a color filter",
         "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
         "value": "2"
       },
-      "theme/color1adj": {
+      "theme/coloreditor/adjcolor": {
         "index": 37,
         "type": "NUMBER",
-        "title": "color1adj",
-        "description": "Color 1 - Filter adjustment\n0 = None, 100 = Strong",
+        "title": "adjcolor",
+        "description": "Strength of color tone or filter",
         "min": 0,
         "max": 100,
         "value": 40.0
       },
-      "theme/color1fil2": {
-        "index": 38,
-        "type": "LIST",
-        "title": "color1fil2",
-        "description": "Color 1 - Select filter manipulation - Changes slider above from total into add/subtract from current (optional)",
-        "entries": "0##None, 1##Add, 2##Remove",
-        "value": "0"
-      },
-      "theme/color1alph": {
+      "theme/coloreditor/opacity": {
         "index": 40,
         "type": "NUMBER",
-        "title": "color1alph",
-        "description": "Color 1 - Opacity Adjustment\n0 = Transparent, 255 = Solid",
+        "title": "opacity",
+        "description": "Opacity Adjustment - 0 = Transparent, 255 = Solid",
         "min": 0,
-        "max": 100,
+        "max": 255,
         "value": 75.0
       },
       "theme/darkmode": {
@@ -413,75 +488,6 @@
         "value": 10.0,
         "toggles": 10,
         "global_formula": "$gv(func/theme)$$#tradius1$"
-  },
-      "themes/colors": {
-        "index": 32,
-        "type": "FOLDER",
-        "title": "colors",
-        "description": "Widget Colors"
-      },
-      "theme/colors/back1": {
-        "index": 49,
-        "type": "COLOR",
-        "title": "back1",
-        "description": "Background color 1",
-        "value": "#BF005B66",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cback1$"
-      },
-      "theme/colors/back2": {
-        "index": 49,
-        "type": "COLOR",
-        "title": "back2",
-        "description": "Background color 2",
-        "value": "#BF007D8C",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cback2$"
-      },
-      "theme/colors/objiconon": {
-        "index": 49,
-        "type": "COLOR",
-        "title": "objiconon",
-        "description": "Object Icon On",
-        "value": "#E7FFFFFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjicoon$"
-      },
-      "theme/colors/objiconoff": {
-        "index": 49,
-        "type": "COLOR",
-        "title": "objiconoff",
-        "description": "Object Icon Off",
-        "value": "#FF00DEFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjicooff$"
-      },
-      "theme/colors/objringon": {
-        "index": 49,
-        "type": "COLOR",
-        "title": "objringon",
-        "description": "Object Ring On",
-        "value": "#FF00DEFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjringon$"
-      },
-      "theme/colors/objringoff": {
-        "index": 49,
-        "type": "COLOR",
-        "title": "objringoff",
-        "description": "Object Ring Off",
-        "value": "#FF00DEFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjringoff$"
-      },
-      "theme/colors/border": {
-        "index": 54,
-        "type": "COLOR",
-        "title": "border",
-        "description": "Border color",
-        "value": "FFFFFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cborder$"
       },
       "entities": {
         "index": 57,
@@ -871,7 +877,7 @@
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(theme/settheme)$$gv(theme/color1sync)$$gv(theme/color1fill)$$gv(theme/color1adj)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
+              "formula": "$gv(settheme)$$gv(theme/color1sync)$$gv(theme/coloreditor/wallcolorset)$$gv(theme/coloreditor/adjcolor)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
             }
           },
           {
@@ -884,7 +890,7 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(source, (if(gv(theme/settheme) = 0, \"wpcolor1\", gv(theme/settheme) = 1, \"wpcolor2\", gv(theme/settheme) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color1fil1) = 1, \"sat\", gv(theme/color1fil1) = 2, \"lum\", gv(theme/color1fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/color1sysc) = 0, \"sysca1\", gv(theme/color1sysc) = 1, \"sysca2\", gv(theme/color1sysc) = 2, \"sysca3\", gv(theme/color1sysc) = 3, \"syscn1\", gv(theme/color1sysc) = 4, \"syscn2\", gv(theme/color1sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color1fil2) = 0, \"\", gv(theme/color1fil2) = 1, \"a\", gv(theme/color1fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/color1adj))))$\n$if(gv(theme/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/color1adj))))$\n$if(gv(theme/color1fil1) = 0 | gv(theme/settheme) = 3, lv(col3, gv(theme/color1pick)))$\n\n$lv(color, (if(gv(theme/settheme) <= 1, #color1, gv(theme/settheme) = 2, #color2, gv(theme/settheme) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/color1alph), 0)))$\n$#final$"
+              "formula": "$lv(source, (if(gv(settheme) = 0, \"wpcolor1\", gv(settheme) = 1, \"wpcolor2\", gv(settheme) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color1fil1) = 1, \"sat\", gv(theme/color1fil1) = 2, \"lum\", gv(theme/color1fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/coloreditor/syscolorset) = 0, \"sysca1\", gv(theme/coloreditor/syscolorset) = 1, \"sysca2\", gv(theme/coloreditor/syscolorset) = 2, \"sysca3\", gv(theme/coloreditor/syscolorset) = 3, \"syscn1\", gv(theme/coloreditor/syscolorset) = 4, \"syscn2\", gv(theme/coloreditor/syscolorset) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color1fil2) = 0, \"\", gv(theme/color1fil2) = 1, \"a\", gv(theme/color1fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$\n\n$lv(color, (if(gv(settheme) <= 1, #color1, gv(settheme) = 2, #color2, gv(settheme) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/coloreditor/opacity), 0)))$\n$#final$"
             }
           }
         ]
@@ -897,7 +903,7 @@
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(theme/settheme)$$gv(theme/color1sync)$$gv(theme/color1fill)$$gv(theme/color1adj)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
+              "formula": "$gv(settheme)$$gv(theme/color1sync)$$gv(theme/coloreditor/wallcolorset)$$gv(theme/coloreditor/adjcolor)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
             }
           },
           {
@@ -910,7 +916,7 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(source, (if(gv(theme/color2sel) = 0, \"wpcolor1\", gv(theme/color2sel) = 1, \"wpcolor2\", gv(theme/color2sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color2fil1) = 1, \"sat\", gv(theme/color2fil1) = 2, \"lum\", gv(theme/color2fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/color2sysc) = 0, \"sysca1\", gv(theme/color2sysc) = 1, \"sysca2\", gv(theme/color2sysc) = 2, \"sysca3\", gv(theme/color2sysc) = 3, \"syscn1\", gv(theme/color2sysc) = 4, \"syscn2\", gv(theme/color2sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color2fil2) = 0, \"\", gv(theme/color2fil2) = 1, \"a\", gv(theme/color2fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/color2adj))))$\n$if(gv(theme/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/color2adj))))$\n$if(gv(theme/color2fil1) = 0 | gv(theme/color2sel) = 3, lv(col3, gv(theme/color2pick)))$\n\n\n$lv(color, (if(gv(theme/color2sel) <= 1, #color1, gv(theme/color2sel) = 2, #color2, gv(theme/color2sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/color2alph), 0)))$\n$#final$"
+              "formula": "$lv(source, (if(gv(theme/color2sel) = 0, \"wpcolor1\", gv(theme/color2sel) = 1, \"wpcolor2\", gv(theme/color2sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color2fil1) = 1, \"sat\", gv(theme/color2fil1) = 2, \"lum\", gv(theme/color2fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/color2sysc) = 0, \"sysca1\", gv(theme/color2sysc) = 1, \"sysca2\", gv(theme/color2sysc) = 2, \"sysca3\", gv(theme/color2sysc) = 3, \"syscn1\", gv(theme/color2sysc) = 4, \"syscn2\", gv(theme/color2sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color2fil2) = 0, \"\", gv(theme/color2fil2) = 1, \"a\", gv(theme/color2fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color2fil1) = 0 | gv(theme/color2sel) = 3, lv(col3, gv(theme/color2pick)))$\n\n\n$lv(color, (if(gv(theme/color2sel) <= 1, #color1, gv(theme/color2sel) = 2, #color2, gv(theme/color2sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/color2alph), 0)))$\n$#final$"
             }
           }
         ]
@@ -1050,21 +1056,20 @@
             "internal_type": "ShapeModule",
             "internal_title": "-- Background - Edit in Globals",
             "internal_toggles": {
-              "paint_color": 100,
+              "paint_color": 10,
               "shape_width": 10,
               "shape_height": 10,
-              "shape_corners": 100
+              "shape_corners": 10
             },
             "internal_formulas": {
               "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/wgtwidth), gv(box1size))$",
-              "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))$"
+              "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))$",
+              "shape_corners": "$gv(func/theme)$$#tradius$",
+              "paint_color": "$gv(func/themecolors)$$#back1$"
+
             },
             "shape_type": "RECT",
-            "paint_mode": "OVERLAY",
-            "internal_globals": {
-              "shape_corners": "theme/cornerradius",
-              "paint_color": "theme/colors/back1"
-            }
+            "paint_mode": "OVERLAY"
           },
           {
             "internal_type": "OverlapLayerModule",
@@ -1073,7 +1078,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(theme/border) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$gv(func/theme)$$if(#border != 0, ALWAYS, REMOVE)$"
             },
             "viewgroup_items": [
               {
@@ -1083,28 +1088,24 @@
                   "paint_color": 10,
                   "shape_width": 10,
                   "shape_height": 10,
-                  "shape_corners": 100,
-                  "paint_stroke": 100
+                  "shape_corners": 10,
+                  "paint_stroke": 10
                 },
                 "internal_formulas": {
+                  "paint_color": "$gv(func/themecolors)$$#border$",
                   "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/wgtwidth), gv(box1size))$",
                   "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))$",
-                  "paint_color": "$gv(theme/colors/border)$"
+                  "shape_corners": "$gv(func/theme)$$#tradius$",
+                  "paint_stroke": "$gv(func/themecolors)$$#tborder$"
                 },
                 "shape_type": "RECT",
-                "internal_globals": {
-                  "shape_corners": "theme/cornerradius",
-                  "paint_color": "theme/colors/back2",
-                  "paint_stroke": "theme/bordersize"
-                },
-                "paint_style": "STROKE",
-                "paint_stroke": 5.0
+                "paint_style": "STROKE"
               }
             ]
           },
           {
             "internal_type": "StackLayerModule",
-            "internal_title": "Icons",
+            "internal_title": "Objects",
             "internal_toggles": {
               "config_visible": 10,
               "position_padding_left": 10,
@@ -1146,7 +1147,7 @@
                 "viewgroup_items": [
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 0",
+                    "internal_title": "Object 0",
                     "internal_toggles": {
                       "config_visible": 10,
                       "position_padding_left": 10,
@@ -1178,7 +1179,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1189,23 +1190,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 1",
+                    "internal_title": "Object 1",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1232,7 +1231,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1243,16 +1242,14 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
@@ -1279,7 +1276,7 @@
                 "viewgroup_items": [
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 0",
+                    "internal_title": "Object 0",
                     "internal_toggles": {
                       "config_visible": 10,
                       "position_padding_left": 10,
@@ -1310,7 +1307,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1321,23 +1318,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 1",
+                    "internal_title": "Object 1",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1364,7 +1359,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         }
                       },
                       {
@@ -1374,16 +1369,14 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
@@ -1497,34 +1490,26 @@
         "viewgroup_items": [
           {
             "internal_type": "ShapeModule",
+            "internal_title": "-- Background - Edit in Globals",
             "shape_type": "RECT",
-            "shape_width": 545.0,
-            "shape_height": 212.0,
-            "paint_color": "#BB008F95",
+            "position_anchor": "CENTERLEFT",
             "internal_toggles": {
-              "paint_color": 100,
+              "paint_color": 10,
               "shape_width": 100,
               "shape_height": 100,
               "position_anchor": 10,
-              "shape_corners": 100,
-              "shape_type": 10,
-              "position_padding_left": 0
+              "shape_corners": 10
             },
-            "internal_title": "-- Background - Edit in Globals",
-            "position_anchor": "CENTERLEFT",
             "internal_formulas": {
-              "paint_color": "$ce(gv(theme/colors/back2),alpha,75)$",
+              "paint_color": "$gv(func/themecolors)$$#back2$",
               "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/box2width), (gv(core/size/box2width) - gv(box1size)))$",
               "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/box2height), (gv(core/size/box2height) - gv(box1size)))$",
               "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
-              "position_padding_left": ""
+              "shape_corners": "$gv(func/theme)$$#tradius$"
             },
-            "shape_corners": 10.0,
             "internal_globals": {
               "shape_width": "core/size/box2width",
-              "shape_height": "core/size/box2height",
-              "shape_corners": "theme/cornerradius",
-              "paint_color": "theme/colors/back2"
+              "shape_height": "core/size/box2height"
             }
           },
           {
@@ -1534,44 +1519,36 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(theme/border) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$gv(func/theme)$$if(#border != 0, ALWAYS, REMOVE)$"
             },
             "viewgroup_items": [
               {
                 "internal_type": "ShapeModule",
+                "internal_title": "-- Background - Edit in Globals",
                 "shape_type": "RECT",
-                "shape_width": 545.0,
-                "shape_height": 212.0,
-                "paint_color": "#BB008F95",
+                "paint_style": "STROKE",
                 "internal_toggles": {
                   "paint_color": 10,
                   "shape_width": 100,
                   "shape_height": 100,
                   "position_anchor": 10,
                   "position_padding_left": 0,
-                  "shape_corners": 100,
-                  "shape_type": 10,
-                  "paint_stroke": 100
+                  "shape_corners": 10,
+                  "paint_stroke": 10
                 },
-                "internal_title": "-- Background - Edit in Globals",
-                "position_anchor": "CENTERLEFT",
                 "internal_formulas": {
-                  "paint_color": "$gv(theme/colors/border)$",
+                  "paint_color": "$gv(func/themecolors)$$#border$",
                   "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/box2width), (gv(core/size/box2width) - gv(box1size)))$",
                   "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/box2height), (gv(core/size/box2height) - gv(box1size)))$",
                   "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
-                  "position_padding_left": "$if(gv(widgetorient) = 0, gv(theme/verticalpadding), 0 )$"
+                  "position_padding_left": "$if(gv(widgetorient) = 0, gv(theme/verticalpadding), 0 )$",
+                  "shape_corners": "$gv(func/theme)$$#tradius$",
+                  "paint_stroke": "$gv(func/themecolors)$$#tborder$"
                 },
-                "shape_corners": 10.0,
                 "internal_globals": {
                   "shape_width": "core/size/box2width",
-                  "shape_height": "core/size/box2height",
-                  "shape_corners": "theme/cornerradius",
-                  "paint_color": "color1",
-                  "paint_stroke": "theme/bordersize"
-                },
-                "paint_style": "STROKE",
-                "paint_stroke": 5.0
+                  "shape_height": "core/size/box2height"
+                }
               }
             ]
           },
@@ -1616,7 +1593,7 @@
                 "viewgroup_items": [
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 0",
+                    "internal_title": "Object 0",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1643,7 +1620,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1654,23 +1631,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 1",
+                    "internal_title": "Object 1",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1697,7 +1672,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1708,23 +1683,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 2",
+                    "internal_title": "Object 2",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1751,7 +1724,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1762,23 +1735,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 3",
+                    "internal_title": "Object 3",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1805,7 +1776,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1816,23 +1787,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 4",
+                    "internal_title": "Object 4",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1859,7 +1828,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1870,23 +1839,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 5",
+                    "internal_title": "Object 5",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1913,7 +1880,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1924,16 +1891,14 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
@@ -1960,7 +1925,7 @@
                 "viewgroup_items": [
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 0",
+                    "internal_title": "Object 0",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -1987,7 +1952,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         },
                         "internal_title": "State"
                       },
@@ -1998,23 +1963,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 1",
+                    "internal_title": "Object 1",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -2041,7 +2004,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         }
                       },
                       {
@@ -2051,23 +2014,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 2",
+                    "internal_title": "Object 2",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -2088,14 +2049,13 @@
                         "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100,
-                          "paint_mode": 10
+                          "shape_width": 100
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         }
                       },
                       {
@@ -2105,23 +2065,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 3",
+                    "internal_title": "Object 3",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -2148,7 +2106,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         }
                       },
                       {
@@ -2158,23 +2116,21 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 4",
+                    "internal_title": "Object 4",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -2197,16 +2153,14 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       },
                       {
@@ -2220,14 +2174,14 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         }
                       }
                     ]
                   },
                   {
                     "internal_type": "OverlapLayerModule",
-                    "internal_title": "Icon 5",
+                    "internal_title": "Object 5",
                     "internal_toggles": {
                       "config_visible": 10
                     },
@@ -2250,16 +2204,14 @@
                         "internal_toggles": {
                           "icon_icon": 10,
                           "icon_size": 100,
-                          "paint_color": 10,
-                          "paint_mode": 10
+                          "paint_color": 10
                         },
                         "internal_globals": {
                           "icon_size": "iconsize"
                         },
                         "internal_formulas": {
                           "icon_icon": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$",
-                          "paint_mode": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, \"MULTIPLY\", \"NORMAL\")$"
+                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       },
                       {
@@ -2273,7 +2225,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$"
+                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
                         }
                       }
                     ]

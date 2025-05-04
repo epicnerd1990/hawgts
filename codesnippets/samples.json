@@ -491,7 +491,7 @@
 }
 
 //////////////////////////////////////
-// Color JSON
+// Theme JSON
 //////////////////////////////////////
 {
   "OneUI": {
@@ -500,6 +500,7 @@
     "pad_widget": 16dp,
     "pad_obj": 10dp,
     "pad_sides": 16dp,
+    "ring_shape": "Squrdle",
     "dev_ico_ring": 0,
     "wgt_opacity": 150,
     "shadow": 0,
@@ -530,6 +531,7 @@
     "pad_widget": 10dp,
     "pad_obj": 10dp,
     "pad_sides": 16dp,
+    "ring_shape": "Circle",
     "dev_ico_ring": 1,
     "wgt_opacity": 50,
     "shadow": 1,
@@ -560,6 +562,7 @@
     "pad_widget": 6dp,
     "pad_obj": 10dp,
     "pad_sides": 12dp,
+    "ring_shape": "Circle",
     "dev_ico_ring": 0,
     "wgt_opacity": 75,
     "colors": {

@@ -182,12 +182,12 @@ TEST 2 - Change to JSON
               )))$
   Filter: $#filter$
 
-  $lv(coltone, (if(gv(theme/color1sysc) = 0, "sysca1",
-                   gv(theme/color1sysc) = 1, "sysca2",
-                   gv(theme/color1sysc) = 2, "sysca3",
-                   gv(theme/color1sysc) = 3, "syscn1",
-                   gv(theme/color1sysc) = 4, "syscn2",
-                   gv(theme/color1sysc) = 5, "syscn3",
+  $lv(coltone, (if(gv(theme/coloreditor/syscolorset) = 0, "sysca1",
+                   gv(theme/coloreditor/syscolorset) = 1, "sysca2",
+                   gv(theme/coloreditor/syscolorset) = 2, "sysca3",
+                   gv(theme/coloreditor/syscolorset) = 3, "syscn1",
+                   gv(theme/coloreditor/syscolorset) = 4, "syscn2",
+                   gv(theme/coloreditor/syscolorset) = 5, "syscn3",
                    "sysca1"
                 )))$
   Color Tone: $#coltone$
@@ -201,33 +201,33 @@ TEST 2 - Change to JSON
 
 // Use `#filter` and `theme/color#adj` to change color
   $if(gv(theme/color1fil1) > 0 & (#theme = "wpcolor1" | #theme = "wpcolor2"), 
-        lv(color1, ce(si(#theme), #filter, gv(theme/color1adj)
+        lv(color1, ce(si(#theme), #filter, gv(theme/coloreditor/adjcolor)
       )))$
   Wallpaper Color: $#color1$
 
   $if(gv(theme/color1fil1) > 0 & #theme = "sys",
-        lv(color2, si(#coltone, gv(theme/color1adj)
+        lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor)
       )))$
   Sysui: $#color2$
 
-  $if(gv(theme/color1fil1) = 0 | gv(theme/settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
+  $if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
   Colpick: $#col3$
 
-  $lv(color, (if(gv(theme/settheme) <= 1, #color1,
-                 gv(theme/settheme)  = 2, #color2,
-                 gv(theme/settheme) = 3, #col3
+  $lv(color, (if(gv(settheme) <= 1, #color1,
+                 gv(settheme)  = 2, #color2,
+                 gv(settheme) = 3, #col3
               )))$
   $#color$
 
-  $lv(final, ce(#color, alpha, gv(theme/color1alph)))$
+  $lv(final, ce(#color, alpha, gv(theme/coloreditor/opacity)))$
   Final color: $#final$
 ```
 
 **V1**
 ```
-  $lv(source, (if(gv(theme/settheme) = 0, "wpcolor1",
-                  gv(theme/settheme) = 1, "wpcolor2",
-                  gv(theme/settheme) = 2, "sys",
+  $lv(source, (if(gv(settheme) = 0, "wpcolor1",
+                  gv(settheme) = 1, "wpcolor2",
+                  gv(settheme) = 2, "sys",
                   "0"
               )))$
   Source: $#source$
@@ -239,12 +239,12 @@ TEST 2 - Change to JSON
               )))$
   Filter: $#filter$
 
-  $lv(coltone, (if(gv(theme/color1sysc) = 0, "sysca1",
-                   gv(theme/color1sysc) = 1, "sysca2",
-                   gv(theme/color1sysc) = 2, "sysca3",
-                   gv(theme/color1sysc) = 3, "syscn1",
-                   gv(theme/color1sysc) = 4, "syscn2",
-                   gv(theme/color1sysc) = 5, "syscn3",
+  $lv(coltone, (if(gv(theme/coloreditor/syscolorset) = 0, "sysca1",
+                   gv(theme/coloreditor/syscolorset) = 1, "sysca2",
+                   gv(theme/coloreditor/syscolorset) = 2, "sysca3",
+                   gv(theme/coloreditor/syscolorset) = 3, "syscn1",
+                   gv(theme/coloreditor/syscolorset) = 4, "syscn2",
+                   gv(theme/coloreditor/syscolorset) = 5, "syscn3",
                    "sysca1"
                 )))$
   Color Tone: $#coltone$
@@ -257,25 +257,25 @@ TEST 2 - Change to JSON
   Addsub: $#addsub$
 
   $if(gv(theme/color1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), 
-        lv(color1, ce(si(#source), #filter, gv(theme/color1adj)
+        lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor)
       )))$
   Wallpaper Color: $#color1$
 
   $if(gv(theme/color1fil1) > 0 & #source = "sys",
-        lv(color2, si(#coltone, gv(theme/color1adj)
+        lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor)
       )))$
   Sysui: $#color2$
 
-  $if(gv(theme/color1fil1) = 0 | gv(theme/settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
+  $if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
   Colpick: $#col3$
 
-  $lv(color, (if(gv(theme/settheme) <= 1, #color1,
-                 gv(theme/settheme)  = 2, #color2,
-                 gv(theme/settheme) = 3, #col3
+  $lv(color, (if(gv(settheme) <= 1, #color1,
+                 gv(settheme)  = 2, #color2,
+                 gv(settheme) = 3, #col3
               )))$
   $#color$
 
-  $lv(final, ce(#color, alpha, gv(theme/color1alph)))$
+  $lv(final, ce(#color, alpha, gv(theme/coloreditor/opacity)))$
   Final color: $#final$
 ```
 
@@ -287,8 +287,8 @@ $lv(filter, (if(gv(theme/color2fil1) = 1, "sat", gv(theme/color2fil1) = 2, "lum"
 $lv(coltone, (if(gv(theme/color2sysc) = 0, "sysca1", gv(theme/color2sysc) = 1, "sysca2", gv(theme/color2sysc) = 2, "sysca3", gv(theme/color2sysc) = 3, "syscn1", gv(theme/color2sysc) = 4, "syscn2", gv(theme/color2sysc) = 5, "syscn3", "sysca1")))$
 $lv(addsub, (if(gv(theme/color2fil2) = 0, "", gv(theme/color2fil2) = 1, "a", gv(theme/color2fil2) = 2, "r", "")))$
 
-$if(gv(theme/color2fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(color1, ce(si(#source), #filter, gv(theme/color2adj))))$
-$if(gv(theme/color2fil1) > 0 & #source = "sys", lv(color2, si(#coltone, gv(theme/color2adj))))$
+$if(gv(theme/color2fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor))))$
+$if(gv(theme/color2fil1) > 0 & #source = "sys", lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor))))$
 $if(gv(theme/color2fil1) = 0 | gv(theme/color2sel) = 3, lv(col3, gv(theme/color2pick)))$
 
 $lv(color, (if(gv(theme/color2sel) <= 1, #color1, gv(theme/color2sel) = 2, #color2, gv(theme/color2sel) = 3, #col3)))$
@@ -296,7 +296,18 @@ $lv(final, ce(#color, alpha, gv(theme/color2alph)))$
 $#final$
 ```
 
-###### theme/settheme
+###### theme/coloreditor/edit
+```
+0##Background 1,
+1##Background 2,
+2##Icon Off,
+3##Icon On,
+4##Ring Off,
+5##Ring On,
+6##Border Color
+```
+
+###### settheme
 
 ```
 0##Material,
@@ -313,7 +324,7 @@ $#final$
 3##Manual (Color picker)
 ```
 
-###### theme/color1sysc, theme/color2sysc
+###### theme/coloreditor/syscolorset, theme/color2sysc
 System and Material UI only
 ```
 0##Accent #1,
@@ -332,7 +343,7 @@ System and Material UI only
 3##Complimentary Color
 ```
 
-###### theme/color1adj, theme/color2adj
+###### theme/coloreditor/adjcolor, theme/coloreditor/adjcolor
 - Filter strength for `theme/color#fil1`
 - 0 - 100
 
@@ -348,7 +359,7 @@ System and Material UI only
 ###### theme/color1pick, theme/color1pick
 - Manually set color using KWGT picker
 
-###### theme/color1alph, theme/color1alph
+###### theme/coloreditor/opacity, theme/coloreditor/opacity
 - Adjust set color opacity
 - 0 - 255
 
