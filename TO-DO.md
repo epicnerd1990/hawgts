@@ -102,6 +102,9 @@ UTF Hex       REGEX                  KWGT
             - Setup battery in different sizes/modes - Find way to scale?
         - Create "Komponent" Templates for different modes
 - Fix and set up favourite formulas in KWGT before starting Media Control Widget **50%**
+- Create official build process - "build.md"?
+    - Create script that creates a "globals.md" chart with name and description imported from json
+    - Check "Final To-Do" list way below
 
 ###### #####################################
 ###### TO-DO - Features to complete for V1
@@ -111,7 +114,7 @@ UTF Hex       REGEX                  KWGT
     - Complete templates for all devices **10%**
     - ~~Fix remaining glitches and alignment issues~~ **100%**
     - Add support for battery items?
-    - Add support for custom dials and displays - or just make these komponents?
+    - Add support for custom dials and displays - or just make these komponent/addons?
 - JSON System completion **70%**
     - Look into file-based JSON template
     - Allow user to select their own custom JSON using flow and file picker? Flow could remove whitespace and write to `json/template`?
@@ -121,6 +124,7 @@ UTF Hex       REGEX                  KWGT
     - File permissions?
 - Confirm icon pack is up to date with latest icon list
 - Group configuration options in folders/subfolders more
+- Should have a flow for each global thats updated with content from the template that is ONLY activated when the template changes. This will maintain user overrides of template settings until they change the template, which will then reset everything.
 - KWGT > TASKER - Create "custom" service call **0%**
     - Use HA templates for simplicity?
 - Set up and build Tasker plugin **0%**
@@ -130,8 +134,10 @@ UTF Hex       REGEX                  KWGT
         - The state does not update when lights are turned from one brightness to another
         - Is this because of the way the Tasker HA blueprint works?
         - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
-
-- Should have a flow for each global thats updated with content from the template that is ONLY activated when the template changes. This will maintain user overrides of template settings until they change the template, which will then reset everything.
+- Final review of code
+    - Go through everything and ensure everything works in all scenarios
+    - Slim down List Global code by using the index# directly to save excess local variables in functions
+    - Test config and operation by following readme on multiple devices and launchers
 
 
 ###### #####################################
@@ -146,6 +152,7 @@ UTF Hex       REGEX                  KWGT
     - Device Icon: click to open editor or open Home Assistant directly to your device
     - Show/hide app icon, 1st = HA, 2nd = Custom
     - Look at "Shortcuts" next to "Flows" in editor
+    - App icons: fixed positioning
 - "Status" system completion **10%**
     - Or use status bar? KWGT code complete, send string to kwgt br: "error" once status is working
     - Use following errors:
@@ -157,6 +164,7 @@ UTF Hex       REGEX                  KWGT
 - Complete all versions of "light" template and maybe start "climate"
 
 - Theme system notes:
+    - 2kpx = 1dp
     - User Options
         > System dark mode - write to global, override with toggle?
         > Choose theme style
@@ -198,23 +206,23 @@ UTF Hex       REGEX                  KWGT
         - Basic: 
             - Background: wallpaper,
             - Icons: no ring (off), white ring (on), white/black icon, circle shape
-- Go over color system - Create "themes"
-    - Look at material color spec to understand color tone in ".OneUI.colors{}"
-    - Write flow for `theme/coloreditor`
-    - Finish setting theme values directly from json in preset.json
-    - "Fill In" "custom" theme values from theme to global?
-        - On "Custom" select? If user goes back to regular theme, settings would persist
-        - Switch at top of `theme/coloreditor`?
-- `theme/objpaddingbox2` > `theme/objpaddingside`
+- Go over color system - Create "themes" **80%**
+    - Create Device Icon ring
+        - Merge with device icon touch?
+        - Ensure it works in all positions
+    - Double check stack group margins in editor
+    - ~~`Figure out pastel icon colors for OneUI`~~ ".OneUI.colors.pastel{}"
+        - `Add new circle icon color code in template.md to all objects`
+    - Check new theme system in KWGT editor
 
 __Attributes         One UI                 HA/Material            Basic                 Custom__
 Color 1 (Primary):   Material Accent #1     Material Accent #1     Wallpaper             Color Picker
-Color 2 (Secondary):.Material Accent #2     Material Accent #2     Wallpaper             Color Picker
+Color 2 (Secondary): Material Accent #2     Material Accent #2     Wallpaper             Color Picker
 Color 3 (Contrast):  Material Neutral #3    Material Neutral #3    White/Black           Color Picker
 Border width:        1dp                    0                      0                     `theme/bordersize`
 Padding - Outside:   16dp                   10dp                   10kpx                 `theme/horizontalpadding`, `theme/verticalpadding`
 Padding - Icons:     4dp                                                                 `theme/objpadding`, `theme/objpadding2`
-Padding - Edges:     16dp                   16dp                   10kpx                 `theme/objpaddingbox2`
+Padding - Edges:     16dp                   16dp                   10kpx                 `theme/objpaddingside`
 Corner Radius:                                                                           `theme/cornerradius`
 Icon Color:          All icons pastel       Only active coloredd   White/Black           `color/color1`, `color/color2`
 Device Icon border:  None                   Corner ball            None                  New
@@ -230,14 +238,28 @@ Device Icon border:  None                   Corner ball            None         
     - Possibly re-do based on community resources
     - Possibly re-do based on UI types and Tasker setup interface/color picker
     - Utilize lists to make the UI user-friendly?
-    - ~~Use existing code where possible but remove duplicates - no need for color1 and color2~~
-    - ~~Merge `theme/color1sync` & `theme/color2sync`~~
-    - ~~Merge `theme/coloreditor/opacity` & `theme/color2alph~~`
-    - ~~Create `theme/color#` x 4, paired to theme~~
-    - ~~Write theme json code in templates.md~~
+    - Look at material color spec to understand color tone in ".OneUI.colors{}"
+    - Finish moving preset.json code to new theme func
+        - Remove formulas from globals meant for custom
+    - Use existing code where possible but remove duplicates - no need for color1 and color2
+    - Merge `theme/color1sync` & `theme/color2sync`
+    - Merge `theme/coloreditor/opacity` & `theme/color2alph~
+    - Create `theme/color#` x 4, paired to theme
+    - Write theme json code in templates.md
+    - ~~`Update `theme/color/*` from `theme/coloreditor` or make user c&p?`~~ 
+   - `"Fill In" "custom" theme values from theme to global` - option? **Potentially not**
+        - On "Custom" select? If user goes back to regular theme, settings would persist
+        - Switch at top of `theme/coloreditor`?
+    - ~~`Write flow for "theme/coloreditor"`~~
+     - `Make circle shape configurable with "ring_shape"`
+    - Look at each theme in JSON
+        - Verify configurations seem to match chart below and Material/OneUI specs
+        - ~~`Convert "dp" to "kpx`"~~
+        - ~~Figure out using `$$` in JSON~~ -  in JSON will work `$si(#jsonval)$` (sysca1, 50)
 - Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - `"lock" in devicetype > "security"`
-- ~~`"Icon #" > "Object #" in editor`~~
+- `"Icon #" > "Object #" in editor`
+- `theme/objpaddingbox2` > `theme/objpaddingside`
 
 
 
@@ -372,7 +394,7 @@ appiconsize                     appico                  Op: Choose app icon size
 theme/cornerradius                    boxrad                  Op: Widget corner radius
 theme/objpadding              icopad                  Op: Icon padding
 theme/objpadding2                icopad                  Op: Icon padding
-theme/objpaddingbox2                                          Op: Icon padding to Box 1
+theme/objpaddingside                                          Op: Icon padding to Box 1
                                 icodevszsc
                                 icodevsz
 theme/verticalpadding                 verpad                  Op: Widget vertical padding

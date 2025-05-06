@@ -48,7 +48,7 @@
         "min": 100,
         "max": 300,
         "toggles": 10,
-        "global_formula": "$si(rwidth) - (gv(theme/verticalpadding) * 2)$"
+        "global_formula": "$gv(func/theme)$$si(rwidth) - (#padwgtver * 2)$"
       },
       "core/size/wgtheight": {
         "index": 5,
@@ -59,7 +59,7 @@
         "min": 500,
         "max": 720,
         "toggles": 10,
-        "global_formula": "$si(rheight) - (gv(theme/horizontalpadding) * 2)$"
+        "global_formula": "$gv(func/theme)$$si(rheight) - (#padwgthor * 2)$"
       },
       "core/size/box2width": {
         "index": 6,
@@ -87,7 +87,7 @@
         "title": "box2iconmax",
         "description": "Number of icons that will fit in Box 2 (per row). Based on widget size and padding",
         "toggles": 10,
-        "global_formula": "$gv(func/alignment)$$lv(box2dir, (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$$lv(icon, gv(iconsize) + #objpad1)$$lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #objpad1))$$if(gv(fitmoreobj) = 0,(if(#boxsize <= 2, 2, mu(round, #boxsize))),10)$"
+        "global_formula": "$gv(func/alignment)$$lv(box2dir, (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$$lv(icon, gv(iconsize) + #padobjhor)$$lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #padobjhor))$$if(gv(fitmoreobj) = 0,(if(#boxsize <= 2, 2, mu(round, #boxsize))),10)$"
       },
       "core/tasker": {
         "index": 9,
@@ -182,8 +182,22 @@
         "index": 22,
         "type": "TEXT",
         "title": "alignment",
-        "description": "General Variables for use in alignment globals and objects",
-        "value": "$lv(align, gv(widgetorient))$$lv(override, gv(autoalign))$$lv(invert, gv(boxtoggle))$$lv(objpad1, gv(theme/objpadding))$$lv(objpad2, gv(theme/objpadding2))$$lv(objboxpad2, gv(theme/objpaddingbox2))$$lv(wgtwidth1, (if(#align = 0, si(rheight), si(rwidth))))$$lv(wgtdir, (if(#align = 0, gv(core/size/wgtheight), gv(core/size/wgtwidth ))))$$lv(wgtdirop, (if(#align = 0, gv(core/size/wgtwidth), gv(core/size/wgtheight ))))$$lv(iconcalc, (gv(iconsize) * 2) + #objpad1)$$lv(pad, (#wgtdir - #iconcalc))$$lv(box1sm, (gv(iconsize) + (#objboxpad2 * 2) * 100 / #wgtwidth1))$$lv(box1lg, (((#objboxpad2 * 2) + #iconcalc)))$$lv(boxalign, (if(gv(box1position) = RIGHT, CENTERRIGHT,gv(box1position) = LEFT, CENTERLEFT,gv(box1position) = TOP, TOP,gv(box1position) = BOTTOM, BOTTOM)))$$lv(boxcenter, (if(gv(box1position) = RIGHT, VERTICAL_RIGHT,gv(box1position) = LEFT, VERTICAL_LEFT,gv(box1position) = TOP, HORIZONTAL_TOP,gv(box1position) = BOTTOM, HORIZONTAL_BOTTOM)))$$lv(margin1, if(#align = 0, \"#objpad2\" , \"#objpad1\"))$$lv(margin2, if(#align = 0, \"#objpad1\" , \"#objpad2\"))$"
+        "description": "Variables for use in alignment globals and objects",
+        "value": "$gv(func/theme)$$lv(align,gv(widgetorient))$$lv(override,gv(autoalign))$$lv(invert,gv(boxtoggle))$$lv(wgtwidth1,(if(#align=0,si(rheight),si(rwidth))))$$lv(wgtdir,(if(#align=0,gv(core/size/wgtheight),gv(core/size/wgtwidth))))$$lv(wgtdirop,(if(#align=0,gv(core/size/wgtwidth),gv(core/size/wgtheight))))$$lv(iconcalc,(gv(iconsize)*2)+#padobjhor)$$lv(pad,(#wgtdir-#iconcalc))$$lv(box1sm,(gv(iconsize)+(#padobjver*2)*100/#wgtwidth1))$$lv(box1lg,(((#padobjver*2)+#iconcalc)))$$lv(boxalign,(if(gv(box1position)=RIGHT,CENTERRIGHT,gv(box1position)=LEFT,CENTERLEFT,gv(box1position)=TOP,TOP,gv(box1position)=BOTTOM,BOTTOM)))$$lv(boxcenter,(if(gv(box1position)=RIGHT,VERTICAL_RIGHT,gv(box1position)=LEFT,VERTICAL_LEFT,gv(box1position)=TOP,HORIZONTAL_TOP,gv(box1position)=BOTTOM,HORIZONTAL_BOTTOM)))$$lv(margin1,if(#align=0,\"#padobjver\",\"#padobjhor\"))$$lv(margin2,if(#align=0,\"#padobjhor\",\"#padobjver\"))$"
+      },
+      "func/theme": {
+        "index": 22,
+        "type": "TEXT",
+        "title": "theme",
+        "description": "Variables for use in theme globals and objects",
+        "value": "$lv(dbtheme,gv(json/theme))$$lv(darkmode,gv(theme/darkmode))$$lv(settheme,(if(gv(settheme)=0,\"OneUI\",gv(settheme)=1,\"Material\",gv(settheme)=2,\"Basic\",gv(settheme)=3,\"Custom\",\"0\")))$$lv(pastel,ce(tc(json,#dbtheme,(\".pastel.\"+mu(rnd,1,18))),sat,20))$$lv(themename,(tc(json,#dbtheme,(\".\"+#settheme))))$$lv(tborder,(tc(json,#dbtheme,(\".\"+#settheme+\".border_width\"))))$$lv(tradius,(tc(json,#dbtheme,(\".\"+#settheme+\".corner_radius\"))))$$lv(tpadwgt,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_widget\"))))$$lv(tpadobj,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_object\"))))$$lv(tpadside,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_sides\"))))$$lv(tdevico,(tc(json,#dbtheme,(\".\"+#settheme+\".dev_ico_ring\"))))$$lv(tringsha,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_shape\"))))$$lv(tshad,(tc(json,#dbtheme,(\".\"+#settheme+\".shadow\"))))$$lv(twgtopa,(tc(json,#dbtheme,(\".\"+#settheme+\".wgt_opacity\"))))$$lv(border,(if(gv(theme/bordersize)!=\"\",gv(theme/bordersize),#tborder)))$$lv(radius,(if(gv(theme/cornerradius)!=\"\",gv(theme/cornerradius),#tradius)))$$lv(padwgthor,(if(gv(theme/verticalpadding)!=\"\",gv(theme/verticalpadding),#tpadwgt)))$$lv(padwgtver,(if(gv(theme/horizontalpadding)!=\"\",gv(theme/horizontalpadding),#tpadwgt)))$$lv(padobjhor,(if(gv(theme/objpadding)!=\"\",gv(theme/objpadding),#tpadobj)))$$lv(padobjver,(if(gv(theme/objpadding2)!=\"\",gv(theme/objpadding2),#tpadobj)))$$lv(padobjside,(if(gv(theme/objpaddingside)!=\"\",gv(theme/objpaddingside),#tpadside)))$$lv(ringsha,(if(gv(theme/ringshape)!=\"\",gv(theme/ringshape),#tringsha)))$$lv(wgtopa,(if(gv(theme/coloreditor/opacity)!=\"\",gv(theme/coloreditor/opacity),#twgtopa)))$"
+      },
+      "func/themecolors": {
+        "index": 22,
+        "type": "TEXT",
+        "title": "themecolors",
+        "description": "Variables for color outputs",
+        "value": "$gv(func/theme)$$lv(cborder,(tc(json,#dbtheme,(\".\"+#colors+\".border\"))))$$lv(cback1,(tc(json,#dbtheme,(\".\"+#colors+\".back_1\"))))$$lv(cback2,(tc(json,#dbtheme,(\".\"+#colors+\".back_2\"))))$$lv(cobjicooff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_off\"))))$$lv(cobjringoff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_off\"))))$$lv(cobjiconon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_on\"))))$$lv(cobjringon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_on\"))))$$lv(back1,(if(gv(theme/colors/back1)!=\"\",gv(theme/colors/back1),if(#cback1~=\"#[a-fA-F0-9]*\",#cback1,si(#cback1)))))$$lv(back2,(if(gv(theme/colors/back2)!=\"\",gv(theme/colors/back2),if(#cback2~=\"#[a-fA-F0-9]*\",#cback2,si(#cback2)))))$$lv(objiconon,(if(gv(theme/colors/objiconon)!=\"\",gv(theme/colors/objiconon),if(#cobjiconon~=\"#[a-fA-F0-9]*\",#cobjiconon,si(#cobjiconon)))))$$lv(objiconoff,(if(gv(theme/colors/objiconoff)!=\"\",gv(theme/colors/objiconoff),if(#cobjiconoff~=\"#[a-fA-F0-9]*\",#cobjiconoff,si(#cobjiconoff)))))$$lv(objringon,(if(gv(theme/colors/objringon)!=\"\",gv(theme/colors/objringon),if(#cobjringon~=\"#[a-fA-F0-9]*\",#cobjringon,si(#cobjringon)))))$$lv(objringoff,(if(gv(theme/colors/objringoff)!=\"\",gv(theme/colors/objringoff),if(#cobjringoff~=\"#[a-fA-F0-9]*\",#cobjringoff,si(#cobjringoff)))))$$lv(border,(if(gv(theme/colors/border)!=\"\",gv(theme/colors/border),if(#cborder~=\"#[a-fA-F0-9]*\",#cborder,si(#cborder)))))$"
       },
       "func/devjsonrem": {
         "index": 23,
@@ -284,93 +298,110 @@
         "type": "COLOR",
         "title": "back1",
         "description": "Background color 1",
-        "value": "#BF005B66",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cback1$"
+        "value": ""
       },
       "theme/colors/back2": {
         "index": 49,
         "type": "COLOR",
         "title": "back2",
         "description": "Background color 2",
-        "value": "#BF007D8C",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cback2$"
+        "value": ""
       },
       "theme/colors/objiconon": {
         "index": 49,
         "type": "COLOR",
         "title": "objiconon",
         "description": "Object Icon On",
-        "value": "#E7FFFFFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjiconon$"
+        "value": ""
       },
       "theme/colors/objiconoff": {
         "index": 49,
         "type": "COLOR",
         "title": "objiconoff",
         "description": "Object Icon Off",
-        "value": "#FF00DEFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjicooff$"
+        "value": ""
       },
       "theme/colors/objringon": {
         "index": 49,
         "type": "COLOR",
         "title": "objringon",
         "description": "Object Ring On",
-        "value": "#FF00DEFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjringon$"
+        "value": ""
       },
       "theme/colors/objringoff": {
         "index": 49,
         "type": "COLOR",
         "title": "objringoff",
         "description": "Object Ring Off",
-        "value": "#FF00DEFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cobjringoff$"
+        "value": ""
       },
       "theme/colors/border": {
         "index": 54,
         "type": "COLOR",
         "title": "border",
         "description": "Border color",
-        "value": "FFFFFF",
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#cborder$"
+        "value": ""
+      },
+      "theme/colorgen": {
+        "index": 32,
+        "type": "FOLDER",
+        "title": "colorgen",
+        "description": "Generate colors when using \"custom\" theme"
+      },
+      "theme/colorgen/syscolorset": {
+        "index": 35,
+        "type": "LIST",
+        "title": "syscolorset",
+        "description": "Select a color tone",
+        "entries": "0##None,1##Accent#1,2##Accent#2,3##Accent#3,4##Neutral#1,5##Neutral#2,6##Neutral#3",
+        "value": "0"
+      },
+      "theme/colorgen/adjcolor": {
+        "index": 37,
+        "type": "NUMBER",
+        "title": "adjcolor",
+        "description": "Strength of color tone or filter",
+        "min": 0,
+        "max": 100,
+        "value": 50.0
+      },
+      "theme/colorgen/opacity": {
+        "index": 40,
+        "type": "NUMBER",
+        "title": "opacity",
+        "description": "Opacity Adjustment - 0 = Transparent, 255 = Solid",
+        "min": 0,
+        "max": 255,
+        "value": 75.0
+      },
+      "theme/colorgen/output": {
+        "index": 40,
+        "type": "COLOR",
+        "title": "output",
+        "description": "Result of your custom color. Copy to \"colors\" folder",
+        "value": ""
       },
       "theme/coloreditor": {
         "index": 32,
         "type": "FOLDER",
         "title": "coloreditor",
-        "description": "Edit colors when using \"custom\" theme. Changes will be reset on theme change"
+        "description": "Edit colors when using \"custom\" theme"
       },
       "theme/coloreditor/editcolor": {
         "index": 38,
         "type": "LIST",
         "title": "edit",
-        "description": "Select the color to edit",
-        "entries": "0##Background 1,1##Background 2,2##Icon Off,3##Icon On,4##Ring Off,5##Ring On,6##Border Color",
+        "description": "Select the color to edit from your wallpaper or the \"colors\" folder",
+        "entries": "0##Background1,1##Background2,2##Icon Off,3##Icon On,4##Ring Off,5##Ring On,6##Border Color,7##Wallpaper Color 1,8##Wallpaper Color 2",
         "value": "0"
-      },
-      "theme/coloreditor/syscolorset": {
-        "index": 35,
-        "type": "LIST",
-        "title": "syscolorset",
-        "description": "(OneUI/Material Theme) Select a color tone to adjust",
-        "entries": "0##Accent #1, 1##Accent #2, 2##Accent #3, 3##Neutral #1, 4##Neutral #2, 5##Neutral #3",
-        "value": "2"
       },
       "theme/coloreditor/wallcolorset": {
         "index": 36,
         "type": "LIST",
         "title": "wallcolorset",
-        "description": "(Basic/Custom Theme) Select a color filter",
+        "description": "Select a color filter",
         "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
-        "value": "2"
+        "value": "0"
       },
       "theme/coloreditor/adjcolor": {
         "index": 37,
@@ -390,6 +421,13 @@
         "max": 255,
         "value": 75.0
       },
+      "theme/coloreditor/output": {
+        "index": 40,
+        "type": "COLOR",
+        "title": "output",
+        "description": "Result of your custom color. Copy to \"colors\" folder",
+        "value": ""
+      },
       "theme/darkmode": {
         "index": 82,
         "type": "SWITCH",
@@ -397,9 +435,16 @@
         "description": "Set dark mode",
         "value": 1,
         "on_mode": "MANUAL_FORMULA",
-        "on_formula": "$gv(func/theme)$$if(#tname != \"Custom\" & si(darkmode) = 1, 1)$",
+        "on_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 1, 1)$",
         "off_mode": "MANUAL_FORMULA",
-        "off_formula": "$gv(func/theme)$$if(#tname != \"Custom\" & si(darkmode) = 0, 0)$"
+        "off_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 0, 0)$"
+      },
+      "theme/ringshape": {
+        "index": 59,
+        "type": "TEXT",
+        "title": "ringshape",
+        "description": "Shape of the rings behind the objects",
+        "value": ""
       },
       "theme/border": {
         "index": 52,
@@ -421,40 +466,40 @@
         "max": 50,
         "value": 3.0,
         "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#tborder$"
+        "global_formula": ""
       },
       "theme/objpadding": {
         "index": 76,
         "type": "NUMBER",
         "title": "objpadding",
-        "description": "Set the object padding across each row/column. Default: 20kpx",
+        "description": "Set the object padding across each row/column",
         "min": 0,
         "max": 50,
         "value": 10.0,
         "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#tpadobj$"
+        "global_formula": ""
       },
       "theme/objpadding2": {
         "index": 77,
         "type": "NUMBER",
         "title": "objpadding2",
-        "description": "Set the object padding between the two rows/columns. Default: 20kpx",
+        "description": "Set the object padding between the two rows/columns",
         "min": 0,
         "max": 50,
         "value": 10.0,
         "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#tpadobj$"
+        "global_formula": ""
       },
-      "theme/objpaddingbox2": {
+      "theme/objpaddingside": {
         "index": 78,
         "type": "NUMBER",
-        "title": "objpaddingbox2",
-        "description": "Set the object padding from the edge of Box 2. Default: 10kpx",
+        "title": "objpaddingside",
+        "description": "Set the object padding from the edge of the box to the first icon",
         "min": 0,
         "max": 50,
         "value": 20.0,
         "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#tpadside$"
+        "global_formula": ""
       },
       "theme/verticalpadding": {
         "index": 79,
@@ -465,7 +510,7 @@
         "min": 0,
         "max": 50,
         "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#tpadwgt$"
+        "global_formula": ""
       },
       "theme/horizontalpadding": {
         "index": 80,
@@ -476,7 +521,7 @@
         "min": 0,
         "max": 50,
         "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#tpadwgt$"
+        "global_formula": ""
       },
       "theme/cornerradius": {
         "index": 81,
@@ -487,7 +532,7 @@
         "max": 100,
         "value": 10.0,
         "toggles": 10,
-        "global_formula": "$gv(func/theme)$$#tradius1$"
+        "global_formula": ""
       },
       "entities": {
         "index": 57,
@@ -520,27 +565,8 @@
         "index": 61,
         "type": "TEXT",
         "title": "entity3",
-        "description": "Device 3 Entity ID",
-        "value": "light.closet_light"
-      },
-      "entities/entity4": {
-        "index": 62,
-        "type": "TEXT",
-        "title": "entity4",
-        "description": "Device 4 Entity ID",
-        "value": "light.kitchen_lights"
-      },
-      "entities/entity5": {
-        "index": 63,
-        "type": "TEXT",
-        "title": "entity5",
-        "description": "Device 5 Entity ID",
-        "value": "light.foyer_lights"
-      },
-      "entities/entity6": {
-        "index": 64,
-        "type": "TEXT",
-        "title": "entity6",
+        "description": "Device 3 Entity ID"        - Add 2 new flows in editor
+
         "description": "Device 6 Entity ID",
         "value": "light.bedroom_lights"
       },
@@ -652,10 +678,9 @@
       },
       "boxtoggle": {
         "index": 84,
-        "type": "LIST",
+        "type": "SWITCH",
         "title": "boxtoggle",
         "description": "Set the order of the boxes on your widget",
-        "entries": "DATA##\"Set the order of the boxes on your widget.\nSave the widget for changes to take effect\",1##Box 1 > Box 2,0##Box 2 > Box 1",
         "value": "1"
       },
       "autoalign": {
@@ -871,13 +896,13 @@
       },
       {
         "id": "FsbjtzyQ",
-        "name": "Color 1 Set",
+        "name": "Color Generate",
         "t": [
           {
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(settheme)$$gv(theme/color1sync)$$gv(theme/coloreditor/wallcolorset)$$gv(theme/coloreditor/adjcolor)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
+              "formula": "$gv(theme/colorgen/syscolorset)$$gv(theme/colorgen/adjcolor)$$gv(theme/colorgen/opacity)$"
             }
           },
           {
@@ -890,20 +915,20 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(source, (if(gv(settheme) = 0, \"wpcolor1\", gv(settheme) = 1, \"wpcolor2\", gv(settheme) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color1fil1) = 1, \"sat\", gv(theme/color1fil1) = 2, \"lum\", gv(theme/color1fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/coloreditor/syscolorset) = 0, \"sysca1\", gv(theme/coloreditor/syscolorset) = 1, \"sysca2\", gv(theme/coloreditor/syscolorset) = 2, \"sysca3\", gv(theme/coloreditor/syscolorset) = 3, \"syscn1\", gv(theme/coloreditor/syscolorset) = 4, \"syscn2\", gv(theme/coloreditor/syscolorset) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color1fil2) = 0, \"\", gv(theme/color1fil2) = 1, \"a\", gv(theme/color1fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color1fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color1fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$\n\n$lv(color, (if(gv(settheme) <= 1, #color1, gv(settheme) = 2, #color2, gv(settheme) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/coloreditor/opacity), 0)))$\n$#final$"
+              "formula": "$gv(func/themecolors)$$lv(adjcolor,gv(theme/colorgen/adjcolor))$$lv(opacity,gv(theme/colorgen/opacity))$$lv(gsyscolorset,gv(theme/colorgen/syscolorset))$$lv(syscolorset,(if(#gsyscolorset=1,\"sysca1\",#gsyscolorset=2,\"sysca2\",#gsyscolorset=3,\"sysca3\",#gsyscolorset=4,\"syscn1\",#gsyscolorset=5,\"syscn2\",#gsyscolorset=6,\"syscn3\",\"\")))$$lv(matfilter,si(#syscolorset,#adjcolor))$$lv(matfinal,ce(#matfilter,alpha,#opacity))$$#matfinal$"
             }
           }
         ]
       },
       {
         "id": "FblPILjW",
-        "name": "Color 2 Set",
+        "name": "Color Editor",
         "t": [
           {
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(settheme)$$gv(theme/color1sync)$$gv(theme/coloreditor/wallcolorset)$$gv(theme/coloreditor/adjcolor)$$gv(theme/color1fil2)$$gv(theme/color1pick)$"
+              "formula": "$gv(theme/coloreditor/editcolor)$$gv(theme/coloreditor/wallcolorset)$$gv(theme/coloreditor/adjcolor)$$gv(theme/coloreditor/opacity)$"
             }
           },
           {
@@ -916,7 +941,7 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(source, (if(gv(theme/color2sel) = 0, \"wpcolor1\", gv(theme/color2sel) = 1, \"wpcolor2\", gv(theme/color2sel) = 2, \"sys\", \"0\")))$\n$lv(filter, (if(gv(theme/color2fil1) = 1, \"sat\", gv(theme/color2fil1) = 2, \"lum\", gv(theme/color2fil1) = 3, \"comp\", \"sat\")))$\n$lv(coltone, (if(gv(theme/color2sysc) = 0, \"sysca1\", gv(theme/color2sysc) = 1, \"sysca2\", gv(theme/color2sysc) = 2, \"sysca3\", gv(theme/color2sysc) = 3, \"syscn1\", gv(theme/color2sysc) = 4, \"syscn2\", gv(theme/color2sysc) = 5, \"syscn3\", \"sysca1\")))$\n$lv(addsub, (if(gv(theme/color2fil2) = 0, \"\", gv(theme/color2fil2) = 1, \"a\", gv(theme/color2fil2) = 2, \"r\", \"\")))$\n\n$if(gv(theme/color2fil1) > 0 & (#source = \"wpcolor1\" | #source = \"wpcolor2\"), lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color2fil1) > 0 & #source = \"sys\", lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor))))$\n$if(gv(theme/color2fil1) = 0 | gv(theme/color2sel) = 3, lv(col3, gv(theme/color2pick)))$\n\n\n$lv(color, (if(gv(theme/color2sel) <= 1, #color1, gv(theme/color2sel) = 2, #color2, gv(theme/color2sel) = 3, #col3)))$\n$lv(final, ce(#color, alpha, mu(round, gv(theme/color2alph), 0)))$\n$#final$"
+              "formula": "$gv(func/themecolors)$$lv(adjcolor,gv(theme/coloreditor/adjcolor))$$lv(opacity,gv(theme/coloreditor/opacity))$$lv(gwallcolorset,gv(theme/coloreditor/wallcolorset))$$lv(geditcolor,gv(theme/coloreditor/editcolor))$$lv(editcolor,(if(#geditcolor=0,\"back1\",#geditcolor=1,\"back2\",#geditcolor=2,\"objiconon\",#geditcolor=3,\"objiconoff\",#geditcolor=4,\"cobjringon\",#geditcolor=5,\"cobjringoff\",#geditcolor=6,\"border\",#geditcolor=7,\"wpcolor1\",#geditcolor=8,\"wpcolor2\",\"\")))$$lv(wallcolorset,(if(#gwallcolorset=1,\"sat\",#gwallcolorset=2,\"lum\",#gwallcolorset=3,\"comp\",\"\")))$$lv(editfilter,if(#geditcolor<=6,ce(#editcolor,#wallcolorset,#adjcolor),(#geditcolor>=7,ce(si(#editcolor),#wallcolorset,#adjcolor)\"\")))$$lv(editfinal,ce(#matfilter,alpha,#opacity))$$#editfinal$"
             }
           }
         ]
@@ -1047,8 +1072,8 @@
         },
         "internal_formulas": {
           "position_anchor": "$gv(func/alignment)$$#boxalign$",
-          "position_offset_x": "$if(gv(widgetorient) = 0, gv(theme/horizontalpadding), 0 )$",
-          "position_offset_y": "$if(gv(widgetorient) = 0, 0, gv(theme/verticalpadding))$",
+          "position_offset_x": "$gv(func/theme)$$if(gv(widgetorient) = 0, #padwgthor, 0 )$",
+          "position_offset_y": "$gv(func/theme)$$if(gv(widgetorient) = 0, 0, #padwgtver)$",
           "config_visible": "$gv(func/jsontemp)$$if(#tbox1 = 0, REMOVE, ALWAYS)$"
         },
         "viewgroup_items": [
@@ -1117,32 +1142,25 @@
             },
             "internal_formulas": {
               "config_visible": "$gv(func/jsonobj)$$if(#ticonpos = \"2\", REMOVE, ALWAYS)$",
-              "position_padding_left": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = LEFT, gv(theme/horizontalpadding), 0)), 0)$",
-              "position_padding_right": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = RIGHT, gv(theme/horizontalpadding), 0)), 0)$",
-              "position_padding_top": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = TOP, gv(theme/horizontalpadding), 0)), 0)$",
-              "position_padding_bottom": "$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = BOTTOM, gv(theme/horizontalpadding), 0)), 0)$",
+              "position_padding_left": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = LEFT, #padwgthor, 0)), 0)$",
+              "position_padding_right": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = RIGHT, #padwgthor, 0)), 0)$",
+              "position_padding_top": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = TOP, #padwgthor, 0)), 0)$",
+              "position_padding_bottom": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = BOTTOM, #padwgthor, 0)), 0)$",
               "config_stacking": "$if(gv(widgetorient) = 0, VERTICAL_CENTER, HORIZONTAL_CENTER)$",
               "config_margin": "$gv(func/alignment)$$#margin1$"
-            },
-            "internal_globals": {
-              "config_margin": "theme/objpadding2"
             },
             "config_stacking": "HORIZONTAL_CENTER",
             "viewgroup_items": [
               {
                 "internal_type": "StackLayerModule",
-                "config_stacking": "HORIZONTAL_CENTER",
                 "internal_title": "Row 1",
                 "internal_toggles": {
                   "config_stacking": 10,
                   "config_margin": 10
                 },
                 "internal_formulas": {
-                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
-                },
-                "internal_globals": {
-                  "config_margin": "theme/objpadding"
+                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER)$",
+                  "config_margin": "$gv(func/theme)$$#tpadobj$"
                 },
                 "viewgroup_items": [
                   {
@@ -1166,20 +1184,21 @@
                         "switch_text": ".box1.row1.0"
                       }
                     ],
-                    "position_padding_left": 10.0,
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
                         "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1222,16 +1241,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1268,10 +1288,7 @@
                 "internal_formulas": {
                   "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
                   "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
-                },
-                "internal_globals": {
-                  "config_margin": "theme/objpadding"
+                  "config_margin": "$gv(func/theme)$$#tpadobj$"
                 },
                 "viewgroup_items": [
                   {
@@ -1298,16 +1315,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1443,12 +1461,10 @@
                   }
                 ],
                 "internal_toggles": {
-                  "icon_size": 100,
-                  "paint_color": 0
+                  "icon_size": 100
                 },
                 "internal_globals": {
-                  "icon_size": "iconsize",
-                  "paint_color": "theme/colors/objiconon"
+                  "icon_size": "iconsize"
                 },
                 "internal_title": "Security Status",
                 "paint_color": "#FF44FF01"
@@ -1458,12 +1474,10 @@
                 "icon_icon": "mdi-shield-home-outline",
                 "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                 "internal_toggles": {
-                  "icon_size": 0,
-                  "paint_color": 0
+                  "icon_size": 0
                 },
                 "internal_globals": {
-                  "icon_size": "iconsize",
-                  "paint_color": "theme/colors/objiconon"
+                  "icon_size": "iconsize"
                 },
                 "internal_title": "Security Status",
                 "paint_color": "#FF1AFF1F",
@@ -1484,8 +1498,8 @@
         },
         "internal_formulas": {
           "position_anchor": "$gv(func/alignment)$$#boxalign$",
-          "position_offset_y": "$if(gv(widgetorient) = 0, 0, (gv(box1size) + gv(theme/verticalpadding)))$",
-          "position_offset_x": "$if(gv(widgetorient) = 0, (gv(box1size) + gv(theme/horizontalpadding)), 0)$"
+          "position_offset_y": "$gv(func/theme)$$if(gv(widgetorient) = 0, 0, (gv(box1size) + #padwgtver))$",
+          "position_offset_x": "$gv(func/theme)$$if(gv(widgetorient) = 0, (gv(box1size) + #padwgthor), 0)$"
         },
         "viewgroup_items": [
           {
@@ -1541,7 +1555,7 @@
                   "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/box2width), (gv(core/size/box2width) - gv(box1size)))$",
                   "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/box2height), (gv(core/size/box2height) - gv(box1size)))$",
                   "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
-                  "position_padding_left": "$if(gv(widgetorient) = 0, gv(theme/verticalpadding), 0 )$",
+                  "position_padding_left": "$gv(func/theme)$$if(gv(widgetorient) = 0, #padwgtver, 0 )$",
                   "shape_corners": "$gv(func/theme)$$#tradius$",
                   "paint_stroke": "$gv(func/themecolors)$$#tborder$"
                 },
@@ -1566,10 +1580,10 @@
             },
             "internal_formulas": {
               "position_anchor": "$gv(func/alignment)$$#boxalign$",
-              "position_padding_left": "$if(gv(box1position) = LEFT, gv(theme/objpaddingbox2), 0)$",
-              "position_padding_right": "$if(gv(box1position) = RIGHT, gv(theme/objpaddingbox2), 0)$",
-              "position_padding_top": "$if(gv(box1position) = TOP, gv(theme/objpaddingbox2), 0)$",
-              "position_padding_bottom": "$if(gv(box1position) = BOTTOM, gv(theme/objpaddingbox2), 0)$",
+              "position_padding_left": "$gv(func/theme)$$if(gv(box1position) = LEFT, #padobjside, 0)$",
+              "position_padding_right": "$gv(func/theme)$$if(gv(box1position) = RIGHT, #padobjside, 0)$",
+              "position_padding_top": "$gv(func/theme)$$if(gv(box1position) = TOP, #padobjside, 0)$",
+              "position_padding_bottom": "$gv(func/theme)$$if(gv(box1position) = BOTTOM, #padobjside, 0)$",
               "config_stacking": "$gv(func/alignment)$$#boxcenter$",
               "config_margin": "$gv(func/alignment)$$#margin1$"
             },
@@ -1585,10 +1599,7 @@
                 },
                 "internal_formulas": {
                   "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
-                },
-                "internal_globals": {
-                  "config_margin": "theme/objpadding"
+                  "config_margin": "$gv(func/theme)$$#tpadobj$"
                 },
                 "viewgroup_items": [
                   {
@@ -1611,16 +1622,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1663,16 +1675,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1715,16 +1728,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1767,16 +1781,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1819,16 +1834,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1871,16 +1887,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -1917,10 +1934,7 @@
                 "internal_formulas": {
                   "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
                   "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$",
-                  "config_margin": "$gv(func/alignment)$$#margin2$"
-                },
-                "internal_globals": {
-                  "config_margin": "theme/objpadding"
+                  "config_margin": "$gv(func/theme)$$#tpadobj$"
                 },
                 "viewgroup_items": [
                   {
@@ -1943,16 +1957,17 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10
                         },
                         "internal_globals": {
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
                       },
@@ -2274,38 +2289,31 @@
         "internal_formulas": {
           "position_anchor": "$gv(func/jsontemp)$$if(gv(box1position) = RIGHT, (if(#ticopos = 1, TOPLEFT, #ticopos = 2, CENTERRIGHT, #ticopos = 3, BOTTOMLEFT)),gv(box1position) = LEFT, (if(#ticopos = 1, TOPRIGHT, #ticopos = 2, CENTERLEFT, #ticopos = 3, BOTTOMRIGHT)),gv(box1position) = TOP, (if(#ticopos = 1, BOTTOMLEFT, #ticopos = 2, TOP, #ticopos = 3, BOTTOMRIGHT)),gv(box1position) = BOTTOM, (if(#ticopos = 1, TOPLEFT, #ticopos = 2, BOTTOM, #ticopos = 3, TOPRIGHT)))$",
           "config_visible": "$gv(func/jsontemp)$$if(#ticopos = 3, REMOVE, ALWAYS)$",
-          "position_offset_x": "$gv(func/jsontemp)$$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,(((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2)+ gv(theme/verticalpadding) - (gv(deviceiconsize) / 2)),gv(box1position) = TOP    | gv(box1position) = BOTTOM, 0)))$$if(#ticopos = 1 | #ticopos = 3, gv(theme/verticalpadding),#ticopos = 2, #pos)$",
-          "position_offset_y": "$gv(func/jsontemp)$$lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,0,gv(box1position) = TOP   | gv(box1position) = BOTTOM,(((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) + gv(theme/horizontalpadding) - (gv(deviceiconsize) / 2)))))$$if(#ticopos = 1 | #ticopos = 3, gv(theme/horizontalpadding),#ticopos = 2, #pos)$"
-        },
-        "internal_globals": {
-          "position_offset_x": "theme/verticalpadding",
-          "position_offset_y": "theme/horizontalpadding"
+          "position_offset_x": "$gv(func/jsontemp)$$gv(func/theme)$$lv(pos,(if(gv(box1position)=RIGHT|gv(box1position)=LEFT,(((if(gv(widgetorient)=0,gv(core/size/wgtheight),gv(box1size)))/2)+#padwgtver-(gv(deviceiconsize)/2)),gv(box1position)=TOP|gv(box1position)=BOTTOM,0)))$$if(#ticopos=1|#ticopos=3,padwgtver,#ticopos=2,#pos)$",
+          "position_offset_y": "$gv(func/jsontemp)$$gv(func/theme)$$lv(pos,(if(gv(box1position)=RIGHT|gv(box1position)=LEFT,0,gv(box1position)=TOP|gv(box1position)=BOTTOM,(((if(gv(widgetorient)=0,gv(core/size/wgtheight),gv(box1size)))/2)+#padwgtver-(gv(deviceiconsize)/2)))))$$if(#ticopos=1|#ticopos=3,#padwgtver,#ticopos=2,#pos)$"
         },
         "viewgroup_items": [
           {
             "internal_type": "FontIconModule",
+            "internal_title": "Device Icon",
+            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
+            "icon_icon": "material-ico-wb-incandescent-mod",
             "internal_toggles": {
               "paint_color": 10,
-              "position_offset_y": 100,
-              "position_offset_x": 100,
+              "position_offset_y": 10,
+              "position_offset_x": 10,
               "icon_rotate_mode": 10,
               "icon_size": 100,
               "icon_icon": 10
             },
             "internal_formulas": {
-              "paint_color": "$ce(gv(theme/colors/objiconon),alpha,20)$",
+              "paint_color": "$gv(func/themecolors)$$#objiconon$",
               "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$",
+              "position_offset_y": "$gv(func/theme)$$##padwgthor$",
+              "position_offset_x": "$gv(func/theme)$$##padwgtver$",
               "icon_icon": "$gv(func/jsontemp)$$#ticon$"
             },
-            "icon_rotate_offset": 180.0,
-            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-            "icon_icon": "material-ico-wb-incandescent-mod",
-            "icon_size": 120.0,
-            "position_offset_x": 15.0,
-            "internal_title": "Device Icon",
             "internal_globals": {
-              "position_offset_y": "theme/horizontalpadding",
-              "position_offset_x": "theme/verticalpadding",
               "icon_size": "deviceiconsize"
             }
           },
@@ -2384,31 +2392,25 @@
       {
         "internal_type": "StackLayerModule",
         "internal_title": "App Icons",
+        "position_offset_x": 10.0,
+        "position_offset_y": 10.0,
+        "config_stacking": "HORIZONTAL_CENTER",
         "internal_toggles": {
-          "config_margin": 0,
-          "position_padding_left": 0,
+          "config_margin": 10,
           "position_anchor": 10,
           "config_visible": 10
         },
-        "internal_globals": {
-          "config_margin": "theme/objpadding",
-          "position_padding_left": "theme/objpadding"
-        },
-        "config_stacking": "HORIZONTAL_CENTER",
-        "config_margin": 10.0,
         "internal_formulas": {
           "position_anchor": "$gv(func/jsontemp)$$if(#ticopos = 3,(if(gv(box1position) = RIGHT, TOPLEFT,gv(box1position) = LEFT, TOPRIGHT,gv(box1position) = TOP, BOTTOMLEFT,gv(box1position) = BOTTOM, TOPLEFT)),(if(gv(box1position) = RIGHT, BOTTOMLEFT,gv(box1position) = LEFT, BOTTOMRIGHT,gv(box1position) = TOP, BOTTOMRIGHT,gv(box1position) = BOTTOM, TOPRIGHT)))$",
-          "config_visible": "$if(gv(appiconvis) = 0, ALWAYS, REMOVE)$"
+          "config_visible": "$if(gv(appiconvis) = 0, ALWAYS, REMOVE)$",
+          "config_margin": "$gv(func/theme)$$#tpadobj$"
         },
-        "position_offset_x": 10.0,
-        "position_offset_y": 10.0,
         "viewgroup_items": [
           {
             "internal_type": "FontIconModule",
-            "icon_icon": "mdi-cog",
             "internal_title": "App 2",
-            "icon_size": 32.0,
-            "position_anchor": "BOTTOMLEFT",
+            "icon_icon": "mdi-cog",
+            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
             "internal_events": [
               {
                 "type": "SINGLE_TAP",
@@ -2418,7 +2420,6 @@
                 "switch": "setupmode"
               }
             ],
-            "position_offset_x": 62.0,
             "internal_toggles": {
               "paint_color": 10,
               "position_anchor": 10,
@@ -2427,23 +2428,20 @@
               "position_offset_y": 10
             },
             "internal_formulas": {
-              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(theme/colors/objiconon),alpha,20), #00FFFFFF)$",
+              "paint_color": "$gv(func/themecolors)$$if(gv(appiconvis) = 0, #objiconon, #00FFFFFF)$",
               "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
-              "position_offset_x": "$gv(theme/verticalpadding) +(gv(theme/objpadding) * 2) +  gv(appiconsize)$",
-              "position_offset_y": "$gv(theme/horizontalpadding) + gv(theme/objpadding)$"
+              "position_offset_x": "$gv(func/theme)$$#padwgtver +(#padobjhor * 2) + gv(appiconsize)$",
+              "position_offset_y": "$gv(func/theme)$$#padwgthor + #padobjhor$"
             },
-            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
             "internal_globals": {
-              "position_offset_x": "theme/verticalpadding",
               "icon_size": "appiconsize"
             }
           },
           {
             "internal_type": "FontIconModule",
-            "icon_icon": "mdi-home-assistant",
             "internal_title": "App 1",
-            "icon_size": 32.0,
-            "position_anchor": "BOTTOMLEFT",
+            "icon_icon": "mdi-home-assistant",
+            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
             "internal_events": [
               {
                 "type": "SINGLE_TAP",
@@ -2452,7 +2450,6 @@
                 "intent": "intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;component=io.homeassistant.companion.android/.launch.LaunchActivity;S.org.kustom.intent.label=Home%20Assistant;end"
               }
             ],
-            "position_offset_x": 22.0,
             "internal_toggles": {
               "paint_color": 10,
               "position_anchor": 10,
@@ -2461,14 +2458,12 @@
               "position_offset_y": 10
             },
             "internal_formulas": {
-              "paint_color": "$if(gv(appiconvis) = 0, ce(gv(theme/colors/objiconon),alpha,20), #00FFFFFF)$",
+              "paint_color": "$gv(func/themecolors)$$if(gv(appiconvis) = 0, #objiconon, #00FFFFFF)$",
               "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
-              "position_offset_x": "$gv(theme/verticalpadding) + gv(theme/objpadding)$",
-              "position_offset_y": "$gv(theme/horizontalpadding) + gv(theme/objpadding)$"
+              "position_offset_x": "$gv(func/theme)$$#padwgtver + #padobjhor$",
+              "position_offset_y": "$gv(func/theme)$$#padwgthor + #padobjhor$"
             },
-            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
             "internal_globals": {
-              "position_offset_x": "theme/verticalpadding",
               "icon_size": "appiconsize"
             }
           }
@@ -2509,7 +2504,7 @@
               },
               {
                 "internal_type": "TextModule",
-                "text_expression": "Widget Padding: $gv(theme/verticalpadding)$ Side, $gv(theme/horizontalpadding)$ Top\nIcon: $gv(iconsize)$kpx, $tc(reg, gv(core/size/box2iconmax), \"\\n\", \"\")$ Vis\nIcon Padding:$gv(theme/objpadding)$ Edge, $gv(theme/objpadding)$ MID\n\n[bl=-10]Widget: $si(rwidth)$W, $si(rheight)$H, $si(rratio)$ 1:1\nBox Area: $tc(reg, gv(core/size/box2minsize), \"\\n\", \"\")$ Min, $gv(core/size/box2width)$W/$gv(core/size/box2height)$H\n\n$lv(icon, gv(iconsize) + gv(theme/objpadding))$$lv(lgbox, if(gv(widgetorient) = 0, gv(core/size/box2width), gv(core/size/box2height)))$$lv(adjustment, if(gv(deviceappiconpadding) = 1, gv(appiconsize), 0))$$lv(boxsize, #lgbox - #adjustment)$Icon to size ratio: $mu(abs, #boxsize /#icon)$[/bl]",
+                "text_expression": "Widget Padding: $gv(func/theme)$$#padwgtver$ Side, $#padwgthor$ Top\nIcon: $gv(iconsize)$kpx, $tc(reg, gv(core/size/box2iconmax), \"\\n\", \"\")$ Vis\nIcon Padding:$gv(theme/objpadding)$ Edge, $gv(theme/objpadding)$ MID\n\n[bl=-10]Widget: $si(rwidth)$W, $si(rheight)$H, $si(rratio)$ 1:1\nBox Area: $tc(reg, gv(core/size/box2minsize), \"\\n\", \"\")$ Min, $gv(core/size/box2width)$W/$gv(core/size/box2height)$H\n\n$lv(icon, gv(iconsize) + gv(theme/objpadding))$$lv(lgbox, if(gv(widgetorient) = 0, gv(core/size/box2width), gv(core/size/box2height)))$$lv(adjustment, if(gv(deviceappiconpadding) = 1, gv(appiconsize), 0))$$lv(boxsize, #lgbox - #adjustment)$Icon to size ratio: $mu(abs, #boxsize /#icon)$[/bl]",
                 "internal_title": "Widget Icon Padding",
                 "text_align": "CENTER",
                 "text_family": "kfile://org.kustom.provider/fonts/RobotoCondensed-Bold.ttf",

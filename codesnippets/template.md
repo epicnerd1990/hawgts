@@ -15,15 +15,15 @@ See samples.json for json samples and examples
   - Template JSON set to widget
 
 ###### #####################################
-###### KWGT Global template flow
+###### Flow: KWGT Global template
 ###### #####################################
 "Light - 1 Device, 2 Rows, 2 Boxes"
 
-**Trigger:** `OnChange` forumla: `$gv(templateselect)`
+**Trigger:** `OnChange` formula: `$gv(templateselect)`
 
 **Action**
 
-###### 1- Formula - 
+###### 1 - Formula - 
 ```
   $lv(objfit, gv(core/size/box2iconmax))$
   $lv(posid, (".box2.row1." + (#objfit - 1)))$
@@ -206,50 +206,130 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
   )$
 ```
 
-###### Flow: Custom Colors > Globals
+###### #####################################
+###### Flow: Generate Material Colors
+###### #####################################
+
+**Trigger:** `OnChange` formula: `$gv(theme/colorgen/syscolorset)$$gv(theme/colorgen/adjcolor)$$gv(theme/colorgen/opacity)$`
+
+**Action**
+
+###### 1 - Formula - 
+```
+  $gv(func/themecolors)$
+
+  $lv(adjcolor, gv(theme/colorgen/adjcolor))$
+  $lv(opacity, gv(theme/colorgen/opacity))$
+
+  $lv(gsyscolorset, gv(theme/colorgen/syscolorset))$
+  $lv(syscolorset, (if(#gsyscolorset = 1, "sysca1",
+                       #gsyscolorset = 2, "sysca2",
+                       #gsyscolorset = 3, "sysca3",
+                       #gsyscolorset = 4, "syscn1",
+                       #gsyscolorset = 5, "syscn2",
+                       #gsyscolorset = 6, "syscn3",
+                       "")
+  ))$
+
+  $lv(matfilter, si(#syscolorset, #adjcolor))$
+  $lv(matfinal, ce(#matfilter, alpha, #opacity))$
+  $#matfinal$
 ```
 
+###### 2 - Set Global Variable: `theme/colorgen/output`
 
+###### #####################################
+###### Flow: Edit Colors
+###### #####################################
 
-// Use `#wallfilter` and `theme/color#adj` to change color
-  $if(gv(theme/color1fil1) > 0 & (#theme = "wpcolor1" | #theme = "wpcolor2"), 
-        lv(color1, ce(si(#theme), #wallfilter, gv(theme/coloreditor/adjcolor)
-     // lv(color1, ce(si(wpcolor1), sat, ##))
-      )))$
-  Wallpaper Color: $#color1$
+**Trigger:** `OnChange` formula: `$gv(theme/coloreditor/editcolor)$$gv(theme/coloreditor/wallcolorset)$$gv(theme/coloreditor/adjcolor)$$gv(theme/coloreditor/opacity)$`
 
-  $if(gv(theme/color1fil1) > 0 & #theme = "sys",
-        lv(color2, si(#systone, gv(theme/coloreditor/adjcolor)
-     // lv(color2, si(sysca1, ##))
-      )))$
-  Sysui: $#color2$
+**Action**
 
-  $if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
-  Colpick: $#col3$
-
-  $lv(color, (if(gv(settheme) <= 1, #color1,
-                 gv(settheme)  = 2, #color2,
-                 gv(settheme) = 3, #col3
-              )))$
-  $#color$
-
-  $lv(final, ce(#color, alpha, gv(theme/coloreditor/opacity)))$
-  Final color: $#final$
+###### 1 - Formula - 
 ```
+  $gv(func/themecolors)$
+
+  $lv(adjcolor, gv(theme/coloreditor/adjcolor))$
+  $lv(opacity, gv(theme/coloreditor/opacity))$
+  $lv(gwallcolorset, gv(theme/coloreditor/wallcolorset))$
+  $lv(geditcolor, gv(theme/coloreditor/editcolor))$
+
+  $lv(editcolor, (if(#geditcolor = 0, "back1",
+                     #geditcolor = 1, "back2",
+                     #geditcolor = 2, "objiconon",
+                     #geditcolor = 3, "objiconoff",
+                     #geditcolor = 4, "cobjringon",
+                     #geditcolor = 5, "cobjringoff",
+                     #geditcolor = 6, "border",
+                     #geditcolor = 7, "wpcolor1",
+                     #geditcolor = 8, "wpcolor2",
+                     "")
+  ))$
+  $lv(wallcolorset, (if(#gwallcolorset = 1, "sat",
+                        #gwallcolorset = 2, "lum",
+                        #gwallcolorset = 3, "comp",
+                        "")
+  ))$
+
+  $lv(editfilter, if(#geditcolor <= 6,
+                    ce(#editcolor, #wallcolorset, #adjcolor),
+                    (#geditcolor >= 7,
+                    ce(si(#editcolor), #wallcolorset, #adjcolor)
+                    "")
+  ))$
+  $lv(editfinal, ce(#matfilter, alpha,#opacity))$
+  $#editfinal$
+```
+
+###### 2 - Set Global Variable: `theme/coloreditor/output`
+
 ###### func/themecolors
 Use: `$gv(func/themecolors)$`
 ```
   $gv(func/theme)$
 
-// JSON data
-  $lv(cborder,     (tc(json, #dbtheme, ("." + #colors + ".border"))))$         // Border Color
-  $lv(cback1,      (tc(json, #dbtheme, ("." + #colors + ".back_1"))))$         // Background 1
-  $lv(cback2,      (tc(json, #dbtheme, ("." + #colors + ".back_2"))))$         // Background 2
-  $lv(cobjicooff,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_off"))))$   // Icon Off
-  $lv(cobjringoff, (tc(json, #dbtheme, ("." + #colors + ".obj_ring_off"))))$   // Ring Off
-  $lv(cobjiconon,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_on"))))$    // Icon On
-  $lv(cobjringon,  (tc(json, #dbtheme, ("." + #colors + ".obj_ring_on"))))$    // Ring On
+  $lv(cborder,     (tc(json, #dbtheme, ("." + #colors + ".border"))))$
+  $lv(cback1,      (tc(json, #dbtheme, ("." + #colors + ".back_1"))))$
+  $lv(cback2,      (tc(json, #dbtheme, ("." + #colors + ".back_2"))))$
+  $lv(cobjicooff,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_off"))))$
+  $lv(cobjringoff, (tc(json, #dbtheme, ("." + #colors + ".obj_ring_off"))))$
+  $lv(cobjiconon,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_on"))))$
+  $lv(cobjringon,  (tc(json, #dbtheme, ("." + #colors + ".obj_ring_on"))))$
 
+// Output data with si() support
+  $lv(back1, (if(gv(theme/colors/back1) != "", gv(theme/colors/back1),
+                if(#cback1 ~= "#[a-fA-F0-9]*", #cback1, si(#cback1))
+             ))
+  )$
+  $lv(back2, (if(gv(theme/colors/back2) != "", gv(theme/colors/back2),
+                if(#cback2 ~= "#[a-fA-F0-9]*", #cback2, si(#cback2))
+             ))
+  )$
+  $lv(objiconon, (if(gv(theme/colors/objiconon) != "", gv(theme/colors/objiconon),
+                if(#cobjiconon ~= "#[a-fA-F0-9]*", #cobjiconon, si(#cobjiconon))
+             ))
+  )$
+  $lv(objiconoff, (if(gv(theme/colors/objiconoff) != "", gv(theme/colors/objiconoff),
+                if(#cobjiconoff ~= "#[a-fA-F0-9]*", #cobjiconoff, si(#cobjiconoff))
+             ))
+  )$
+  $lv(objringon, (if(gv(theme/colors/objringon) != "", gv(theme/colors/objringon),
+                if(#cobjringon ~= "#[a-fA-F0-9]*", #cobjringon, si(#cobjringon))
+             ))
+  )$
+  $lv(objringoff, (if(gv(theme/colors/objringoff) != "", gv(theme/colors/objringoff),
+                if(#cobjringoff ~= "#[a-fA-F0-9]*", #cobjringoff, si(#cobjringoff))
+             ))
+  )$
+  $lv(border, (if(gv(theme/colors/border) != "", gv(theme/colors/border),
+                if(#cborder ~= "#[a-fA-F0-9]*", #cborder, si(#cborder))
+             ))
+  )$
+
+```
+
+```
 // Output data
   $lv(back1,       (if(gv(theme/colors/back1)      != "", gv(theme/colors/back1),      #cback1)))$
   $lv(back2,       (if(gv(theme/colors/back2)      != "", gv(theme/colors/back2),      #cback2)))$
@@ -259,50 +339,50 @@ Use: `$gv(func/themecolors)$`
   $lv(objringoff,  (if(gv(theme/colors/objringoff) != "", gv(theme/colors/objringoff), #cobjringoff)))$
   $lv(border,      (if(gv(theme/colors/border)     != "", gv(theme/colors/border),     #cborder)))$
 ```
+
 ###### func/theme 
 Use: `$gv(func/theme)$`
-
 ```
   $lv(dbtheme, gv(json/theme))$
   $lv(darkmode, gv(theme/darkmode))$
 
-// Set editor globals > locals
-  $lv(editcolor, gv(theme/coloreditor/editcolor))$
-  $lv(adjcolor, gv(theme/coloreditor/adjcolor))$
-  $lv(opacity, gv(theme/coloreditor/opacity))$
-
-// Set editor list globals > temp locals
-  $lv(gsettheme, gv(settheme))$
-  $lv(gsyscolorset, gv(theme/coloreditor/syscolorset))$
-  $lv(gwallcolorset, gv(theme/coloreditor/wallcolorset))$
-
-// Set Lists to locals
-  $lv(settheme, (if(#gsettheme = 0, "OneUI",
-                    #gsettheme = 1, "Material",
-                    #gsettheme = 2, "Basic",
-                    #gsettheme = 3, "Custom",
+  $lv(settheme, (if(gv(settheme) = 0, "OneUI",
+                    gv(settheme) = 1, "Material",
+                    gv(settheme) = 2, "Basic",
+                    gv(settheme) = 3, "Custom",
                     "0")
   ))$
-  $lv(syscolorset, (if(#gsyscolorset = 0, "sysca1",
-                       #gsyscolorset = 1, "sysca2",
-                       #gsyscolorset = 2, "sysca3",
-                       #gsyscolorset = 3, "syscn1",
-                       #gsyscolorset = 4, "syscn2",
-                       #gsyscolorset = 5, "syscn3",
-                       "sysca1")
-  ))$
-  $lv(wallcolorset, (if(#gwallcolorset = 1, "sat",
-                        #gwallcolorset = 2, "lum",
-                        #gwallcolorset = 3, "comp",
-                        "sat")
-  ))$
 
-// Set correct color key location based on mode
-  $lv(colors, if(#darkmode = 0, (#settheme + ".colors.light"),
-                                (#settheme + ".colors.dark")
-  ))$
+// Randomly select one of the samsung colors from the JSON
+// and output a pastel version to match OneUI colors
+  $lv(pastel, ce(tc(json, #dbtheme, (".pastel." + mu(rnd, 1, 18))), sat, 20))$
 
-// JSON data
+// Raw JSON values
+  $lv(themename,(tc(json, #dbtheme, ("." + #settheme))))$
+  $lv(tborder,  (tc(json, #dbtheme, ("." + #settheme + ".border_width"))))$
+  $lv(tradius,  (tc(json, #dbtheme, ("." + #settheme + ".corner_radius"))))$
+  $lv(tpadwgt,  (tc(json, #dbtheme, ("." + #settheme + ".pad_widget"))))$
+  $lv(tpadobj,  (tc(json, #dbtheme, ("." + #settheme + ".pad_object"))))$
+  $lv(tpadside, (tc(json, #dbtheme, ("." + #settheme + ".pad_sides"))))$
+  $lv(tdevico,  (tc(json, #dbtheme, ("." + #settheme + ".dev_ico_ring"))))$
+  $lv(tringsha, (tc(json, #dbtheme, ("." + #settheme + ".ring_shape"))))$
+  $lv(tshad,    (tc(json, #dbtheme, ("." + #settheme + ".shadow"))))$
+  $lv(twgtopa,  (tc(json, #dbtheme, ("." + #settheme + ".wgt_opacity"))))$
+
+// Output data accounting for custom overrides
+  $lv(border,      (if(gv(theme/bordersize)         != "", gv(theme/bordersize),          #tborder)))$
+  $lv(radius,      (if(gv(theme/cornerradius)       != "", gv(theme/cornerradius),        #tradius)))$
+  $lv(padwgthor,   (if(gv(theme/verticalpadding)    != "", gv(theme/verticalpadding),     #tpadwgt)))$
+  $lv(padwgtver,   (if(gv(theme/horizontalpadding)  != "", gv(theme/horizontalpadding),   #tpadwgt)))$
+  $lv(padobjhor,   (if(gv(theme/objpadding)         != "", gv(theme/objpadding),          #tpadobj)))$
+  $lv(padobjver,   (if(gv(theme/objpadding2)        != "", gv(theme/objpadding2),         #tpadobj)))$
+  $lv(padobjside,  (if(gv(theme/objpaddingside)     != "", gv(theme/objpaddingside),      #tpadside)))$
+  $lv(ringsha,     (if(gv(theme/ringshape)          != "", gv(theme/ringshape),           #tringsha)))$
+  $lv(wgtopa,      (if(gv(theme/coloreditor/opacity)!= "", gv(theme/coloreditor/opacity), #twgtopa)))$
+```
+
+```
+// JSON data with titles for reference
   $lv(themename,(tc(json, #dbtheme, ("." + #settheme))))$                         // Theme Title
   $lv(tborder,  (tc(json, #dbtheme, ("." + #settheme + ".border_width"))))$       // Border width
   $lv(tradius,  (tc(json, #dbtheme, ("." + #settheme + ".corner_radius"))))$      // Corner Radius
@@ -310,18 +390,9 @@ Use: `$gv(func/theme)$`
   $lv(tpadobj,  (tc(json, #dbtheme, ("." + #settheme + ".pad_object"))))$         // Object Padding
   $lv(tpadside, (tc(json, #dbtheme, ("." + #settheme + ".pad_sides"))))$          // Padding on box sides
   $lv(tdevico,  (tc(json, #dbtheme, ("." + #settheme + ".dev_ico_ring"))))$       // Ring behind Device Icon
+  $lv(tringsha, (tc(json, #dbtheme, ("." + #settheme + ".ring_shape"))))$         // Shape of object rings
   $lv(tshad,    (tc(json, #dbtheme, ("." + #settheme + ".shadow"))))$             // Widget Shadow
-  $lv(twgtopa,  (tc(json, #dbtheme, ("." + #settheme  + ".wgt_opacity"))))$       // Widget opacity
-
-// Output data
-  $lv(border,      (if(gv(theme/bordersize)         != "", gv(theme/bordersize),          #tborder)))$
-  $lv(radius,      (if(gv(theme/cornerradius)       != "", gv(theme/cornerradius),        #tradius)))$
-  $lv(padwgthor,   (if(gv(theme/verticalpadding)    != "", gv(theme/verticalpadding),     #tpadwgt)))$
-  $lv(padwgtver,   (if(gv(theme/horizontalpadding)  != "", gv(theme/horizontalpadding),   #tpadwgt)))$
-  $lv(padobjhor,   (if(gv(theme/objpadding)         != "", gv(theme/objpadding),          #tpadobj)))$
-  $lv(padobjver,   (if(gv(theme/objpadding2)        != "", gv(theme/objpadding2),         #tpadobj)))$
-  $lv(padobjver,   (if(gv(theme/objpaddingbox2)     != "", gv(theme/objpaddingbox2),      #tpadside)))$
-  $lv(wgtopa,      (if(gv(theme/coloreditor/opacity)!= "", gv(theme/coloreditor/opacity), #twgtopa)))$
+  $lv(twgtopa,  (tc(json, #dbtheme, ("." + #settheme + ".wgt_opacity"))))$        // Widget opacity
 ```
 
 ###### #####################################
@@ -358,14 +429,17 @@ Use: `$gv(func/theme)$`
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
   $gv(func/themecolors)$
-  $if(#stoutput = 1, #objringon, #objringoff)$
+  $if(#stoutput = 1 & #themename =  "OneUI", #pastel,
+      #stoutput = 1 & #themename != "OneUI", #objringon,
+      #objringoff)$
 ```
 
 **V1**
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
-  $if(#stoutput = 1, gv(theme/colors/objiconon), #00FFFFFF)$
+  $gv(func/themecolors)$
+  $if(#stoutput = 1, #objringon, #objringoff)$
 ```
 
 ###### Icon Paint Color Formula
@@ -381,13 +455,6 @@ Use: `$gv(func/theme)$`
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
   $if(#stoutput = 1, gv(theme/colors/back1), gv(theme/colors/objiconon))$
-```
-
-###### Icon Color Filter Formula
-```
-  $lv(posid, ".box2.row2.0")$
-  $gv(func/jsonstate)$
-  $if(#stoutput = 1, "MULTIPLY", "NORMAL")$
 ```
 
 ###### Box 1, Icon 1 padding override
@@ -455,26 +522,30 @@ $gv(func/alignment)$$#margin1$
 "position_offset_x"
 ```
   $gv(func/jsontemp)$
+  $gv(func/theme)$
 
   $lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,
-                (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) + gv(theme/verticalpadding) - (gv(deviceiconsize) / 2)),
+                (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) +
+                #padwgtver - (gv(deviceiconsize) / 2)),
                gv(box1position) = TOP   | gv(box1position) = BOTTOM,
                0
            ))
   )$
-  $if(#ticopos = 1 | #ticopos = 3, gv(theme/verticalpadding), #ticopos = 2, #pos)$
+  $if(#ticopos = 1 | #ticopos = 3, padwgtver, #ticopos = 2, #pos)$
 ```
 
 "position_offset_x"
 ```
   $gv(func/jsontemp)$
+  $gv(func/theme)$
 
   $lv(pos, (if(gv(box1position) = RIGHT | gv(box1position) = LEFT,
                0,
                gv(box1position) = TOP   | gv(box1position) = BOTTOM,
-                 (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) + gv(theme/horizontalpadding) - (gv(deviceiconsize) / 2))
+                 (((if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))) / 2) +
+                 #padwgtver - (gv(deviceiconsize) / 2))
             ))
   )$
-  $if(#ticopos = 1 | #ticopos = 3, gv(theme/horizontalpadding),#ticopos = 2, #pos)$
+  $if(#ticopos = 1 | #ticopos = 3, #padwgtver, #ticopos = 2, #pos)$
 ```
 

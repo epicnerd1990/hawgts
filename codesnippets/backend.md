@@ -83,22 +83,20 @@
 ###### func/alignment - Functions for template code to use to reference autosizing data
 `$gv(func/alignment)$`
 ```
+  $gv(func/theme)$
+
   $lv(align,    gv(widgetorient))$
   $lv(override, gv(autoalign))$
   $lv(invert,   gv(boxtoggle))$
 
-  $lv(objpad1,    gv(theme/objpadding))$
-  $lv(objpad2,    gv(theme/objpadding2))$
-  $lv(objboxpad2, gv(theme/objpaddingbox2))$
-
   $lv(wgtwidth1, (if(#align = 0, si(rheight), si(rwidth))))$
   $lv(wgtdir,   (if(#align = 0, gv(core/size/wgtheight), gv(core/size/wgtwidth  ))))$
   $lv(wgtdirop, (if(#align = 0, gv(core/size/wgtwidth),  gv(core/size/wgtheight ))))$
-  $lv(iconcalc, (gv(iconsize) * 2) + #objpad1)$
+  $lv(iconcalc, (gv(iconsize) * 2) + #padobjhor)$
   $lv(pad,      (#wgtdir - #iconcalc))$
 
-  $lv(box1sm, (gv(iconsize) + (#objboxpad2 * 2) * 100 / #wgtwidth1))$
-  $lv(box1lg, (((#objboxpad2 * 2) + #iconcalc)))$
+  $lv(box1sm, (gv(iconsize) + (#padobjver * 2) * 100 / #wgtwidth1))$
+  $lv(box1lg, (((#padobjver * 2) + #iconcalc)))$
   $lv(boxalign, (if(gv(box1position) = RIGHT,  CENTERRIGHT,
                     gv(box1position) = LEFT,   CENTERLEFT,
                     gv(box1position) = TOP,    TOP,
@@ -110,8 +108,8 @@
                      gv(box1position) = BOTTOM, HORIZONTAL_BOTTOM
   )))$
 
-  $lv(margin1, if(#align = 0, "#objpad2" , "#objpad1"))$
-  $lv(margin2, if(#align = 0, "#objpad1" , "#objpad2"))$
+  $lv(margin1, if(#align = 0, "#padobjver" , "#padobjhor"))$
+  $lv(margin2, if(#align = 0, "#padobjhor" , "#padobjver"))$
 ```
 
 ###### #####################################
@@ -119,10 +117,10 @@
 ###### #####################################
 
 ###### core/size/wgtwidth
-`$si(rwidth) - (gv(theme/horizontalpadding) * 2)$`
+`$gv(func/theme)$$si(rwidth) - (#padwgthor * 2)$`
 
 ###### core/size/wgtheight
-`$si(rwidth) - (gv(theme/verticalpadding) * 2)$`
+`$gv(func/theme)$$si(rwidth) - (#padwgtver * 2)$`
 
 ###### core/size/box2width
 ```
@@ -140,8 +138,8 @@
 ```
   $gv(func/alignment)$
   $lv(box2dir,  (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$
-  $lv(icon, gv(iconsize) + #objpad1)$
-  $lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #objpad1))$
+  $lv(icon, gv(iconsize) + #padobjhor)$
+  $lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #padobjhor))$
   $if(gv(fitmoreobj) = 0,
         (if(#boxsize <= 2, 2, mu(round, #boxsize))),
         10
@@ -151,8 +149,6 @@
 ###### #####################################
 ###### Status System **10%**
 ###### #####################################
-
-TEST 2 - Change to JSON
 ```
   $lv(dbstatus, gv(errordb))$
   $lv(stnew, gv(currentstatus))$
@@ -162,68 +158,10 @@ TEST 2 - Change to JSON
 ```
 
 ###### #####################################
-###### Color System **60%**
+###### Color System **80%**
 ###### #####################################
 
-###### theme/colors/back1
-```
-  $lv(theme, (if(#ctheme = 0, "OneUI",
-                 #ctheme = 1, "Material",
-                 #ctheme = 2, "Basic",
-                 #ctheme = 3, "Custom",
-                 "0"
-              )))$
-  Source: $#theme$
-
-  $lv(filter, (if(gv(theme/color1fil1) = 1, "sat",
-                  gv(theme/color1fil1) = 2, "lum",
-                  gv(theme/color1fil1) = 3, "comp",
-                  "sat"
-              )))$
-  Filter: $#filter$
-
-  $lv(coltone, (if(gv(theme/coloreditor/syscolorset) = 0, "sysca1",
-                   gv(theme/coloreditor/syscolorset) = 1, "sysca2",
-                   gv(theme/coloreditor/syscolorset) = 2, "sysca3",
-                   gv(theme/coloreditor/syscolorset) = 3, "syscn1",
-                   gv(theme/coloreditor/syscolorset) = 4, "syscn2",
-                   gv(theme/coloreditor/syscolorset) = 5, "syscn3",
-                   "sysca1"
-                )))$
-  Color Tone: $#coltone$
-
-  $lv(addsub, (if(gv(theme/color1fil2) = 0, "", 
-                  gv(theme/color1fil2) = 1, "a",
-                  gv(theme/color1fil2) = 2, "r",
-                  ""
-              )))$
-  Addsub: $#addsub$
-
-// Use `#filter` and `theme/color#adj` to change color
-  $if(gv(theme/color1fil1) > 0 & (#theme = "wpcolor1" | #theme = "wpcolor2"), 
-        lv(color1, ce(si(#theme), #filter, gv(theme/coloreditor/adjcolor)
-      )))$
-  Wallpaper Color: $#color1$
-
-  $if(gv(theme/color1fil1) > 0 & #theme = "sys",
-        lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor)
-      )))$
-  Sysui: $#color2$
-
-  $if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
-  Colpick: $#col3$
-
-  $lv(color, (if(gv(settheme) <= 1, #color1,
-                 gv(settheme)  = 2, #color2,
-                 gv(settheme) = 3, #col3
-              )))$
-  $#color$
-
-  $lv(final, ce(#color, alpha, gv(theme/coloreditor/opacity)))$
-  Final color: $#final$
-```
-
-**V1**
+###### theme/colors/back1 **Deprecated**
 ```
   $lv(source, (if(gv(settheme) = 0, "wpcolor1",
                   gv(settheme) = 1, "wpcolor2",
@@ -280,7 +218,7 @@ TEST 2 - Change to JSON
 ```
 
 
-###### theme/colors/back2
+###### theme/colors/back2 **Deprecated**
 ```
 $lv(source, (if(gv(theme/color2sel) = 0, "wpcolor1", gv(theme/color2sel) = 1, "wpcolor2", gv(theme/color2sel) = 2, "sys", "0")))$
 $lv(filter, (if(gv(theme/color2fil1) = 1, "sat", gv(theme/color2fil1) = 2, "lum", gv(theme/color2fil1) = 3, "comp", "sat")))$
@@ -296,19 +234,7 @@ $lv(final, ce(#color, alpha, gv(theme/color2alph)))$
 $#final$
 ```
 
-###### theme/coloreditor/edit
-```
-0##Background 1,
-1##Background 2,
-2##Icon Off,
-3##Icon On,
-4##Ring Off,
-5##Ring On,
-6##Border Color
-```
-
 ###### settheme
-
 ```
 0##Material,
 1##OneUI,
@@ -316,26 +242,43 @@ $#final$
 3##Custom
 ```
 
-**V1**
+###### theme/colors
+`theme/colors/back1`
+`theme/colors/back2`
+`theme/colors/objiconon`
+`theme/colors/objiconoff`
+`theme/colors/objringon`
+`theme/colors/objringoff`
+`theme/colors/border`
+
+###### theme/coloreditor/editcolor
+- Select color to edit
 ```
-0##Wallpaper #1,
-1##Wallpaper #2,
-2##System (MaterialYou),
-3##Manual (Color picker)
+0##Background 1,
+1##Background 2,
+2##Icon Off,
+3##Icon On,
+4##Ring Off,
+5##Ring On,
+6##Border Color,
+7##Wallpaper Color 1,
+8##Wallpaper Color 2
 ```
 
-###### theme/coloreditor/syscolorset, theme/color2sysc
-System and Material UI only
+###### theme/colorgen/syscolorset
+- System and Material UI only
 ```
-0##Accent #1,
-1##Accent #2,
-2##Accent #3,
-3##Neutral #1,
-4##Neutral #2,
-5##Neutral #3
+0##None,
+1##Accent #1,
+2##Accent #2,
+3##Accent #3,
+4##Neutral #1,
+5##Neutral #2,
+6##Neutral #3
 ```
 
-###### theme/color1fil1, theme/color2fil1
+###### theme/coloreditor/wallcolorset
+- Wallpaper & imported color only
 ```
 0##None,
 1##Saturation,
@@ -343,40 +286,40 @@ System and Material UI only
 3##Complimentary Color
 ```
 
-###### theme/coloreditor/adjcolor, theme/coloreditor/adjcolor
-- Filter strength for `theme/color#fil1`
+###### theme/coloreditor/adjcolor, theme/colorgen/adjcolor
+- Filter/tone strength for `syscolorset` `wallcolorset`
 - 0 - 100
 
-
-###### theme/color1fil2, theme/color2fil2
-- Control above filter for `theme/color#fil1`
-```
-0##None,
-1##Add,
-2##Remove
-```
-
-###### theme/color1pick, theme/color1pick
-- Manually set color using KWGT picker
-
-###### theme/coloreditor/opacity, theme/coloreditor/opacity
+###### theme/coloreditor/opacity theme/colorgen/opacity
 - Adjust set color opacity
 - 0 - 255
 
-###### theme/colors/objiconon
-- Icon color - KWGT picker
+###### theme/coloreditor/output theme/colorgen/output
+- Output of color editor/generator
 
-###### theme/colicoon
-- Color of icon when state is on - dark saturation of color1?
-```
-  $ce(si(wpcolor1, comp), sat, 60)$
-```
-
-###### theme/color1fin, theme/color2fin
-- Color 1/Color 2 final - KWGT picker
+###### theme/darkmode
+- Switch: 1 = Dark mode
 
 ###### theme/border
 - Toggle On/Off
 
-###### theme/colors/border
-- Border  color - KWGT picker (fix)
+###### theme/bordersize
+- Set size of border around box
+
+###### theme/objpadding
+- Padding across "rows"
+
+###### theme/objpadding2
+- Padding across "columns"
+
+###### theme/objpaddingside
+- Padding from edge of box to first icon
+
+###### theme/verticalpadding
+- Vertical padding size
+
+###### theme/horizontalpadding
+- Horizontal padding size
+
+###### theme/cornerradius
+- Rounded corner radius
