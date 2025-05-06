@@ -2,6 +2,12 @@ Please note this README is extremely outdated, and was written at an earlier sta
 
 # Home Assistant control widgets for Android devices (HAWGT)
 
+**2025**
+A customizable and themable Home Assistant widget with common device configurations ready to go. Advanced users can design their own theme to match their homescreen and configure their layouts using JSON. 
+
+The widget was designed to be easy to configure if you haven't used the Kustom products before, but have powerful customization for those who have or tech-savvy individuals  
+
+**2023**
 These widgets were built to fill a need for a customizable, nice-looking android widget for controlling Smart home devices and TV's without opening the Home Assistant app. The original concept was nice-looking device controls for a wall-mounted android device, so they are primarily designed to be used in a page layout, stacked on a single Android launcher page as a Control Hub. However, the smaller widgets are designed to also work on your regular launcher pages, and on a larger device like a tablet, all widgets should work well with your layout.
 
 This document was written assuming you're new to Kustom and Tasker. Terminology will be basic and explanations offered for each step. More advanced users can skip to <HERE>. For readability, Home Assistant will be shortened to HA.
