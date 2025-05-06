@@ -186,88 +186,88 @@
         "value": "$gv(func/theme)$$lv(align,gv(widgetorient))$$lv(override,gv(autoalign))$$lv(invert,gv(boxtoggle))$$lv(wgtwidth1,(if(#align=0,si(rheight),si(rwidth))))$$lv(wgtdir,(if(#align=0,gv(core/size/wgtheight),gv(core/size/wgtwidth))))$$lv(wgtdirop,(if(#align=0,gv(core/size/wgtwidth),gv(core/size/wgtheight))))$$lv(iconcalc,(gv(iconsize)*2)+#padobjhor)$$lv(pad,(#wgtdir-#iconcalc))$$lv(box1sm,(gv(iconsize)+(#padobjver*2)*100/#wgtwidth1))$$lv(box1lg,(((#padobjver*2)+#iconcalc)))$$lv(boxalign,(if(gv(box1position)=RIGHT,CENTERRIGHT,gv(box1position)=LEFT,CENTERLEFT,gv(box1position)=TOP,TOP,gv(box1position)=BOTTOM,BOTTOM)))$$lv(boxcenter,(if(gv(box1position)=RIGHT,VERTICAL_RIGHT,gv(box1position)=LEFT,VERTICAL_LEFT,gv(box1position)=TOP,HORIZONTAL_TOP,gv(box1position)=BOTTOM,HORIZONTAL_BOTTOM)))$$lv(margin1,if(#align=0,\"#padobjver\",\"#padobjhor\"))$$lv(margin2,if(#align=0,\"#padobjhor\",\"#padobjver\"))$"
       },
       "func/theme": {
-        "index": 22,
+        "index": 23,
         "type": "TEXT",
         "title": "theme",
         "description": "Variables for use in theme globals and objects",
         "value": "$lv(dbtheme,gv(json/theme))$$lv(darkmode,gv(theme/darkmode))$$lv(settheme,(if(gv(settheme)=0,\"OneUI\",gv(settheme)=1,\"Material\",gv(settheme)=2,\"Basic\",gv(settheme)=3,\"Custom\",\"0\")))$$lv(pastel,ce(tc(json,#dbtheme,(\".pastel.\"+mu(rnd,1,18))),sat,20))$$lv(themename,(tc(json,#dbtheme,(\".\"+#settheme))))$$lv(tborder,(tc(json,#dbtheme,(\".\"+#settheme+\".border_width\"))))$$lv(tradius,(tc(json,#dbtheme,(\".\"+#settheme+\".corner_radius\"))))$$lv(tpadwgt,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_widget\"))))$$lv(tpadobj,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_object\"))))$$lv(tpadside,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_sides\"))))$$lv(tdevico,(tc(json,#dbtheme,(\".\"+#settheme+\".dev_ico_ring\"))))$$lv(tringsha,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_shape\"))))$$lv(tshad,(tc(json,#dbtheme,(\".\"+#settheme+\".shadow\"))))$$lv(twgtopa,(tc(json,#dbtheme,(\".\"+#settheme+\".wgt_opacity\"))))$$lv(border,(if(gv(theme/bordersize)!=\"\",gv(theme/bordersize),#tborder)))$$lv(radius,(if(gv(theme/cornerradius)!=\"\",gv(theme/cornerradius),#tradius)))$$lv(padwgthor,(if(gv(theme/verticalpadding)!=\"\",gv(theme/verticalpadding),#tpadwgt)))$$lv(padwgtver,(if(gv(theme/horizontalpadding)!=\"\",gv(theme/horizontalpadding),#tpadwgt)))$$lv(padobjhor,(if(gv(theme/objpadding)!=\"\",gv(theme/objpadding),#tpadobj)))$$lv(padobjver,(if(gv(theme/objpadding2)!=\"\",gv(theme/objpadding2),#tpadobj)))$$lv(padobjside,(if(gv(theme/objpaddingside)!=\"\",gv(theme/objpaddingside),#tpadside)))$$lv(ringsha,(if(gv(theme/ringshape)!=\"\",gv(theme/ringshape),#tringsha)))$$lv(wgtopa,(if(gv(theme/coloreditor/opacity)!=\"\",gv(theme/coloreditor/opacity),#twgtopa)))$"
       },
       "func/themecolors": {
-        "index": 22,
+        "index": 24,
         "type": "TEXT",
         "title": "themecolors",
         "description": "Variables for color outputs",
         "value": "$gv(func/theme)$$lv(cborder,(tc(json,#dbtheme,(\".\"+#colors+\".border\"))))$$lv(cback1,(tc(json,#dbtheme,(\".\"+#colors+\".back_1\"))))$$lv(cback2,(tc(json,#dbtheme,(\".\"+#colors+\".back_2\"))))$$lv(cobjicooff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_off\"))))$$lv(cobjringoff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_off\"))))$$lv(cobjiconon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_on\"))))$$lv(cobjringon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_on\"))))$$lv(back1,(if(gv(theme/colors/back1)!=\"\",gv(theme/colors/back1),if(#cback1~=\"#[a-fA-F0-9]*\",#cback1,si(#cback1)))))$$lv(back2,(if(gv(theme/colors/back2)!=\"\",gv(theme/colors/back2),if(#cback2~=\"#[a-fA-F0-9]*\",#cback2,si(#cback2)))))$$lv(objiconon,(if(gv(theme/colors/objiconon)!=\"\",gv(theme/colors/objiconon),if(#cobjiconon~=\"#[a-fA-F0-9]*\",#cobjiconon,si(#cobjiconon)))))$$lv(objiconoff,(if(gv(theme/colors/objiconoff)!=\"\",gv(theme/colors/objiconoff),if(#cobjiconoff~=\"#[a-fA-F0-9]*\",#cobjiconoff,si(#cobjiconoff)))))$$lv(objringon,(if(gv(theme/colors/objringon)!=\"\",gv(theme/colors/objringon),if(#cobjringon~=\"#[a-fA-F0-9]*\",#cobjringon,si(#cobjringon)))))$$lv(objringoff,(if(gv(theme/colors/objringoff)!=\"\",gv(theme/colors/objringoff),if(#cobjringoff~=\"#[a-fA-F0-9]*\",#cobjringoff,si(#cobjringoff)))))$$lv(border,(if(gv(theme/colors/border)!=\"\",gv(theme/colors/border),if(#cborder~=\"#[a-fA-F0-9]*\",#cborder,si(#cborder)))))$"
       },
       "func/devjsonrem": {
-        "index": 23,
+        "index": 25,
         "type": "TEXT",
         "title": "devjsonrem",
         "description": "Device State - Remove entity",
         "value": "$tc(reg,#datawipe,(\"\\{\\\" + tc(utf, 22) + \"entity_id\" + \"\\\" + tc(utf, 22) + \":\\\" + tc(utf, 22) +#entity + \"\\\" + tc(utf, 22) + \".*?\\},\"),\"\")$"
       },
       "func/devjsonadd": {
-        "index": 24,
+        "index": 26,
         "type": "TEXT",
         "title": "devjsonadd",
         "description": "Device State - Add newlines and spaces to JSON",
         "value": "$tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,#jsonout,\"\\},\",\"\\},\" + tc(utf, 0A)),\":\",\": \"),\"\\\" + tc(utf, 22) + \",\",\"\\\" + tc(utf, 22) + \",\" + tc(utf, 0A)),\"\\{\",\"\\{\" + tc(utf, 0A)),\"\\}\",tc(utf, 0A) + \"\\}\"),\"\\[\",\"\\[\" + tc(utf, 0A)),\"\\\" + tc(utf, 22) + \"device_states\\\" + tc(utf, 22) + \".*\",\"$0\"),\"\\]\",\"  ]\")$"
       },
       "func/devjsonindent": {
-        "index": 25,
+        "index": 27,
         "type": "TEXT",
         "title": "devjsonindent",
         "description": "Device State - Add indentation to JSON",
         "value": "$tc(reg,tc(reg,#jsonline,(\"(?<=\\[)[^\\[\\]]*(?=\\])\"),tc(utf, 0A) + \"    \" + #jarredit + tc(utf, 0A) + \"  \"),(\"(?<!\\[)(?<=\\n|^)\\s*(\" + tc(utf, 22) + \".*)\"),\"  $0\")$"
       },
       "func/devjsonnew": {
-        "index": 26,
+        "index": 28,
         "type": "TEXT",
         "title": "devjsonnew",
         "description": "Device State - Add new entity to bottom of list",
         "value": "$tc(reg, #jsonrem, \"\\},\\]\\}\", (\"\\},\" + #jsonwipe + \"\\]\\}\"))$"
       },
       "json": {
-        "index": 27,
+        "index": 29,
         "type": "FOLDER",
         "title": "JSON Data",
         "description": "Device template and state data"
       },
       "json/device": {
-        "index": 28,
+        "index": 30,
         "type": "TEXT",
         "title": "device",
         "value": "{\n  \"device_states\": [\n       {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.closet_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"150\",\n      \"color\": \"color\"\n    },\n    {\n      \"entity_id\": \"light.ensuite_light\",\n      \"state\": \"on\",\n      \"brightness\": \"75\",\n      \"color\": \"color\"\n    },\n       ]\n}"
       },
       "json/theme": {
-        "index": 28,
+        "index": 31,
         "type": "TEXT",
         "title": "theme",
         "value": "{\"OneUI\":{\"border_width\":1dp,\"corner_radius\":1dp,\"pad_widget\":16dp,\"pad_obj\":10dp,\"pad_sides\":16dp,\"dev_ico_ring\":0,\"wgt_opacity\":150,\"shadow\":0,\"colors\":{\"light\":{\"back_1\":\"#FFFFFF\",\"back_2\":\"#F5F4F4\",\"obj_icon_off\":\"#EBEBEB\",\"obj_ring_off\":\"$si(sysca1,5)$\",\"obj_icon_on\":\"#FFFFFF\",\"obj_ring_on\":\"pastels\",\"border\":\"#EBEBEB\"},\"dark\":{\"back_1\":\"#000000\",\"back_2\":\"$si(syscn2,90)$\",\"obj_icon_off\":\"#EBEBEB\",\"obj_ring_off\":\"$si(sysca1,15)$\",\"obj_icon_on\":\"#FFFFFF\",\"obj_ring_on\":\"pastels\",\"border\":\"#EBEBEB\"}}},\"Material\":{\"border_width\":0,\"corner_radius\":1dp,\"pad_widget\":10dp,\"pad_obj\":10dp,\"pad_sides\":16dp,\"dev_ico_ring\":1,\"wgt_opacity\":50,\"shadow\":1,\"colors\":{\"light\":{\"back_1\":\"$si(sysca1,40)$\",\"back_2\":\"$si(sysca1,10)$\",\"obj_icon_off\":\"$si(syscn1,50)$\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$si(syscn1,50)$\",\"obj_ring_on\":\"$si(sysca1,50)$\",\"border\":\"#79747E\"},\"dark\":{\"back_1\":\"$si(sysca1,90)$\",\"back_2\":\"$si(sysca2,60)$\",\"obj_icon_off\":\"$si(syscn1,50)$\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$si(syscn1,50)$\",\"obj_ring_on\":\"$si(sysca1,50)$\",\"border\":\"#79747E\"}}},\"Basic\":{\"border_width\":0,\"corner_radius\":10kpx,\"pad_widget\":6dp,\"pad_obj\":10dp,\"pad_sides\":12dp,\"dev_ico_ring\":0,\"wgt_opacity\":75,\"colors\":{\"light\":{\"back_1\":\"$si(wpcolor1)$\",\"back_2\":\"$si(wpcolor2)$\",\"obj_icon_off\":\"#E7FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$ce(si(wpcolor1,comp),sat,60)$\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"},\"dark\":{\"back_1\":\"$si(wpcolor1)$\",\"back_2\":\"$si(wpcolor2)$\",\"obj_icon_off\":\"#FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$ce(si(wpcolor1,comp),sat,60)$\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"}}}}"
       },
       "json/template": {
-        "index": 29,
+        "index": 32,
         "type": "TEXT",
         "title": "template",
         "description": "Template Database",
         "value": "{  \"light\": {\n    \"objects\": {\n      \"bedroom\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"page\",\n        \"onstate\": \"page1\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"1\"\n      },\n      \"office\": {\n        \"icon\": \"mdi-room-desk\",\n        \"type\": \"page\",\n        \"onstate\": \"page2\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"2\"\n      },\n      \"livingroom\": {\n        \"icon\": \"mdi-room-sofa-single-outline\",\n        \"type\": \"page\",\n        \"onstate\": \"page3\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"3\"\n      },\n      \"foyer\": {\n        \"icon\": \"mdi-room-coat-rack\",\n        \"type\": \"page\",\n        \"onstate\": \"page4\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"4\"\n      },\n      \"power\": {\n        \"icon\": \"mdi-power\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"toggle\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"controlapp\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"color\": {\n        \"icon\": \"mdi-palette\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"color\",\n        \"cmd\": \"color\",\n        \"data\": \"#FFFFFF\"\n      },\n      \"off\": {\n        \"icon\": \"mdi-lightbulb-off-outline\",\n        \"type\": \"action\",\n        \"onstate\": \"off\",\n        \"action\": \"off\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"low\": {\n        \"icon\": \"mdi-lightbulb-on-30\",\n        \"type\": \"action\",\n        \"onstate\": \"1>75\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"74\"\n      },\n      \"med\": {\n        \"icon\": \"mdi-lightbulb-on-60\",\n        \"type\": \"action\",\n        \"onstate\": \"76>200\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"150\"\n      },\n      \"high\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"200>255\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      },\n      \"on\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"on\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      }\n    },\n    \"light1\": {\n      \"name\": \"Light - 2-4 Page/Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 1,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 1,\n      \"device_count\": \"2-4\",\n      \"page1\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page2\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page3\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page4\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      }\n    },\n    \"light2\": {\n      \"name\": \"Light - 0 Page, 1 Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 2,\n      \"device_count\": 1,\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n    },\n    \"light3\": {\n      \"name\": \"Light - 0 page, 1 Device, 1 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 1,\n      \"device_icon_pos\": 1,\n      \"device_count\": 1,\n      \"box1\": {\n          \"row1\": {\n            \"0\": \"controlapp\"\n          }\n      },\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n   }\n  }\n} "
       },
       "json/error": {
-        "index": 30,
+        "index": 33,
         "type": "TEXT",
         "title": "error",
         "description": "JSON - Errors to output",
         "value": "{\"status\": {\"01\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"02\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"03\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"04\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"05\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"06\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"07\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"}}}"
       },
       "readme": {
-        "index": 31,
+        "index": 34,
         "type": "LIST",
         "title": "README",
         "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
         "value": "OPEN - Readme"
       },
       "settheme": {
-        "index": 34,
+        "index": 35,
         "type": "LIST",
         "title": "settheme",
         "description": "Select the theme you'd like to use on this widget. You can also select a style, then hit custom to modify it",
@@ -275,81 +275,81 @@
         "value": "0"
       },
       "themes": {
-        "index": 32,
+        "index": 36,
         "type": "FOLDER",
         "title": "themes",
         "description": "Set Widget colors"
       },
       "theme/colornote": {
-        "index": 33,
+        "index": 37,
         "type": "LIST",
         "title": "COLORNOTE",
         "value": "-- OPEN - Color Options",
         "entries": "Edit widget colors by following through this setup. See Readme for details."
       },
       "theme/colors": {
-        "index": 32,
+        "index": 38,
         "type": "FOLDER",
         "title": "colors",
         "description": "Widget Colors"
       },
       "theme/colors/back1": {
-        "index": 49,
+        "index": 39,
         "type": "COLOR",
         "title": "back1",
         "description": "Background color 1",
         "value": ""
       },
       "theme/colors/back2": {
-        "index": 49,
+        "index": 40,
         "type": "COLOR",
         "title": "back2",
         "description": "Background color 2",
         "value": ""
       },
       "theme/colors/objiconon": {
-        "index": 49,
+        "index": 41,
         "type": "COLOR",
         "title": "objiconon",
         "description": "Object Icon On",
         "value": ""
       },
       "theme/colors/objiconoff": {
-        "index": 49,
+        "index": 42,
         "type": "COLOR",
         "title": "objiconoff",
         "description": "Object Icon Off",
         "value": ""
       },
       "theme/colors/objringon": {
-        "index": 49,
+        "index": 43,
         "type": "COLOR",
         "title": "objringon",
         "description": "Object Ring On",
         "value": ""
       },
       "theme/colors/objringoff": {
-        "index": 49,
+        "index": 44,
         "type": "COLOR",
         "title": "objringoff",
         "description": "Object Ring Off",
         "value": ""
       },
       "theme/colors/border": {
-        "index": 54,
+        "index": 45,
         "type": "COLOR",
         "title": "border",
         "description": "Border color",
         "value": ""
       },
       "theme/colorgen": {
-        "index": 32,
+        "index": 46,
         "type": "FOLDER",
         "title": "colorgen",
         "description": "Generate colors when using \"custom\" theme"
       },
       "theme/colorgen/syscolorset": {
-        "index": 35,
+        "index": 47,
         "type": "LIST",
         "title": "syscolorset",
         "description": "Select a color tone",
@@ -357,7 +357,7 @@
         "value": "0"
       },
       "theme/colorgen/adjcolor": {
-        "index": 37,
+        "index": 48,
         "type": "NUMBER",
         "title": "adjcolor",
         "description": "Strength of color tone or filter",
@@ -366,7 +366,7 @@
         "value": 50.0
       },
       "theme/colorgen/opacity": {
-        "index": 40,
+        "index": 49,
         "type": "NUMBER",
         "title": "opacity",
         "description": "Opacity Adjustment - 0 = Transparent, 255 = Solid",
@@ -375,20 +375,20 @@
         "value": 75.0
       },
       "theme/colorgen/output": {
-        "index": 40,
+        "index": 50,
         "type": "COLOR",
         "title": "output",
         "description": "Result of your custom color. Copy to \"colors\" folder",
         "value": ""
       },
       "theme/coloreditor": {
-        "index": 32,
+        "index": 51,
         "type": "FOLDER",
         "title": "coloreditor",
         "description": "Edit colors when using \"custom\" theme"
       },
       "theme/coloreditor/editcolor": {
-        "index": 38,
+        "index": 52,
         "type": "LIST",
         "title": "edit",
         "description": "Select the color to edit from your wallpaper or the \"colors\" folder",
@@ -396,7 +396,7 @@
         "value": "0"
       },
       "theme/coloreditor/wallcolorset": {
-        "index": 36,
+        "index": 53,
         "type": "LIST",
         "title": "wallcolorset",
         "description": "Select a color filter",
@@ -404,7 +404,7 @@
         "value": "0"
       },
       "theme/coloreditor/adjcolor": {
-        "index": 37,
+        "index": 54,
         "type": "NUMBER",
         "title": "adjcolor",
         "description": "Strength of color tone or filter",
@@ -413,7 +413,7 @@
         "value": 40.0
       },
       "theme/coloreditor/opacity": {
-        "index": 40,
+        "index": 55,
         "type": "NUMBER",
         "title": "opacity",
         "description": "Opacity Adjustment - 0 = Transparent, 255 = Solid",
@@ -422,14 +422,14 @@
         "value": 75.0
       },
       "theme/coloreditor/output": {
-        "index": 40,
+        "index": 56,
         "type": "COLOR",
         "title": "output",
         "description": "Result of your custom color. Copy to \"colors\" folder",
         "value": ""
       },
       "theme/darkmode": {
-        "index": 82,
+        "index": 57,
         "type": "SWITCH",
         "title": "darkmode",
         "description": "Set dark mode",
@@ -440,14 +440,14 @@
         "off_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 0, 0)$"
       },
       "theme/ringshape": {
-        "index": 59,
+        "index": 58,
         "type": "TEXT",
         "title": "ringshape",
         "description": "Shape of the rings behind the objects",
         "value": ""
       },
       "theme/border": {
-        "index": 52,
+        "index": 59,
         "type": "SWITCH",
         "title": "border",
         "description": "Turn on a border around your boxes",
@@ -458,7 +458,7 @@
         "off_formula": "$gv(func/theme)$$if(#tborder = \"0\", 0)$"
       },
       "theme/bordersize": {
-        "index": 53,
+        "index": 60,
         "type": "NUMBER",
         "title": "bordersize",
         "description": "Set the size of the border",
@@ -469,7 +469,7 @@
         "global_formula": ""
       },
       "theme/objpadding": {
-        "index": 76,
+        "index": 61,
         "type": "NUMBER",
         "title": "objpadding",
         "description": "Set the object padding across each row/column",
@@ -480,7 +480,7 @@
         "global_formula": ""
       },
       "theme/objpadding2": {
-        "index": 77,
+        "index": 62,
         "type": "NUMBER",
         "title": "objpadding2",
         "description": "Set the object padding between the two rows/columns",
@@ -491,7 +491,7 @@
         "global_formula": ""
       },
       "theme/objpaddingside": {
-        "index": 78,
+        "index": 63,
         "type": "NUMBER",
         "title": "objpaddingside",
         "description": "Set the object padding from the edge of the box to the first icon",
@@ -502,7 +502,7 @@
         "global_formula": ""
       },
       "theme/verticalpadding": {
-        "index": 79,
+        "index": 64,
         "type": "NUMBER",
         "title": "verticalpadding",
         "description": "Select the widget vertical padding size",
@@ -513,7 +513,7 @@
         "global_formula": ""
       },
       "theme/horizontalpadding": {
-        "index": 80,
+        "index": 65,
         "type": "NUMBER",
         "title": "horizontalpadding",
         "description": "Select the horizontal widget padding size",
@@ -524,7 +524,7 @@
         "global_formula": ""
       },
       "theme/cornerradius": {
-        "index": 81,
+        "index": 66,
         "type": "NUMBER",
         "title": "cornerradius",
         "description": "Set the radius of the rounded corners",
@@ -535,43 +535,41 @@
         "global_formula": ""
       },
       "entities": {
-        "index": 57,
+        "index": 67,
         "type": "FOLDER",
         "title": "entities",
         "description": "Set Home Assistant entity names"
       },
       "entities/entitynote": {
-        "index": 58,
+        "index": 68,
         "type": "LIST",
         "title": "entitynote",
         "entries": "\"ENTITY LIST\\n\\nIf you're only controlling one device, enter it in \"entity1\". If you're controlling more than one, enter them in the order they appear in the template. (1st device is \"entity1\", 2nd is \"entity2\", etc)\"\n",
         "value": "-- OPEN - Enter Entity IDs below"
       },
       "entities/entity1": {
-        "index": 59,
+        "index": 69,
         "type": "TEXT",
         "title": "entity1",
         "description": "Device 1 Entity ID",
         "value": "light.bedroom_lights"
       },
       "entities/entity2": {
-        "index": 60,
+        "index": 70,
         "type": "TEXT",
         "title": "entity2",
         "description": "Device 2 Entity ID",
         "value": "light.ensuite_light"
       },
       "entities/entity3": {
-        "index": 61,
+        "index": 71,
         "type": "TEXT",
         "title": "entity3",
-        "description": "Device 3 Entity ID"        - Add 2 new flows in editor
-
         "description": "Device 6 Entity ID",
         "value": "light.bedroom_lights"
       },
       "devicetype": {
-        "index": 65,
+        "index": 72,
         "type": "LIST",
         "title": "devicetype",
         "description": "Select the type of device you'd like to control",
@@ -579,7 +577,7 @@
         "value": "light"
       },
       "templateselect": {
-        "index": 66,
+        "index": 73,
         "type": "LIST",
         "title": "templateselect",
         "description": "Select your template",
@@ -587,42 +585,42 @@
         "value": "1"
       },
       "templatename": {
-        "index": 67,
+        "index": 74,
         "type": "TEXT",
         "title": "templatename",
         "description": "Debugging - Chosen Template name",
         "value": "Light - 2-4 Page/Device, 2 Row"
       },
       "templateinfo": {
-        "index": 68,
+        "index": 75,
         "type": "TEXT",
         "title": "templateselect",
         "description": "Template Discription via flow",
         "value": "light - 2-4 Device(s), 1 Row(s), 2 Boxes\nConnect 2-4 light entities for this template\nThis widget is incorrectly sized for this template. \\nEither make the widget larger or choose a different template. \\nAdvanced users see README for alternative options"
       },
       "-- 2.": {
-        "index": 69,
+        "index": 76,
         "type": "LIST",
         "title": "-- 2.",
         "entries": "-- Customization and tweaks",
         "value": "-- Customization and tweaks"
       },
       "fitmoreobj": {
-        "index": 70,
+        "index": 77,
         "type": "SWITCH",
         "title": "fitmoreobj",
         "description": "Disable widget object count restrictions to use templates that are close to fitting. May cause overlap",
         "value": 0
       },
       "deviceiconrotation": {
-        "index": 71,
+        "index": 78,
         "type": "LIST",
         "title": "deviceiconrotation",
         "entries": "DATA##\"Rotate or flip the device icon on your Widget\",NONE##0 Degrees,DEG90##90 Degrees,DEG180##180 Degrees,DEG270##180 Degrees,FLIP_X##Flip Vertically,FLIP_Y##Flip Horizontally",
         "value": "FLIP_Y"
       },
       "deviceiconsize": {
-        "index": 72,
+        "index": 79,
         "type": "NUMBER",
         "title": "deviceiconsize",
         "description": "Set the size of the Device Icon.\nDefault: 120kpx",
@@ -631,7 +629,7 @@
         "max": 450
       },
       "iconsize": {
-        "index": 73,
+        "index": 80,
         "type": "NUMBER",
         "title": "iconsize",
         "description": "Set the size of the object icons.\nDefault: 80kpx",
@@ -640,14 +638,14 @@
         "value": 80.0
       },
       "appiconvis": {
-        "index": 74,
+        "index": 81,
         "type": "SWITCH",
         "title": "appiconvis",
         "description": "Set visbility of app-launcher object(s). On = Hidden",
         "value": "1"
       },
       "appiconsize": {
-        "index": 75,
+        "index": 82,
         "type": "NUMBER",
         "title": "appiconsize",
         "description": "Set the size of the small app-launcher object(s).\nDefault: 32kpx",
@@ -656,42 +654,42 @@
         "value": 32.0
       },
       "deviceopeneditor": {
-        "index": 82,
+        "index": 83,
         "type": "SWITCH",
         "title": "deviceopeneditor",
         "description": "Enable device icon click to open KWGT Editor. Can be disabled once widget is set up",
         "value": 1
       },
       "-- 3.": {
-        "index": 83,
+        "index": 84,
         "type": "LIST",
         "title": "-- 3.",
         "entries": "--Advanced customization and tweaks",
         "value": "--Advanced customization and tweaks"
       },
       "box1sq": {
-        "index": 90,
+        "index": 85,
         "type": "SWITCH",
         "title": "box1sq",
         "description": "Make Box 1 a perfect square",
         "value": 0
       },
       "boxtoggle": {
-        "index": 84,
+        "index": 86,
         "type": "SWITCH",
         "title": "boxtoggle",
         "description": "Set the order of the boxes on your widget",
         "value": "1"
       },
       "autoalign": {
-        "index": 85,
+        "index": 87,
         "type": "SWITCH",
         "title": "autoalign",
         "description": "Override the following widget alignments",
         "value": 1
       },
       "widgetorient": {
-        "index": 86,
+        "index": 88,
         "type": "SWITCH",
         "title": "widgetorient",
         "description": "Set horizontal or vertical orientation of widget. Disable flow before changing. Off = Horizontal, On = Vertical",
@@ -702,7 +700,7 @@
         "off_formula": "$if(gv(autoalign) = 1, (si(rratio) > 0.8, 0))$"
       },
       "box1position": {
-        "index": 87,
+        "index": 89,
         "type": "LIST",
         "title": "box1position",
         "description": "Set position of Box 1",
@@ -710,7 +708,7 @@
         "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout"
       },
       "box1size": {
-        "index": 88,
+        "index": 90,
         "type": "NUMBER",
         "title": "box1size",
         "description": "Override Box 1 size set from Flow. Disable flow before changing",
@@ -719,7 +717,7 @@
         "max": 720
       },
       "setupmode": {
-        "index": 89,
+        "index": 91,
         "type": "SWITCH",
         "title": "setupmode",
         "description": "Debugging - Enable showing setup data",
@@ -1091,7 +1089,6 @@
               "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))$",
               "shape_corners": "$gv(func/theme)$$#tradius$",
               "paint_color": "$gv(func/themecolors)$$#back1$"
-
             },
             "shape_type": "RECT",
             "paint_mode": "OVERLAY"
