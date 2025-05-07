@@ -8,11 +8,11 @@
     "pflags": 0,
     "hash": null,
     "height": 378,
-    "id": "df6cb0c8-ff63-4c1f-8555-2bf660814083",
+    "id": "4081e2d5-4349-47b9-8937-842377a9c1ea",
     "locked": false,
-    "release": 378511712,
-    "ts": 1746221818536,
-    "title": "0.6.5A",
+    "release": 378512316,
+    "ts": 1746586303298,
+    "title": "0.6.7A",
     "version": 13,
     "width": 1080,
     "xscreens": 0,
@@ -190,14 +190,14 @@
         "type": "TEXT",
         "title": "theme",
         "description": "Variables for use in theme globals and objects",
-        "value": "$lv(dbtheme,gv(json/theme))$$lv(darkmode,gv(theme/darkmode))$$lv(settheme,(if(gv(settheme)=0,\"OneUI\",gv(settheme)=1,\"Material\",gv(settheme)=2,\"Basic\",gv(settheme)=3,\"Custom\",\"0\")))$$lv(pastel,ce(tc(json,#dbtheme,(\".pastel.\"+mu(rnd,1,18))),sat,20))$$lv(themename,(tc(json,#dbtheme,(\".\"+#settheme))))$$lv(tborder,(tc(json,#dbtheme,(\".\"+#settheme+\".border_width\"))))$$lv(tradius,(tc(json,#dbtheme,(\".\"+#settheme+\".corner_radius\"))))$$lv(tpadwgt,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_widget\"))))$$lv(tpadobj,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_object\"))))$$lv(tpadside,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_sides\"))))$$lv(tdevico,(tc(json,#dbtheme,(\".\"+#settheme+\".dev_ico_ring\"))))$$lv(tringsha,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_shape\"))))$$lv(tshad,(tc(json,#dbtheme,(\".\"+#settheme+\".shadow\"))))$$lv(twgtopa,(tc(json,#dbtheme,(\".\"+#settheme+\".wgt_opacity\"))))$$lv(border,(if(gv(theme/bordersize)!=\"\",gv(theme/bordersize),#tborder)))$$lv(radius,(if(gv(theme/cornerradius)!=\"\",gv(theme/cornerradius),#tradius)))$$lv(padwgthor,(if(gv(theme/verticalpadding)!=\"\",gv(theme/verticalpadding),#tpadwgt)))$$lv(padwgtver,(if(gv(theme/horizontalpadding)!=\"\",gv(theme/horizontalpadding),#tpadwgt)))$$lv(padobjhor,(if(gv(theme/objpadding)!=\"\",gv(theme/objpadding),#tpadobj)))$$lv(padobjver,(if(gv(theme/objpadding2)!=\"\",gv(theme/objpadding2),#tpadobj)))$$lv(padobjside,(if(gv(theme/objpaddingside)!=\"\",gv(theme/objpaddingside),#tpadside)))$$lv(ringsha,(if(gv(theme/ringshape)!=\"\",gv(theme/ringshape),#tringsha)))$$lv(wgtopa,(if(gv(theme/coloreditor/opacity)!=\"\",gv(theme/coloreditor/opacity),#twgtopa)))$"
+        "value": "$lv(dbtheme,gv(json/theme))$$lv(darkmode,gv(theme/darkmode))$$lv(settheme,(if(gv(settheme)=0,\"OneUI\",gv(settheme)=1,\"Material\",gv(settheme)=2,\"Basic\",gv(settheme)=3,\"Custom\",\"0\")))$$lv(pastel,ce(tc(json,#dbtheme,(\".pastel.\"+mu(rnd,1,18))),sat,20))$$lv(themename,(tc(json,#dbtheme,(\".\"+#settheme))))$$lv(tborder,(tc(json,#dbtheme,(\".\"+#settheme+\".border_width\"))))$$lv(tradius,(tc(json,#dbtheme,(\".\"+#settheme+\".corner_radius\"))))$$lv(tpadwgt,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_widget\"))))$$lv(tpadobj,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_obj\"))))$$lv(tpadside,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_sides\"))))$$lv(tdevico,(tc(json,#dbtheme,(\".\"+#settheme+\".dev_ico_ring\"))))$$lv(tringsha,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_shape\"))))$$lv(tshad,(tc(json,#dbtheme,(\".\"+#settheme+\".shadow\"))))$$lv(twgtopa,(tc(json,#dbtheme,(\".\"+#settheme+\".wgt_opacity\"))))$$lv(border,(if(gv(theme/bordersize)!=\"\",gv(theme/bordersize),#tborder)))$$lv(radius,(if(gv(theme/cornerradius)!=\"\",gv(theme/cornerradius),#tradius)))$$lv(padwgthor,(if(gv(theme/verticalpadding)!=\"\",gv(theme/verticalpadding),#tpadwgt)))$$lv(padwgtver,(if(gv(theme/horizontalpadding)!=\"\",gv(theme/horizontalpadding),#tpadwgt)))$$lv(padobjhor,(if(gv(theme/objpadding)!=\"\",gv(theme/objpadding),#tpadobj)))$$lv(padobjver,(if(gv(theme/objpadding2)!=\"\",gv(theme/objpadding2),#tpadobj)))$$lv(padobjside,(if(gv(theme/objpaddingside)!=\"\",gv(theme/objpaddingside),#tpadside)))$$lv(ringsha,(if(gv(theme/ringshape)!=\"\",gv(theme/ringshape),#tringsha)))$$lv(wgtopa,(if(gv(theme/coloreditor/opacity)!=\"\",gv(theme/coloreditor/opacity),#twgtopa)))$"
       },
       "func/themecolors": {
         "index": 24,
         "type": "TEXT",
         "title": "themecolors",
         "description": "Variables for color outputs",
-        "value": "$gv(func/theme)$$lv(cborder,(tc(json,#dbtheme,(\".\"+#colors+\".border\"))))$$lv(cback1,(tc(json,#dbtheme,(\".\"+#colors+\".back_1\"))))$$lv(cback2,(tc(json,#dbtheme,(\".\"+#colors+\".back_2\"))))$$lv(cobjicooff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_off\"))))$$lv(cobjringoff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_off\"))))$$lv(cobjiconon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_on\"))))$$lv(cobjringon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_on\"))))$$lv(back1,(if(gv(theme/colors/back1)!=\"\",gv(theme/colors/back1),if(#cback1~=\"#[a-fA-F0-9]*\",#cback1,si(#cback1)))))$$lv(back2,(if(gv(theme/colors/back2)!=\"\",gv(theme/colors/back2),if(#cback2~=\"#[a-fA-F0-9]*\",#cback2,si(#cback2)))))$$lv(objiconon,(if(gv(theme/colors/objiconon)!=\"\",gv(theme/colors/objiconon),if(#cobjiconon~=\"#[a-fA-F0-9]*\",#cobjiconon,si(#cobjiconon)))))$$lv(objiconoff,(if(gv(theme/colors/objiconoff)!=\"\",gv(theme/colors/objiconoff),if(#cobjiconoff~=\"#[a-fA-F0-9]*\",#cobjiconoff,si(#cobjiconoff)))))$$lv(objringon,(if(gv(theme/colors/objringon)!=\"\",gv(theme/colors/objringon),if(#cobjringon~=\"#[a-fA-F0-9]*\",#cobjringon,si(#cobjringon)))))$$lv(objringoff,(if(gv(theme/colors/objringoff)!=\"\",gv(theme/colors/objringoff),if(#cobjringoff~=\"#[a-fA-F0-9]*\",#cobjringoff,si(#cobjringoff)))))$$lv(border,(if(gv(theme/colors/border)!=\"\",gv(theme/colors/border),if(#cborder~=\"#[a-fA-F0-9]*\",#cborder,si(#cborder)))))$"
+        "value": "$gv(func/theme)$$lv(colors, if(#darkmode = 0, (#settheme + \".colors.light\"),(#settheme + \".colors.dark\")))$$lv(cborder, (tc(json, #dbtheme, (\".\" + #colors + \".border\"))))$$lv(cback1, (tc(json, #dbtheme, (\".\" + #colors + \".back_1\"))))$$lv(cback2, (tc(json, #dbtheme, (\".\" + #colors + \".back_2\"))))$$lv(cobjiconoff, (tc(json, #dbtheme, (\".\" + #colors + \".obj_icon_off\"))))$$lv(cobjringoff, (tc(json, #dbtheme, (\".\" + #colors + \".obj_ring_off\"))))$$lv(cobjiconon, (tc(json, #dbtheme, (\".\" + #colors + \".obj_icon_on\"))))$$lv(cobjringon, (tc(json, #dbtheme, (\".\" + #colors + \".obj_ring_on\"))))$$lv(back1, (if(gv(theme/colors/back1) != \"\", gv(theme/colors/back1),if(#cback1 ~= \"#[a-fA-F0-9]*\", #cback1, si(#cback1)))))$$lv(back2, (if(gv(theme/colors/back2) != \"\", gv(theme/colors/back2),if(#cback2 ~= \"#[a-fA-F0-9]*\", #cback2, si(#cback2)))))$$lv(objiconon, (if(gv(theme/colors/objiconon) != \"\", gv(theme/colors/objiconon),if(#cobjiconon ~= \"#[a-fA-F0-9]*\", #cobjiconon, si(#cobjiconon)))))$$lv(objiconoff, (if(gv(theme/colors/objiconoff) != \"\", gv(theme/colors/objiconoff),if(#cobjiconoff ~= \"#[a-fA-F0-9]*\", #cobjiconoff, si(#cobjiconoff)))))$$lv(objringon, (if(gv(theme/colors/objringon) != \"\", gv(theme/colors/objringon),if(#cobjringon ~= \"#[a-fA-F0-9]*\", #cobjringon, si(#cobjringon)))))$$lv(objringoff, (if(gv(theme/colors/objringoff) != \"\", gv(theme/colors/objringoff),if(#cobjringoff ~= \"#[a-fA-F0-9]*\", #cobjringoff, si(#cobjringoff)))))$$lv(border, (if(gv(theme/colors/border) != \"\", gv(theme/colors/border),if(#cborder ~= \"#[a-fA-F0-9]*\", #cborder, si(#cborder)))))$"
       },
       "func/devjsonrem": {
         "index": 25,
@@ -237,13 +237,13 @@
         "index": 30,
         "type": "TEXT",
         "title": "device",
-        "value": "{\n  \"device_states\": [\n       {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.closet_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"150\",\n      \"color\": \"color\"\n    },\n    {\n      \"entity_id\": \"light.ensuite_light\",\n      \"state\": \"on\",\n      \"brightness\": \"75\",\n      \"color\": \"color\"\n    },\n       ]\n}"
+        "value": "{\n  \"device_states\": [\n       {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.closet_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.ensuite_light\",\n      \"state\": \"on\",\n      \"brightness\": \"75\",\n      \"color\": \"color\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"99\",\n      \"color\": \"color\"\n    },\n       ]\n}"
       },
       "json/theme": {
         "index": 31,
         "type": "TEXT",
         "title": "theme",
-        "value": "{\"OneUI\":{\"border_width\":1dp,\"corner_radius\":1dp,\"pad_widget\":16dp,\"pad_obj\":10dp,\"pad_sides\":16dp,\"dev_ico_ring\":0,\"wgt_opacity\":150,\"shadow\":0,\"colors\":{\"light\":{\"back_1\":\"#FFFFFF\",\"back_2\":\"#F5F4F4\",\"obj_icon_off\":\"#EBEBEB\",\"obj_ring_off\":\"$si(sysca1,5)$\",\"obj_icon_on\":\"#FFFFFF\",\"obj_ring_on\":\"pastels\",\"border\":\"#EBEBEB\"},\"dark\":{\"back_1\":\"#000000\",\"back_2\":\"$si(syscn2,90)$\",\"obj_icon_off\":\"#EBEBEB\",\"obj_ring_off\":\"$si(sysca1,15)$\",\"obj_icon_on\":\"#FFFFFF\",\"obj_ring_on\":\"pastels\",\"border\":\"#EBEBEB\"}}},\"Material\":{\"border_width\":0,\"corner_radius\":1dp,\"pad_widget\":10dp,\"pad_obj\":10dp,\"pad_sides\":16dp,\"dev_ico_ring\":1,\"wgt_opacity\":50,\"shadow\":1,\"colors\":{\"light\":{\"back_1\":\"$si(sysca1,40)$\",\"back_2\":\"$si(sysca1,10)$\",\"obj_icon_off\":\"$si(syscn1,50)$\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$si(syscn1,50)$\",\"obj_ring_on\":\"$si(sysca1,50)$\",\"border\":\"#79747E\"},\"dark\":{\"back_1\":\"$si(sysca1,90)$\",\"back_2\":\"$si(sysca2,60)$\",\"obj_icon_off\":\"$si(syscn1,50)$\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$si(syscn1,50)$\",\"obj_ring_on\":\"$si(sysca1,50)$\",\"border\":\"#79747E\"}}},\"Basic\":{\"border_width\":0,\"corner_radius\":10kpx,\"pad_widget\":6dp,\"pad_obj\":10dp,\"pad_sides\":12dp,\"dev_ico_ring\":0,\"wgt_opacity\":75,\"colors\":{\"light\":{\"back_1\":\"$si(wpcolor1)$\",\"back_2\":\"$si(wpcolor2)$\",\"obj_icon_off\":\"#E7FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$ce(si(wpcolor1,comp),sat,60)$\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"},\"dark\":{\"back_1\":\"$si(wpcolor1)$\",\"back_2\":\"$si(wpcolor2)$\",\"obj_icon_off\":\"#FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"$ce(si(wpcolor1,comp),sat,60)$\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"}}}}"
+        "value": "{\"OneUI\": {\"border_width\": 2,\"corner_radius\": 2,\"pad_widget\": 16,\"pad_obj\": 10,\"pad_sides\": 16,\"ring_shape\": \"Squrdle\",\"dev_ico_ring\": 0,\"wgt_opacity\": 150,\"shadow\": 0,\"colors\": {\"light\": {\"back_1\": \"#FFFFFF\",\"back_2\": \"#F5F4F4\",\"obj_icon_off\": \"#EBEBEB\",\"obj_ring_off\": \"sysca1, 5\",\"obj_icon_on\": \"#FFFFFF\",\"obj_ring_on\": \"\",\"border\": \"#EBEBEB\"},\"dark\": {\"back_1\": \"#000000\",\"back_2\": \"syscn2, 90\",\"obj_icon_off\": \"#EBEBEB\",\"obj_ring_off\": \"sysca1, 15\",\"obj_icon_on\": \"#FFFFFF\",\"obj_ring_on\": \"\",\"border\": \"#EBEBEB\"},\"pastel\": {\"0\": \"#9bbe04\",\"1\": \"#15b76d\",\"2\": \"#0c967c\",\"3\": \"#18dc7f\",\"4\": \"#11b1f3\",\"5\": \"#0091ea\",\"6\": \"#1e4bc6\",\"7\": \"#6693ed\",\"8\": \"#7882ff\",\"9\": \"#8064f4\",\"10\": \"#6445e5\",\"11\": \"#ee2172\",\"12\": \"#f01446\",\"13\": \"#d60052\",\"14\": \"#e53d35\",\"15\": \"#e95b31\",\"16\": \"#ff9e00\",\"17\": \"#ff7b22\",\"18\": \"#ff9e00\"}}},\"Material\": {\"border_width\": 0,\"corner_radius\": 2,\"pad_widget\": 10,\"pad_obj\": 10,\"pad_sides\": 16,\"ring_shape\": \"Circle\",\"dev_ico_ring\": 1,\"wgt_opacity\": 50,\"shadow\": 1,\"colors\": {\"light\": {\"back_1\": \"sysca1, 40\",\"back_2\": \"sysca1, 10\",\"obj_icon_off\": \"syscn1, 50\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"syscn1, 50\",\"obj_ring_on\": \"sysca1, 50\",\"border\": \"#79747E\"},\"dark\": {\"back_1\": \"sysca1, 90\",\"back_2\": \"sysca2, 60\",\"obj_icon_off\": \"syscn1, 50\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"syscn1, 50\",\"obj_ring_on\": \"sysca1, 50\",\"border\": \"#79747E\"}}},\"Basic\": {\"border_width\": 0,\"corner_radius\": 10,\"pad_widget\": 6,\"pad_obj\": 10,\"pad_sides\": 12,\"ring_shape\": \"Circle\",\"dev_ico_ring\": 0,\"wgt_opacity\": 75,\"colors\": {\"light\": {\"back_1\": \"wpcolor1\",\"back_2\": \"wpcolor2\",\"obj_icon_off\": \"#E7FFFFFF\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"wpcolor1\",\"obj_ring_on\": \"#FFFFFF\",\"border\": \"\"},\"dark\": {\"back_1\": \"wpcolor1\",\"back_2\": \"wpcolor2\",\"obj_icon_off\": \"#FFFFFF\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"wpcolor1\",\"obj_ring_on\": \"#FFFFFF\",\"border\": \"\"}}}}"
       },
       "json/template": {
         "index": 32,
@@ -272,12 +272,12 @@
         "title": "settheme",
         "description": "Select the theme you'd like to use on this widget. You can also select a style, then hit custom to modify it",
         "entries": "0##Material,1##OneUI,2##Basic,3##Custom",
-        "value": "0"
+        "value": "2"
       },
-      "themes": {
+      "theme": {
         "index": 36,
         "type": "FOLDER",
-        "title": "themes",
+        "title": "theme",
         "description": "Set Widget colors"
       },
       "theme/colornote": {
@@ -354,7 +354,7 @@
         "title": "syscolorset",
         "description": "Select a color tone",
         "entries": "0##None,1##Accent#1,2##Accent#2,3##Accent#3,4##Neutral#1,5##Neutral#2,6##Neutral#3",
-        "value": "0"
+        "value": "1"
       },
       "theme/colorgen/adjcolor": {
         "index": 48,
@@ -433,7 +433,7 @@
         "type": "SWITCH",
         "title": "darkmode",
         "description": "Set dark mode",
-        "value": 1,
+        "value": 0,
         "on_mode": "MANUAL_FORMULA",
         "on_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 1, 1)$",
         "off_mode": "MANUAL_FORMULA",
@@ -464,9 +464,7 @@
         "description": "Set the size of the border",
         "min": 0,
         "max": 50,
-        "value": 3.0,
-        "toggles": 10,
-        "global_formula": ""
+        "value": 3.0
       },
       "theme/objpadding": {
         "index": 61,
@@ -475,9 +473,7 @@
         "description": "Set the object padding across each row/column",
         "min": 0,
         "max": 50,
-        "value": 10.0,
-        "toggles": 10,
-        "global_formula": ""
+        "value": 10.0
       },
       "theme/objpadding2": {
         "index": 62,
@@ -486,9 +482,7 @@
         "description": "Set the object padding between the two rows/columns",
         "min": 0,
         "max": 50,
-        "value": 10.0,
-        "toggles": 10,
-        "global_formula": ""
+        "value": 10.0
       },
       "theme/objpaddingside": {
         "index": 63,
@@ -497,9 +491,7 @@
         "description": "Set the object padding from the edge of the box to the first icon",
         "min": 0,
         "max": 50,
-        "value": 20.0,
-        "toggles": 10,
-        "global_formula": ""
+        "value": 20.0
       },
       "theme/verticalpadding": {
         "index": 64,
@@ -508,9 +500,7 @@
         "description": "Select the widget vertical padding size",
         "value": 6.0,
         "min": 0,
-        "max": 50,
-        "toggles": 10,
-        "global_formula": ""
+        "max": 50
       },
       "theme/horizontalpadding": {
         "index": 65,
@@ -519,9 +509,7 @@
         "description": "Select the horizontal widget padding size",
         "value": 6.0,
         "min": 0,
-        "max": 50,
-        "toggles": 10,
-        "global_formula": ""
+        "max": 50
       },
       "theme/cornerradius": {
         "index": 66,
@@ -530,9 +518,7 @@
         "description": "Set the radius of the rounded corners",
         "min": 0,
         "max": 100,
-        "value": 10.0,
-        "toggles": 10,
-        "global_formula": ""
+        "value": 10.0
       },
       "entities": {
         "index": 67,
@@ -596,7 +582,7 @@
         "type": "TEXT",
         "title": "templateselect",
         "description": "Template Discription via flow",
-        "value": "light - 2-4 Device(s), 1 Row(s), 2 Boxes\nConnect 2-4 light entities for this template\nThis widget is incorrectly sized for this template. \\nEither make the widget larger or choose a different template. \\nAdvanced users see README for alternative options"
+        "value": "light - 2-4 Device(s), 2 Row(s), 2 Boxes\nConnect 2-4 light entities for this template\nThis widget is incorrectly sized for this template. \\nEither make the widget larger or choose a different template. \\nAdvanced users see README for alternative options"
       },
       "-- 2.": {
         "index": 76,
@@ -693,7 +679,7 @@
         "type": "SWITCH",
         "title": "widgetorient",
         "description": "Set horizontal or vertical orientation of widget. Disable flow before changing. Off = Horizontal, On = Vertical",
-        "value": "0",
+        "value": 1,
         "on_mode": "MANUAL_FORMULA",
         "on_formula": "$if(gv(autoalign) = 1, (si(rratio) < 0.8, 0))$",
         "off_mode": "MANUAL_FORMULA",
@@ -712,7 +698,7 @@
         "type": "NUMBER",
         "title": "box1size",
         "description": "Override Box 1 size set from Flow. Disable flow before changing",
-        "value": "210",
+        "value": 190.0,
         "min": 0,
         "max": 720
       },
@@ -866,6 +852,10 @@
             "params": {
               "formula": "$gv(widgetorient)$$gv(devicetype)$$gv(templateselect)$$gv(box1sq)$"
             }
+          },
+          {
+            "id": "TTbtNHVj",
+            "type": "T_ONCE"
           }
         ],
         "a": [
@@ -915,6 +905,13 @@
             "params": {
               "formula": "$gv(func/themecolors)$$lv(adjcolor,gv(theme/colorgen/adjcolor))$$lv(opacity,gv(theme/colorgen/opacity))$$lv(gsyscolorset,gv(theme/colorgen/syscolorset))$$lv(syscolorset,(if(#gsyscolorset=1,\"sysca1\",#gsyscolorset=2,\"sysca2\",#gsyscolorset=3,\"sysca3\",#gsyscolorset=4,\"syscn1\",#gsyscolorset=5,\"syscn2\",#gsyscolorset=6,\"syscn3\",\"\")))$$lv(matfilter,si(#syscolorset,#adjcolor))$$lv(matfinal,ce(#matfilter,alpha,#opacity))$$#matfinal$"
             }
+          },
+          {
+            "id": "TA0aKoeW",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "theme/colorgen/output"
+            }
           }
         ]
       },
@@ -940,6 +937,13 @@
             "type": "A_FORMULA",
             "params": {
               "formula": "$gv(func/themecolors)$$lv(adjcolor,gv(theme/coloreditor/adjcolor))$$lv(opacity,gv(theme/coloreditor/opacity))$$lv(gwallcolorset,gv(theme/coloreditor/wallcolorset))$$lv(geditcolor,gv(theme/coloreditor/editcolor))$$lv(editcolor,(if(#geditcolor=0,\"back1\",#geditcolor=1,\"back2\",#geditcolor=2,\"objiconon\",#geditcolor=3,\"objiconoff\",#geditcolor=4,\"cobjringon\",#geditcolor=5,\"cobjringoff\",#geditcolor=6,\"border\",#geditcolor=7,\"wpcolor1\",#geditcolor=8,\"wpcolor2\",\"\")))$$lv(wallcolorset,(if(#gwallcolorset=1,\"sat\",#gwallcolorset=2,\"lum\",#gwallcolorset=3,\"comp\",\"\")))$$lv(editfilter,if(#geditcolor<=6,ce(#editcolor,#wallcolorset,#adjcolor),(#geditcolor>=7,ce(si(#editcolor),#wallcolorset,#adjcolor)\"\")))$$lv(editfinal,ce(#matfilter,alpha,#opacity))$$#editfinal$"
+            }
+          },
+          {
+            "id": "TAJkiJSQ",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "theme/coloreditor/output"
             }
           }
         ]
@@ -1194,7 +1198,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1247,7 +1251,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1321,7 +1325,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1374,7 +1378,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
                         }
                       },
                       {
@@ -1628,7 +1632,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1681,7 +1685,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1734,7 +1738,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1787,7 +1791,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1840,7 +1844,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1893,7 +1897,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -1963,7 +1967,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$",
+                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
                         },
                         "internal_title": "State"
@@ -2016,7 +2020,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
                         }
                       },
                       {
@@ -2067,7 +2071,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
                         }
                       },
                       {
@@ -2118,7 +2122,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
                         }
                       },
                       {
@@ -2186,7 +2190,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
                         }
                       }
                     ]
@@ -2237,7 +2241,7 @@
                           "shape_width": "iconsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objringon, #objringoff)$"
+                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
                         }
                       }
                     ]

@@ -42,6 +42,7 @@
 
 ###### 2 - Formula - Write to the template
 ```
+
   $gv(func/jsontemp)$
   $gv(func/alignment)$
 
@@ -158,81 +159,8 @@
 ```
 
 ###### #####################################
-###### Color System **80%**
+###### Theme System
 ###### #####################################
-
-###### theme/colors/back1 **Deprecated**
-```
-  $lv(source, (if(gv(settheme) = 0, "wpcolor1",
-                  gv(settheme) = 1, "wpcolor2",
-                  gv(settheme) = 2, "sys",
-                  "0"
-              )))$
-  Source: $#source$
-
-  $lv(filter, (if(gv(theme/color1fil1) = 1, "sat",
-                  gv(theme/color1fil1) = 2, "lum",
-                  gv(theme/color1fil1) = 3, "comp",
-                  "sat"
-              )))$
-  Filter: $#filter$
-
-  $lv(coltone, (if(gv(theme/coloreditor/syscolorset) = 0, "sysca1",
-                   gv(theme/coloreditor/syscolorset) = 1, "sysca2",
-                   gv(theme/coloreditor/syscolorset) = 2, "sysca3",
-                   gv(theme/coloreditor/syscolorset) = 3, "syscn1",
-                   gv(theme/coloreditor/syscolorset) = 4, "syscn2",
-                   gv(theme/coloreditor/syscolorset) = 5, "syscn3",
-                   "sysca1"
-                )))$
-  Color Tone: $#coltone$
-
-  $lv(addsub, (if(gv(theme/color1fil2) = 0, "", 
-                  gv(theme/color1fil2) = 1, "a",
-                  gv(theme/color1fil2) = 2, "r",
-                  ""
-              )))$
-  Addsub: $#addsub$
-
-  $if(gv(theme/color1fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), 
-        lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor)
-      )))$
-  Wallpaper Color: $#color1$
-
-  $if(gv(theme/color1fil1) > 0 & #source = "sys",
-        lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor)
-      )))$
-  Sysui: $#color2$
-
-  $if(gv(theme/color1fil1) = 0 | gv(settheme) = 3, lv(col3, gv(theme/color1pick)))$ 
-  Colpick: $#col3$
-
-  $lv(color, (if(gv(settheme) <= 1, #color1,
-                 gv(settheme)  = 2, #color2,
-                 gv(settheme) = 3, #col3
-              )))$
-  $#color$
-
-  $lv(final, ce(#color, alpha, gv(theme/coloreditor/opacity)))$
-  Final color: $#final$
-```
-
-
-###### theme/colors/back2 **Deprecated**
-```
-$lv(source, (if(gv(theme/color2sel) = 0, "wpcolor1", gv(theme/color2sel) = 1, "wpcolor2", gv(theme/color2sel) = 2, "sys", "0")))$
-$lv(filter, (if(gv(theme/color2fil1) = 1, "sat", gv(theme/color2fil1) = 2, "lum", gv(theme/color2fil1) = 3, "comp", "sat")))$
-$lv(coltone, (if(gv(theme/color2sysc) = 0, "sysca1", gv(theme/color2sysc) = 1, "sysca2", gv(theme/color2sysc) = 2, "sysca3", gv(theme/color2sysc) = 3, "syscn1", gv(theme/color2sysc) = 4, "syscn2", gv(theme/color2sysc) = 5, "syscn3", "sysca1")))$
-$lv(addsub, (if(gv(theme/color2fil2) = 0, "", gv(theme/color2fil2) = 1, "a", gv(theme/color2fil2) = 2, "r", "")))$
-
-$if(gv(theme/color2fil1) > 0 & (#source = "wpcolor1" | #source = "wpcolor2"), lv(color1, ce(si(#source), #filter, gv(theme/coloreditor/adjcolor))))$
-$if(gv(theme/color2fil1) > 0 & #source = "sys", lv(color2, si(#coltone, gv(theme/coloreditor/adjcolor))))$
-$if(gv(theme/color2fil1) = 0 | gv(theme/color2sel) = 3, lv(col3, gv(theme/color2pick)))$
-
-$lv(color, (if(gv(theme/color2sel) <= 1, #color1, gv(theme/color2sel) = 2, #color2, gv(theme/color2sel) = 3, #col3)))$
-$lv(final, ce(#color, alpha, gv(theme/color2alph)))$
-$#final$
-```
 
 ###### settheme
 ```

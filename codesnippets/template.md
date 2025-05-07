@@ -288,6 +288,9 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
 Use: `$gv(func/themecolors)$`
 ```
   $gv(func/theme)$
+  $lv(colors, if(#darkmode = 0, (#settheme + ".colors.light"),
+                                (#settheme + ".colors.dark")
+  ))$
 
   $lv(cborder,     (tc(json, #dbtheme, ("." + #colors + ".border"))))$
   $lv(cback1,      (tc(json, #dbtheme, ("." + #colors + ".back_1"))))$
@@ -297,7 +300,6 @@ Use: `$gv(func/themecolors)$`
   $lv(cobjiconon,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_on"))))$
   $lv(cobjringon,  (tc(json, #dbtheme, ("." + #colors + ".obj_ring_on"))))$
 
-// Output data with si() support
   $lv(back1, (if(gv(theme/colors/back1) != "", gv(theme/colors/back1),
                 if(#cback1 ~= "#[a-fA-F0-9]*", #cback1, si(#cback1))
              ))
@@ -362,7 +364,7 @@ Use: `$gv(func/theme)$`
   $lv(tborder,  (tc(json, #dbtheme, ("." + #settheme + ".border_width"))))$
   $lv(tradius,  (tc(json, #dbtheme, ("." + #settheme + ".corner_radius"))))$
   $lv(tpadwgt,  (tc(json, #dbtheme, ("." + #settheme + ".pad_widget"))))$
-  $lv(tpadobj,  (tc(json, #dbtheme, ("." + #settheme + ".pad_object"))))$
+  $lv(tpadobj,  (tc(json, #dbtheme, ("." + #settheme + ".pad_obj"))))$
   $lv(tpadside, (tc(json, #dbtheme, ("." + #settheme + ".pad_sides"))))$
   $lv(tdevico,  (tc(json, #dbtheme, ("." + #settheme + ".dev_ico_ring"))))$
   $lv(tringsha, (tc(json, #dbtheme, ("." + #settheme + ".ring_shape"))))$

@@ -146,7 +146,9 @@ UTF Hex       REGEX                  KWGT
 - `templateinfo` Flow
     - Create a for loop for `ntwgtsize`?
     - Connect to status system?
-- Add "Setup" button that is in Box 2 when first opened. Clicking it goes to the github readme
+- Add "Setup" button that is in Box 2 when first opened
+    - Clicking it goes to the github readme?
+    - Arrow to direct user to "Globals" tab?
 - Device and App icons
     - Confirm all code works
     - Device Icon: click to open editor or open Home Assistant directly to your device
@@ -206,14 +208,13 @@ UTF Hex       REGEX                  KWGT
         - Basic: 
             - Background: wallpaper,
             - Icons: no ring (off), white ring (on), white/black icon, circle shape
-- Go over color system - Create "themes" **80%**
+- Go over color system - Create "themes" **90% & working**
+    - Configure colors and styles correctly, testing to get correct results
     - Create Device Icon ring
-        - Merge with device icon touch?
+        - Merge with device icon touch
         - Ensure it works in all positions
     - Double check stack group margins in editor
-    - ~~`Figure out pastel icon colors for OneUI`~~ ".OneUI.colors.pastel{}"
-        - `Add new circle icon color code in template.md to all objects`
-    - Check new theme system in KWGT editor
+    - Create "Clear Custom Values" option - Flow
 
 __Attributes         One UI                 HA/Material            Basic                 Custom__
 Color 1 (Primary):   Material Accent #1     Material Accent #1     Wallpaper             Color Picker
@@ -246,16 +247,19 @@ Device Icon border:  None                   Corner ball            None         
     - Merge `theme/coloreditor/opacity` & `theme/color2alph~
     - Create `theme/color#` x 4, paired to theme
     - Write theme json code in templates.md
-    - ~~`Update `theme/color/*` from `theme/coloreditor` or make user c&p?`~~ 
+    - `Update `theme/color/*` from `theme/coloreditor` or make user c&p?`~
    - `"Fill In" "custom" theme values from theme to global` - option? **Potentially not**
         - On "Custom" select? If user goes back to regular theme, settings would persist
         - Switch at top of `theme/coloreditor`?
-    - ~~`Write flow for "theme/coloreditor"`~~
+    - `Write flow for "theme/coloreditor"`
      - `Make circle shape configurable with "ring_shape"`
     - Look at each theme in JSON
         - Verify configurations seem to match chart below and Material/OneUI specs
-        - ~~`Convert "dp" to "kpx`"~~
-        - ~~Figure out using `$$` in JSON~~ -  in JSON will work `$si(#jsonval)$` (sysca1, 50)
+        - `Convert "dp" to "kpx`"
+        - Figure out using `$$` in JSON - in JSON will work `$si(#jsonval)$` (sysca1, 50)
+    - `Figure out pastel icon colors for OneUI` ".OneUI.colors.pastel{}"
+        - `Add new circle icon color code in template.md to all objects`
+    - Remove "10" mode from theme globals so they arent in formula mode
 - Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - `"lock" in devicetype > "security"`
 - `"Icon #" > "Object #" in editor`
