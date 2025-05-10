@@ -138,8 +138,9 @@
 ###### core/size/box2iconmax
 ```
   $gv(func/alignment)$
+  $gv(func/theme)$
   $lv(box2dir,  (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$
-  $lv(icon, gv(iconsize) + #padobjhor)$
+  $lv(icon, ((gv(iconsize) * #ringsize / 100) + gv(iconsize) + #padobjhor))$
   $lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #padobjhor))$
   $if(gv(fitmoreobj) = 0,
         (if(#boxsize <= 2, 2, mu(round, #boxsize))),
@@ -164,8 +165,8 @@
 
 ###### settheme
 ```
-0##Material,
-1##OneUI,
+0##OneUI,
+1##Material,
 2##Basic,
 3##Custom
 ```
@@ -178,6 +179,18 @@
 `theme/colors/objringon`
 `theme/colors/objringoff`
 `theme/colors/border`
+
+###### theme/colors/reset
+```
+  $if(gv(theme/colors/back1 = "" &
+         theme/colors/back2 = "" &
+         theme/colors/objiconon = "" &
+         theme/colors/objiconoff = "" &
+         theme/colors/objringon = "" &
+         theme/colors/objringoff = "" &
+         theme/colors/border = "", 0
+  ))$
+```
 
 ###### theme/coloreditor/editcolor
 - Select color to edit

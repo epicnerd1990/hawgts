@@ -500,27 +500,28 @@
     "pad_widget": 16,
     "pad_obj": 10,
     "pad_sides": 16,
-    "ring_shape": "Squrdle",
+    "ring_shape": "SQUIRCLE",
+    "ring_percent": 25,
     "dev_ico_ring": 0,
     "wgt_opacity": 150,
     "shadow": 0,
     "colors": {
       "light": {
-        "back_1": "#FFFFFF",
-        "back_2": "#F5F4F4",
-        "obj_icon_off": "#EBEBEB",
-        "obj_ring_off": "sysca1, 5",
-        "obj_icon_on": "#FFFFFF",
+        "back_1": "syscn1, 90",
+        "back_2": "syscn2, 90",
+        "obj_icon_off": "sysca2, 30",
+        "obj_ring_off": "",
+        "obj_icon_on": "sysca1, 100",
         "obj_ring_on": "",
         "border": "#EBEBEB"
       },
       "dark": {
-        "back_1": "#000000",
-        "back_2": "syscn2, 90",
-        "obj_icon_off": "#EBEBEB",
-        "obj_ring_off": "sysca1, 15",
-        "obj_icon_on": "#FFFFFF",
-        "obj_ring_on": "",
+        "back_1": "syscn1, 22",
+        "back_2": "syscn2, 22",
+        "obj_icon_off": "sysca2, 90",
+        "obj_ring_off": "sysca2, 30",
+        "obj_icon_on": "sysca1, 20",
+        "obj_ring_on": "sysca1, 80",
         "border": "#EBEBEB"
       },
       "pastel": {
@@ -552,29 +553,30 @@
     "pad_widget": 10,
     "pad_obj": 10,
     "pad_sides": 16,
-    "ring_shape": "Circle",
+    "ring_shape": "CIRCLE",
+    "ring_percent": 25,
     "dev_ico_ring": 1,
     "wgt_opacity": 50,
     "shadow": 1,
     "colors": {
       "light": {
-        "back_1": "sysca1, 40",
-        "back_2": "sysca1, 10",
-        "obj_icon_off": "syscn1, 50",
-        "obj_ring_off": "#FF000000",
-        "obj_icon_on": "syscn1, 50",
-        "obj_ring_on": "sysca1, 50",
-        "border": "#79747E"
+        "back_1": "syscn1, 90",
+        "back_2": "syscn2, 90",
+        "obj_icon_off": "sysca2, 30",
+        "obj_ring_off": "sysca2, 90",
+        "obj_icon_on": "sysca1, 100",
+        "obj_ring_on": "sysca1, 40",
+        "border": ""
       },
       "dark": {
-        "back_1": "sysca1, 90",
-        "back_2": "sysca2, 60",
-        "obj_icon_off": "syscn1, 50",
-        "obj_ring_off": "#FF000000",
-        "obj_icon_on": "syscn1, 50",
-        "obj_ring_on": "sysca1, 50",
-        "border": "#79747E"
-      }
+        "back_1": "syscn1, 22",
+        "back_2": "syscn2, 22",
+        "obj_icon_off": "sysca2, 90",
+        "obj_ring_off": "sysca2, 30",
+        "obj_icon_on": "sysca1, 20",
+        "obj_ring_on": "sysca1, 80",
+        "border": ""
+      },
     }
   },
   "Basic": {
@@ -583,7 +585,8 @@
     "pad_widget": 6,
     "pad_obj": 10,
     "pad_sides": 12,
-    "ring_shape": "Circle",
+    "ring_shape": "CIRCLE",
+    "ring_percent": 0,
     "dev_ico_ring": 0,
     "wgt_opacity": 75,
     "colors": {

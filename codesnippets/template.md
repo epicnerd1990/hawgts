@@ -288,6 +288,7 @@ Example usage: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$[$lv(keyname, ".c
 Use: `$gv(func/themecolors)$`
 ```
   $gv(func/theme)$
+  $lv(darkmode, gv(theme/darkmode))$
   $lv(colors, if(#darkmode = 0, (#settheme + ".colors.light"),
                                 (#settheme + ".colors.dark")
   ))$
@@ -295,58 +296,53 @@ Use: `$gv(func/themecolors)$`
   $lv(cborder,     (tc(json, #dbtheme, ("." + #colors + ".border"))))$
   $lv(cback1,      (tc(json, #dbtheme, ("." + #colors + ".back_1"))))$
   $lv(cback2,      (tc(json, #dbtheme, ("." + #colors + ".back_2"))))$
-  $lv(cobjicooff,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_off"))))$
+  $lv(cobjiconoff,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_off"))))$
   $lv(cobjringoff, (tc(json, #dbtheme, ("." + #colors + ".obj_ring_off"))))$
   $lv(cobjiconon,  (tc(json, #dbtheme, ("." + #colors + ".obj_icon_on"))))$
   $lv(cobjringon,  (tc(json, #dbtheme, ("." + #colors + ".obj_ring_on"))))$
 
+
   $lv(back1, (if(gv(theme/colors/back1) != "", gv(theme/colors/back1),
-                if(#cback1 ~= "#[a-fA-F0-9]*", #cback1, si(#cback1))
+                if(#cback1 ~= "#[a-fA-F0-9]*", #cback1, 
+                si(tc(split, #cback1, ",", 0), tc(split, #cback1, ",", 1)))
              ))
   )$
   $lv(back2, (if(gv(theme/colors/back2) != "", gv(theme/colors/back2),
-                if(#cback2 ~= "#[a-fA-F0-9]*", #cback2, si(#cback2))
+                if(#cback2 ~= "#[a-fA-F0-9]*", #cback2, 
+                si(tc(split, #cback2, ",", 0), tc(split, #cback2, ",", 1)))
              ))
   )$
   $lv(objiconon, (if(gv(theme/colors/objiconon) != "", gv(theme/colors/objiconon),
-                if(#cobjiconon ~= "#[a-fA-F0-9]*", #cobjiconon, si(#cobjiconon))
+                if(#cobjiconon ~= "#[a-fA-F0-9]*", #cobjiconon, 
+                si(tc(split, #cobjiconon, ",", 0), tc(split, #cobjiconon, ",", 1)))
              ))
   )$
   $lv(objiconoff, (if(gv(theme/colors/objiconoff) != "", gv(theme/colors/objiconoff),
-                if(#cobjiconoff ~= "#[a-fA-F0-9]*", #cobjiconoff, si(#cobjiconoff))
+                if(#cobjiconoff ~= "#[a-fA-F0-9]*", #cobjiconoff, 
+                si(tc(split, #cobjiconoff, ",", 0), tc(split, #cobjiconoff, ",", 1)))
              ))
   )$
   $lv(objringon, (if(gv(theme/colors/objringon) != "", gv(theme/colors/objringon),
-                if(#cobjringon ~= "#[a-fA-F0-9]*", #cobjringon, si(#cobjringon))
+                if(#cobjringon ~= "#[a-fA-F0-9]*", #cobjringon, 
+                si(tc(split, #cobjringon, ",", 0), tc(split, #cobjringon, ",", 1)))
              ))
   )$
   $lv(objringoff, (if(gv(theme/colors/objringoff) != "", gv(theme/colors/objringoff),
-                if(#cobjringoff ~= "#[a-fA-F0-9]*", #cobjringoff, si(#cobjringoff))
+                if(#cobjringoff ~= "#[a-fA-F0-9]*", #cobjringoff, 
+                si(tc(split, #cobjringoff, ",", 0), tc(split, #cobjringoff, ",", 1)))
              ))
   )$
   $lv(border, (if(gv(theme/colors/border) != "", gv(theme/colors/border),
-                if(#cborder ~= "#[a-fA-F0-9]*", #cborder, si(#cborder))
+                if(#cborder ~= "#[a-fA-F0-9]*", #cborder, 
+                si(tc(split, #cborder, ",", 0), tc(split, #cborder, ",", 1)))
              ))
   )$
-
-```
-
-```
-// Output data
-  $lv(back1,       (if(gv(theme/colors/back1)      != "", gv(theme/colors/back1),      #cback1)))$
-  $lv(back2,       (if(gv(theme/colors/back2)      != "", gv(theme/colors/back2),      #cback2)))$
-  $lv(objiconon,   (if(gv(theme/colors/objiconon)  != "", gv(theme/colors/objiconon),  #cobjiconon)))$
-  $lv(objiconoff,  (if(gv(theme/colors/objiconoff) != "", gv(theme/colors/objiconoff), #cobjiconoff)))$
-  $lv(objringon,   (if(gv(theme/colors/objringon)  != "", gv(theme/colors/objringon),  #cobjringon)))$
-  $lv(objringoff,  (if(gv(theme/colors/objringoff) != "", gv(theme/colors/objringoff), #cobjringoff)))$
-  $lv(border,      (if(gv(theme/colors/border)     != "", gv(theme/colors/border),     #cborder)))$
 ```
 
 ###### func/theme 
 Use: `$gv(func/theme)$`
 ```
   $lv(dbtheme, gv(json/theme))$
-  $lv(darkmode, gv(theme/darkmode))$
 
   $lv(settheme, (if(gv(settheme) = 0, "OneUI",
                     gv(settheme) = 1, "Material",
@@ -354,37 +350,49 @@ Use: `$gv(func/theme)$`
                     gv(settheme) = 3, "Custom",
                     "0")
   ))$
+  $lv(pastel, ce(tc(json, #dbtheme, (".pastel." + mu(rnd, 0, 18))), sat, 20))$
+  $lv(themename, (tc(json, #dbtheme, ("." + #settheme))))$
 
-// Randomly select one of the samsung colors from the JSON
-// and output a pastel version to match OneUI colors
-  $lv(pastel, ce(tc(json, #dbtheme, (".pastel." + mu(rnd, 1, 18))), sat, 20))$
+  $lv(tborder,   (tc(json, #dbtheme, ("." + #settheme + ".border_width"))))$
+  $lv(tradius,   (tc(json, #dbtheme, ("." + #settheme + ".corner_radius"))))$
+  $lv(tpadwgt,   (tc(json, #dbtheme, ("." + #settheme + ".pad_widget"))))$
+  $lv(tpadobj,   (tc(json, #dbtheme, ("." + #settheme + ".pad_obj"))))$
+  $lv(tpadside,  (tc(json, #dbtheme, ("." + #settheme + ".pad_sides"))))$
+  $lv(tdevico,   (tc(json, #dbtheme, ("." + #settheme + ".dev_ico_ring"))))$
+  $lv(tringsha,  (tc(json, #dbtheme, ("." + #settheme + ".ring_shape"))))$
+  $lv(tringsize, (tc(json, #dbtheme, ("." + #settheme + ".ring_percent"))))$
+  $lv(tshadow,   (tc(json, #dbtheme, ("." + #settheme + ".shadow"))))$
+  $lv(twgtopa,   (tc(json, #dbtheme, ("." + #settheme + ".wgt_opacity"))))$
 
-// Raw JSON values
-  $lv(themename,(tc(json, #dbtheme, ("." + #settheme))))$
-  $lv(tborder,  (tc(json, #dbtheme, ("." + #settheme + ".border_width"))))$
-  $lv(tradius,  (tc(json, #dbtheme, ("." + #settheme + ".corner_radius"))))$
-  $lv(tpadwgt,  (tc(json, #dbtheme, ("." + #settheme + ".pad_widget"))))$
-  $lv(tpadobj,  (tc(json, #dbtheme, ("." + #settheme + ".pad_obj"))))$
-  $lv(tpadside, (tc(json, #dbtheme, ("." + #settheme + ".pad_sides"))))$
-  $lv(tdevico,  (tc(json, #dbtheme, ("." + #settheme + ".dev_ico_ring"))))$
-  $lv(tringsha, (tc(json, #dbtheme, ("." + #settheme + ".ring_shape"))))$
-  $lv(tshad,    (tc(json, #dbtheme, ("." + #settheme + ".shadow"))))$
-  $lv(twgtopa,  (tc(json, #dbtheme, ("." + #settheme + ".wgt_opacity"))))$
+  $lv(gborder,    gv(theme/bordersize))$
+  $lv(gradius,    gv(theme/cornerradius))$
+  $lv(gpadwgtver, gv(theme/verticalpadding))$
+  $lv(gpadwgthor, gv(theme/horizontalpadding))$
+  $lv(gpadobjhor, gv(theme/objpadding))$
+  $lv(gpadobjver, gv(theme/objpadding2))$
+  $lv(gpadside,   gv(theme/objpaddingside))$
+  $lv(gringsha,   gv(theme/ringshape))$
+  $lv(gringsize,  gv(theme/ringsize))$
+  $lv(gshadow,    gv(theme/shadow))$
+  $lv(gwgtopa,    gv(theme/opacity))$
 
-// Output data accounting for custom overrides
-  $lv(border,      (if(gv(theme/bordersize)         != "", gv(theme/bordersize),          #tborder)))$
-  $lv(radius,      (if(gv(theme/cornerradius)       != "", gv(theme/cornerradius),        #tradius)))$
-  $lv(padwgthor,   (if(gv(theme/verticalpadding)    != "", gv(theme/verticalpadding),     #tpadwgt)))$
-  $lv(padwgtver,   (if(gv(theme/horizontalpadding)  != "", gv(theme/horizontalpadding),   #tpadwgt)))$
-  $lv(padobjhor,   (if(gv(theme/objpadding)         != "", gv(theme/objpadding),          #tpadobj)))$
-  $lv(padobjver,   (if(gv(theme/objpadding2)        != "", gv(theme/objpadding2),         #tpadobj)))$
-  $lv(padobjside,  (if(gv(theme/objpaddingside)     != "", gv(theme/objpaddingside),      #tpadside)))$
-  $lv(ringsha,     (if(gv(theme/ringshape)          != "", gv(theme/ringshape),           #tringsha)))$
-  $lv(wgtopa,      (if(gv(theme/coloreditor/opacity)!= "", gv(theme/coloreditor/opacity), #twgtopa)))$
+  $lv(border,     (if(#gborder,    (if((#gborder * 1)    <= 0, #tborder,   #gborder)),    #tborder)))$
+  $lv(radius,     (if(#gradius,    (if((#gradius * 1)    <= 0, #tradius,   #gradius)),    #tradius)))$
+  $lv(padwgtver,  (if(#gpadwgtver, (if((#gpadwgtver * 1) <= 0, #tpadwgt,   #gpadwgtver)), #tpadwgt)))$
+  $lv(padwgthor,  (if(#gpadwgthor, (if((#gpadwgthor * 1) <= 0, #tpadwgt,   #gpadwgthor)), #tpadwgt)))$
+  $lv(padobjhor,  (if(#gpadobjhor, (if((#gpadobjhor * 1) <= 0, #tpadobj,   #gpadobjhor)), #tpadobj)))$
+  $lv(padobjver,  (if(#gpadobjver, (if((#gpadobjver * 1) <= 0, #tpadobj,   #gpadobjver)), #tpadobj)))$
+  $lv(padobjside, (if(#gpadside,   (if((#gpadside * 1)   <= 0, #tpadside,  #gpadside)),   #tpadside)))$
+  $lv(ringsha,    (if(#gringsha,   (if((#gringsha * 1)   <= 0, #tringsha,  #gringsha)),   #tringsha)))$
+  $lv(ringsize,   (if(#gringsize,  (if((#gringsize * 1)  <= 0, #tringsize, #gringsize)),  #tringsize)))$
+  $lv(shadow,     (if(#gshadow,    (if((#gshadow * 1)    <= 0, #tshadow,   #gshadow)),    #tshadow)))$
+  $lv(wgtopa,     (if(#gwgtopa,    (if((#gwgtopa * 1)    <= 0, #twgtopa,   #gwgtopa)),    #twgtopa)))$
+
+  $lv(squircle, (#ringsize / 70) * 100)
 ```
 
+
 ```
-// JSON data with titles for reference
   $lv(themename,(tc(json, #dbtheme, ("." + #settheme))))$                         // Theme Title
   $lv(tborder,  (tc(json, #dbtheme, ("." + #settheme + ".border_width"))))$       // Border width
   $lv(tradius,  (tc(json, #dbtheme, ("." + #settheme + ".corner_radius"))))$      // Corner Radius
@@ -426,7 +434,8 @@ Use: `$gv(func/theme)$`
 
 ```
 
-###### Circle Paint Color Formula
+###### Circle
+- Paint Color Formula
 ```
   $lv(posid, ".box2.row2.0")$
   $gv(func/jsonstate)$
@@ -436,13 +445,12 @@ Use: `$gv(func/theme)$`
       #objringoff)$
 ```
 
-**V1**
+- Shape Width
 ```
-  $lv(posid, ".box2.row2.0")$
-  $gv(func/jsonstate)$
-  $gv(func/themecolors)$
-  $if(#stoutput = 1, #objringon, #objringoff)$
+$gv(func/theme)$
+$(gv(iconsize) * #ringsize / 100) + gv(iconsize)$
 ```
+
 
 ###### Icon Paint Color Formula
 ```

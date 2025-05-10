@@ -105,6 +105,7 @@ UTF Hex       REGEX                  KWGT
 - Create official build process - "build.md"?
     - Create script that creates a "globals.md" chart with name and description imported from json
     - Check "Final To-Do" list way below
+- Review all description tags for globals
 
 ###### #####################################
 ###### TO-DO - Features to complete for V1
@@ -164,70 +165,18 @@ UTF Hex       REGEX                  KWGT
         - JSON Error
         - Tasker Error
 - Complete all versions of "light" template and maybe start "climate"
-
-- Theme system notes:
-    - 2kpx = 1dp
-    - User Options
-        > System dark mode - write to global, override with toggle?
-        > Choose theme style
-            > If not "Custom", set all attributes
-            > If "Custom", use existing globals to configure (Make --3 "theme globals"?)
-    - Existing code:
-        > User select color src (wallpaper, material, etc)
-        > User select color accent `$si(sysca1, 50)$`
-        > User select color filter `$ce(#FF0000, sat, 50)$`
-        > User set filter strength and mask
-        > User overide color/manual input
-        > User set color transparency `$ce(#FF0000, alpha, 50)$`
-    - New code: `theme/`
-        > User selects theme style
-        - Custom options `theme/colors`
-            > User select color accent (allow adjustment of sysca# tone) and filter
-            > User set filter strength and mask
-            > User overide color/manual input for all colors
-            > User set color transparency
-            > User set border size and on/off
-            > User set color transparency
-        - Custom options always override theme options
-    - Kustom color resources
-        - `$si(darkmode)$` System Dark mode (1 = dark)
-        - `$si(darkwp)$`   Dark colored wallpaper
-        - `$si(wpcolor1)$` Primary wallpaper color extracted
-        - `$si(wpcolor2)$` Secondary wallpaper color extracted
-        - `$si(sysca1, 50)$` Material/OneUI Accent  #1 @ 50% tone (0=white, 100=black)
-        - `$si(sysca2, 80)$` Material/OneUI Accent  #2 @ 80% tone
-        - `$si(syscn1, 20)$` Material/OneUI Neutral #1 @ 50% tone
-    - Colors:
-        - OneUI: 
-            - Background: white/black
-            - Icons: Colorful rings (off), "blue" ring (on), 
-            - White icon outline - black where no rings are, Squirgle shape
-        - Material: 
-            - Background: white/black,
-            - Icons: no ring (off), color ring (on), white/black icon, circle shape, device icon ring
-        - Basic: 
-            - Background: wallpaper,
-            - Icons: no ring (off), white ring (on), white/black icon, circle shape
-- Go over color system - Create "themes" **90% & working**
+- Theme system
     - Configure colors and styles correctly, testing to get correct results
-    - Create Device Icon ring
-        - Merge with device icon touch
-        - Ensure it works in all positions
-    - Double check stack group margins in editor
-    - Create "Clear Custom Values" option - Flow
-
-__Attributes         One UI                 HA/Material            Basic                 Custom__
-Color 1 (Primary):   Material Accent #1     Material Accent #1     Wallpaper             Color Picker
-Color 2 (Secondary): Material Accent #2     Material Accent #2     Wallpaper             Color Picker
-Color 3 (Contrast):  Material Neutral #3    Material Neutral #3    White/Black           Color Picker
-Border width:        1dp                    0                      0                     `theme/bordersize`
-Padding - Outside:   16dp                   10dp                   10kpx                 `theme/horizontalpadding`, `theme/verticalpadding`
-Padding - Icons:     4dp                                                                 `theme/objpadding`, `theme/objpadding2`
-Padding - Edges:     16dp                   16dp                   10kpx                 `theme/objpaddingside`
-Corner Radius:                                                                           `theme/cornerradius`
-Icon Color:          All icons pastel       Only active coloredd   White/Black           `color/color1`, `color/color2`
-Device Icon border:  None                   Corner ball            None                  New
-
+        - Fine-tune colors for each group
+        - ~~Big problem with `$si(#var)$` not parsing. Look into solutions or risk revamp~~
+        - ~~Found solution. `$si(#var)` = not working. `$si(#var, #var)$` works. Split in code~~
+        - Test opacity, shadows and borders
+    - ~~Create "Clear Custom Values" option - Flow~~ 
+    - Background
+        - `Add widget shadow` - Testing in editor
+        - ~~`Implement Opacity code into background`~~
+    - `func/themecolors` not allowing color hex values in JSON??
+    - Look at border code - should not need formula for switch?
 
 ###### #####################################
 ###### Completed Tasks
@@ -243,6 +192,7 @@ Device Icon border:  None                   Corner ball            None         
     - Finish moving preset.json code to new theme func
         - Remove formulas from globals meant for custom
     - Use existing code where possible but remove duplicates - no need for color1 and color2
+    - Device icon color > `#objiconoff`
     - Merge `theme/color1sync` & `theme/color2sync`
     - Merge `theme/coloreditor/opacity` & `theme/color2alph~
     - Create `theme/color#` x 4, paired to theme
@@ -252,7 +202,6 @@ Device Icon border:  None                   Corner ball            None         
         - On "Custom" select? If user goes back to regular theme, settings would persist
         - Switch at top of `theme/coloreditor`?
     - `Write flow for "theme/coloreditor"`
-     - `Make circle shape configurable with "ring_shape"`
     - Look at each theme in JSON
         - Verify configurations seem to match chart below and Material/OneUI specs
         - `Convert "dp" to "kpx`"
@@ -260,12 +209,18 @@ Device Icon border:  None                   Corner ball            None         
     - `Figure out pastel icon colors for OneUI` ".OneUI.colors.pastel{}"
         - `Add new circle icon color code in template.md to all objects`
     - Remove "10" mode from theme globals so they arent in formula mode
+    - `#padwgthor` and `#padwgtver` are backwards
+    - Several object formulas set to `#tradius` not `#radius`
+        - Double check stack group margins in editor
+    - Box border strokes incorrect
+    - Icon ring meant to be 25% bigger then icon size  in material - implement ring size
+    - `"State" title on rings > "Ring"`
+    - `Make circle shape configurable with "ring_shape"`
 - Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - `"lock" in devicetype > "security"`
 - `"Icon #" > "Object #" in editor`
 - `theme/objpaddingbox2` > `theme/objpaddingside`
-
-
+- Some entities missing after theme work
 
 ###### #####################################
 ###### Feature Wishlist (V1+)
@@ -286,6 +241,9 @@ Device Icon border:  None                   Corner ball            None         
 - Change tasker/cmd data to process json instead of "&" syntax?
     - Can write template json in KWGT to send to tasker
 - Integerate TV templates into widget once TV Remote is complete
+- Create Device Icon ring
+    - Merge with device icon touch
+    - Ensure it works in all positions
 
 
 ###### #####################################
@@ -297,152 +255,6 @@ Device Icon border:  None                   Corner ball            None         
 - Remove Device Icon click to open editor option?
 - Create a "setup your widget by going to globals" textbox with basic setup info
 - Remove "notes" key in template JSON
-
-
-###### #####################################
-###### All Globals
-###### #####################################
-6.0:                            4.9:                    Task:                                       Notes:
-core
-    core/size
-        core/size/wgtwidth      generate/wgtwidth       Flow Generated Width
-        core/size/wgtheight     generate/wgtheigh       Flow Generated Height
-        core/size/box2width     generate/box2wid        Flow Generated Box 2 Width
-        core/size/box2height    generate/box2hei        Flow Generated Box 2 Height
-        core/size/box1col                               Box 1 icon count                            Review
-                                generate/box1hei                                                    DEPRECATED
-        core/size/box2minsize   generate/box2min        Box 2 minimum size
-        core/size/box1iconmax                           Box Icon sizes
-        core/size/box2iconmax   generate/icocount       Box Icon sizes
-    core/currentstatus                                                                              Status system - not complete
-    core/setstatus                                                                                  Status system - not complete
-    core/statustimer                                                                                Status system - not complete
-    core/curpage                generate/pagenum        Page number for multi-page widgets
-    core/stackalign             formulas/icostack       Formula for stack groups and such           Deprecate soon?
-    core/boxalign               formulas/icopos         Formula for box1 positioning
-    core/contentalign                                                                               UNUSED - DEPRECATE?
-    core/color1                 generate/col1
-    core/color2                 generate/col2
-tasker
-    tasker/data                 tasker/info             Recent command from Tasker
-    core/tasker/fromtasker           tasker/stateupd         tasker/data to Device JSON
-    core/tasker/fromcolorpic         tasker/colpic           Unused Tasker color picker                  Review with color system redesign
-    tasker/cmd                                   Button press data > template JSON           Confirm template code
-                                tasker/sendtoha         Data sent to tasker from widget. Flow uses  DEPRECATED
-                                tasker/statedat         Device state DB                             DEPRECATED
-func
-    func/jsonmain              formulas/devstate       LV - Main JSON read
-    func/func/jsonstate             formulas/devstate       LV - Device State data (in-code use)
-                                formulas/lgtlevel                                                   DEPRECATED - Merged into "tjsonkeys"
-                                formulas/lgtcolor                                                   DEPRECATED - Merged into "tjsonkeys"
-    func/jsonobj               formulas/devstate       LV - Template data (in-code use)
-    func/devjsonrem                                 TASKER > KWGT FLOW - Remove entity from list
-    func/devjsonadd                                TASKER > KWGT FLOW                          Review
-    func/devjsonindent                                TASKER > KWGT FLOW                          Review
-    func/devjsonnew                                 TASKER > KWGT FLOW - Add new entity to list
-    func/alignment                                        Generate how many icons can fit in Box 2
-readme
-setupmode                       setupmde                Display JSON data for debugging             DEBUGGING
--- 1.
-colors
-    theme/colornote
-    settheme
-    theme/coloreditor/syscolorset
-    theme/color1fil1
-    theme/coloreditor/adjcolor
-    theme/color1fil2
-    theme/color1pick
-    theme/coloreditor/opacity
-    theme/color2sel
-    theme/color2sysc
-    theme/color2fil1
-    theme/coloreditor/adjcolor
-    theme/color2fil2
-    theme/color2pick
-    theme/color2alph
-    theme/colors/objiconon
-    theme/colicoon
-    theme/color2fin
-    theme/color1fin
-    theme/border
-    theme/bordersize
-    theme/colors/border
-    theme/colors/back1
-    theme/colors/back2
-                     devcount                Op: Select # of devices to control
-                                1-device                1 device style options (rows, etc)          DEPRECATED
-                                2-device                2 device style options (rows, etc)          DEPRECATED
-devicetype                                              Op: Select Device type from template data   NEW
-deviceicons                     devico
-templateselect                                          Op: Select template # to use (1-6)          NEW
-templatename                                            Display Template name selected              NEW
-entities
-    entities/entitynote
-    entities/entity1
-    entities/entity2
-    entities/entity3
-    entities/entity4
-    entities/entity5
-    entities/entity6
--- 2.
-deviceiconposition              devicovi                Op: Device icon position                    Merged both together
-deviceiconrotation                                      Op: Device icon rotation
-deviceiconsize                                          Op: Device icon size
-boxtoggle                                                Op: Box 1 > Box 2
-core/box1vis                        generate/box1wid        Op: Width of Box 1.                         Switched from auto to overrideable
-box1size                                                Op: Manual override of "core/box1vis"
-box2align                       box2alig                Op: Align custom content in Box 2           DEPRECATE?
-iconsize                        icosize                 Op: Choose main icon size
-appiconvis                      appicovi                Op: Choose app icon visibility
-appiconsize                     appico                  Op: Choose app icon size
-theme/cornerradius                    boxrad                  Op: Widget corner radius
-theme/objpadding              icopad                  Op: Icon padding
-theme/objpadding2                icopad                  Op: Icon padding
-theme/objpaddingside                                          Op: Icon padding to Box 1
-                                icodevszsc
-                                icodevsz
-theme/verticalpadding                 verpad                  Op: Widget vertical padding
-theme/horizontalpadding               horpad                  Op: Widget horizontal padding
--- 3.
-currenttemplate                                         Display the name of the current template
-boxdir1
-autoalign                       autoalig
-widgetorient                    wgtalign
-box1position                    position                Op: Set position/alignment of Box 1 icons.  Merge with "box2align"?
-deviceiconshrink                                        Op: Shrink Device icon to App icon size
-deviceappiconpadding            apicopad                Op: Override icon count calc for box 2      DEPRECATE??
-deviceopeneditor                openedit                Op: Open editor on device icon click
--- 4.
-json/error                                               JSON - Status                               Not working
-json/device                                              JSON - Devicestates.json                    Generated
-json/template                                            JSON - Templates.json
-
-
-###### #####################################
-###### All Flows
-###### #####################################
-Template Touch - KWGT > Tasker
-Current Template Global Set
-Template DB & Device Icon Set
-KWGT > Tasker
-Tasker > KWGT DB
-Tasker > Status
-AA - Box 1 Position
-AA - Box 1 Size
-Color 1 Set
-Color 2 Set
-Icon Padding Set
-Icon Count Set
-Template Name
-
-
-###### #####################################
-###### All Global Functions
-###### #####################################
-
-`func/jsonmain`
-`#dbtemp`                   Template JSON
-
 
 ###### #####################################
 ###### Icon Pack
