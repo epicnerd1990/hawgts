@@ -1,10 +1,10 @@
-# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
+# This file is meant for the developer for reference only and the content is laid out for viewing in the code editor only. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
 
 ###### #####################################
 ###### TO-DO to get to V1 release
 ###### #####################################
 This is a floating list used to keep track of where everything is at while developing the core of the widget.
-It contains lists, resources, plans and data lists
+It contains lists, resources and plans
 
 
 ###### Legend for to-do list
@@ -88,44 +88,47 @@ UTF Hex       REGEX                  KWGT
 
 
 ###### #####################################
-###### TO-DO - V1 General Tasks
+###### Dev version > Release version
 ###### #####################################
-- Complete Readme
-    - Readme = basic, wiki = advanced use?
+- Move service global folders to bottom from top
+- Remove debugging, setup data, etc globals and objects completely
+- Remove Device Icon click to open editor option?
+- Create a "setup your widget by going to globals" textbox with basic setup info
+- Remove "notes" key in template JSON
+- Set page icons to generic for editing by user
+- Include "kustom.codeworkspace" in repo again?
+- Use Kustom packager to create Android "App"?
+
+
+###### #####################################
+###### TO-DO - Tasks to complete for V1
+###### #####################################
+- Complete Readme **50%**
+    - "globals.md" + "json.md"
+    - Make readme easier to understand
 - Continue to work on Codex AI programming
-- Look at YAML for lists?
-- Create Template database
-    - Specific templates to make:
-        - "House Security" template
-    - Specific Komponents to make:
-        - Battery - Complete
-            - Setup battery in different sizes/modes - Find way to scale?
-        - Create "Komponent" Templates for different modes
+- Look at YAML for lists/notes?
 - Fix and set up favourite formulas in KWGT before starting Media Control Widget **50%**
+- Confirm icon pack is up to date with latest icon list
 - Create official build process - "build.md"?
     - Create script that creates a "globals.md" chart with name and description imported from json
-    - Check "Final To-Do" list way below
-- Review all description tags for globals
+    - Reference "Dev version > Release version" list above
+- Finish Features below
+
 
 ###### #####################################
 ###### TO-DO - Features to complete for V1
 ###### #####################################
-
 - Finish implementing Templates V3 and alignment system cleanup **90%**
     - Complete templates for all devices **10%**
-    - ~~Fix remaining glitches and alignment issues~~ **100%**
-    - Add support for battery items?
-    - Add support for custom dials and displays - or just make these komponent/addons?
+    - "House Security"?
 - JSON System completion **70%**
     - Look into file-based JSON template
-    - Allow user to select their own custom JSON using flow and file picker? Flow could remove whitespace and write to `json/template`?
-    - Could also document the template syntax on github wiki and users can append to the template json for custom layouts.
-        - Provide basic samples and a copy of template.json for reference
+    - Allow user to select their own custom JSON using flow and file picker?
+    - Document the JSON syntax on github and users can append to the template json for custom layouts.
+        - Provide basic samples and a copy of json files for reference
     - Could use "Send Data" option in flows or WebGet()
     - File permissions?
-- Confirm icon pack is up to date with latest icon list
-- Group configuration options in folders/subfolders more
-- Should have a flow for each global thats updated with content from the template that is ONLY activated when the template changes. This will maintain user overrides of template settings until they change the template, which will then reset everything.
 - KWGT > TASKER - Create "custom" service call **0%**
     - Use HA templates for simplicity?
 - Set up and build Tasker plugin **0%**
@@ -139,6 +142,9 @@ UTF Hex       REGEX                  KWGT
     - Go through everything and ensure everything works in all scenarios
     - Slim down List Global code by using the index# directly to save excess local variables in functions
     - Test config and operation by following readme on multiple devices and launchers
+    - Catch any stray fixed values in "preset.json"
+    - ~~Review all description tags for globals~~
+    - ~~Group configuration options in folders/subfolders more~~
 
 
 ###### #####################################
@@ -147,41 +153,40 @@ UTF Hex       REGEX                  KWGT
 - `templateinfo` Flow
     - Create a for loop for `ntwgtsize`?
     - Connect to status system?
-- Add "Setup" button that is in Box 2 when first opened
-    - Clicking it goes to the github readme?
-    - Arrow to direct user to "Globals" tab?
+    - Merge `templateinfo` and `templatename`??
 - Device and App icons
     - Confirm all code works
     - Device Icon: click to open editor or open Home Assistant directly to your device
     - Show/hide app icon, 1st = HA, 2nd = Custom
     - Look at "Shortcuts" next to "Flows" in editor
     - App icons: fixed positioning
-- "Status" system completion **10%**
-    - Or use status bar? KWGT code complete, send string to kwgt br: "error" once status is working
-    - Use following errors:
-        - HA Not running
-        - Cannot get status update
-        - State not returned after change
-        - JSON Error
-        - Tasker Error
-- Complete all versions of "light" template and maybe start "climate"
-- Theme system
+    - Home Assistant "Assist" URI
+- "Status" system completion **40%**
+    - Send string to kwgt br: "error"
+    - Integrate "Setup" button below?
+    - Integrate `templateinfo` button above?
+- Add "Setup" button that is in Box 2 when first opened
+    - Clicking it goes to the github readme?
+    - Arrow to direct user to "Globals" tab?
+- `template.json` database creation **10%**
+    - Most of "light" and first couple "climate" templates are complete
+- Theme system **90%**
     - Configure colors and styles correctly, testing to get correct results
+        - ~~Big problem with `$si(#var)$` not parsing. Look into solutions~~
+            - ~~`$si(#var)` = not working. `$si(#var, #var)$` works. Split in code~~
         - Fine-tune colors for each group
-        - ~~Big problem with `$si(#var)$` not parsing. Look into solutions or risk revamp~~
-        - ~~Found solution. `$si(#var)` = not working. `$si(#var, #var)$` works. Split in code~~
         - Test opacity, shadows and borders
-    - ~~Create "Clear Custom Values" option - Flow~~ 
-    - Background
-        - `Add widget shadow` - Testing in editor
-        - ~~`Implement Opacity code into background`~~
+        - Check color editor and generator flows
+    - `Add widget shadow` - Testing in editor
     - `func/themecolors` not allowing color hex values in JSON??
-    - Look at border code - should not need formula for switch?
+    - Test Color Editor and Color Generator
+
 
 ###### #####################################
 ###### Completed Tasks
 ###### #####################################
 - Theme system overhaul and upgrade
+    - Look at border code - should not need formula for switch?
     - Implement Tasker color picker? **NO**
     - Create "themes" like One UI, material, HA card, etc. Template independant
     - Store data in JSON
@@ -194,14 +199,14 @@ UTF Hex       REGEX                  KWGT
     - Use existing code where possible but remove duplicates - no need for color1 and color2
     - Device icon color > `#objiconoff`
     - Merge `theme/color1sync` & `theme/color2sync`
-    - Merge `theme/coloreditor/opacity` & `theme/color2alph~
+    - Merge `colors/coloreditor/opacity` & `theme/color2alph
     - Create `theme/color#` x 4, paired to theme
     - Write theme json code in templates.md
-    - `Update `theme/color/*` from `theme/coloreditor` or make user c&p?`~
+    - `Update `theme/color/*` from `colors/coloreditor` or make user c&p?`~
    - `"Fill In" "custom" theme values from theme to global` - option? **Potentially not**
         - On "Custom" select? If user goes back to regular theme, settings would persist
-        - Switch at top of `theme/coloreditor`?
-    - `Write flow for "theme/coloreditor"`
+        - Switch at top of `colors/coloreditor`?
+    - `Write flow for "colors/coloreditor"`
     - Look at each theme in JSON
         - Verify configurations seem to match chart below and Material/OneUI specs
         - `Convert "dp" to "kpx`"
@@ -216,22 +221,23 @@ UTF Hex       REGEX                  KWGT
     - Icon ring meant to be 25% bigger then icon size  in material - implement ring size
     - `"State" title on rings > "Ring"`
     - `Make circle shape configurable with "ring_shape"`
+    - `Implement Opacity code into background`
+    - Create "Clear Custom Values" option - Flow
 - Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - `"lock" in devicetype > "security"`
 - `"Icon #" > "Object #" in editor`
 - `theme/objpaddingbox2` > `theme/objpaddingside`
 - Some entities missing after theme work
 
-###### #####################################
-###### Feature Wishlist (V1+)
-###### #####################################
 
+###### #####################################
+###### Future features and plans (V1+)
+###### #####################################
 - Create a kustom flow that formats json from no formatting to human readable **Universally**
     - Use for loops and awareness of {} level, arrays and commas.
     - Wipe all whitespace first to get json to consistant state
     - Provide custom HA calls for lights and potentially other devices? Or use templates instead?
 - Create a flow loop that writes new lv() - Can reduce stacks of defined lv()
-- Make widget a Komponent that can be added to a KWLP wallpaper
 - Integrate all options into the globals.
 - Setup Mode
     - Set up "setupmode" text layout better and add a few different text options (sizing, json, etc)
@@ -244,17 +250,11 @@ UTF Hex       REGEX                  KWGT
 - Create Device Icon ring
     - Merge with device icon touch
     - Ensure it works in all positions
+- Komponents
+    - Make widget a Komponent that can be added to a KWLP wallpaper
+    - Add support for custom dials and displays
+        - Climate dial, Security panel?, Battery meter
 
-
-###### #####################################
-###### Dev version > Release version
-###### #####################################
-
-- Move service global folders to bottom from top
-- Remove debugging, setup data, etc globals and objects completely
-- Remove Device Icon click to open editor option?
-- Create a "setup your widget by going to globals" textbox with basic setup info
-- Remove "notes" key in template JSON
 
 ###### #####################################
 ###### Icon Pack

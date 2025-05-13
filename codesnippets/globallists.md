@@ -1,11 +1,6 @@
-# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
+# This file is meant for the developer for reference only and the content is laid out for viewing in the code editor only. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
 
 # This file contains snippets of code formatted for easy editing. This code is syncronized to "preset.json" values after each edit. Related data also included
-
-###### #####################################
-###### All Global "list" objects in KWGT in editable format
-###### #####################################
-
 
 ###### readme
 ```
@@ -19,66 +14,6 @@ Box 1 - Smaller box, usually containing main device controls like power\n
 Box 2 - Larger box, usually containing device controls such as volume or brightness\n\n
 
 Created by Corey Welsh to fill the need of universal Home Assistant Android widget\"
-```
-
-###### `deviceiconrotation` 
-```
-DATA##\"Select the rotation of the Device Icon on your Widget\",
-NONE##0 Degrees,
-DEG90##90 Degrees,
-DEG180##180 Degrees,
-DEG270##180 Degrees,
-FLIP_X##Flip Vertically,
-FLIP_Y##Flip Horizontally
-```
-
-###### `core/deviceiconposition` > Set by template file now
-```
-DATA##\"Select the location of the Device Icon on your Widget. \",
-1##Default Location,
-2##Inside Box 1 (ONLY for templates not using Box 1)
-3##Hidden,
-```
-
-###### `appiconvis`
-```
-DATA##\"Set visbility of App Icons. Hiding these when using one row will make the device icon to fit the widget height.\",
-0##Show App Icons,
-1##Hide App Icons
-```
-
-###### #####################################
-###### Template-specfic Global Lists
-###### #####################################
-
-###### `templateselect`
-```
-DATA##"Select the template you'd like to use for the device selected above",
-1##Template 1,
-2##Template 2,
-3##Template 3,
-4##Template 4,
-5##Template 5,
-6##Template 6,
-0##Custom Template
-```
-
-###### `devicetype`
-```
-DATA##"Select the type of device you'd like to control",
-light##Lights,
-climate##Climate,
-tv##Television,
-sound##Sound System,
-security##Security,
-lock##Doors and Locks,
-power##Charging and Battery,
-remote##Remote control,
-appliance##Home Appliances,
-home##Home Features?,
-electronics##Personal Electronics,
-maintence##Home Maintence,
-other##Others
 ```
 
 ###### #####################################

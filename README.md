@@ -1,201 +1,103 @@
-Please note this README is extremely outdated, and was written at an earlier stage of the development process. It will be updated once the widget is feature-complete
+# (2) Home Assistant control widgets for Android devices (HAWGT)
 
-# Home Assistant control widgets for Android devices (HAWGT)
+A customizable and themable Home Assistant (HA) widget for creating "Cards" on your Android Launcher. Designed for easy use for those not in the Kustom ecosystem, the widget comes with one-click theme and device layout templates. Simply open the widget, choose your device type, choose a layout template that fits your layout and enter your "entity_id" from HA to get it functional.
 
-**2025**
-A customizable and themable Home Assistant widget with common device configurations ready to go. Advanced users can design their own theme to match their homescreen and configure their layouts using JSON. 
+For advanced users, there's a powerful customization system that allows you to create custom themes and adjust nearly every layout and color detail, all from the [Globals menu](/docs/globals.md) (settings). And if you want even more customization, see [JSON database specs](/docs/json.md) to learn how to make your own themes and device templates to transfer across widgets and devices.
 
-The widget was designed to be easy to configure if you haven't used the Kustom products before, but have powerful customization for those who have or tech-savvy individuals  
+This widget was designed with the following goals:
+- Easy to configure widget once connected to HA, for those who dont use Kustom software
+- Ability for multiple widgets to create a "Dashboard" on your launcher
+- Infinately customizable and can be made to match any style, configuration or layout on your device
 
-**2023**
-These widgets were built to fill a need for a customizable, nice-looking android widget for controlling Smart home devices and TV's without opening the Home Assistant app. The original concept was nice-looking device controls for a wall-mounted android device, so they are primarily designed to be used in a page layout, stacked on a single Android launcher page as a Control Hub. However, the smaller widgets are designed to also work on your regular launcher pages, and on a larger device like a tablet, all widgets should work well with your layout.
+This widget uses the powerful [Kustom](https://docs.kustom.rocks) customization suite and [Tasker](https://tasker.joaoapps.com/index.html), one of the best automation apps for Android to facilitate the customization  and communication to HA. Because of this, it requires an initial configuration that can take a bit of time. Please see the [HAWGTS > HA Default widget](#2-hawgts-vs-built-in-ha-app-widget) comparision chart to see if this widget will be worth your time. This document was written assuming you're new to Kustom and Tasker. Terminology will be basic and explanations offered for each step.
 
-This document was written assuming you're new to Kustom and Tasker. Terminology will be basic and explanations offered for each step. More advanced users can skip to <HERE>. For readability, Home Assistant will be shortened to HA.
+##  (2) Terminology
+HA = Home Assistant  
+Settings menu = Globals tab on widget  
+Layout template = Layout of objects on widget  
+Objects = Icons on widget
+`Global name`
+
 
 ## *Section Completion Stages
-Stage 1: Basic layout - Title and maybe some data  
-Stage 2: Started - may need reformatting and more data added  
-Stage 3: Mostly complete - add new data as needed  
-Stage 4: Complete (beta)
-Stage 5: Incorrect data - review thouroughly
+- 1: Basic layout - Title and maybe some data
+- 2: Started - may need reformatting and more data added
+- 3: Mostly complete - add new data as needed
+- None: Complete - add new data as needed
 
 
-## (3) Widget features:
-- Common features shared with both widgets
-    - Works on any Android device, but a few features are limited to newer versions of android
-    - Combine multiple copies to create a unique "Home Assistant page" on your launchers homepage
-    - Material Design icon pack included with many basics to get yourself started and to match your HA icons. Easily add your own icons in KWGT
-    - Automatic widget layout adjustment and alignment based on given size
-    - Advanced scaling options allow adjustment of virtually every element in the widget to fit good on any device and with different home screen grid patterns
-    - Comprehensive background color control with the following color sources
-        - Extract colors from your wallpaper
-        - Extract specific custom system colors from Android 13? onwards to match your current device customization
-            - See [Android Color Specs?](<URL>) for details of which colors are available for extraction
-        - Filters for extracted colors to customize them to your preferences or choose complementary colors
-        - Input your own ARGB colors
-    - Advanced customization available to integrate common android tasks on your device using tasker, for example casting your device music to a HA connected device (see [Advanced]<#URL>)
-- Device Control Widget
-    - Control any device from your Android Home Screen
-    - Based on a "2-box" mode to differentiate between main controls (power, room select, etc) and device controls (light settings, climate controls, etc)
-    - Several preset size modes which scale widget from a single on/off control to controlling several devices with multiple settings from a single widget
-    - Several preset styles such as OneUI and Material, with advanced customization of colors, transparency and box sizes to maintain the 
-    - Many preset templates for common HA devices - a few listed below
-        - Lighting controls by room
-        - Climate controls with multiple modes
-        - Battery meters for your devices
-        - Home security dashboard
-        - Home entertainment devices such as TV or sound system
-- Large media controller
-    - Dual TV Control and Local modes to make home screen space more efficiently used
-    - TV remote replacement controls and 2-way streaming service data (only Samsung Tizen TV's so far)
-    - Local Device mode with media controls, status widgets of smart devices and (advanced) Android device controls using Tasker (see [Advanced]<#URL>)
+## (2) Widget features:
+- Control your Smart Home Device from the Android Home Screen
+- Comprehensive theme, color and template system
+    - Choose between the preset themes - Basic, Samsungs "OneUI" and Googles "Material" themes - that use color data from your system and wallpaper
+    - Override preset color, size, padding, etc directly from the settings
+    - Preset device templates for quick configuration of layout and available commands
+    - Theme and device template data are stored in [JSON](/docs/json.md), so advanced users can create their own layouts/themes and duplicate them across widgets
+- Based on a 2-box design to differentiate between main controls and secondary controls
+- Combine multiple copies to create a unique "Home Assistant page" on your launchers homepage
+- Material Design icon pack included with many basics to get yourself started and to match your HA icons. Easily add your own icons in KWGT
+- Automatically align and adjust to work your home screen layout
+- Advanced customization options allow adjustment of virtually every element in the widget to fit with any home screen grid patterns
+- Preset templates for most common devices
+    - Widget can scale from a single on/off button to controlling multiple devices with multiple pages from a single widget
+    - Home security dashboard, TV remote control, Climate control, etc
 
-## (3) Setup and installation of software
-This widget will take a bit of time to set up initially, as it requires as bit of configuration, but once its set up, you can make as many widgets as you like and even your own! It will also help to have a second devie available with your entities page open in home assistant
-1. Install [Tasker](<GPURL>) and [KWGT](<GPURL>) or [KLWP](<GPLAYURL>) on your device if you don't have them already. If you haven't used these apps before, open each one up and follow the configuration process. This involves asking for system permissions and setting working folders for the applications. In Tasker, choose to use the full version, not Tasky. For Kustom create a new folder for it to work in on newer Android versions
+## (2) Current limitations
+- Only on/off state can be indicated for each widget object, and on/off/toggle are the only commands supported. [HA Template]<> data is planned for the future.
+- Kustom software is extremely sophisticated and allows far more customizability then most Android apps. Unfortunately, this means it has a learning curve to learn its scripting language. This widget attempts to overcome that learning curve by offering many options in a "settings" menu. However, users looking for a simple solution should try the widgets included with the HA app first, as they already communicate with your HA instance and dont require any additonal configuration
+- Requires Tasker and KWGT to be installed and configured to communicate with each other, as well as a HA Blueprint configured. This initial configuration can take a bit of time, but once its complete, it will handle as many widgets as you'd like
+- Support for Kustom "Komponents" coming soon. This will allow you to control your local device and your HA instance from the same widgets, or allow the creation of dials and levels
 
-2. Get your API key from HA. It's located in your user settings under the security tab. At the bottom of the page is the option to generated a new long-lived access key. WARNING: It's only displayed once, so keep it open in a tab until you've tested the connection!
 
-3. Install the [KWGT Plugin](<URL>) for tasker. Clicking the link on your Android device should open it directly in Tasker **VERIFY**. You'll be asked for the API key you just got and your HA address information. You have 3 options for your adress information:
-    - [Nabu Casa](<HAURL>) account - HA service offering a custom secure URL to your HA Server
+## (2) HAWGTS vs built-in HA app widget
+You should consider using the built-in HA widget if you want simple but easy to configure controls. HAWGTS fills the niche of those looking for ultimate Android Launcher customization.
+| HAWGTS                                | HA Default                             |
+|---------------------------------------|----------------------------------------|
+| Many touch commands for each device   | One touch command per widget           |
+| Basic entity state information        | Advanced entity state information      |
+| Complicated initial config            | No inital config - uses HA app         |
+| Basic commands like on/off/brightness | Advanced commands and details in popup |
+| Basic presets & advanced theme config | Basic presets                          |
+
+
+## (3) Installation and Configuration
+1. Install [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm&hl=en_CA) and [KWGT](https://play.google.com/store/apps/details?id=org.kustom.widget&hl=en_CA) on your device if you don't have them already. If you haven't used these apps before, open each one up and follow the configuration process. This involves asking for system permissions and setting working folders for the applications. In Tasker, choose to use the full version, not Tasky. For Kustom, make sure to create a new working folder for it to work in on newer Android versions in the settings
+2. Get your API key from HA. It's located in your user settings under the security tab. At the bottom of the page is the option to generated a new long-lived access key. 
+> WARNING: It's only displayed once, so keep it open in a tab until you've tested the connection!
+3. Install the [KWGT Plugin](<URL>) for tasker. Clicking the link on your Android device should open it directly in Tasker. You'll be asked for the API key you just got and your HA address information. You have 3 options for your adress information:
+    - [Nabu Casa](https://www.nabucasa.com) account - HA service offering a custom secure URL to your HA Server
     - Custom URL - For advanced users who have already set up a public URL
     - Local IP - You can use the address you use locally, however it will only work when your device connected to your WiFi network.
-
-4. Next, log into Home Assistant and install the [HA Blueprint](<URL>), following the instructions from the Tasker developer. Use the same info you used in the taskernet setup and add your server information **VERIFY**.
-
+4. Next, log into Home Assistant and install the [HA Blueprint](<URL>), following the instructions from the Tasker developer. Use the same info you used in the taskernet setup and add your server information **VERIFY**. You will need to add all entities you want state data from to the HA Blueprint
 5. Last, download the hawgts.kwgt file above and install it in < your-kwgt-folder >/widgets/hawgts.kwgt. This must be done after configuring KWGT for the first time!
 
 
-## (2) Set up your widget Interface (beginners guide)
+## (3) Set up your widget Interface - Basic
 > Installing a custom Android launcher is highly recommended for this widget. If using a default launcher, support will be limited. Common launchers include Apex, Nova and Niagara.
 
-1. Configure your launcher to support removing padding from widgets and half-grid placement (if possible) **VERIFY** to allow maximum customizability
-2. Create a new 2x4 KWGT widget on your home screen. Remove padding from the widget if your launcher supports it
-3. Click on the widget to set it uo. This will open KWGT's preset selection mode. Choose the widget you'd like to start with (this setup assumes you've chosen DCW)
-4. You will be presented with the HAWGTS preset in KWGT. Hit the save button at the top to complete the widget setup
-5. Find the "Globals" tab in the bottom section and select it. This is where all of the widget configuration is done, its essentially a "settings" page.
-6. View the [Globals reference](/setup/globals.md) to walk through the settings and configure your widget how you like it. Return here after you've configured the widgets style to continue setting up
+1. Create a new 2x4 KWGT widget on your home screen. Remove the padding from the widget if your launcher supports it (long-press)
+2. Click on the widget to set it uo. This will open KWGT's preset selection mode. Choose the HAWGTS widget you placed in the Kustom Widget folder
+3. You will be presented with the HAWGTS preset in KWGT. Hit the save button at the top to complete the widget setup. Note that you will have to hit the save button after making big changes to allow all the values to recalculate
+5. Find the "Globals" tab in the bottom section and select it. This is where all of the widget configuration is done, it will be refered to as the "Settings" page for the rest of this readme
+6. View the [Globals guide](/docs/globals.md) to walk through the settings and configure your widget how you like it. Return here after you've configured the widgets theme and template to continue setting up
+7. Test your configuration and review the setup instructions if you run into problems
 
-
-## (1) Getting your software to talk to each other - Configuration and testing
-
-### Setting up widgets with devices you want to control
-- Many preset templates will "drop" icons that don't have room to display
-
-
-## (5) Linking tasker commands to KWGT
-
-You'll need the following information from Home Assistant for each of the devices you want to control
-- [Entity ID](<HAURL>) (eg. light.living_room)
-- State information and respective HA Templates if you want to show current device status' (eg )
-- dfdfd 
-- Parameters you want to pass to the entity (eg. light brightness or color). [This](https://www.home-assistant.io/integrations/light/#service-lightturn_on) is a list of the parameters accepted by the light.turn_on as an example
-
-To write a command, use the following syntax:
-service_call&entity_id&parameters
-Where "service_call" can be one of the following: on, off, light, toggle, or template
-
-The following code will set a light with the entity id "light.bedroom_light" to a brightness to 50%, remembering that full brightness is "255":
-light&light.bedroom_lights&brightness=125
-
-Basic devices and scripts are simple:
-off&switch.coffee_maker
-toggle&mediaplayer.lr_tv
-on&script.send_ir_command
-
-The parameters argument is used for common devices pre-setup in tasker, such as lights and thermostats *VERIFY*. Its also used to utilize Home Assistants template support. The template support is used mostly to manually set data into the list of devices or for extra custom control. Read more about it [below]<READMEURL>.
-light&light.bedroom_light&brightness=125,color=255,235,35
-template& {{ states.light.bedroom_lights.attributes.brightness }}
-
-## (1) Setting up device states
-
-Explain devname and how to add a new device (HA Blueprint and change state once)
-
-
-### Helpful Information
-
-
-Formatting commands - KWGT touch event
-Switching from Yaml to JSON [link](https://www.json2yaml.com/convert-yaml-to-json) & removing lines
-(haservicecall)&(hajson/template)
-light.turn_on&{ "entity_id": "light.bedroom_lights", "brightness": 30 }
-
-## Testing all controls
-
-
-## (1) Troubleshooting
+## (1) Set up your widget Interface - Advanced
 
 
 
-# ADVANCED
-## (1) Make new device states indicators
-# Match Existing
-Copy the "Device Highlight" template from dev templates into the group(s) where you'd like it. Make the following edits to each copy:
+## (2) Tips and tricks
 
-- Edit the entity id for the color of the Circle shape
-- Edit the color and filter entity id's for the icon shape
-- Customize your icon & other details
+#### (3) Changing settings not included in "Globals" menu
+Using the Kustom editor, you can override and change all of the settings the widget presets for you. This can be done by going to the item you want to edit in the "Items" tab. If an option has a calculator or global icon to the right of it, it is pre-set. You can modify this configutration by touching the item, or remove it by selecting the checkbox and touching the calculator or globe icon in the top right of the editor. Once the preset configuration is removed, you can then edit the option.
 
 
-If you want to make custom changes, you can create a local variable called "glbname" and set its stset to your entity id. Once done, you can use the following global variables. "glbname" will be used in their formulas to return the result.
-Global variable     |       Returns
-func/state              Device state
-func/lgtlevel           Light Brightness (out of 255)
-func/lgtcolor           Light Color
-core/curpage            Number of current page if using a "pages" template
+#### (3) Custom Icons
+Included with the widget is a large number of "Material" style icons, the same used in HA. You can change any icon by overriding the pre-configured icon as shown above and selecting the icon you'd like from the Kustom icon picker.
 
 
+#### (2) Padding and alignment
+- Some launchers allow you to remove additional padding to allow widgets to touch, and placement of widgets on half-grid locations. Look at the settings menu for your launcher to see if this option is available
+- The widget allows many object size and padding overrides in the "theme" folder. See the [Globals guide](/docs/globals.md#global-table) for specifics
+- To configure advanced alignment, use the `theme/advanced/autoalign` toggle in the advanced section of the settings to disable auto-sizing formulas and create custom values
 
-## (1) Using templates for more customization 
-
-# Pre-made templates
-
-
-2025:
-- Make note about overriding any UI item by turning off formula mode. Eg. the device icon can be changed with the icon selector by removing the formula
-- Also make note of which flows can be disabled to customize which features, eg auto-align and such. Could use to remove toggle for auto-align
-
-
-To set up your template,
-1. Select the number of devices you'd like to control
-2. Select type of device (select multiple for more than one device type)
-3. Scroll through the list of templates until you find one close to what you're looking for
-4. Choose "Edit JSON" to edit the template to open the templates JSON.
-
-In the JSON, the group of objects in the "controllist" key are the names of the icons that are available to use in the widget. Go to the keys "box_1" and :box_2". In the "row" sub-keys, you can put the names of the icons you'd like to use from "controllist" to link them to specific icons on the widget.You can then customize the icon to set the HA command, state status and other details as shows in the following section.
-
-
-
-# Komponents 
-To make the widgets as customizable as possible, you can put a Kustom Komponent in Box 2 as an alternative to HA icons. This is useful for those using this widget in page format, as you can easily add other device widgets to match the interface. 
-
-> Kompnents require advanced setup to link into HAWGTS globals
-
-Awesome Komponents to try out:
-- 1
-- 2
-- 3
-
-HAWGTS HA Komponents:
-- Battery Meter
-- 
-
-
-
-## (1) Add more icons to rows in Device Control Widget
-Create a new Overlay Group and place it in the list where you'd like it. If this is the third (or higher) control in the row, you have to make sure the groups visibility is set to the following formula:
-```$if(gv(core/icocount)  < #, REMOVE, ALWAYS)$```
-Where # is the number of this icon lists in the order. This is used to hide the last icons first when the widget is sized smaller.
-
-Name your Overlay Group to your device name and place a control icon inside the group
-
-## (1) Create a custom device control
-This widget comes with many examples of device controls you can try, complete with HA commands that should work with only minor tweaks. If you're comfortable with Kustom products and want to create your own controls, the following information should help. All icons material design icons, either official or from [Pictogrammers](https://pictogrammers.com/library/mdi/). Its a vast database of material-styled icons for almost every use. You can download the svg of the icon you like and put it in the [Kustom]<FOLDERLOCATIONEXPLANATION> folder. If you're going to have a bunch of icons, make a new folder called "mdi" and place them in there.
-
-The following attributes are used for the FontIcon in this widget for alignment and sizing:
-- Size: Global Variable "icomain"
-- Color: Global Variable "colico"
-- Touch: Toggle Global Switch > Global Variable "tasker/hactrl" > HA Command code
-
-
-## (1) Final notes
