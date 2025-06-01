@@ -114,7 +114,6 @@ Sample: `$lv(posid, ".box2.row1.0")$$gv(func/jsonobj)$$#obicon$`
 
 Sample: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$$#stoutput$`
 
-
 ## (1) Troubleshooting
 
 #### (1) Widget looks funky after making a change
