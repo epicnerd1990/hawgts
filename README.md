@@ -114,6 +114,7 @@ Sample: `$lv(posid, ".box2.row1.0")$$gv(func/jsonobj)$$#obicon$`
 
 Sample: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$$#stoutput$`
 
+
 ## (1) Troubleshooting
 
 #### (1) Widget looks funky after making a change
@@ -142,7 +143,7 @@ Included with the widget is a large number of Material icons, the same used in H
 ## (1) Future work and contributions
 - To get to V1, goals have prioritized user control, not information display. As of now, only on/off state can be indicated for each widget object (except lights, which can have color and brightness information). Much more state data and [HA Template](https://www.home-assistant.io/docs/configuration/templating/) support is planned for V2
 - Support for [Kustom Komponents](https://docs.kustom.rocks/docs/general_information/groups_explained/#komponent) planned for V2. This will allow many more template customizations like dials, levels and gauges
-Feedback, bug reports and pull requests are welcome
+- Feedback, bug reports and pull requests are welcome
 
 ## Licence
 Copyright (C) 2025 Corey Welsh
@@ -156,4 +157,4 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-See <https://www.gnu.org/licenses/> for full licence.
+See <https://www.gnu.org/licenses/> or repo licence page for full licence.
