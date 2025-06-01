@@ -1,4 +1,4 @@
-# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
+# This file is meant for the developer for reference only and the content is laid out for viewing in the code editor only. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
 
 # This file contains snippets of code formatted for easy editing. This code is syncronized to "preset.json" values after each edit. Related data also included
 

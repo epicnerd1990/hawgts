@@ -8,11 +8,11 @@
     "pflags": 0,
     "hash": null,
     "height": 378,
-    "id": "4081e2d5-4349-47b9-8937-842377a9c1ea",
+    "id": "e202dcdc-76b3-4dec-915d-f1a6043d0679",
     "locked": false,
     "release": 378512316,
-    "ts": 1746586303298,
-    "title": "0.6.7A",
+    "ts": 1748055932482,
+    "title": "0.6.9A",
     "version": 13,
     "width": 1080,
     "xscreens": 0,
@@ -21,689 +21,715 @@
   "preset_root": {
     "internal_type": "RootLayerModule",
     "globals_list": {
-      "core": {
-        "index": 1,
-        "type": "FOLDER",
-        "title": "core",
-        "description": "LOCKED - Core Globals"
-      },
-      "core/curpage": {
-        "index": 2,
-        "type": "NUMBER",
-        "title": "curpage",
-        "description": "Current page for paging templates",
-        "value": "1"
-      },
-      "core/size": {
-        "index": 3,
-        "type": "FOLDER",
-        "title": "size",
-        "description": "Widget Size Globals"
-      },
-      "core/size/wgtwidth": {
-        "index": 4,
-        "type": "NUMBER",
-        "title": "wgtwidth",
-        "description": "Widget width - padding",
-        "min": 100,
-        "max": 300,
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$si(rwidth) - (#padwgtver * 2)$"
-      },
-      "core/size/wgtheight": {
-        "index": 5,
-        "type": "NUMBER",
-        "title": "wgtheight",
-        "description": "Widget height - padding",
-        "value": 690,
-        "min": 500,
-        "max": 720,
-        "toggles": 10,
-        "global_formula": "$gv(func/theme)$$si(rheight) - (#padwgthor * 2)$"
-      },
-      "core/size/box2width": {
-        "index": 6,
-        "type": "NUMBER",
-        "title": "box2width",
-        "description": "Width of Box 2",
-        "min": 0,
-        "max": 720,
-        "toggles": 10,
-        "global_formula": "$gv(func/jsontemp)$$gv(func/alignment)$$if(#tbox1=0|#align=1,gv(core/size/wgtwidth),(#wgtdirop-gv(box1size)))$"
-      },
-      "core/size/box2height": {
-        "index": 7,
-        "type": "NUMBER",
-        "title": "box2height",
-        "description": "Height of Box 2",
-        "min": 0,
-        "max": 720,
-        "toggles": 10,
-        "global_formula": "$gv(func/alignment)$$if(#tbox1=0|#align=0,gv(core/size/wgtheight),(#wgtdirop-gv(box1size)))$"
-      },
-      "core/size/box2iconmax": {
-        "index": 8,
-        "type": "NUMBER",
-        "title": "box2iconmax",
-        "description": "Number of icons that will fit in Box 2 (per row). Based on widget size and padding",
-        "toggles": 10,
-        "global_formula": "$gv(func/alignment)$$lv(box2dir, (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$$lv(icon, gv(iconsize) + #padobjhor)$$lv(boxsize, (#box2dir - gv(deviceiconsize)) / (#icon + #padobjhor))$$if(gv(fitmoreobj) = 0,(if(#boxsize <= 2, 2, mu(round, #boxsize))),10)$"
-      },
-      "core/tasker": {
-        "index": 9,
-        "type": "FOLDER",
-        "title": "tasker",
-        "description": "Tasker Globals"
-      },
-      "core/tasker/fromtasker": {
-        "index": 10,
-        "type": "TEXT",
-        "title": "fromtasker",
-        "description": "State information sent from tasker to apply to \"tasker/statedat\". Only entitites listed in HA Tasker blueprint are sent.",
-        "value": "$br(tasker, states)$ "
-      },
-      "core/tasker/temp": {
-        "index": 11,
-        "type": "TEXT",
-        "title": "temp",
-        "value": "tasker://secondary?service_call=light&entity_id=light.bedroom_lights&parameters=brightness:150"
-      },
-      "core/tasker/fromcolorpic": {
-        "index": 12,
-        "type": "TEXT",
-        "title": "fromcolorpic",
-        "description": "Return from tasker Color Picker",
-        "value": "$br(tasker, fromcolorpic)$"
-      },
-      "core/status": {
-        "index": 13,
-        "type": "FOLDER",
-        "title": "status",
-        "description": "Tasker Globals"
-      },
-      "core/status/currentstatus": {
-        "index": 14,
-        "type": "TEXT",
-        "title": "currentstatus",
-        "description": "Current status or last status displayed",
-        "value": "$if(#status = \"#status\", gv(json/error, #status))$"
-      },
-      "core/status/setstatus": {
-        "index": 15,
-        "type": "TEXT",
-        "title": "setstatus",
-        "description": "Send error id (##) to this to activate error",
-        "value": "01"
-      },
-      "core/status/statustimer": {
-        "index": 16,
-        "type": "SWITCH",
-        "title": "statustimer",
-        "description": "Time to display Status message",
-        "off_mode": "MANUAL_TIMER",
-        "off_timer": 60,
-        "value": 1
-      },
-      "func": {
-        "index": 17,
-        "type": "FOLDER",
-        "title": "func",
-        "description": "LOCKED - Global func"
-      },
-      "func/jsonmain": {
-        "index": 18,
-        "type": "TEXT",
-        "title": "jsonmain",
-        "description": "Load JSON data for following global variables",
-        "value": "$lv(dbtemp, gv(json/template))$$lv(dbdev, gv(json/device))$$lv(template, (\".\" + gv(devicetype) + \".\" + (gv(devicetype) + gv(templateselect))))$$lv(tpageon, (tc(json, #dbtemp, (#template + \".page\"))))$$lv(obj, \".\" + gv(devicetype) + \".objects\")$$lv(curpage, gv(core/curpage))$$lv(objfindkey,(if(#tpageon = 0, (#template + #posid),(#template + \".page\" + #curpage + #posid))))$$lv(objkey, (if((tc(json, #dbtemp, #objfindkey)) = \"\", \"\",(#obj + \".\" + (tc(json, #dbtemp, #objfindkey))))))$$lv(entity,(if(#tpageon = 0, gv(entities/entity1),gv(entities/(\"entity\" + #curpage)))))$$lv(entitykey, (if(#entity != \"\",\".device_states[?(@.entity_id == '\" + #entity + \"')]\")))$$lv(box1obj,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row1.1\"))))))$"
-      },
-      "func/jsonstate": {
-        "index": 19,
-        "type": "TEXT",
-        "title": "jsonstate",
-        "description": "Get the current state of devices connected to the widget. Call with \".box1.row2.0\"",
-        "value": "$gv(func/jsonmain)$$lv(obtype,\t(tc(json,#dbtemp,(#objkey+\".type\"))))$$lv(obonstate,\t(tc(json,#dbtemp,(#objkey+\".onstate\"))))$$lv(oblevelh,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",1)))))$$lv(oblevell,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",0)))))$$lv(ststate,\t(tc(json,#dbdev,(#entitykey+\".state\"))))$$lv(stlevelv,(tc(json,#dbdev,(#entitykey+\".brightness\"))))$$lv(stlevel,\t(if(#stlevelv!=\"\",#stlevelv,0)))$$lv(stcolor,\t(tc(json,#dbdev,(#entitykey+\".color\"))))$$lv(stcustom,\t(tc(json,#dbdev,(#entitykey+\".\"+#keyname))))$$lv(stobtype,(if(#obonstate~=\"\\d+>\\d+\"&#obtype=\"action\"&#ststate!=\"off\",\"range\",#obonstate~=\"page\\d\"&#obtype=\"page\",\t\t\t\t\t\t\t\t\t\t\"page\",#obonstate=\"off\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"0\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"on\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"on\",#obonstate=\"\"|#obtype=\"\",\t\t\t\t\t\t\t\t\t\t\"nostate\",#obonstate)))$$lv(stoutput,(if(#stobtype!=\"range\",(if(#ststate!=\"\",if(#stobtype=\"page\"&#tpageon=1&(\"page\"+#curpage)=#obonstate,1,#stobtype=\"on\"&#ststate=\"on\",1,#stobtype=\"off\"&#ststate=\"off\",1,#stobtype=\"nostate\",0,0),0)),(if(#stobtype=\"range\"&#stlevel>=#oblevell&#stlevel<=#oblevelh,1,0)))))$"
-      },
-      "func/jsonobj": {
-        "index": 20,
-        "type": "TEXT",
-        "title": "jsonobj",
-        "description": "Get object information. Call with \".box1.row2.0\"",
-        "value": "$gv(func/jsonmain)$$lv(obid,(if(#objkey!=\"\",1,0)))$$lv(obtype,(tc(json,#dbtemp,(#objkey+\".type\"))))$$lv(obicon,(tc(json,#dbtemp,(#objkey+\".icon\"))))$$lv(obaction,(tc(json,#dbtemp,(#objkey+\".action\"))))$$lv(obcmd,(tc(json,#dbtemp,(#objkey+\".cmd\"))))$$lv(obdata,(tc(json,#dbtemp,(#objkey+\".data\"))))$$lv(obparam,(if(#obaction=\"light\",(#obcmd+\":\"+#obdata),#obaction=\"template\",#obdata,\"\")))$"
-      },
-      "func/jsontemp": {
-        "index": 21,
-        "type": "TEXT",
-        "title": "jsontemp",
-        "description": "Get template information. Call with \".box1.row2.0\"",
-        "value": "$gv(func/jsonmain)$$lv(tname,(tc(json,#dbtemp,(#template+\".name\"))))$$lv(ticon,(tc(json,#dbtemp,(#template+\".icon\"))))$$lv(tbox1,(tc(json,#dbtemp,(#template+\".box1_size\"))))$$lv(trowct,(tc(json,#dbtemp,(#template+\".row_count\"))))$$lv(ticopos,(tc(json,#dbtemp,(#template+\".device_icon_pos\"))))$$lv(tdevct,(tc(json,#dbtemp,(#template+\".device_count\"))))$"
-      },
-      "func/alignment": {
-        "index": 22,
-        "type": "TEXT",
-        "title": "alignment",
-        "description": "Variables for use in alignment globals and objects",
-        "value": "$gv(func/theme)$$lv(align,gv(widgetorient))$$lv(override,gv(autoalign))$$lv(invert,gv(boxtoggle))$$lv(wgtwidth1,(if(#align=0,si(rheight),si(rwidth))))$$lv(wgtdir,(if(#align=0,gv(core/size/wgtheight),gv(core/size/wgtwidth))))$$lv(wgtdirop,(if(#align=0,gv(core/size/wgtwidth),gv(core/size/wgtheight))))$$lv(iconcalc,(gv(iconsize)*2)+#padobjhor)$$lv(pad,(#wgtdir-#iconcalc))$$lv(box1sm,(gv(iconsize)+(#padobjver*2)*100/#wgtwidth1))$$lv(box1lg,(((#padobjver*2)+#iconcalc)))$$lv(boxalign,(if(gv(box1position)=RIGHT,CENTERRIGHT,gv(box1position)=LEFT,CENTERLEFT,gv(box1position)=TOP,TOP,gv(box1position)=BOTTOM,BOTTOM)))$$lv(boxcenter,(if(gv(box1position)=RIGHT,VERTICAL_RIGHT,gv(box1position)=LEFT,VERTICAL_LEFT,gv(box1position)=TOP,HORIZONTAL_TOP,gv(box1position)=BOTTOM,HORIZONTAL_BOTTOM)))$$lv(margin1,if(#align=0,\"#padobjver\",\"#padobjhor\"))$$lv(margin2,if(#align=0,\"#padobjhor\",\"#padobjver\"))$"
-      },
-      "func/theme": {
-        "index": 23,
-        "type": "TEXT",
-        "title": "theme",
-        "description": "Variables for use in theme globals and objects",
-        "value": "$lv(dbtheme,gv(json/theme))$$lv(darkmode,gv(theme/darkmode))$$lv(settheme,(if(gv(settheme)=0,\"OneUI\",gv(settheme)=1,\"Material\",gv(settheme)=2,\"Basic\",gv(settheme)=3,\"Custom\",\"0\")))$$lv(pastel,ce(tc(json,#dbtheme,(\".pastel.\"+mu(rnd,1,18))),sat,20))$$lv(themename,(tc(json,#dbtheme,(\".\"+#settheme))))$$lv(tborder,(tc(json,#dbtheme,(\".\"+#settheme+\".border_width\"))))$$lv(tradius,(tc(json,#dbtheme,(\".\"+#settheme+\".corner_radius\"))))$$lv(tpadwgt,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_widget\"))))$$lv(tpadobj,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_obj\"))))$$lv(tpadside,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_sides\"))))$$lv(tdevico,(tc(json,#dbtheme,(\".\"+#settheme+\".dev_ico_ring\"))))$$lv(tringsha,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_shape\"))))$$lv(tshad,(tc(json,#dbtheme,(\".\"+#settheme+\".shadow\"))))$$lv(twgtopa,(tc(json,#dbtheme,(\".\"+#settheme+\".wgt_opacity\"))))$$lv(border,(if(gv(theme/bordersize)!=\"\",gv(theme/bordersize),#tborder)))$$lv(radius,(if(gv(theme/cornerradius)!=\"\",gv(theme/cornerradius),#tradius)))$$lv(padwgthor,(if(gv(theme/verticalpadding)!=\"\",gv(theme/verticalpadding),#tpadwgt)))$$lv(padwgtver,(if(gv(theme/horizontalpadding)!=\"\",gv(theme/horizontalpadding),#tpadwgt)))$$lv(padobjhor,(if(gv(theme/objpadding)!=\"\",gv(theme/objpadding),#tpadobj)))$$lv(padobjver,(if(gv(theme/objpadding2)!=\"\",gv(theme/objpadding2),#tpadobj)))$$lv(padobjside,(if(gv(theme/objpaddingside)!=\"\",gv(theme/objpaddingside),#tpadside)))$$lv(ringsha,(if(gv(theme/ringshape)!=\"\",gv(theme/ringshape),#tringsha)))$$lv(wgtopa,(if(gv(theme/coloreditor/opacity)!=\"\",gv(theme/coloreditor/opacity),#twgtopa)))$"
-      },
-      "func/themecolors": {
-        "index": 24,
-        "type": "TEXT",
-        "title": "themecolors",
-        "description": "Variables for color outputs",
-        "value": "$gv(func/theme)$$lv(colors, if(#darkmode = 0, (#settheme + \".colors.light\"),(#settheme + \".colors.dark\")))$$lv(cborder, (tc(json, #dbtheme, (\".\" + #colors + \".border\"))))$$lv(cback1, (tc(json, #dbtheme, (\".\" + #colors + \".back_1\"))))$$lv(cback2, (tc(json, #dbtheme, (\".\" + #colors + \".back_2\"))))$$lv(cobjiconoff, (tc(json, #dbtheme, (\".\" + #colors + \".obj_icon_off\"))))$$lv(cobjringoff, (tc(json, #dbtheme, (\".\" + #colors + \".obj_ring_off\"))))$$lv(cobjiconon, (tc(json, #dbtheme, (\".\" + #colors + \".obj_icon_on\"))))$$lv(cobjringon, (tc(json, #dbtheme, (\".\" + #colors + \".obj_ring_on\"))))$$lv(back1, (if(gv(theme/colors/back1) != \"\", gv(theme/colors/back1),if(#cback1 ~= \"#[a-fA-F0-9]*\", #cback1, si(#cback1)))))$$lv(back2, (if(gv(theme/colors/back2) != \"\", gv(theme/colors/back2),if(#cback2 ~= \"#[a-fA-F0-9]*\", #cback2, si(#cback2)))))$$lv(objiconon, (if(gv(theme/colors/objiconon) != \"\", gv(theme/colors/objiconon),if(#cobjiconon ~= \"#[a-fA-F0-9]*\", #cobjiconon, si(#cobjiconon)))))$$lv(objiconoff, (if(gv(theme/colors/objiconoff) != \"\", gv(theme/colors/objiconoff),if(#cobjiconoff ~= \"#[a-fA-F0-9]*\", #cobjiconoff, si(#cobjiconoff)))))$$lv(objringon, (if(gv(theme/colors/objringon) != \"\", gv(theme/colors/objringon),if(#cobjringon ~= \"#[a-fA-F0-9]*\", #cobjringon, si(#cobjringon)))))$$lv(objringoff, (if(gv(theme/colors/objringoff) != \"\", gv(theme/colors/objringoff),if(#cobjringoff ~= \"#[a-fA-F0-9]*\", #cobjringoff, si(#cobjringoff)))))$$lv(border, (if(gv(theme/colors/border) != \"\", gv(theme/colors/border),if(#cborder ~= \"#[a-fA-F0-9]*\", #cborder, si(#cborder)))))$"
-      },
-      "func/devjsonrem": {
-        "index": 25,
-        "type": "TEXT",
-        "title": "devjsonrem",
-        "description": "Device State - Remove entity",
-        "value": "$tc(reg,#datawipe,(\"\\{\\\" + tc(utf, 22) + \"entity_id\" + \"\\\" + tc(utf, 22) + \":\\\" + tc(utf, 22) +#entity + \"\\\" + tc(utf, 22) + \".*?\\},\"),\"\")$"
-      },
-      "func/devjsonadd": {
-        "index": 26,
-        "type": "TEXT",
-        "title": "devjsonadd",
-        "description": "Device State - Add newlines and spaces to JSON",
-        "value": "$tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,#jsonout,\"\\},\",\"\\},\" + tc(utf, 0A)),\":\",\": \"),\"\\\" + tc(utf, 22) + \",\",\"\\\" + tc(utf, 22) + \",\" + tc(utf, 0A)),\"\\{\",\"\\{\" + tc(utf, 0A)),\"\\}\",tc(utf, 0A) + \"\\}\"),\"\\[\",\"\\[\" + tc(utf, 0A)),\"\\\" + tc(utf, 22) + \"device_states\\\" + tc(utf, 22) + \".*\",\"$0\"),\"\\]\",\"  ]\")$"
-      },
-      "func/devjsonindent": {
-        "index": 27,
-        "type": "TEXT",
-        "title": "devjsonindent",
-        "description": "Device State - Add indentation to JSON",
-        "value": "$tc(reg,tc(reg,#jsonline,(\"(?<=\\[)[^\\[\\]]*(?=\\])\"),tc(utf, 0A) + \"    \" + #jarredit + tc(utf, 0A) + \"  \"),(\"(?<!\\[)(?<=\\n|^)\\s*(\" + tc(utf, 22) + \".*)\"),\"  $0\")$"
-      },
-      "func/devjsonnew": {
-        "index": 28,
-        "type": "TEXT",
-        "title": "devjsonnew",
-        "description": "Device State - Add new entity to bottom of list",
-        "value": "$tc(reg, #jsonrem, \"\\},\\]\\}\", (\"\\},\" + #jsonwipe + \"\\]\\}\"))$"
-      },
-      "json": {
-        "index": 29,
-        "type": "FOLDER",
-        "title": "JSON Data",
-        "description": "Device template and state data"
-      },
-      "json/device": {
-        "index": 30,
-        "type": "TEXT",
-        "title": "device",
-        "value": "{\n  \"device_states\": [\n       {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.closet_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.ensuite_light\",\n      \"state\": \"on\",\n      \"brightness\": \"75\",\n      \"color\": \"color\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"99\",\n      \"color\": \"color\"\n    },\n       ]\n}"
-      },
-      "json/theme": {
-        "index": 31,
-        "type": "TEXT",
-        "title": "theme",
-        "value": "{\"OneUI\": {\"border_width\": 2,\"corner_radius\": 2,\"pad_widget\": 16,\"pad_obj\": 10,\"pad_sides\": 16,\"ring_shape\": \"Squrdle\",\"dev_ico_ring\": 0,\"wgt_opacity\": 150,\"shadow\": 0,\"colors\": {\"light\": {\"back_1\": \"#FFFFFF\",\"back_2\": \"#F5F4F4\",\"obj_icon_off\": \"#EBEBEB\",\"obj_ring_off\": \"sysca1, 5\",\"obj_icon_on\": \"#FFFFFF\",\"obj_ring_on\": \"\",\"border\": \"#EBEBEB\"},\"dark\": {\"back_1\": \"#000000\",\"back_2\": \"syscn2, 90\",\"obj_icon_off\": \"#EBEBEB\",\"obj_ring_off\": \"sysca1, 15\",\"obj_icon_on\": \"#FFFFFF\",\"obj_ring_on\": \"\",\"border\": \"#EBEBEB\"},\"pastel\": {\"0\": \"#9bbe04\",\"1\": \"#15b76d\",\"2\": \"#0c967c\",\"3\": \"#18dc7f\",\"4\": \"#11b1f3\",\"5\": \"#0091ea\",\"6\": \"#1e4bc6\",\"7\": \"#6693ed\",\"8\": \"#7882ff\",\"9\": \"#8064f4\",\"10\": \"#6445e5\",\"11\": \"#ee2172\",\"12\": \"#f01446\",\"13\": \"#d60052\",\"14\": \"#e53d35\",\"15\": \"#e95b31\",\"16\": \"#ff9e00\",\"17\": \"#ff7b22\",\"18\": \"#ff9e00\"}}},\"Material\": {\"border_width\": 0,\"corner_radius\": 2,\"pad_widget\": 10,\"pad_obj\": 10,\"pad_sides\": 16,\"ring_shape\": \"Circle\",\"dev_ico_ring\": 1,\"wgt_opacity\": 50,\"shadow\": 1,\"colors\": {\"light\": {\"back_1\": \"sysca1, 40\",\"back_2\": \"sysca1, 10\",\"obj_icon_off\": \"syscn1, 50\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"syscn1, 50\",\"obj_ring_on\": \"sysca1, 50\",\"border\": \"#79747E\"},\"dark\": {\"back_1\": \"sysca1, 90\",\"back_2\": \"sysca2, 60\",\"obj_icon_off\": \"syscn1, 50\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"syscn1, 50\",\"obj_ring_on\": \"sysca1, 50\",\"border\": \"#79747E\"}}},\"Basic\": {\"border_width\": 0,\"corner_radius\": 10,\"pad_widget\": 6,\"pad_obj\": 10,\"pad_sides\": 12,\"ring_shape\": \"Circle\",\"dev_ico_ring\": 0,\"wgt_opacity\": 75,\"colors\": {\"light\": {\"back_1\": \"wpcolor1\",\"back_2\": \"wpcolor2\",\"obj_icon_off\": \"#E7FFFFFF\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"wpcolor1\",\"obj_ring_on\": \"#FFFFFF\",\"border\": \"\"},\"dark\": {\"back_1\": \"wpcolor1\",\"back_2\": \"wpcolor2\",\"obj_icon_off\": \"#FFFFFF\",\"obj_ring_off\": \"#FF000000\",\"obj_icon_on\": \"wpcolor1\",\"obj_ring_on\": \"#FFFFFF\",\"border\": \"\"}}}}"
-      },
-      "json/template": {
-        "index": 32,
-        "type": "TEXT",
-        "title": "template",
-        "description": "Template Database",
-        "value": "{  \"light\": {\n    \"objects\": {\n      \"bedroom\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"page\",\n        \"onstate\": \"page1\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"1\"\n      },\n      \"office\": {\n        \"icon\": \"mdi-room-desk\",\n        \"type\": \"page\",\n        \"onstate\": \"page2\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"2\"\n      },\n      \"livingroom\": {\n        \"icon\": \"mdi-room-sofa-single-outline\",\n        \"type\": \"page\",\n        \"onstate\": \"page3\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"3\"\n      },\n      \"foyer\": {\n        \"icon\": \"mdi-room-coat-rack\",\n        \"type\": \"page\",\n        \"onstate\": \"page4\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"4\"\n      },\n      \"power\": {\n        \"icon\": \"mdi-power\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"toggle\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"controlapp\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"color\": {\n        \"icon\": \"mdi-palette\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"color\",\n        \"cmd\": \"color\",\n        \"data\": \"#FFFFFF\"\n      },\n      \"off\": {\n        \"icon\": \"mdi-lightbulb-off-outline\",\n        \"type\": \"action\",\n        \"onstate\": \"off\",\n        \"action\": \"off\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"low\": {\n        \"icon\": \"mdi-lightbulb-on-30\",\n        \"type\": \"action\",\n        \"onstate\": \"1>75\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"74\"\n      },\n      \"med\": {\n        \"icon\": \"mdi-lightbulb-on-60\",\n        \"type\": \"action\",\n        \"onstate\": \"76>200\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"150\"\n      },\n      \"high\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"200>255\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      },\n      \"on\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"on\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      }\n    },\n    \"light1\": {\n      \"name\": \"Light - 2-4 Page/Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 1,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 1,\n      \"device_count\": \"2-4\",\n      \"page1\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page2\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page3\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page4\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      }\n    },\n    \"light2\": {\n      \"name\": \"Light - 0 Page, 1 Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 2,\n      \"device_count\": 1,\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n    },\n    \"light3\": {\n      \"name\": \"Light - 0 page, 1 Device, 1 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 1,\n      \"device_icon_pos\": 1,\n      \"device_count\": 1,\n      \"box1\": {\n          \"row1\": {\n            \"0\": \"controlapp\"\n          }\n      },\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n   }\n  }\n} "
-      },
-      "json/error": {
-        "index": 33,
-        "type": "TEXT",
-        "title": "error",
-        "description": "JSON - Errors to output",
-        "value": "{\"status\": {\"01\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"02\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"03\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"04\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"05\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"06\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"07\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"}}}"
-      },
       "readme": {
-        "index": 34,
+        "index": 1,
         "type": "LIST",
         "title": "README",
-        "entries": "\"Thanks for downloading HA Device Control Widget! Setup:\n1. Use following settings to configure the UI for the style you want\n2. Once UI is configured, read the setup instructions by clicking on the button in the widget.\nPlease note you'll need to have Tasker installed to facilitate communication to HA\n\nThe below global settings are to configure the interface, while HA communication is set up on each icon.\nBox 1 - Smaller box, usually containing main device controls like power\nBox 2 - Larger box, usually containing device controls such as volume or brightness\n\nCreated by Corey Welsh to fill the need of universal Home Assistant Android widget\"",
-        "value": "OPEN - Readme"
+        "entries": "See readme.md for instructions on how to connect HAWGTS with your Home Assistant system. Follow the instructions below to setup your widget with the settings in this menu\n\n1. Choose a theme. Change any theme settings or colors you'd like to make it your own, or skip this part\n2. Set your device type, then toggle through the templates to see which one works for your layout and launcher\n3. Set your entity_id(s) from Home Assistant\n\nThe widget should now be able to control your configured device. Once your first widget is complete, export it from KWGT to make copies of your customized widget for other devices",
+        "value": "Tap to open"
       },
       "settheme": {
-        "index": 35,
+        "index": 2,
         "type": "LIST",
         "title": "settheme",
-        "description": "Select the theme you'd like to use on this widget. You can also select a style, then hit custom to modify it",
-        "entries": "0##Material,1##OneUI,2##Basic,3##Custom",
-        "value": "2"
-      },
-      "theme": {
-        "index": 36,
-        "type": "FOLDER",
-        "title": "theme",
-        "description": "Set Widget colors"
-      },
-      "theme/colornote": {
-        "index": 37,
-        "type": "LIST",
-        "title": "COLORNOTE",
-        "value": "-- OPEN - Color Options",
-        "entries": "Edit widget colors by following through this setup. See Readme for details."
-      },
-      "theme/colors": {
-        "index": 38,
-        "type": "FOLDER",
-        "title": "colors",
-        "description": "Widget Colors"
-      },
-      "theme/colors/back1": {
-        "index": 39,
-        "type": "COLOR",
-        "title": "back1",
-        "description": "Background color 1",
-        "value": ""
-      },
-      "theme/colors/back2": {
-        "index": 40,
-        "type": "COLOR",
-        "title": "back2",
-        "description": "Background color 2",
-        "value": ""
-      },
-      "theme/colors/objiconon": {
-        "index": 41,
-        "type": "COLOR",
-        "title": "objiconon",
-        "description": "Object Icon On",
-        "value": ""
-      },
-      "theme/colors/objiconoff": {
-        "index": 42,
-        "type": "COLOR",
-        "title": "objiconoff",
-        "description": "Object Icon Off",
-        "value": ""
-      },
-      "theme/colors/objringon": {
-        "index": 43,
-        "type": "COLOR",
-        "title": "objringon",
-        "description": "Object Ring On",
-        "value": ""
-      },
-      "theme/colors/objringoff": {
-        "index": 44,
-        "type": "COLOR",
-        "title": "objringoff",
-        "description": "Object Ring Off",
-        "value": ""
-      },
-      "theme/colors/border": {
-        "index": 45,
-        "type": "COLOR",
-        "title": "border",
-        "description": "Border color",
-        "value": ""
-      },
-      "theme/colorgen": {
-        "index": 46,
-        "type": "FOLDER",
-        "title": "colorgen",
-        "description": "Generate colors when using \"custom\" theme"
-      },
-      "theme/colorgen/syscolorset": {
-        "index": 47,
-        "type": "LIST",
-        "title": "syscolorset",
-        "description": "Select a color tone",
-        "entries": "0##None,1##Accent#1,2##Accent#2,3##Accent#3,4##Neutral#1,5##Neutral#2,6##Neutral#3",
-        "value": "1"
-      },
-      "theme/colorgen/adjcolor": {
-        "index": 48,
-        "type": "NUMBER",
-        "title": "adjcolor",
-        "description": "Strength of color tone or filter",
-        "min": 0,
-        "max": 100,
-        "value": 50.0
-      },
-      "theme/colorgen/opacity": {
-        "index": 49,
-        "type": "NUMBER",
-        "title": "opacity",
-        "description": "Opacity Adjustment - 0 = Transparent, 255 = Solid",
-        "min": 0,
-        "max": 255,
-        "value": 75.0
-      },
-      "theme/colorgen/output": {
-        "index": 50,
-        "type": "COLOR",
-        "title": "output",
-        "description": "Result of your custom color. Copy to \"colors\" folder",
-        "value": ""
-      },
-      "theme/coloreditor": {
-        "index": 51,
-        "type": "FOLDER",
-        "title": "coloreditor",
-        "description": "Edit colors when using \"custom\" theme"
-      },
-      "theme/coloreditor/editcolor": {
-        "index": 52,
-        "type": "LIST",
-        "title": "edit",
-        "description": "Select the color to edit from your wallpaper or the \"colors\" folder",
-        "entries": "0##Background1,1##Background2,2##Icon Off,3##Icon On,4##Ring Off,5##Ring On,6##Border Color,7##Wallpaper Color 1,8##Wallpaper Color 2",
-        "value": "0"
-      },
-      "theme/coloreditor/wallcolorset": {
-        "index": 53,
-        "type": "LIST",
-        "title": "wallcolorset",
-        "description": "Select a color filter",
-        "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
-        "value": "0"
-      },
-      "theme/coloreditor/adjcolor": {
-        "index": 54,
-        "type": "NUMBER",
-        "title": "adjcolor",
-        "description": "Strength of color tone or filter",
-        "min": 0,
-        "max": 100,
-        "value": 40.0
-      },
-      "theme/coloreditor/opacity": {
-        "index": 55,
-        "type": "NUMBER",
-        "title": "opacity",
-        "description": "Opacity Adjustment - 0 = Transparent, 255 = Solid",
-        "min": 0,
-        "max": 255,
-        "value": 75.0
-      },
-      "theme/coloreditor/output": {
-        "index": 56,
-        "type": "COLOR",
-        "title": "output",
-        "description": "Result of your custom color. Copy to \"colors\" folder",
-        "value": ""
-      },
-      "theme/darkmode": {
-        "index": 57,
-        "type": "SWITCH",
-        "title": "darkmode",
-        "description": "Set dark mode",
-        "value": 0,
-        "on_mode": "MANUAL_FORMULA",
-        "on_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 1, 1)$",
-        "off_mode": "MANUAL_FORMULA",
-        "off_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 0, 0)$"
-      },
-      "theme/ringshape": {
-        "index": 58,
-        "type": "TEXT",
-        "title": "ringshape",
-        "description": "Shape of the rings behind the objects",
-        "value": ""
-      },
-      "theme/border": {
-        "index": 59,
-        "type": "SWITCH",
-        "title": "border",
-        "description": "Turn on a border around your boxes",
-        "value": 0,
-        "on_mode": "MANUAL_FORMULA",
-        "on_formula": "$gv(func/theme)$$if(#tborder != \"0\", 1)$",
-        "off_mode": "MANUAL_FORMULA",
-        "off_formula": "$gv(func/theme)$$if(#tborder = \"0\", 0)$"
-      },
-      "theme/bordersize": {
-        "index": 60,
-        "type": "NUMBER",
-        "title": "bordersize",
-        "description": "Set the size of the border",
-        "min": 0,
-        "max": 50,
-        "value": 3.0
-      },
-      "theme/objpadding": {
-        "index": 61,
-        "type": "NUMBER",
-        "title": "objpadding",
-        "description": "Set the object padding across each row/column",
-        "min": 0,
-        "max": 50,
-        "value": 10.0
-      },
-      "theme/objpadding2": {
-        "index": 62,
-        "type": "NUMBER",
-        "title": "objpadding2",
-        "description": "Set the object padding between the two rows/columns",
-        "min": 0,
-        "max": 50,
-        "value": 10.0
-      },
-      "theme/objpaddingside": {
-        "index": 63,
-        "type": "NUMBER",
-        "title": "objpaddingside",
-        "description": "Set the object padding from the edge of the box to the first icon",
-        "min": 0,
-        "max": 50,
-        "value": 20.0
-      },
-      "theme/verticalpadding": {
-        "index": 64,
-        "type": "NUMBER",
-        "title": "verticalpadding",
-        "description": "Select the widget vertical padding size",
-        "value": 6.0,
-        "min": 0,
-        "max": 50
-      },
-      "theme/horizontalpadding": {
-        "index": 65,
-        "type": "NUMBER",
-        "title": "horizontalpadding",
-        "description": "Select the horizontal widget padding size",
-        "value": 6.0,
-        "min": 0,
-        "max": 50
-      },
-      "theme/cornerradius": {
-        "index": 66,
-        "type": "NUMBER",
-        "title": "cornerradius",
-        "description": "Set the radius of the rounded corners",
-        "min": 0,
-        "max": 100,
-        "value": 10.0
-      },
-      "entities": {
-        "index": 67,
-        "type": "FOLDER",
-        "title": "entities",
-        "description": "Set Home Assistant entity names"
-      },
-      "entities/entitynote": {
-        "index": 68,
-        "type": "LIST",
-        "title": "entitynote",
-        "entries": "\"ENTITY LIST\\n\\nIf you're only controlling one device, enter it in \"entity1\". If you're controlling more than one, enter them in the order they appear in the template. (1st device is \"entity1\", 2nd is \"entity2\", etc)\"\n",
-        "value": "-- OPEN - Enter Entity IDs below"
-      },
-      "entities/entity1": {
-        "index": 69,
-        "type": "TEXT",
-        "title": "entity1",
-        "description": "Device 1 Entity ID",
-        "value": "light.bedroom_lights"
-      },
-      "entities/entity2": {
-        "index": 70,
-        "type": "TEXT",
-        "title": "entity2",
-        "description": "Device 2 Entity ID",
-        "value": "light.ensuite_light"
-      },
-      "entities/entity3": {
-        "index": 71,
-        "type": "TEXT",
-        "title": "entity3",
-        "description": "Device 6 Entity ID",
-        "value": "light.bedroom_lights"
+        "description": "Select the theme to use on this widget. Open the \"theme\" folder below to customize it",
+        "entries": "OneUI,Material,Basic",
+        "value": "Basic"
       },
       "devicetype": {
-        "index": 72,
+        "index": 3,
         "type": "LIST",
         "title": "devicetype",
-        "description": "Select the type of device you'd like to control",
-        "entries": "DATA##\"Select the type of device you'd like to control\",light##Lights,climate##Climate,tv##Television,sound##Sound System,security##Security,lock##Doors and Locks,power##Charging and Battery,remote##Remote control,appliance##Home Appliances,home##Home Features?,electronics#Personal Electronics,maintence##Home Maintence,other##Others",
+        "description": "Select the type of device to control",
+        "entries": "DATA##\"Select the type of device to control\",light##Lights,climate##Climate,tv##Television,sound##Sound System,security##Security,lock##Doors and Locks,power##Charging and Battery,remote##Remote control,appliance##Home Appliances,home##Home Features?,electronics#Personal Electronics,maintence##Home Maintence,custom##Custom",
         "value": "light"
       },
       "templateselect": {
-        "index": 73,
+        "index": 4,
         "type": "LIST",
         "title": "templateselect",
-        "description": "Select your template",
-        "entries": "DATA##\"Select the template style you'd like to use for the device selected above\",1##Template 1,2##Template 2,3##Template 3,4##Template 4,5##Template 5,6##Template 6,0##Custom Template",
+        "description": "Select the layout template to use for your device(s)",
+        "entries": "DATA##\"Select the layout template to use for your device(s)\",1##Template 1,2##Template 2,3##Template 3,4##Template 4,5##Template 5,6##Template 6,0##Custom Template",
         "value": "1"
       },
       "templatename": {
-        "index": 74,
+        "index": 5,
         "type": "TEXT",
         "title": "templatename",
         "description": "Debugging - Chosen Template name",
         "value": "Light - 2-4 Page/Device, 2 Row"
       },
       "templateinfo": {
-        "index": 75,
-        "type": "TEXT",
-        "title": "templateselect",
-        "description": "Template Discription via flow",
-        "value": "light - 2-4 Device(s), 2 Row(s), 2 Boxes\nConnect 2-4 light entities for this template\nThis widget is incorrectly sized for this template. \\nEither make the widget larger or choose a different template. \\nAdvanced users see README for alternative options"
-      },
-      "-- 2.": {
-        "index": 76,
+        "index": 6,
         "type": "LIST",
-        "title": "-- 2.",
-        "entries": "-- Customization and tweaks",
-        "value": "-- Customization and tweaks"
+        "title": "templateinfo",
+        "description": "Template Description via flow",
+        "value": ""
       },
       "fitmoreobj": {
-        "index": 77,
+        "index": 7,
         "type": "SWITCH",
         "title": "fitmoreobj",
         "description": "Disable widget object count restrictions to use templates that are close to fitting. May cause overlap",
         "value": 0
       },
-      "deviceiconrotation": {
-        "index": 78,
+      "theme": {
+        "index": 8,
+        "type": "FOLDER",
+        "title": "theme",
+        "description": "Override preset sizing and alignment variables"
+      },
+      "theme/themeinfo": {
+        "index": 9,
+        "type": "LIST",
+        "title": "THEME",
+        "value": "Tap to open",
+        "description": "User custom theme instructions",
+        "entries": "\"Use this to override theme properties set by the theme JSON. This includes colors, sizing, padding, etc. All values in this folder are ignored when empty (unless otherwise indicated).\n\nSee readme for more information and JSON config\""
+      },
+      "theme/objsize": {
+        "index": 10,
+        "type": "NUMBER",
+        "title": "objsize",
+        "description": "(Preset to 100) - Size of the object rings",
+        "min": 20,
+        "max": 200,
+        "value": 100.0
+      },
+      "theme/iconsize": {
+        "index": 11,
+        "type": "NUMBER",
+        "title": "iconsize",
+        "description": "Icon ring percentange/ratio (icon background:icon size)",
+        "min": 0,
+        "max": 100
+      },
+      "theme/deviceiconsize": {
+        "index": 12,
+        "type": "NUMBER",
+        "title": "deviceiconsize",
+        "description": "(Preset to 120) - Size of the Device Icon",
+        "value": 120.0,
+        "min": 0,
+        "max": 450
+      },
+      "theme/deviceiconrotation": {
+        "index": 13,
         "type": "LIST",
         "title": "deviceiconrotation",
         "entries": "DATA##\"Rotate or flip the device icon on your Widget\",NONE##0 Degrees,DEG90##90 Degrees,DEG180##180 Degrees,DEG270##180 Degrees,FLIP_X##Flip Vertically,FLIP_Y##Flip Horizontally",
         "value": "FLIP_Y"
       },
-      "deviceiconsize": {
-        "index": 79,
-        "type": "NUMBER",
-        "title": "deviceiconsize",
-        "description": "Set the size of the Device Icon.\nDefault: 120kpx",
-        "value": 120.0,
-        "min": 0,
-        "max": 450
-      },
-      "iconsize": {
-        "index": 80,
-        "type": "NUMBER",
-        "title": "iconsize",
-        "description": "Set the size of the object icons.\nDefault: 80kpx",
-        "min": 20,
-        "max": 120,
-        "value": 80.0
-      },
-      "appiconvis": {
-        "index": 81,
-        "type": "SWITCH",
-        "title": "appiconvis",
-        "description": "Set visbility of app-launcher object(s). On = Hidden",
-        "value": "1"
-      },
-      "appiconsize": {
-        "index": 82,
-        "type": "NUMBER",
-        "title": "appiconsize",
-        "description": "Set the size of the small app-launcher object(s).\nDefault: 32kpx",
-        "min": 20,
-        "max": 75,
-        "value": 32.0
-      },
-      "deviceopeneditor": {
-        "index": 83,
-        "type": "SWITCH",
-        "title": "deviceopeneditor",
-        "description": "Enable device icon click to open KWGT Editor. Can be disabled once widget is set up",
-        "value": 1
-      },
-      "-- 3.": {
-        "index": 84,
+      "theme/ringshape": {
+        "index": 14,
         "type": "LIST",
-        "title": "-- 3.",
-        "entries": "--Advanced customization and tweaks",
-        "value": "--Advanced customization and tweaks"
+        "title": "ringshape",
+        "description": "Shape of the ring around the icons",
+        "entries": "0##Not Set,SQUARE##Square,CIRCLE##Circle,SQUIRCLE##Squircle,RECT##Rectangle,OVAL##Oval,TRIANGLE##Triangle",
+        "value": ""
       },
-      "box1sq": {
-        "index": 85,
+      "theme/darkmode": {
+        "index": 15,
+        "type": "SWITCH",
+        "title": "darkmode",
+        "description": "Enable/disable system dark mode. Override by editing and removing the formula",
+        "value": 0,
+        "on_mode": "MANUAL_FORMULA",
+        "on_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 1, 1)$",
+        "off_mode": "MANUAL_FORMULA",
+        "off_formula": "$gv(func/theme)$$if(#themename != \"Custom\" & si(darkmode) = 0, 0)$"
+      },
+      "theme/shadow": {
+        "index": 16,
+        "type": "SWITCH",
+        "title": "shadow",
+        "description": "Enable/disable shadow. Override by editing and removing the formula",
+        "on_mode": "MANUAL_FORMULA",
+        "on_formula": "$gv(func/theme)$$if(#tshadow != \"0\", ON)$",
+        "off_mode": "MANUAL_FORMULA",
+        "off_formula": "$gv(func/theme)$$if(#tshadow = \"0\", OFF)$"
+      },
+      "theme/bordersize": {
+        "index": 17,
+        "type": "NUMBER",
+        "title": "bordersize",
+        "description": "Size of the border",
+        "min": 0,
+        "max": 50
+      },
+      "theme/opacity": {
+        "index": 18,
+        "type": "NUMBER",
+        "title": "opacity",
+        "description": "Opacity of the widget background",
+        "min": 0,
+        "max": 100
+      },
+      "theme/cornerradius": {
+        "index": 19,
+        "type": "NUMBER",
+        "title": "cornerradius",
+        "description": "Radius of the widgets rounded corners",
+        "min": 0,
+        "max": 100
+      },
+      "theme/objpaddinghor": {
+        "index": 20,
+        "type": "NUMBER",
+        "title": "objpaddinghor",
+        "description": "Object padding across each row",
+        "min": 0,
+        "max": 50
+      },
+      "theme/objpaddingver": {
+        "index": 21,
+        "type": "NUMBER",
+        "title": "objpaddingver",
+        "description": "Object padding between the two rows",
+        "min": 0,
+        "max": 50
+      },
+      "theme/objpaddingside": {
+        "index": 22,
+        "type": "NUMBER",
+        "title": "objpaddingside",
+        "description": "Padding from the edge of the box to the first icon",
+        "min": 0,
+        "max": 50
+      },
+      "theme/wgtpaddingver": {
+        "index": 23,
+        "type": "NUMBER",
+        "title": "wgtpaddingver",
+        "description": "Widget vertical padding",
+        "min": 0,
+        "max": 50
+      },
+      "theme/wgtpaddinghor": {
+        "index": 24,
+        "type": "NUMBER",
+        "title": "wgtpaddinghor",
+        "description": "Widget horizontal padding",
+        "min": 0,
+        "max": 50
+      },
+      "theme/advanced": {
+        "index": 25,
+        "type": "FOLDER",
+        "title": "advanced",
+        "description": "Advanced alignment settings"
+      },
+      "theme/advanced/box1sq": {
+        "index": 26,
         "type": "SWITCH",
         "title": "box1sq",
         "description": "Make Box 1 a perfect square",
         "value": 0
       },
-      "boxtoggle": {
-        "index": 86,
+      "theme/advanced/boxtoggle": {
+        "index": 27,
         "type": "SWITCH",
         "title": "boxtoggle",
         "description": "Set the order of the boxes on your widget",
         "value": "1"
       },
-      "autoalign": {
-        "index": 87,
+      "theme/advanced/autoalign": {
+        "index": 28,
         "type": "SWITCH",
         "title": "autoalign",
-        "description": "Override the following widget alignments",
+        "description": "Turn off to override the following widget alignments",
         "value": 1
       },
-      "widgetorient": {
-        "index": 88,
+      "theme/advanced/widgetorient": {
+        "index": 29,
         "type": "SWITCH",
         "title": "widgetorient",
-        "description": "Set horizontal or vertical orientation of widget. Disable flow before changing. Off = Horizontal, On = Vertical",
+        "description": "Set horizontal or vertical orientation of widget",
         "value": 1,
         "on_mode": "MANUAL_FORMULA",
-        "on_formula": "$if(gv(autoalign) = 1, (si(rratio) < 0.8, 0))$",
+        "on_formula": "$if(gv(theme/advanced/autoalign) = 1, (si(rratio) < 0.8, 0))$",
         "off_mode": "MANUAL_FORMULA",
-        "off_formula": "$if(gv(autoalign) = 1, (si(rratio) > 0.8, 0))$"
+        "off_formula": "$if(gv(theme/advanced/autoalign) = 1, (si(rratio) > 0.8, 0))$"
       },
-      "box1position": {
-        "index": 89,
+      "theme/advanced/box1pos": {
+        "index": 30,
         "type": "LIST",
-        "title": "box1position",
+        "title": "theme/advanced/box1pos",
         "description": "Set position of Box 1",
         "value": "LEFT",
         "entries": "LEFT##Left - Horizontal Layout, RIGHT##Right - Horizontal Layout, TOP##Top - Vertical Layout, BOTTOM##Bottom - Vertical Layout"
       },
-      "box1size": {
-        "index": 90,
+      "theme/advanced/box1size": {
+        "index": 31,
         "type": "NUMBER",
         "title": "box1size",
-        "description": "Override Box 1 size set from Flow. Disable flow before changing",
-        "value": 190.0,
+        "description": "Override Box 1 size set from Flow",
+        "value": "   217",
         "min": 0,
         "max": 720
       },
-      "setupmode": {
+      "colors": {
+        "index": 32,
+        "type": "FOLDER",
+        "title": "colors",
+        "description": "Override preset theme colors"
+      },
+      "colors/themeinfo": {
+        "index": 33,
+        "type": "LIST",
+        "title": "themeinfo",
+        "value": "OPEN - Information",
+        "description": "User custom theme instructions",
+        "entries": "Use this to override color properties set by the theme JSON. All values in this folder are ignored when empty.\n\nThere is also a color generator to use your phone's system colors and an editor to modify colors\n\nSee readme for more information and JSON config"
+      },
+      "colors/reset": {
+        "index": 34,
+        "type": "SWITCH",
+        "title": "reset",
+        "description": "Reset all colors in folder",
+        "value": 0,
+        "off_mode": "MANUAL_FORMULA",
+        "off_formula": "$if(gv(colors/back1=\"\"&colors/back2=\"\"&colors/objiconon=\"\"&colors/objiconoff=\"\"&colors/objringon=\"\"&colors/objringoff=\"\"&colors/border=\"\",0))$"
+      },
+      "colors/ringrandom": {
+        "index": 34,
+        "type": "SWITCH",
+        "title": "ringrandom",
+        "description": "Random colors for the object ring. Must be configured in theme",
+        "value": 0
+      },
+      "colors/back1": {
+        "index": 35,
+        "type": "COLOR",
+        "title": "back1",
+        "description": "Background color 1",
+        "value": ""
+      },
+      "colors/back2": {
+        "index": 36,
+        "type": "COLOR",
+        "title": "back2",
+        "description": "Background color 2",
+        "value": ""
+      },
+      "colors/objiconon": {
+        "index": 37,
+        "type": "COLOR",
+        "title": "objiconon",
+        "description": "Object Icon - State on",
+        "value": ""
+      },
+      "colors/objiconoff": {
+        "index": 38,
+        "type": "COLOR",
+        "title": "objiconoff",
+        "description": "Object Icon - State off",
+        "value": ""
+      },
+      "colors/objringon": {
+        "index": 39,
+        "type": "COLOR",
+        "title": "objringon",
+        "description": "Object Ring - State on",
+        "value": ""
+      },
+      "colors/objringoff": {
+        "index": 40,
+        "type": "COLOR",
+        "title": "objringoff",
+        "description": "Object Ring - State off",
+        "value": ""
+      },
+      "colors/border": {
+        "index": 41,
+        "type": "COLOR",
+        "title": "border",
+        "description": "Border color",
+        "value": ""
+      },
+      "colors/colorgen": {
+        "index": 42,
+        "type": "FOLDER",
+        "title": "colorgen",
+        "description": "Generate colors for your widget from the system"
+      },
+      "colors/colorgen/info": {
+        "index": 43,
+        "type": "LIST",
+        "title": "info",
+        "value": "OPEN - Information",
+        "description": "Color generator instructions",
+        "entries": "Use this color generator to get colors from your device theme and modify them\n\nThis is based on \"Material Design\" specifications. So \"Primary 80\" should be Accent #1 + 80% tone. See specifications online and readme for more details.\n\nNote: Background color opacity can also be set in the \"theme\" folder\n\nYou will have to copy the color to where you want to use it when generated"
+      },
+      "colors/colorgen/syscolorset": {
+        "index": 44,
+        "type": "LIST",
+        "title": "syscolorset",
+        "description": "Select a color tone",
+        "entries": "0##None,1##Accent #1,2##Accent #2,3##Accent #3,4##Neutral #1,5##Neutral #2,6##Neutral #3",
+        "value": "2"
+      },
+      "colors/colorgen/adjtone": {
+        "index": 45,
+        "type": "NUMBER",
+        "title": "adjtone",
+        "description": "Strength of color tone - 0 = Black, 100 = White",
+        "min": 0,
+        "max": 100,
+        "value": 50.0
+      },
+      "colors/colorgen/opacity": {
+        "index": 46,
+        "type": "NUMBER",
+        "title": "opacity",
+        "description": "Opacity Adjustment - 0 = Transparent, 255 = Solid",
+        "min": 0,
+        "max": 255,
+        "value": 50.0
+      },
+      "colors/colorgen/output": {
+        "index": 47,
+        "type": "COLOR",
+        "title": "output",
+        "description": "Color output. Tap to tweak and copy hex code to \"colors\" folder",
+        "value": "#80537C89"
+      },
+      "colors/coloredit": {
+        "index": 48,
+        "type": "FOLDER",
+        "title": "coloredit",
+        "description": "Edit colors for your widget from the theme or wallpaper"
+      },
+      "colors/coloredit/info": {
+        "index": 49,
+        "type": "LIST",
+        "title": "info",
+        "value": "OPEN - Information",
+        "description": "Color editor instructions",
+        "entries": "Use this color editor to modify the existing colors used in your theme, or extracted from your wallpaper\n\nSelect the color source you want to modify. Colors are from the selected theme or your overridden color, if set. Wallpaper colors are extracted from the device wallpaper by KWGT.\n\nNote: Background color opacity can also be set in the \"theme\" folder\n\nYou will have to copy the color to where you want to use it once complete"
+      },
+      "colors/coloredit/editcolor": {
+        "index": 50,
+        "type": "LIST",
+        "title": "edit",
+        "description": "Select the color to edit",
+        "entries": "back1##Background 1,back2##Background 2,objiconoff##Icon Off,objiconon##Icon On,cobjringoff##Ring Off,cobjringon##Ring On,border##Border Color,wpcolor1##Wallpaper Color 1,wpcolor2##Wallpaper Color 2,wpcolor3##Wallpaper Color 3",
+        "value": "wpcolor1"
+      },
+      "colors/coloredit/filter": {
+        "index": 51,
+        "type": "LIST",
+        "title": "wallcolorset",
+        "description": "Select a color filter",
+        "entries": "0##None, 1##Saturation, 2##Brightness, 3##Complimentary Color",
+        "value": "2"
+      },
+      "colors/coloredit/adjfilter": {
+        "index": 52,
+        "type": "NUMBER",
+        "title": "adjcolor",
+        "description": "Strength of color filter",
+        "min": 0,
+        "max": 100,
+        "value": 60.0
+      },
+      "colors/coloredit/opacity": {
+        "index": 53,
+        "type": "NUMBER",
+        "title": "opacity",
+        "description": "Opacity Adjustment - 0 = Transparent, 100 = Solid",
+        "min": 0,
+        "max": 100,
+        "value": 80.0
+      },
+      "colors/coloredit/output": {
+        "index": 54,
+        "type": "COLOR",
+        "title": "output",
+        "description": "Color output. Tap to tweak and copy hex code to \"colors\" folder",
+        "value": "#CC000000"
+      },
+      "entities": {
+        "index": 55,
+        "type": "FOLDER",
+        "title": "entities",
+        "description": "Home Assistant \"entity_id\" to use"
+      },
+      "entities/entitynote": {
+        "index": 56,
+        "type": "LIST",
+        "title": "entitynote",
+        "description": "User entity instructions",
+        "entries": "\"ENTITY LIST\n\nIf you're only controlling one device, enter it in \"entity1\". If you're controlling more than one, enter them in the order they appear in the template. (1st device is \"entity1\", 2nd is \"entity2\", etc)\"",
+        "value": "OPEN - Information"
+      },
+      "entities/entity1": {
+        "index": 57,
+        "type": "TEXT",
+        "title": "entity1",
+        "description": "Device 1 Entity ID",
+        "value": "light.bedroom_lights"
+      },
+      "entities/entity2": {
+        "index": 58,
+        "type": "TEXT",
+        "title": "entity2",
+        "description": "Device 2 Entity ID",
+        "value": "light.ensuite_light"
+      },
+      "entities/entity3": {
+        "index": 59,
+        "type": "TEXT",
+        "title": "entity3",
+        "description": "Device 3 Entity ID",
+        "value": "light.closet_light"
+      },
+      "entities/entity4": {
+        "index": 60,
+        "type": "TEXT",
+        "title": "entity4",
+        "description": "Device 4 Entity ID",
+        "value": "light.kitchen_lights"
+      },
+      "external": {
+        "index": 61,
+        "type": "FOLDER",
+        "title": "external",
+        "description": "Configure device icon and app icon apps to open"
+      },
+      "external/devicon": {
+        "index": 62,
+        "type": "LIST",
+        "title": "devicon",
+        "description": "Select an app to open on touch: Device icon",
+        "entries": "1##This device in Home Assistant App,2##Home Assistant App,3##Home Assistant Assist,4##KWGT Editor (Great while configuring widget),5##Custom",
+        "value": "4"
+      },
+      "external/appicon1": {
+        "index": 63,
+        "type": "LIST",
+        "title": "appicon1",
+        "description": "Select an app to open on touch: App icon #1",
+        "entries": "0##Hidden,1##This device in Home Assistant App,2##Home Assistant App,3##Home Assistant Assist,4##KWGT Editor (Great while configuring widget),5##Custom",
+        "value": "2"
+      },
+      "external/appicon2": {
+        "index": 64,
+        "type": "LIST",
+        "description": "Select an app to open on touch: App icon #2",
+        "title": "appicon2",
+        "entries": "0##Hidden,1##This device in Home Assistant App,2##Home Assistant App,3##Home Assistant Assist,4##KWGT Editor (Great while configuring widget),5##Custom",
+        "value": "3"
+      },
+      "external/appiconsize": {
+        "index": 65,
+        "type": "NUMBER",
+        "title": "appiconsize",
+        "description": "(Preset to 32) Size of the small app-launcher objects",
+        "min": 20,
+        "max": 75,
+        "value": 32.0
+      },
+      "external/custom": {
+        "index": 66,
+        "type": "TEXT",
+        "title": "custom",
+        "description": "Enter the Android package name to open (eg com.android.appname)",
+        "value": ""
+      },
+      "core": {
+        "index": 67,
+        "type": "FOLDER",
+        "title": "core",
+        "description": "Core"
+      },
+      "core/curpage": {
+        "index": 68,
+        "type": "NUMBER",
+        "title": "curpage",
+        "description": "Current page for paged templates",
+        "value": "1"
+      },
+      "core/randomring": {
+        "index": 69,
+        "type": "TEXT",
+        "title": "randomring",
+        "description": "Code for ring \"paint_color\" attribute",
+        "value": "gv(func/theme) + if(tc(json, #dbtheme, (#settheme + \".colors.pastel.\" + i)) !=\"\", i)"
+      },
+      "core/tasker": {
+        "index": 70,
+        "type": "FOLDER",
+        "title": "tasker",
+        "description": "Tasker"
+      },
+      "core/tasker/fromtasker": {
+        "index": 71,
+        "type": "TEXT",
+        "title": "fromtasker",
+        "description": "State information sent from tasker to apply to \"json/device\"",
+        "value": "$br(tasker, states)$ "
+      },
+      "core/tasker/temp": {
+        "index": 72,
+        "type": "TEXT",
+        "title": "temp",
+        "description": "Temp storage for Tasker > KWGT flow",
+        "value": ""
+      },
+      "core/status": {
+        "index": 73,
+        "type": "FOLDER",
+        "title": "status",
+        "description": "Status system"
+      },
+      "core/status/currentstatus": {
+        "index": 74,
+        "type": "TEXT",
+        "title": "currentstatus",
+        "description": "Current status or last status displayed",
+        "value": ""
+      },
+      "core/status/setstatus": {
+        "index": 75,
+        "type": "TEXT",
+        "title": "setstatus",
+        "description": "",
+        "value": "01"
+      },
+      "core/status/statustimer": {
+        "index": 76,
+        "type": "SWITCH",
+        "title": "statustimer",
+        "description": "Time to display Status message",
+        "value": 1
+      },
+      "func": {
+        "index": 77,
+        "type": "FOLDER",
+        "title": "func",
+        "description": "Global functions"
+      },
+      "func/jsonmain": {
+        "index": 78,
+        "type": "TEXT",
+        "title": "jsonmain",
+        "description": "Load JSON data for following 3 global variables",
+        "value": "$lv(dbtemp, gv(json/template))$$lv(dbdev, gv(json/device))$$lv(template, (\".\" + gv(devicetype) + \".\" + (gv(devicetype) + gv(templateselect))))$$lv(tpageon, (tc(json, #dbtemp, (#template + \".page\"))))$$lv(obj, \".\" + gv(devicetype) + \".objects\")$$lv(curpage, gv(core/curpage))$$lv(objfindkey,(if(#tpageon = 0, (#template + #posid),(#template + \".page\" + #curpage + #posid))))$$lv(objkey, (if((tc(json, #dbtemp, #objfindkey)) = \"\", \"\",(#obj + \".\" + (tc(json, #dbtemp, #objfindkey))))))$$lv(entity,(if(#tpageon = 0, gv(entities/entity1),gv(entities/(\"entity\" + #curpage)))))$$lv(entitykey, (if(#entity != \"\",\".device_states[?(@.entity_id == '\" + #entity + \"')]\")))$$lv(box1obj,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row1.1\"))))))$"
+      },
+      "func/jsonstate": {
+        "index": 79,
+        "type": "TEXT",
+        "title": "jsonstate",
+        "description": "Get the current state of devices. Call with #posid \".box1.row2.0\"",
+        "value": "$gv(func/jsonmain)$$lv(obtype,\t(tc(json,#dbtemp,(#objkey+\".type\"))))$$lv(obonstate,\t(tc(json,#dbtemp,(#objkey+\".onstate\"))))$$lv(oblevelh,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",1)))))$$lv(oblevell,\t(if(#obonstate!=\"\",(tc(split,#obonstate,\">\",0)))))$$lv(ststate,\t(tc(json,#dbdev,(#entitykey+\".state\"))))$$lv(stlevelv,(tc(json,#dbdev,(#entitykey+\".brightness\"))))$$lv(stlevel,\t(if(#stlevelv!=\"\",#stlevelv,0)))$$lv(stcolor,\t(tc(json,#dbdev,(#entitykey+\".color\"))))$$lv(stcustom,\t(tc(json,#dbdev,(#entitykey+\".\"+#keyname))))$$lv(stobtype,(if(#obonstate~=\"\\d+>\\d+\"&#obtype=\"action\"&#ststate!=\"off\",\"range\",#obonstate~=\"page\\d\"&#obtype=\"page\",\t\t\t\t\t\t\t\t\t\t\"page\",#obonstate=\"off\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"0\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"off\",#obonstate=\"on\"&#obtype=\"action\",\t\t\t\t\t\t\t\t\t\t\"on\",#obonstate=\"\"|#obtype=\"\",\t\t\t\t\t\t\t\t\t\t\"nostate\",#obonstate)))$$lv(stoutput,(if(#stobtype!=\"range\",(if(#ststate!=\"\",if(#stobtype=\"page\"&#tpageon=1&(\"page\"+#curpage)=#obonstate,1,#stobtype=\"on\"&#ststate=\"on\",1,#stobtype=\"off\"&#ststate=\"off\",1,#stobtype=\"nostate\",0,0),0)),(if(#stobtype=\"range\"&#stlevel>=#oblevell&#stlevel<=#oblevelh,1,0)))))$"
+      },
+      "func/jsonobj": {
+        "index": 80,
+        "type": "TEXT",
+        "title": "jsonobj",
+        "description": "Get object information. Call with #posid \".box1.row2.0\"",
+        "value": "$gv(func/jsonmain)$$lv(obid,(if(#objkey!=\"\",1,0)))$$lv(obtype,(tc(json,#dbtemp,(#objkey+\".type\"))))$$lv(obicon,(tc(json,#dbtemp,(#objkey+\".icon\"))))$$lv(obaction,(tc(json,#dbtemp,(#objkey+\".action\"))))$$lv(obcmd,(tc(json,#dbtemp,(#objkey+\".cmd\"))))$$lv(obdata,(tc(json,#dbtemp,(#objkey+\".data\"))))$$lv(obparam,(if(#obaction=\"light\",(#obcmd+\":\"+#obdata),#obaction=\"template\",#obdata,\"\")))$"
+      },
+      "func/jsontemp": {
+        "index": 81,
+        "type": "TEXT",
+        "title": "jsontemp",
+        "description": "Get template information",
+        "value": "$gv(func/jsonmain)$$lv(tname,(tc(json,#dbtemp,(#template+\".name\"))))$$lv(ticon,(tc(json,#dbtemp,(#template+\".icon\"))))$$lv(tbox1,(tc(json,#dbtemp,(#template+\".box1_size\"))))$$lv(trowct,(tc(json,#dbtemp,(#template+\".row_count\"))))$$lv(ticopos,(tc(json,#dbtemp,(#template+\".device_icon_pos\"))))$$lv(tdevct,(tc(json,#dbtemp,(#template+\".device_count\"))))$"
+      },
+      "func/alignment": {
+        "index": 82,
+        "type": "TEXT",
+        "title": "alignment",
+        "description": "Variables for use in alignment globals and objects",
+        "value": "$gv(func/theme)$$gv(func/jsontemp)$$lv(align,gv(theme/advanced/widgetorient))$$lv(override,gv(theme/advanced/autoalign))$$lv(invert,gv(theme/advanced/boxtoggle))$$lv(box1pos,gv(theme/advanced/box1pos))$$lv(box1size,gv(theme/advanced/box1size))$$lv(objsize,gv(theme/objsize))$$lv(wgtwidth,(si(rwidth)-(#padwgtver*2)))$$lv(wgtheight,(si(rheight)-(#padwgthor*2)))$$lv(wgtdir,(if(#align=0,#wgtheight,#wgtwidth)))$$lv(wgtdirop,(if(#align=0,#wgtwidth,#wgtheight)))$$lv(devobjpos,(if(#align=0,#wgtheight,#box1size)))$$lv(objiconsize,(#objsize-(#objsize*#iconsize/100)))$$lv(devposcalc,((#devobjpos/2)+#padwgtver-(gv(theme/deviceiconsize)/2)))$$lv(box2obj,(#objsize+#padobjhor))$$lv(box2width,(if(#tbox1=0|#align=1,#wgtwidth,(#wgtdirop-#box1size))))$$lv(box2height,(if(#tbox1=0|#align=0,#wgtheight,(#wgtdirop-#box1size))))$$lv(box2dir,(if(#align=0,#box2width,#box2height)))$$lv(box2size,(#box2dir-gv(theme/deviceiconsize))/(#box2obj+#padobjhor))$$lv(box2maxobj,(if(gv(fitmoreobj)=0,(if(#box2size<=2,2,mu(round,#box2size))),10)))$$lv(box1sm,(#objsize+(#padobjside*2)*100/#wgtdir))$$lv(box1lg,(((#objsize+#padobjside)*2)+#padobjhor))$$lv(L,\"LEFT\")$$lv(R,\"RIGHT\")$$lv(T,\"TOP\")$$lv(B,\"BOTTOM\")$$lv(C,\"CENTER\")$$lv(box1anchor,(if(#box1pos=#R,(#C+#R),#box1pos=#L,(#C+#L),#box1pos=#T,#T,#box1pos=#B,#B)))$$lv(box1center,(if(#box1pos=#R,(\"VERTICAL_\"+#R),#box1pos=#L,(\"VERTICAL_\"+#L),#box1pos=#T,(\"VERTICAL_\"+#T),#box1pos=#B,(\"VERTICAL_\"+#B))))$$lv(devicopos,if(#box1pos=#R,(if(#ticopos=1,(#T+#L),#ticopos=2,(#C+#R),#ticopos=3,(#B+#L))),#box1pos=#L,(if(#ticopos=1,(#T+#R),#ticopos=2,(#C+#L),#ticopos=3,(#B+#R))),#box1pos=#T,(if(#ticopos=1,(#B+#L),#ticopos=2,#T,#ticopos=3,(#B+#R))),#box1pos=#B,(if(#ticopos=1,(#T+#L),#ticopos=2,#B,#ticopos=3,(#T+#R)))))$$lv(appicopos,(if(#box1pos=#R,(#B+#L),#box1pos=#L,(#B+#R),#box1pos=#T,(#B+#R),#box1pos=#B,(#T+#R))))$$lv(devicoalign,(if(#box1pos=#R|#box1pos=#L,1,#box1pos=#T|#box1pos=#B,0)))$$lv(pad1,if(#align=0,\"#padobjver\",\"#padobjhor\"))$$lv(pad2,if(#align=0,\"#padobjhor\",\"#padobjver\"))$$lv(pad3,if(#align=0,\"#padwgtver\",\"#padwgthor\"))$"
+      },
+      "func/theme": {
+        "index": 83,
+        "type": "TEXT",
+        "title": "theme",
+        "description": "Variables for use in theme globals and objects",
+        "value": "$lv(dbtheme,gv(json/theme))$$lv(settheme,gv(settheme))$$lv(tborder,(tc(json,#dbtheme,(\".\"+#settheme+\".border_width\"))))$$lv(tradius,(tc(json,#dbtheme,(\".\"+#settheme+\".corner_radius\"))))$$lv(tpadwgt,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_widget\"))))$$lv(tpadobj,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_obj\"))))$$lv(tpadside,(tc(json,#dbtheme,(\".\"+#settheme+\".pad_sides\"))))$$lv(tdevico,(tc(json,#dbtheme,(\".\"+#settheme+\".dev_ico_ring\"))))$$lv(tringsha,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_shape\"))))$$lv(ticonsize,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_percent\"))))$$lv(tringrnd,(tc(json,#dbtheme,(\".\"+#settheme+\".ring_random\"))))$$lv(tshadow,(tc(json,#dbtheme,(\".\"+#settheme+\".shadow\"))))$$lv(twgtopa,(tc(json,#dbtheme,(\".\"+#settheme+\".wgt_opacity\"))))$$lv(gborder,gv(theme/bordersize))$$lv(gradius,gv(theme/cornerradius))$$lv(gpadwgtver,gv(theme/wgtpaddingver))$$lv(gpadwgthor,gv(theme/wgtpaddinghor))$$lv(gpadobjhor,gv(theme/objpaddinghor))$$lv(gpadobjver,gv(theme/objpaddingver))$$lv(gpadside,gv(theme/objpaddingside))$$lv(gringsha,gv(theme/ringshape))$$lv(giconsize,gv(theme/iconsize))$$lv(gringrnd,gv(colors/ringrandom))$$lv(gshadow,gv(theme/shadow))$$lv(gwgtopa,gv(theme/opacity))$$lv(border,(if(#gborder,(if((#gborder*1)<=0,#tborder,#gborder)),#tborder)))$$lv(radius,(if(#gradius,(if((#gradius*1)<=0,#tradius,#gradius)),#tradius)))$$lv(padwgtver,(if(#gpadwgtver,(if((#gpadwgtver*1)<=0,#tpadwgt,#gpadwgtver)),#tpadwgt)))$$lv(padwgthor,(if(#gpadwgthor,(if((#gpadwgthor*1)<=0,#tpadwgt,#gpadwgthor)),#tpadwgt)))$$lv(padobjhor,(if(#gpadobjhor,(if((#gpadobjhor*1)<=0,#tpadobj,#gpadobjhor)),#tpadobj)))$$lv(padobjver,(if(#gpadobjver,(if((#gpadobjver*1)<=0,#tpadobj,#gpadobjver)),#tpadobj)))$$lv(padobjside,(if(#gpadside,(if((#gpadside*1)<=0,#tpadside,#gpadside)),#tpadside)))$$lv(ringsha,(if(#gringsha,(if((#gringsha*1)<=0,#tringsha,#gringsha)),#tringsha)))$$lv(iconsize,(if(#giconsize,(if((#giconsize*1)<=0,#ticonsize,#giconsize)),#ticonsize)))$$lv(ringrnd,(if(#gringrnd,(if((#gringrnd*1)<=0,#tringrnd,#gringrnd)),#tringrnd)))$$lv(shadow,(if(#gshadow,(if((#gshadow*1)<=0,#tshadow,#gshadow)),#tshadow)))$$lv(wgtopa,(if(#gwgtopa,(if((#gwgtopa*1)<=0,#twgtopa,#gwgtopa)),#twgtopa)))$$lv(squircle,(#iconsize/70)*100)$"
+      },
+      "func/themecolors": {
+        "index": 84,
+        "type": "TEXT",
+        "title": "themecolors",
+        "description": "Variables for color outputs",
+        "value": "$gv(func/theme)$$lv(darkmode,gv(theme/darkmode))$$lv(colors,if(#darkmode=0,(#settheme+\".colors.light\"),(#settheme+\".colors.dark\")))$$lv(cback1,(tc(json,#dbtheme,(\".\"+#colors+\".back_1\"))))$$lv(cback2,(tc(json,#dbtheme,(\".\"+#colors+\".back_2\"))))$$lv(cobjiconon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_on\"))))$$lv(cobjiconoff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_icon_off\"))))$$lv(cobjringon,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_on\"))))$$lv(cobjringoff,(tc(json,#dbtheme,(\".\"+#colors+\".obj_ring_off\"))))$$lv(cborder,(tc(json,#dbtheme,(\".\"+#colors+\".border\"))))$$lv(back1,(if(gv(colors/back1)!=\"\",gv(colors/back1),if(#cback1~=\"^#[a-fA-F0-9]*$\",#cback1,si(tc(split,#cback1,\",\",0),tc(split,#cback1,\",\",1))))))$$lv(back2,(if(gv(colors/back2)!=\"\",gv(colors/back2),if(#cback2~=\"^#[a-fA-F0-9]*$\",#cback2,si(tc(split,#cback2,\",\",0),tc(split,#cback2,\",\",1))))))$$lv(objiconon,(if(gv(colors/objiconon)!=\"\",gv(colors/objiconon),if(#cobjiconon~=\"^#[a-fA-F0-9]*$\",#cobjiconon,#cobjiconon=\"random\",\"random\",si(tc(split,#cobjiconon,\",\",0),tc(split,#cobjiconon,\",\",1))))))$$lv(objiconoff,(if(gv(colors/objiconoff)!=\"\",gv(colors/objiconoff),if(#cobjiconoff~=\"^#[a-fA-F0-9]*$\",#cobjiconoff,#cobjiconoff=\"random\",\"random\",si(tc(split,#cobjiconoff,\",\",0),tc(split,#cobjiconoff,\",\",1))))))$$lv(objringon,(if(gv(colors/objringon)!=\"\",gv(colors/objringon),if(#cobjringon~=\"^#[a-fA-F0-9]*$\",#cobjringon,#cobjringon=\"random\",\"random\",si(tc(split,#cobjringon,\",\",0),tc(split,#cobjringon,\",\",1))))))$$lv(objringoff,(if(gv(colors/objringoff)!=\"\",gv(colors/objringoff),if(#cobjringoff~=\"^#[a-fA-F0-9]*$\",#cobjringoff,#cobjringoff=\"random\",\"random\",si(tc(split,#cobjringoff,\",\",0),tc(split,#cobjringoff,\",\",1))))))$$lv(border,(if(gv(colors/border)!=\"\",gv(colors/border),if(#cborder~=\"^#[a-fA-F0-9]*$\",#cborder,si(tc(split,#cborder,\",\",0),tc(split,#cborder,\",\",1))))))$"
+      },
+      "func/status": {
+        "index": 85,
+        "type": "TEXT",
+        "title": "status",
+        "description": "Calculate widget status",
+        "value": "$lv(dbstatus,gv(json/status))$$lv(posid,(\".box2.row1.\"+(#box2maxobj-1)))$$gv(func/jsonobj)$$lv(tempjson,if(#tname=\"\"|#ticon=\"\"|#tbox1=\"\"|#trowct=\"\"|#ticopos=\"\"|#tdevct=\"\"|#obid=\"\"|#obtype=\"\"|#obicon=\"\"|#obaction=\"\"|#obcmd=\"\"|#obdata=\"\"|#obparam=\"\",1,0))$$lv(devjson,if(#obtype=\"\"|#obonstate=\"\"|#ststate=\"\"|#stobtype=\"\"|#stoutput=\"\"|gv(json/device)=\"\",1,0))$$lv(tempmain,if(#template=\"\"|#tpageon=\"\"|#obj=\"\"|#curpage=\"\"|#objfindkey=\"\"|#objkey=\"\"|#entity=\"\"|#entitykey=\"\"|#box1obj=\"\",1,0))$$lv(comm1,(if(#=#,1,0)))$$lv(comm2,(if(#=#,1,0)))$$lv(comm3,(if(#=#,1,0)))$$lv(widget1,#tempjson)$$lv(widget2,#devjson)$$lv(widget3,#tempmain)$$lv(widget4,(if(#=#,1,0)))$$lv(template1,(if(#obid=0,1,0)))$$lv(template2,(if(#=#,1,0)))$$lv(theme1,(if(#=#,1,0)))$$lv(theme2,(if(#=#,1,0)))$$lv(setup1,(if(gv(devicetype)=\"DATA\",1,0)))$$lv(error,(if(#comm1,(#error+\";\"+\"comm,1\"),#comm2,(#error+\";\"+\"comm,2\"),#comm3,(#error+\";\"+\"comm,3\"),#widget1,(#error+\";\"+\"widget,1\"),#widget2,(#error+\";\"+\"widget,2\"),#widget3,(#error+\";\"+\"widget,3\"),#widget4,(#error+\";\"+\"widget,4\"),#template1,(#error+\";\"+\"template,1\"),#template2,(#error+\";\"+\"template,2\"),#theme1,(#error+\";\"+\"theme,1\"),#theme2,(#error+\";\"+\"theme,2\"),#setup1,(#error+\";\"+\"setup,1\"),)))$$lv(error1,tc(split,#error,\";\",0))$$lv(cat1,tc(split,#error1,\",\",0))$$lv(num1,tc(split,#error1,\",\",1))$$lv(error2,tc(split,#error,\";\",1))$$lv(cat2,tc(split,#error2,\",\",0))$$lv(num2,tc(split,#error2,\",\",1))$$lv(errorout1,tc(json,#dbstatus,(\".\"+#cat1+\".\"+#error1+\".error\")))$$lv(errorout2,tc(json,#dbstatus,(\".\"+#cat2+\".\"+#error2+\".error\")))$"
+      },
+      "func/devjsonrem": {
+        "index": 86,
+        "type": "TEXT",
+        "title": "devjsonrem",
+        "description": "Device State - Remove entity",
+        "value": "$tc(reg,#datawipe,(\"\\{\\\" + tc(utf, 22) + \"entity_id\" + \"\\\" + tc(utf, 22) + \":\\\" + tc(utf, 22) +#entity + \"\\\" + tc(utf, 22) + \".*?\\},\"),\"\")$"
+      },
+      "func/devjsonadd": {
+        "index": 87,
+        "type": "TEXT",
+        "title": "devjsonadd",
+        "description": "Device State - Add newlines and spaces to JSON",
+        "value": "$tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,tc(reg,#jsonout,\"\\},\",\"\\},\" + tc(utf, 0A)),\":\",\": \"),\"\\\" + tc(utf, 22) + \",\",\"\\\" + tc(utf, 22) + \",\" + tc(utf, 0A)),\"\\{\",\"\\{\" + tc(utf, 0A)),\"\\}\",tc(utf, 0A) + \"\\}\"),\"\\[\",\"\\[\" + tc(utf, 0A)),\"\\\" + tc(utf, 22) + \"device_states\\\" + tc(utf, 22) + \".*\",\"$0\"),\"\\]\",\"  ]\")$"
+      },
+      "func/devjsonindent": {
+        "index": 88,
+        "type": "TEXT",
+        "title": "devjsonindent",
+        "description": "Device State - Add indentation to JSON",
+        "value": "$tc(reg,tc(reg,#jsonline,(\"(?<=\\[)[^\\[\\]]*(?=\\])\"),tc(utf, 0A) + \"    \" + #jarredit + tc(utf, 0A) + \"  \"),(\"(?<!\\[)(?<=\\n|^)\\s*(\" + tc(utf, 22) + \".*)\"),\"  $0\")$"
+      },
+      "func/devjsonnew": {
+        "index": 89,
+        "type": "TEXT",
+        "title": "devjsonnew",
+        "description": "Device State - Add new entity to bottom of list",
+        "value": "$tc(reg, #jsonrem, \"\\},\\]\\}\", (\"\\},\" + #jsonwipe + \"\\]\\}\"))$"
+      },
+      "json": {
+        "index": 90,
+        "type": "FOLDER",
+        "title": "JSON Data",
+        "description": "JSON databases for widget"
+      },
+      "json/device": {
         "index": 91,
+        "type": "TEXT",
+        "title": "device",
+        "description": "Device states database",
+        "value": "{\n  \"device_states\": [\n       {\n      \"entity_id\": \"light.study_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"125\",\n      \"color\": \"255,255,128,75\"\n    },\n    {\n      \"entity_id\": \"light.lr_lights\",\n      \"state\": \"off\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"light.foyer_lights\",\n      \"state\": \"on\",\n      \"brightness\": \"200\",\n      \"color\": \"255,200,128,80\"\n    },\n    {\n      \"entity_id\": \"sensor.hallway_temperature\",\n      \"state\": \"20C\",\n      \"last_updated\": \"10: 30AM\"\n    },\n    {\n      \"entity_id\": \"light.ensuite_light\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.bedroom_lights\",\n      \"state\": \"off\"\n    },\n    {\n      \"entity_id\": \"light.closet_light\",\n      \"state\": \"off\"\n    },\n       ]\n}"
+      },
+      "json/theme": {
+        "index": 92,
+        "type": "TEXT",
+        "title": "theme",
+        "description": "Theme database",
+        "value": "{\"OneUI\":{\"border_width\":2,\"corner_radius\":2,\"pad_widget\":16,\"pad_obj\":10,\"pad_sides\":16,\"ring_shape\":\"SQUIRCLE\",\"ring_percent\":25,\"ring_random\":1,\"dev_ico_ring\":0,\"wgt_opacity\":150,\"shadow\":0,\"colors\":{\"light\":{\"back_1\":\"syscn1,90\",\"back_2\":\"syscn2,90\",\"obj_icon_off\":\"sysca2,30\",\"obj_ring_off\":\"random\",\"obj_icon_on\":\"sysca1,100\",\"obj_ring_on\":\"\",\"border\":\"#EBEBEB\"},\"dark\":{\"back_1\":\"syscn1,22\",\"back_2\":\"syscn2,22\",\"obj_icon_off\":\"sysca2,90\",\"obj_ring_off\":\"sysca2,30\",\"obj_icon_on\":\"sysca1,20\",\"obj_ring_on\":\"sysca1,80\",\"border\":\"#EBEBEB\"},\"randomring\":{\"0\":\"#9bbe04\",\"1\":\"#15b76d\",\"2\":\"#0c967c\",\"3\":\"#18dc7f\",\"4\":\"#11b1f3\",\"5\":\"#091ea\",\"6\":\"#1e4bc6\",\"7\":\"#6693ed\",\"8\":\"#7882ff\",\"9\":\"#8064f4\",\"10\":\"#6445e5\",\"11\":\"#ee2172\",\"12\":\"#f01446\",\"13\":\"#d60052\",\"14\":\"#e53d35\",\"15\":\"#e95b31\",\"16\":\"#ff9e00\",\"17\":\"#ff7b22\",\"18\":\"#ff9e00\"}}},\"Material\":{\"border_width\":0,\"corner_radius\":2,\"pad_widget\":10,\"pad_obj\":10,\"pad_sides\":16,\"ring_shape\":\"CIRCLE\",\"ring_percent\":25,\"ring_random\":0,\"dev_ico_ring\":1,\"wgt_opacity\":50,\"shadow\":1,\"colors\":{\"light\":{\"back_1\":\"syscn1,90\",\"back_2\":\"syscn2,90\",\"obj_icon_off\":\"sysca2,30\",\"obj_ring_off\":\"sysca2,90\",\"obj_icon_on\":\"sysca1,100\",\"obj_ring_on\":\"sysca1,40\",\"border\":\"\"},\"dark\":{\"back_1\":\"syscn1,22\",\"back_2\":\"syscn2,22\",\"obj_icon_off\":\"sysca2,90\",\"obj_ring_off\":\"sysca2,30\",\"obj_icon_on\":\"sysca1,20\",\"obj_ring_on\":\"sysca1,80\",\"border\":\"\"}}},\"Basic\":{\"border_width\":0,\"corner_radius\":10,\"pad_widget\":6,\"pad_obj\":10,\"pad_sides\":12,\"ring_shape\":\"CIRCLE\",\"ring_percent\":0,\"ring_random\":1,\"dev_ico_ring\":0,\"wgt_opacity\":75,\"colors\":{\"light\":{\"back_1\":\"wpcolor1\",\"back_2\":\"wpcolor2\",\"obj_icon_off\":\"#E7FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"wpcolor1\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"},\"dark\":{\"back_1\":\"wpcolor1\",\"back_2\":\"wpcolor2\",\"obj_icon_off\":\"#FFFFFF\",\"obj_ring_off\":\"#FF000000\",\"obj_icon_on\":\"wpcolor1\",\"obj_ring_on\":\"#FFFFFF\",\"border\":\"\"}}}}"
+      },
+      "json/template": {
+        "index": 93,
+        "type": "TEXT",
+        "title": "template",
+        "description": "Template database",
+        "value": "{  \"light\": {\n    \"objects\": {\n      \"bedroom\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"page\",\n        \"onstate\": \"page1\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"1\"\n      },\n      \"office\": {\n        \"icon\": \"mdi-room-desk\",\n        \"type\": \"page\",\n        \"onstate\": \"page2\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"2\"\n      },\n      \"livingroom\": {\n        \"icon\": \"mdi-room-sofa-single-outline\",\n        \"type\": \"page\",\n        \"onstate\": \"page3\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"3\"\n      },\n      \"foyer\": {\n        \"icon\": \"mdi-room-coat-rack\",\n        \"type\": \"page\",\n        \"onstate\": \"page4\",\n        \"action\": \"page\",\n        \"cmd\": \"\",\n        \"data\": \"4\"\n      },\n      \"power\": {\n        \"icon\": \"mdi-power\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"toggle\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"controlapp\": {\n        \"icon\": \"mdi-room-king-bed\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"color\": {\n        \"icon\": \"mdi-palette\",\n        \"type\": \"action\",\n        \"onstate\": \"\",\n        \"action\": \"color\",\n        \"cmd\": \"color\",\n        \"data\": \"#FFFFFF\"\n      },\n      \"off\": {\n        \"icon\": \"mdi-lightbulb-off-outline\",\n        \"type\": \"action\",\n        \"onstate\": \"off\",\n        \"action\": \"off\",\n        \"cmd\": \"\",\n        \"data\": \"\"\n      },\n      \"low\": {\n        \"icon\": \"mdi-lightbulb-on-30\",\n        \"type\": \"action\",\n        \"onstate\": \"1>75\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"74\"\n      },\n      \"med\": {\n        \"icon\": \"mdi-lightbulb-on-60\",\n        \"type\": \"action\",\n        \"onstate\": \"76>200\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"150\"\n      },\n      \"high\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"200>255\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      },\n      \"on\": {\n        \"icon\": \"mdi-lightbulb-on\",\n        \"type\": \"action\",\n        \"onstate\": \"on\",\n        \"action\": \"light\",\n        \"cmd\": \"brightness\",\n        \"data\": \"255\"\n      }\n    },\n    \"light1\": {\n      \"name\": \"Light - 2-4 Page/Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 1,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 1,\n      \"device_count\": \"2-4\",\n      \"page1\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page2\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page3\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      },\n      \"page4\": {\n        \"box1\": {\n          \"row1\": {\n            \"0\": \"bedroom\",\n            \"1\": \"office\"\n          },\n          \"row2\": {\n            \"0\": \"livingroom\",\n            \"1\": \"foyer\"\n          }\n        },\n        \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n        }\n      }\n    },\n    \"light2\": {\n      \"name\": \"Light - 0 Page, 1 Device, 2 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 2,\n      \"device_icon_pos\": 2,\n      \"device_count\": 1,\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"power\",\n            \"1\": \"controlapp\",\n            \"2\": \"color\"\n          },\n          \"row2\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n    },\n    \"light3\": {\n      \"name\": \"Light - 0 page, 1 Device, 1 Row\",\n      \"note\": \"Testing Template V3\",\n      \"icon\": \"material-ico-wb-incandescent-mod\",\n      \"page\": 0,\n      \"box1_size\": 2,\n      \"row_count\": 1,\n      \"device_icon_pos\": 1,\n      \"device_count\": 1,\n      \"box1\": {\n          \"row1\": {\n            \"0\": \"controlapp\"\n          }\n      },\n      \"box2\": {\n          \"row1\": {\n            \"0\": \"off\",\n            \"1\": \"low\",\n            \"2\": \"med\",\n            \"3\": \"high\"\n          }\n      }\n   }\n  }\n} "
+      },
+      "json/status": {
+        "index": 94,
+        "type": "TEXT",
+        "title": "status",
+        "description": "Status and error database",
+        "value": "{\"status\": {\"01\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"02\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"03\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"04\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"05\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"06\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"07\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"}}}"
+      },
+      "setupmode": {
+        "index": 95,
         "type": "SWITCH",
         "title": "setupmode",
         "description": "Debugging - Enable showing setup data",
@@ -725,7 +751,7 @@
             "id": "TAZDuMgg",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(posid, #last)$$gv(func/jsonobj)$$lv(uri, (if(#obtype = \"template\",(\"tasker://secondary?service_call=\" + #obaction + \"&parameters=\" + #obparam),#obtype = \"action\",(\"tasker://secondary?service_call=\" + #obaction + \"&entity_id=\" + #entity + \"&parameters=\" + #obparam),\"\")))$$if(#uri = \"\" & #obtype = \"page\", #obdata, #uri)$"
+              "formula": "$lv(posid,#last)$$gv(func/jsonobj)$$lv(uri,(if(#obtype=\"template\",(\"tasker://secondary?service_call=\"+#obaction+\"&parameters=\"+#obparam),#obtype=\"action\",(\"tasker://secondary?service_call=\"+#obaction+\"&entity_id=\"+#entity+\"&parameters=\"+#obparam),#obtype=\"page\",\"page\",\"\")))$$if(#uri=\"\"|#uri=\"page\",#obdata,#uri)$"
             }
           },
           {
@@ -821,7 +847,7 @@
             "id": "TTGZqmKT",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(boxtoggle)$$si(rratio)$"
+              "formula": "$gv(theme/advanced/boxtoggle)$$si(rratio)$"
             }
           }
         ],
@@ -830,14 +856,14 @@
             "id": "TAKkmw2V",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(align, gv(widgetorient))$$lv(invert, gv(boxtoggle))$$lv(pos, (if(#align = 0 & #invert = 0, \"RIGHT\",#align = 0 & #invert = 1, \"LEFT\",#align = 1 & #invert = 0, \"TOP\",#align = 1 & #invert = 1, \"BOTTOM\")))$$if(gv(autoalign) = 1, #pos, gv(box1position))$"
+              "formula": "$lv(align, gv(theme/advanced/widgetorient))$$lv(invert, gv(theme/advanced/boxtoggle))$$lv(pos, (if(#align = 0 & #invert = 0, \"RIGHT\",#align = 0 & #invert = 1, \"LEFT\",#align = 1 & #invert = 0, \"TOP\",#align = 1 & #invert = 1, \"BOTTOM\")))$$if(gv(theme/advanced/autoalign) = 1, #pos, gv(theme/advanced/box1pos))$"
             }
           },
           {
             "id": "TAkUFwMK",
             "type": "A_GLOBAL",
             "params": {
-              "global": "box1position"
+              "global": "theme/advanced/box1pos"
             }
           }
         ]
@@ -850,7 +876,7 @@
             "id": "TT0gENXP",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(widgetorient)$$gv(devicetype)$$gv(templateselect)$$gv(box1sq)$"
+              "formula": "$gv(theme/advanced/widgetorient)$$gv(devicetype)$$gv(templateselect)$$gv(theme/advanced/box1sq)$"
             }
           },
           {
@@ -863,21 +889,21 @@
             "id": "TAcZGnOY",
             "type": "A_STOP_IF",
             "params": {
-              "formula": "$gv(autoalign)$"
+              "formula": "$gv(theme/advanced/autoalign)$"
             }
           },
           {
             "id": "TAdp5TwR",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(func/jsontemp)$$gv(func/alignment)$$lv(box1col1,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row1.1\"))))))$$lv(box1col2,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row2.1\"))))))$$lv(box1col, if(#box1col1 = \"\" & #box1col2 = \"\", 0, 1))$$lv(size, (if(gv(box1sq) = 1, #wgtdir,(if(#tbox1 = 0, 0,#tbox1 = 1, #box1sm,#tbox1 = 2 & #box1col = 0, #box1sm,#tbox1 = 2 & #box1col = 1, #box1lg,#ticopos = 2 & #tbox1 = 2, #wgtdir,#ticopos = 2 & #tbox1 = 1, #box1sm,#wgtdir)))))$$#size$"
+              "formula": "$gv(func/jsontemp)$$gv(func/alignment)$$lv(box1col1,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row1.1\"))))))$$lv(box1col2,(tc(json, #dbtemp,(if(#tpageon = 0, (#template + \".box1.row1.1\"),(#template + \".page\" + #curpage + \".box1.row2.1\"))))))$$lv(box1col, if(#box1col1 = \"\" & #box1col2 = \"\", 0, 1))$$lv(size, (if(gv(theme/advanced/box1sq) = 1, #wgtdir,(if(#tbox1 = 0, 0,#tbox1 = 1, #box1sm,#tbox1 = 2 & #box1col = 0, #box1sm,#tbox1 = 2 & #box1col = 1, #box1lg,#ticopos = 2 & #tbox1 = 2, #wgtdir,#ticopos = 2 & #tbox1 = 1, #box1sm,#wgtdir)))))$$#size$"
             }
           },
           {
             "id": "TALDjuUt",
             "type": "A_GLOBAL",
             "params": {
-              "global": "box1size"
+              "global": "theme/advanced/box1size"
             }
           }
         ]
@@ -890,7 +916,7 @@
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(theme/colorgen/syscolorset)$$gv(theme/colorgen/adjcolor)$$gv(theme/colorgen/opacity)$"
+              "formula": "$gv(colors/colorgen/syscolorset)$$gv(colors/colorgen/adjtone)$$gv(colors/colorgen/opacity)$"
             }
           },
           {
@@ -903,14 +929,14 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(func/themecolors)$$lv(adjcolor,gv(theme/colorgen/adjcolor))$$lv(opacity,gv(theme/colorgen/opacity))$$lv(gsyscolorset,gv(theme/colorgen/syscolorset))$$lv(syscolorset,(if(#gsyscolorset=1,\"sysca1\",#gsyscolorset=2,\"sysca2\",#gsyscolorset=3,\"sysca3\",#gsyscolorset=4,\"syscn1\",#gsyscolorset=5,\"syscn2\",#gsyscolorset=6,\"syscn3\",\"\")))$$lv(matfilter,si(#syscolorset,#adjcolor))$$lv(matfinal,ce(#matfilter,alpha,#opacity))$$#matfinal$"
+              "formula": "$gv(func/themecolors)$$lv(adjcolor,gv(colors/colorgen/adjtone))$$lv(opacity,gv(colors/colorgen/opacity))$$lv(gsyscolorset,gv(colors/colorgen/syscolorset))$$lv(syscolorset,(if(#gsyscolorset=1,\"sysca1\",#gsyscolorset=2,\"sysca2\",#gsyscolorset=3,\"sysca3\",#gsyscolorset=4,\"syscn1\",#gsyscolorset=5,\"syscn2\",#gsyscolorset=6,\"syscn3\",\"\")))$$lv(matfilter,si(#syscolorset,#adjcolor))$$lv(matfinal,ce(#matfilter,alpha,#opacity))$$#matfinal$"
             }
           },
           {
             "id": "TA0aKoeW",
             "type": "A_GLOBAL",
             "params": {
-              "global": "theme/colorgen/output"
+              "global": "colors/colorgen/output"
             }
           }
         ]
@@ -923,7 +949,7 @@
             "id": "TTUkmYaQ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(theme/coloreditor/editcolor)$$gv(theme/coloreditor/wallcolorset)$$gv(theme/coloreditor/adjcolor)$$gv(theme/coloreditor/opacity)$"
+              "formula": "$gv(colors/coloredit/editcolor)$$gv(colors/coloredit/filter)$$gv(colors/coloredit/adjfilter)$$gv(colors/coloredit/opacity)$"
             }
           },
           {
@@ -936,14 +962,14 @@
             "id": "TAR39UAy",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(func/themecolors)$$lv(adjcolor,gv(theme/coloreditor/adjcolor))$$lv(opacity,gv(theme/coloreditor/opacity))$$lv(gwallcolorset,gv(theme/coloreditor/wallcolorset))$$lv(geditcolor,gv(theme/coloreditor/editcolor))$$lv(editcolor,(if(#geditcolor=0,\"back1\",#geditcolor=1,\"back2\",#geditcolor=2,\"objiconon\",#geditcolor=3,\"objiconoff\",#geditcolor=4,\"cobjringon\",#geditcolor=5,\"cobjringoff\",#geditcolor=6,\"border\",#geditcolor=7,\"wpcolor1\",#geditcolor=8,\"wpcolor2\",\"\")))$$lv(wallcolorset,(if(#gwallcolorset=1,\"sat\",#gwallcolorset=2,\"lum\",#gwallcolorset=3,\"comp\",\"\")))$$lv(editfilter,if(#geditcolor<=6,ce(#editcolor,#wallcolorset,#adjcolor),(#geditcolor>=7,ce(si(#editcolor),#wallcolorset,#adjcolor)\"\")))$$lv(editfinal,ce(#matfilter,alpha,#opacity))$$#editfinal$"
+              "formula": "$gv(func/themecolors)$$lv(adjfilter,gv(colors/coloredit/adjfilter))$$lv(opacity,gv(colors/coloredit/opacity))$$lv(gfilter,gv(colors/coloredit/filter))$$lv(editcolor,gv(colors/coloredit/editcolor))$$lv(filter,(if(#gfilter=1,\"sat\",#gfilter=2,\"lum\",#gfilter=3,\"comp\",\"\")))$$lv(getcolor,(tc(json,#dbtheme,(\".\"+#colors+#editcolor))))$$lv(editfilter,if(#editcolor~=\"wpcolor\\d\",ce(si(#editcolor),#filter,#adjfilter),ce(#getcolor,#filter,#adjfilter),))$$lv(editfinal,ce(#editfilter,alpha,#opacity))$$#editfinal$"
             }
           },
           {
             "id": "TAJkiJSQ",
             "type": "A_GLOBAL",
             "params": {
-              "global": "theme/coloreditor/output"
+              "global": "colors/coloredit/output"
             }
           }
         ]
@@ -994,7 +1020,7 @@
             "id": "TA7X3wSB",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$lv(objfit, gv(core/size/box2iconmax))$$lv(posid, \".box_2.row_2.\" + (#objfit - 1))$$gv(func/jsontemp)$$lv(box1vis, if(#tboxsize = 0, \", 1 Box\", \", 2 Boxes\"))$$lv(ntdevnum, (if(#tdevct ~= \"\\d-\\d\",(\"Connect \" + #tdevct + \" \" + gv(devicetype) + \" entities for this template\"),#tdevct = 4,(\"Connect up to 4 \" + gv(devicetype) + \" entities for this template, 1 per page\"),(\"Connect \" + #tdevct + \" \" + gv(devicetype) + \" entities for this template\"))))$$lv(ntwgtsize, (if(#objkey != #obj,\"This widget is incorrectly sized for this template. \\nEither make the widget larger or choose a different template. \\nAdvanced users see README for alternative options\",\"\")))$$gv(devicetype) + \" - \" + #tdevct + \" Device(s), \" + #trowct + \" Row(s)\" + #box1vis$\n$#ntdevnum$\n$#ntwgtsize$"
+              "formula": "$lv(posid,(\".box2.row1.\"+(#box2maxobj-1)))$$gv(func/alignment)$$lv(box1vis,if(#tbox1=1,\",1Box\",#tbox1=2,\",2Boxes\",0))$$lv(ntdevnum,(if(#tdevct~=\"\\d-\\d\",(\"Connect\"+#tdevct+\"\"+gv(devicetype)+\"entitiesforthistemplate\"),#tdevct=4,(\"Connectupto4\"+gv(devicetype)+\"entitiesforthistemplate,1perpage\"),(\"Connect\"+#tdevct+\"\"+gv(devicetype)+\"entitiesforthistemplate\"))))$$lv(ntwgtsize,(if(#objkey!=#obj,\"Thistemplaterequires\"+\"?\"+\"iconstofitinBox2,butonly\"+\"#box2maxobj\"+\"canfit.\\\\nResizethewidget,see\\\"fitmoreobj\\\"settingbeloworconsultReadme\",\"\")))$$gv(devicetype)+\"-\"+#tdevct+\"Device(s),\"+#trowct+\"Row(s)\"+#box1vis$$#ntdevnum$$#ntwgtsize$"
             }
           },
           {
@@ -1018,7 +1044,8 @@
             "id": "TTuZQfrZ",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(core/tasker/temp)$"
+              "formula": "$gv(core/tasker/temp)$",
+              "trigger": "NOT_EMPTY"
             }
           }
         ],
@@ -1028,6 +1055,20 @@
             "type": "A_INTENT_URI",
             "params": {
               "uri": "$lv(uri, gv(core/tasker/temp))$$if(#uri ~= \"\\b\\d\\b\", \"\", #uri)$"
+            }
+          },
+          {
+            "id": "TAPJ9OzQ",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "0"
+            }
+          },
+          {
+            "id": "TAmpB5ow",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "core/tasker/temp"
             }
           }
         ]
@@ -1060,9 +1101,197 @@
             }
           }
         ]
+      },
+      {
+        "id": "FnUXUxSr",
+        "name": "Clear custom color values",
+        "t": [
+          {
+            "id": "TTphjlji",
+            "type": "T_FORMULA",
+            "params": {
+              "formula": "$gv(colors/reset)$"
+            }
+          }
+        ],
+        "a": [
+          {
+            "id": "TA2pas31",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "$gv(_)$"
+            }
+          },
+          {
+            "id": "TA5u5frQ",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "colors/back1"
+            }
+          },
+          {
+            "id": "TAEVzXP1",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "colors/back2"
+            }
+          },
+          {
+            "id": "TAMOLS73",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "colors/objiconon"
+            }
+          },
+          {
+            "id": "TAIfgmXr",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "colors/objiconoff"
+            }
+          },
+          {
+            "id": "TAFQ35LE",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "colors/objringon"
+            }
+          },
+          {
+            "id": "TAfQvtdU",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "colors/objringoff"
+            }
+          },
+          {
+            "id": "TAtakAeI",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "colors/border"
+            }
+          }
+        ]
+      },
+      {
+        "id": "FLEl6LBU",
+        "name": "External Launcher",
+        "t": [
+          {
+            "id": "TTUobnYB",
+            "type": "T_MANUAL"
+          }
+        ],
+        "a": [
+          {
+            "id": "TAQ6fnTG",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "$lv(ext, gv(\"external/\" + #trigger))$$gv(func/jsonmain)$$lv(app,if(#ext = 1, (\"ha.entity.\" + #entity),#ext = 2, \"ha\",#ext = 3, \"ha.assist\",#ext = 4, \"kwgt\",#ext = 5, gv(external/custom),\"\"))$$lv(action, if(#ext = 5, \"custom\", \"open\"))$$\"tasker://secondary?action=\" + #action + \"&app=\" + #app$"
+            }
+          },
+          {
+            "id": "TAFTNmZo",
+            "type": "A_INTENT_URI",
+            "params": {
+              "uri": "$#last$"
+            }
+          }
+        ]
+      },
+      {
+        "id": "FXd9JKxE",
+        "name": "Status bar",
+        "t": [
+          {
+            "id": "TT9nchCA",
+            "type": "T_FORMULA",
+            "params": {
+              "formula": "$gv(core/status/setstatus)$",
+              "trigger": "NOT_EMPTY"
+            }
+          }
+        ],
+        "a": [
+          {
+            "id": "TAwVXxGZ",
+            "type": "A_FORMULA",
+            "params": {
+              "formula": "$gv(func/status)$$tc(json, #dbstatus, (\".\" + #cat1 + \".\" + #error1 + \".error\"))$"
+            }
+          },
+          {
+            "id": "TAqUS6rV",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "core/status/currentstatus"
+            }
+          },
+          {
+            "id": "TAj1Cwa8",
+            "type": "A_GLOBAL",
+            "params": {
+              "global": "core/status/statustimer"
+            }
+          }
+        ]
       }
     ],
     "viewgroup_items": [
+      {
+        "internal_type": "OverlapLayerModule",
+        "internal_title": "Background Data",
+        "internal_toggles": {
+          "config_alpha": 10,
+          "config_visible": 10
+        },
+        "internal_formulas": {
+          "config_alpha": "$gv(func/theme)$$#wgtopa$",
+          "config_visible": "$gv(func/theme)$$if(#shadow = 0, REMOVE, ALWAYS)$"
+        },
+        "viewgroup_items": [
+          {
+            "internal_type": "ShapeModule",
+            "internal_title": "Shadow1",
+            "internal_toggles": {
+              "shape_width": 10,
+              "shape_height": 10,
+              "shape_corners": 10
+            },
+            "internal_formulas": {
+              "shape_width": "$gv(func/alignment)$$if(#align = 1, #wgtheight, #wgtwidth)$",
+              "shape_height": "$gv(func/alignment)$$if(#align = 0, #wgtheight, #wgtwidth)$",
+              "shape_corners": "$gv(func/theme)$$#radius$"
+            },
+            "paint_color": "#00FFFFFF",
+            "fx_shadow": "OUTER",
+            "fx_shadow_distance": 4.0,
+            "fx_shadow_direction": 180.0,
+            "shape_type": "RECT",
+            "paint_mode": "OVERLAY"
+          },
+          {
+            "internal_type": "ShapeModule",
+            "internal_title": "Shadow2",
+            "internal_toggles": {
+              "shape_width": 10,
+              "shape_height": 10,
+              "shape_corners": 10
+            },
+            "internal_formulas": {
+              "shape_width": "$gv(func/alignment)$$if(#align = 1, #wgtheight, #wgtwidth)$",
+              "shape_height": "$gv(func/alignment)$$if(#align = 0, #wgtheight, #wgtwidth)$",
+              "shape_corners": "$gv(func/theme)$$#radius$"
+            },
+            "paint_color": "#00FFFFFF",
+            "fx_shadow": "OUTER",
+            "fx_shadow_distance": 4.0,
+            "fx_shadow_direction": 0,
+            "shape_type": "RECT",
+            "paint_mode": "OVERLAY"
+          }
+        ]
+      },
       {
         "internal_type": "OverlapLayerModule",
         "internal_title": "Box 1",
@@ -1073,33 +1302,45 @@
           "config_visible": 10
         },
         "internal_formulas": {
-          "position_anchor": "$gv(func/alignment)$$#boxalign$",
-          "position_offset_x": "$gv(func/theme)$$if(gv(widgetorient) = 0, #padwgthor, 0 )$",
-          "position_offset_y": "$gv(func/theme)$$if(gv(widgetorient) = 0, 0, #padwgtver)$",
+          "position_anchor": "$gv(func/alignment)$$#box1anchor$",
+          "position_offset_x": "$gv(func/alignment)$$if(#align = 0, #padwgthor, 0 )$",
+          "position_offset_y": "$gv(func/alignment)$$if(#align = 0, 0, #padwgtver)$",
           "config_visible": "$gv(func/jsontemp)$$if(#tbox1 = 0, REMOVE, ALWAYS)$"
         },
         "viewgroup_items": [
           {
-            "internal_type": "ShapeModule",
-            "internal_title": "-- Background - Edit in Globals",
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "Background",
             "internal_toggles": {
-              "paint_color": 10,
-              "shape_width": 10,
-              "shape_height": 10,
-              "shape_corners": 10
+              "config_alpha": 10
             },
             "internal_formulas": {
-              "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/wgtwidth), gv(box1size))$",
-              "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))$",
-              "shape_corners": "$gv(func/theme)$$#tradius$",
-              "paint_color": "$gv(func/themecolors)$$#back1$"
+              "config_alpha": "$gv(func/theme)$$#wgtopa$"
             },
-            "shape_type": "RECT",
-            "paint_mode": "OVERLAY"
+            "viewgroup_items": [
+              {
+                "internal_type": "ShapeModule",
+                "internal_title": "Background Color",
+                "internal_toggles": {
+                  "paint_color": 10,
+                  "shape_width": 10,
+                  "shape_height": 10,
+                  "shape_corners": 10
+                },
+                "internal_formulas": {
+                  "shape_width": "$gv(func/alignment)$$if(#align = 1, #wgtwidth, gv(theme/advanced/box1size))$",
+                  "shape_height": "$gv(func/alignment)$$if(#align = 0, #wgtheight, gv(theme/advanced/box1size))$",
+                  "shape_corners": "$gv(func/theme)$$#radius$",
+                  "paint_color": "$gv(func/themecolors)$$#back1$"
+                },
+                "shape_type": "RECT",
+                "paint_mode": "OVERLAY"
+              }
+            ]
           },
           {
             "internal_type": "OverlapLayerModule",
-            "internal_title": "-- Background - Edit in Globals",
+            "internal_title": "Background",
             "internal_toggles": {
               "config_visible": 10
             },
@@ -1109,7 +1350,7 @@
             "viewgroup_items": [
               {
                 "internal_type": "ShapeModule",
-                "internal_title": "-- Background - Edit in Globals",
+                "internal_title": "Background",
                 "internal_toggles": {
                   "paint_color": 10,
                   "shape_width": 10,
@@ -1119,10 +1360,10 @@
                 },
                 "internal_formulas": {
                   "paint_color": "$gv(func/themecolors)$$#border$",
-                  "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/wgtwidth), gv(box1size))$",
-                  "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/wgtheight), gv(box1size))$",
-                  "shape_corners": "$gv(func/theme)$$#tradius$",
-                  "paint_stroke": "$gv(func/themecolors)$$#tborder$"
+                  "shape_width": "$gv(func/alignment)$$if(#align = 1, #wgtwidth, gv(theme/advanced/box1size))$",
+                  "shape_height": "$gv(func/alignment)$$if(#align = 0, #wgtheight, gv(theme/advanced/box1size))$",
+                  "shape_corners": "$gv(func/theme)$$#radius$",
+                  "paint_stroke": "$gv(func/theme)$$#border$"
                 },
                 "shape_type": "RECT",
                 "paint_style": "STROKE"
@@ -1143,12 +1384,12 @@
             },
             "internal_formulas": {
               "config_visible": "$gv(func/jsonobj)$$if(#ticonpos = \"2\", REMOVE, ALWAYS)$",
-              "position_padding_left": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = LEFT, #padwgthor, 0)), 0)$",
-              "position_padding_right": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = RIGHT, #padwgthor, 0)), 0)$",
-              "position_padding_top": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = TOP, #padwgthor, 0)), 0)$",
-              "position_padding_bottom": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(box1position) = BOTTOM, #padwgthor, 0)), 0)$",
-              "config_stacking": "$if(gv(widgetorient) = 0, VERTICAL_CENTER, HORIZONTAL_CENTER)$",
-              "config_margin": "$gv(func/alignment)$$#margin1$"
+              "position_padding_left": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(theme/advanced/box1pos) = LEFT, #padwgthor, 0)), 0)$",
+              "position_padding_right": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(theme/advanced/box1pos) = RIGHT, #padwgthor, 0)), 0)$",
+              "position_padding_top": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(theme/advanced/box1pos) = TOP, #padwgthor, 0)), 0)$",
+              "position_padding_bottom": "$gv(func/theme)$$gv(func/jsontemp)$$if(#tbox1 = 1, (if(gv(theme/advanced/box1pos) = BOTTOM, #padwgthor, 0)), 0)$",
+              "config_stacking": "$if(gv(theme/advanced/widgetorient) = 0, VERTICAL_CENTER, HORIZONTAL_CENTER)$",
+              "config_margin": "$gv(func/alignment)$$#pad1$"
             },
             "config_stacking": "HORIZONTAL_CENTER",
             "viewgroup_items": [
@@ -1160,8 +1401,8 @@
                   "config_margin": 10
                 },
                 "internal_formulas": {
-                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER)$",
-                  "config_margin": "$gv(func/theme)$$#tpadobj$"
+                  "config_stacking": "$if(gv(theme/advanced/widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER)$",
+                  "config_margin": "$gv(func/alignment)$$#pad2$"
                 },
                 "viewgroup_items": [
                   {
@@ -1188,20 +1429,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box1.row1.0\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1209,13 +1451,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1242,19 +1482,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box1.row1.1\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1262,13 +1504,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box1.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1287,9 +1527,9 @@
                   "config_margin": 10
                 },
                 "internal_formulas": {
-                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
+                  "config_stacking": "$if(gv(theme/advanced/widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
                   "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$",
-                  "config_margin": "$gv(func/theme)$$#tpadobj$"
+                  "config_margin": "$gv(func/alignment)$$#pad2$"
                 },
                 "viewgroup_items": [
                   {
@@ -1316,19 +1556,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box1.row2.0\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1336,13 +1578,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box1.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1369,16 +1609,20 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box1.row2.1\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         }
                       },
                       {
@@ -1387,15 +1631,13 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonobj)$$#obicon$",
-                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
+                          "paint_color": "$lv(posid, \".box1.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$ "
                         }
                       }
                     ]
@@ -1465,7 +1707,7 @@
                   "icon_size": 100
                 },
                 "internal_globals": {
-                  "icon_size": "iconsize"
+                  "icon_size": "theme/objsize"
                 },
                 "internal_title": "Security Status",
                 "paint_color": "#FF44FF01"
@@ -1478,7 +1720,7 @@
                   "icon_size": 0
                 },
                 "internal_globals": {
-                  "icon_size": "iconsize"
+                  "icon_size": "theme/objsize"
                 },
                 "internal_title": "Security Status",
                 "paint_color": "#FF1AFF1F",
@@ -1491,45 +1733,49 @@
       {
         "internal_type": "OverlapLayerModule",
         "internal_title": "Box 2",
-        "position_anchor": "CENTERLEFT",
         "internal_toggles": {
           "position_anchor": 10,
           "position_offset_y": 10,
           "position_offset_x": 10
         },
         "internal_formulas": {
-          "position_anchor": "$gv(func/alignment)$$#boxalign$",
-          "position_offset_y": "$gv(func/theme)$$if(gv(widgetorient) = 0, 0, (gv(box1size) + #padwgtver))$",
-          "position_offset_x": "$gv(func/theme)$$if(gv(widgetorient) = 0, (gv(box1size) + #padwgthor), 0)$"
+          "position_anchor": "$gv(func/alignment)$$#box1anchor$",
+          "position_offset_y": "$gv(func/theme)$$if(gv(theme/advanced/widgetorient) = 0, 0, (gv(theme/advanced/box1size) + #padwgtver))$",
+          "position_offset_x": "$gv(func/theme)$$if(gv(theme/advanced/widgetorient) = 0, (gv(theme/advanced/box1size) + #padwgthor), 0)$"
         },
         "viewgroup_items": [
           {
-            "internal_type": "ShapeModule",
-            "internal_title": "-- Background - Edit in Globals",
-            "shape_type": "RECT",
-            "position_anchor": "CENTERLEFT",
+            "internal_type": "OverlapLayerModule",
+            "internal_title": "Background",
             "internal_toggles": {
-              "paint_color": 10,
-              "shape_width": 100,
-              "shape_height": 100,
-              "position_anchor": 10,
-              "shape_corners": 10
+              "config_alpha": 10
             },
             "internal_formulas": {
-              "paint_color": "$gv(func/themecolors)$$#back2$",
-              "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/box2width), (gv(core/size/box2width) - gv(box1size)))$",
-              "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/box2height), (gv(core/size/box2height) - gv(box1size)))$",
-              "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
-              "shape_corners": "$gv(func/theme)$$#tradius$"
+              "config_alpha": "$gv(func/theme)$$#wgtopa$"
             },
-            "internal_globals": {
-              "shape_width": "core/size/box2width",
-              "shape_height": "core/size/box2height"
-            }
+            "viewgroup_items": [
+              {
+                "internal_type": "ShapeModule",
+                "internal_title": "Background Color",
+                "shape_type": "RECT",
+                "internal_toggles": {
+                  "paint_color": 10,
+                  "shape_width": 10,
+                  "shape_height": 10,
+                  "shape_corners": 10
+                },
+                "internal_formulas": {
+                  "paint_color": "$gv(func/themecolors)$$#back2$",
+                  "shape_height": "$gv(func/alignment)$$#box2height$",
+                  "shape_width": "$gv(func/alignment)$$#box2width$",
+                  "shape_corners": "$gv(func/theme)$$#radius$"
+                }
+              }
+            ]
           },
           {
             "internal_type": "OverlapLayerModule",
-            "internal_title": "-- Background - Edit in Globals",
+            "internal_title": "Background",
             "internal_toggles": {
               "config_visible": 10
             },
@@ -1539,30 +1785,22 @@
             "viewgroup_items": [
               {
                 "internal_type": "ShapeModule",
-                "internal_title": "-- Background - Edit in Globals",
+                "internal_title": "Background Border",
                 "shape_type": "RECT",
                 "paint_style": "STROKE",
                 "internal_toggles": {
                   "paint_color": 10,
-                  "shape_width": 100,
-                  "shape_height": 100,
-                  "position_anchor": 10,
-                  "position_padding_left": 0,
                   "shape_corners": 10,
+                  "shape_width": 10,
+                  "shape_height": 10,
                   "paint_stroke": 10
                 },
                 "internal_formulas": {
                   "paint_color": "$gv(func/themecolors)$$#border$",
-                  "shape_width": "$if(gv(widgetorient) = 1, gv(core/size/box2width), (gv(core/size/box2width) - gv(box1size)))$",
-                  "shape_height": "$if(gv(widgetorient) = 0, gv(core/size/box2height), (gv(core/size/box2height) - gv(box1size)))$",
-                  "position_anchor": "$if(gv(widgetorient) = 0, CENTERLEFT, BOTTOM)$",
-                  "position_padding_left": "$gv(func/theme)$$if(gv(widgetorient) = 0, #padwgtver, 0 )$",
-                  "shape_corners": "$gv(func/theme)$$#tradius$",
-                  "paint_stroke": "$gv(func/themecolors)$$#tborder$"
-                },
-                "internal_globals": {
-                  "shape_width": "core/size/box2width",
-                  "shape_height": "core/size/box2height"
+                  "shape_corners": "$gv(func/theme)$$#radius$",
+                  "shape_height": "$gv(func/alignment)$$#box2height$",
+                  "shape_width": "$gv(func/alignment)$$#box2width$",
+                  "paint_stroke": "$gv(func/theme)$$#border$"
                 }
               }
             ]
@@ -1580,13 +1818,13 @@
               "config_margin": 10
             },
             "internal_formulas": {
-              "position_anchor": "$gv(func/alignment)$$#boxalign$",
-              "position_padding_left": "$gv(func/theme)$$if(gv(box1position) = LEFT, #padobjside, 0)$",
-              "position_padding_right": "$gv(func/theme)$$if(gv(box1position) = RIGHT, #padobjside, 0)$",
-              "position_padding_top": "$gv(func/theme)$$if(gv(box1position) = TOP, #padobjside, 0)$",
-              "position_padding_bottom": "$gv(func/theme)$$if(gv(box1position) = BOTTOM, #padobjside, 0)$",
-              "config_stacking": "$gv(func/alignment)$$#boxcenter$",
-              "config_margin": "$gv(func/alignment)$$#margin1$"
+              "position_anchor": "$gv(func/alignment)$$#box1anchor$",
+              "position_padding_left": "$gv(func/theme)$$if(gv(theme/advanced/box1pos) = LEFT, #padobjside, 0)$",
+              "position_padding_right": "$gv(func/theme)$$if(gv(theme/advanced/box1pos) = RIGHT, #padobjside, 0)$",
+              "position_padding_top": "$gv(func/theme)$$if(gv(theme/advanced/box1pos) = TOP, #padobjside, 0)$",
+              "position_padding_bottom": "$gv(func/theme)$$if(gv(theme/advanced/box1pos) = BOTTOM, #padobjside, 0)$",
+              "config_stacking": "$gv(func/alignment)$$#box1center$",
+              "config_margin": "$gv(func/alignment)$$#pad1$"
             },
             "config_stacking": "VERTICAL_CENTER",
             "viewgroup_items": [
@@ -1599,8 +1837,8 @@
                   "config_margin": 10
                 },
                 "internal_formulas": {
-                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
-                  "config_margin": "$gv(func/theme)$$#tpadobj$"
+                  "config_stacking": "$if(gv(theme/advanced/widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
+                  "config_margin": "$gv(func/alignment)$$#pad2$"
                 },
                 "viewgroup_items": [
                   {
@@ -1623,19 +1861,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row1.0\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1643,13 +1883,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row1.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1676,19 +1914,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row1.1\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1696,13 +1936,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row1.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1716,7 +1954,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 3, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 3, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1729,19 +1967,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid,\"(.box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 0 & #settheme = \"OneUI\", #ringcolor,#stoutput = 1 & #settheme != \"OneUI)\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 0 & #settheme = \"OneUI\", #ringcolor,#stoutput = 1 & #settheme != \"OneUI\"))$if(#ringcolor=\"\",lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$if(#objringoff=\"random\",#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1749,13 +1989,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row1.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1769,7 +2007,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 4, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 4, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1782,19 +2020,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row1.3\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1802,13 +2042,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1822,7 +2060,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 5, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 5, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1835,19 +2073,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row1.4\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1855,13 +2095,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row1.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1875,7 +2113,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 6, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 6, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -1888,19 +2126,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row1.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row1.3\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1908,13 +2148,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row1.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -1933,9 +2171,9 @@
                   "config_visible": 10
                 },
                 "internal_formulas": {
-                  "config_stacking": "$if(gv(widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
+                  "config_stacking": "$if(gv(theme/advanced/widgetorient) = 0, HORIZONTAL_CENTER, VERTICAL_CENTER )$",
                   "config_visible": "$gv(func/jsontemp)$$if(#trowct != \"2\", REMOVE, ALWAYS)$",
-                  "config_margin": "$gv(func/theme)$$#tpadobj$"
+                  "config_margin": "$gv(func/alignment)$$#pad2$"
                 },
                 "viewgroup_items": [
                   {
@@ -1958,19 +2196,21 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
                           "shape_width": 100,
-                          "shape_type": 10
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$",
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row2.0\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
                           "shape_type": "$gv(func/theme)$$#ringsha$"
-                        },
-                        "internal_title": "State"
+                        }
                       },
                       {
                         "internal_type": "FontIconModule",
@@ -1978,13 +2218,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row2.0\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -2011,16 +2249,20 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row2.1\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         }
                       },
                       {
@@ -2029,13 +2271,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row2.1\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -2049,7 +2289,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 3, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 3, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -2062,16 +2302,20 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row2.2\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         }
                       },
                       {
@@ -2080,13 +2324,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row2.2\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -2100,7 +2342,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 4, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 4, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -2113,16 +2355,20 @@
                     "viewgroup_items": [
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row2.3\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         }
                       },
                       {
@@ -2131,13 +2377,11 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row2.3\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
@@ -2151,7 +2395,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 5, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 5, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -2168,29 +2412,31 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       },
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row2.4\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row2.4\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         }
                       }
                     ]
@@ -2202,7 +2448,7 @@
                       "config_visible": 10
                     },
                     "internal_formulas": {
-                      "config_visible": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonobj)$$if(#obid = \"0\" | gv(core/size/box2iconmax) < 6, REMOVE, ALWAYS)$"
+                      "config_visible": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonobj)$$gv(func/alignment)$$if(#obid = \"0\" | #box2maxobj < 6, REMOVE, ALWAYS)$"
                     },
                     "internal_events": [
                       {
@@ -2219,29 +2465,31 @@
                         "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
                         "internal_toggles": {
                           "icon_icon": 10,
-                          "icon_size": 100,
+                          "icon_size": 10,
                           "paint_color": 10
                         },
-                        "internal_globals": {
-                          "icon_size": "iconsize"
-                        },
                         "internal_formulas": {
+                          "icon_size": "$gv(func/alignment)$$#objiconsize$",
                           "icon_icon": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonobj)$$#obicon$",
                           "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1, #objiconon, #objiconoff)$"
                         }
                       },
                       {
                         "internal_type": "ShapeModule",
-                        "shape_type": "CIRCLE",
+                        "internal_title": "Ring",
                         "internal_toggles": {
                           "paint_color": 10,
-                          "shape_width": 100
+                          "shape_width": 100,
+                          "shape_type": 10,
+                          "shape_corners": 10
                         },
                         "internal_globals": {
-                          "shape_width": "iconsize"
+                          "shape_width": "theme/objsize"
                         },
                         "internal_formulas": {
-                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$if(#stoutput = 1 & #themename = \"OneUI\", #pastel,#stoutput = 1 & #themename != \"OneUI\", #objringon,#objringoff)$"
+                          "shape_corners": "$gv(func/theme)$$#squircle$",
+                          "paint_color": "$lv(posid, \".box2.row2.5\")$$gv(func/jsonstate)$$gv(func/themecolors)$$lv(colorcount,if(#ringrnd=1,tc(reg,fl(0,40,\"i+1\",gv(core/randomring),\",\"),\"[\\d+,]*,(\\d+),*\",\".box2.row2.5\")))$$if(#ringcolor=\"\"&#ringrnd=1,lv(ringcolor,ce(tc(json,#dbtheme,(\".randomring.\"+mu(rnd,0,#colorcount))),sat,20)))$$if(#objringoff=\"random\"&#ringrnd=1,#ringcolor,if(#stoutput=1,#objringon,#objringoff))$",
+                          "shape_type": "$gv(func/theme)$$#ringsha$"
                         }
                       }
                     ]
@@ -2257,7 +2505,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(core/statustimer) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(core/status/statustimer) = 1, ALWAYS, REMOVE)$"
             },
             "config_stacking": "HORIZONTAL_CENTER",
             "position_anchor": "BOTTOMLEFT",
@@ -2271,8 +2519,13 @@
               },
               {
                 "internal_type": "TextModule",
-                "text_expression": "$gv(core/currentstatus)$$if(gv(core/box1dir1) = DATA, \"Error - One or more global list variables incorrectly set\")$",
-                "position_padding_left": 5.0
+                "position_padding_left": 5.0,
+                "internal_toggles": {
+                  "text_expression": 100
+                },
+                "internal_globals": {
+                  "text_expression": "core/status/currentstatus"
+                }
               }
             ]
           }
@@ -2288,10 +2541,10 @@
           "config_visible": 10
         },
         "internal_formulas": {
-          "position_anchor": "$gv(func/jsontemp)$$if(gv(box1position) = RIGHT, (if(#ticopos = 1, TOPLEFT, #ticopos = 2, CENTERRIGHT, #ticopos = 3, BOTTOMLEFT)),gv(box1position) = LEFT, (if(#ticopos = 1, TOPRIGHT, #ticopos = 2, CENTERLEFT, #ticopos = 3, BOTTOMRIGHT)),gv(box1position) = TOP, (if(#ticopos = 1, BOTTOMLEFT, #ticopos = 2, TOP, #ticopos = 3, BOTTOMRIGHT)),gv(box1position) = BOTTOM, (if(#ticopos = 1, TOPLEFT, #ticopos = 2, BOTTOM, #ticopos = 3, TOPRIGHT)))$",
+          "position_anchor": "$gv(func/alignment)$$#devicopos$",
           "config_visible": "$gv(func/jsontemp)$$if(#ticopos = 3, REMOVE, ALWAYS)$",
-          "position_offset_x": "$gv(func/jsontemp)$$gv(func/theme)$$lv(pos,(if(gv(box1position)=RIGHT|gv(box1position)=LEFT,(((if(gv(widgetorient)=0,gv(core/size/wgtheight),gv(box1size)))/2)+#padwgtver-(gv(deviceiconsize)/2)),gv(box1position)=TOP|gv(box1position)=BOTTOM,0)))$$if(#ticopos=1|#ticopos=3,padwgtver,#ticopos=2,#pos)$",
-          "position_offset_y": "$gv(func/jsontemp)$$gv(func/theme)$$lv(pos,(if(gv(box1position)=RIGHT|gv(box1position)=LEFT,0,gv(box1position)=TOP|gv(box1position)=BOTTOM,(((if(gv(widgetorient)=0,gv(core/size/wgtheight),gv(box1size)))/2)+#padwgtver-(gv(deviceiconsize)/2)))))$$if(#ticopos=1|#ticopos=3,#padwgtver,#ticopos=2,#pos)$"
+          "position_offset_x": "$gv(func/alignment)$$lv(pos, if(#devicoalign = 1, #devposcalc, 0))$$if(#ticopos = 1 | #ticopos = 3, #pad3, #ticopos = 2, #pos)$",
+          "position_offset_y": "$gv(func/alignment)$$lv(pos, if(#poscalc = 0, #poscalc, 0))$$if(#ticopos = 1 | #ticopos = 3, #pad3, #ticopos = 2, #pos)$"
         },
         "viewgroup_items": [
           {
@@ -2308,83 +2561,44 @@
               "icon_icon": 10
             },
             "internal_formulas": {
-              "paint_color": "$gv(func/themecolors)$$#objiconon$",
-              "icon_rotate_mode": "$if(gv(deviceiconrotation) = DATA, NONE, gv(deviceiconrotation))$",
+              "paint_color": "$gv(func/themecolors)$$lv(posid, \".box1.row1.0\")$$gv(func/jsonstate)$$if(gv(devicetype) = \"light\" & #stcolor != \"\", #stcolor, #objiconoff)$$#stcolor$",
+              "icon_rotate_mode": "$if(gv(theme/deviceiconrotation) = DATA, NONE, gv(theme/deviceiconrotation))$",
               "position_offset_y": "$gv(func/theme)$$##padwgthor$",
               "position_offset_x": "$gv(func/theme)$$##padwgtver$",
               "icon_icon": "$gv(func/jsontemp)$$#ticon$"
             },
             "internal_globals": {
-              "icon_size": "deviceiconsize"
+              "icon_size": "theme/deviceiconsize"
             }
           },
           {
             "internal_type": "OverlapLayerModule",
-            "internal_title": "DO NOT EDIT - Open Editor",
+            "internal_title": "Touch Overlay",
+            "internal_toggles": {
+              "config_visible": 10
+            },
+            "internal_formulas": {
+              "config_visible": "$if(gv(external/devicon) != 0, ALWAYS, REMOVE)$"
+            },
             "viewgroup_items": [
               {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "KWGT Editor On",
+                "internal_type": "ShapeModule",
                 "internal_toggles": {
-                  "config_visible": 10
+                  "shape_width": 100
                 },
-                "internal_formulas": {
-                  "config_visible": "$if(gv(deviceopeneditor) = 1, ALWAYS, REMOVE)$"
+                "internal_globals": {
+                  "shape_width": "theme/deviceiconsize"
                 },
-                "viewgroup_items": [
+                "internal_events": [
                   {
-                    "internal_type": "ShapeModule",
-                    "internal_toggles": {
-                      "shape_width": 100
-                    },
-                    "internal_formulas": {
-                      "shape_width": "$gv(deviceiconsize) - (gv(deviceiconsize) * 0.2)$"
-                    },
-                    "internal_globals": {
-                      "shape_width": "deviceiconsize"
-                    },
-                    "paint_color": "#00FFFFFF",
-                    "internal_events": [
-                      {
-                        "type": "SINGLE_TAP",
-                        "action": "KUSTOM_ACTION"
-                      }
-                    ],
-                    "shape_type": "SQUIRCLE"
+                    "type": "SINGLE_TAP",
+                    "action": "TRIGGER_FLOW",
+                    "flow_id": "FLEl6LBU",
+                    "switch_text": "devicon"
                   }
-                ]
-              },
-              {
-                "internal_type": "OverlapLayerModule",
-                "internal_title": "KWGT Editor Off",
-                "internal_toggles": {
-                  "config_visible": 10
-                },
-                "internal_formulas": {
-                  "config_visible": "$if(gv(deviceopeneditor) = 0, ALWAYS, REMOVE)$"
-                },
-                "viewgroup_items": [
-                  {
-                    "internal_type": "ShapeModule",
-                    "internal_toggles": {
-                      "shape_width": 100
-                    },
-                    "internal_formulas": {
-                      "shape_width": "$gv(deviceiconsize) - (gv(deviceiconsize) * 0.2)$"
-                    },
-                    "internal_globals": {
-                      "shape_width": "deviceiconsize"
-                    },
-                    "paint_color": "#00FFFFFF",
-                    "internal_events": [
-                      {
-                        "type": "SINGLE_TAP",
-                        "action": "NONE"
-                      }
-                    ],
-                    "shape_type": "SQUIRCLE"
-                  }
-                ]
+                ],
+                "paint_color": "#00FFFFFF",
+                "shape_type": "SQUIRCLE"
               }
             ]
           }
@@ -2399,148 +2613,103 @@
         "internal_toggles": {
           "config_margin": 10,
           "position_anchor": 10,
-          "config_visible": 10
+          "position_offset_x": 10,
+          "position_offset_y": 10
         },
         "internal_formulas": {
-          "position_anchor": "$gv(func/jsontemp)$$if(#ticopos = 3,(if(gv(box1position) = RIGHT, TOPLEFT,gv(box1position) = LEFT, TOPRIGHT,gv(box1position) = TOP, BOTTOMLEFT,gv(box1position) = BOTTOM, TOPLEFT)),(if(gv(box1position) = RIGHT, BOTTOMLEFT,gv(box1position) = LEFT, BOTTOMRIGHT,gv(box1position) = TOP, BOTTOMRIGHT,gv(box1position) = BOTTOM, TOPRIGHT)))$",
-          "config_visible": "$if(gv(appiconvis) = 0, ALWAYS, REMOVE)$",
-          "config_margin": "$gv(func/theme)$$#tpadobj$"
+          "position_anchor": "$gv(func/alignment)$$#appicopos$",
+          "config_margin": "$gv(func/theme)$$#padobjver$",
+          "position_offset_x": "$gv(func/alignment)$$lv(pos, if(#devicoalign = 1, #devposcalc, 0))$$(if(#ticopos = 1 | #ticopos = 3, #pad3, #ticopos = 2, #pos)) + #padobjside$",
+          "position_offset_y": "$gv(func/alignment)$$lv(pos, if(#poscalc = 0, #poscalc, 0))$$(if(#ticopos = 1 | #ticopos = 3, #pad3, #ticopos = 2, #pos)) + #padobjside$"
         },
         "viewgroup_items": [
           {
-            "internal_type": "FontIconModule",
-            "internal_title": "App 2",
-            "icon_icon": "mdi-cog",
-            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-            "internal_events": [
-              {
-                "type": "SINGLE_TAP",
-                "action": "SWITCH_GLOBAL",
-                "kustom_action": "ADVANCED_EDITOR",
-                "intent": "intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;component=io.homeassistant.companion.android/.launch.LaunchActivity;S.org.kustom.intent.label=Home%20Assistant;end",
-                "switch": "setupmode"
-              }
-            ],
-            "internal_toggles": {
-              "paint_color": 10,
-              "position_anchor": 10,
-              "position_offset_x": 10,
-              "icon_size": 100,
-              "position_offset_y": 10
-            },
-            "internal_formulas": {
-              "paint_color": "$gv(func/themecolors)$$if(gv(appiconvis) = 0, #objiconon, #00FFFFFF)$",
-              "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
-              "position_offset_x": "$gv(func/theme)$$#padwgtver +(#padobjhor * 2) + gv(appiconsize)$",
-              "position_offset_y": "$gv(func/theme)$$#padwgthor + #padobjhor$"
-            },
-            "internal_globals": {
-              "icon_size": "appiconsize"
-            }
-          },
-          {
-            "internal_type": "FontIconModule",
+            "internal_type": "StackLayerModule",
             "internal_title": "App 1",
-            "icon_icon": "mdi-home-assistant",
-            "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
-            "internal_events": [
-              {
-                "type": "SINGLE_TAP",
-                "action": "LAUNCH_APP",
-                "kustom_action": "ADVANCED_EDITOR",
-                "intent": "intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;component=io.homeassistant.companion.android/.launch.LaunchActivity;S.org.kustom.intent.label=Home%20Assistant;end"
-              }
-            ],
+            "config_stacking": "HORIZONTAL_CENTER",
             "internal_toggles": {
-              "paint_color": 10,
-              "position_anchor": 10,
-              "position_offset_x": 10,
-              "icon_size": 100,
-              "position_offset_y": 10
+              "config_visible": 10
             },
             "internal_formulas": {
-              "paint_color": "$gv(func/themecolors)$$if(gv(appiconvis) = 0, #objiconon, #00FFFFFF)$",
-              "position_anchor": "$if(gv(box1position) = RIGHT, BOTTOMLEFT, gv(box1position) = LEFT, BOTTOMRIGHT,  gv(box1position) = TOP, BOTTOMRIGHT,  gv(box1position) = BOTTOM, TOPRIGHT)$",
-              "position_offset_x": "$gv(func/theme)$$#padwgtver + #padobjhor$",
-              "position_offset_y": "$gv(func/theme)$$#padwgthor + #padobjhor$"
+              "config_visible": "$if(gv(external/appicon1) != 0, ALWAYS, REMOVE)$"
             },
-            "internal_globals": {
-              "icon_size": "appiconsize"
-            }
-          }
-        ]
-      },
-      {
-        "internal_type": "OverlapLayerModule",
-        "internal_title": "Debugging Data",
-        "internal_toggles": {
-          "config_visible": 10
-        },
-        "internal_formulas": {
-          "config_visible": "$if(gv(setupmode)= 0 ,\"NEVER\", \"ALWAYS\")$"
-        },
-        "viewgroup_items": [
-          {
-            "internal_type": "ShapeModule",
-            "shape_type": "RECT",
-            "internal_toggles": {
-              "shape_width": 100,
-              "shape_height": 100
-            },
-            "internal_globals": {
-              "shape_width": "core/size/wgtwidth",
-              "shape_height": "core/size/wgtheight"
-            },
-            "shape_height": 21.0,
-            "paint_color": "#88FFFFFF"
-          },
-          {
-            "internal_type": "OverlapLayerModule",
-            "internal_title": "Off",
-            "config_visible": "REMOVE",
             "viewgroup_items": [
               {
-                "internal_type": "TextModule",
-                "text_expression": "$tc(json, gv(json/device), \".device_states[?(@.entity_id == 'light.bedroom_lights')].state\")$"
-              },
-              {
-                "internal_type": "TextModule",
-                "text_expression": "Widget Padding: $gv(func/theme)$$#padwgtver$ Side, $#padwgthor$ Top\nIcon: $gv(iconsize)$kpx, $tc(reg, gv(core/size/box2iconmax), \"\\n\", \"\")$ Vis\nIcon Padding:$gv(theme/objpadding)$ Edge, $gv(theme/objpadding)$ MID\n\n[bl=-10]Widget: $si(rwidth)$W, $si(rheight)$H, $si(rratio)$ 1:1\nBox Area: $tc(reg, gv(core/size/box2minsize), \"\\n\", \"\")$ Min, $gv(core/size/box2width)$W/$gv(core/size/box2height)$H\n\n$lv(icon, gv(iconsize) + gv(theme/objpadding))$$lv(lgbox, if(gv(widgetorient) = 0, gv(core/size/box2width), gv(core/size/box2height)))$$lv(adjustment, if(gv(deviceappiconpadding) = 1, gv(appiconsize), 0))$$lv(boxsize, #lgbox - #adjustment)$Icon to size ratio: $mu(abs, #boxsize /#icon)$[/bl]",
-                "internal_title": "Widget Icon Padding",
-                "text_align": "CENTER",
-                "text_family": "kfile://org.kustom.provider/fonts/RobotoCondensed-Bold.ttf",
-                "text_filter": [
-                  "UP"
+                "internal_type": "FontIconModule",
+                "internal_title": "App 1",
+                "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
+                "internal_events": [
+                  {
+                    "type": "SINGLE_TAP",
+                    "action": "TRIGGER_FLOW",
+                    "flow_id": "FLEl6LBU",
+                    "switch_text": "appicon1"
+                  }
                 ],
-                "paint_stroke": 2.0
-              },
-              {
-                "internal_type": "ShapeModule",
-                "internal_title": "KODE Testing",
                 "internal_toggles": {
-                  "paint_color": 10
+                  "paint_color": 10,
+                  "position_anchor": 10,
+                  "position_offset_x": 10,
+                  "icon_size": 100,
+                  "icon_icon": 10,
+                  "position_offset_y": 10
                 },
                 "internal_formulas": {
-                  "paint_color": "$tc(reg, gv(json/device),\n\"^\" + tc(utf, 22) + \".*\\\" + tc(utf, 5B) + tc(utf, 24),\n\"test\"\n)$"
+                  "paint_color": "$gv(func/themecolors)$$#objiconoff$",
+                  "icon_icon": "$gv(func/jsontemp)$$lv(ext,gv(external/appicon1))$$if(#ext=1,#ticon,#ext=2,\"app-home-assistant\",#ext=3,\"app-home-assistant-assist\",#ext=4,\"mdi-cog\", #ext=5,#ticon,\"\")$",
+                  "position_anchor": "$if(gv(theme/advanced/box1pos) = RIGHT, BOTTOMLEFT, gv(theme/advanced/box1pos) = LEFT, BOTTOMRIGHT,  gv(theme/advanced/box1pos) = TOP, BOTTOMRIGHT,  gv(theme/advanced/box1pos) = BOTTOM, TOPRIGHT)$",
+                  "position_offset_x": "$gv(func/theme)$$#padwgtver +(#padobjhor * 2) + gv(external/appiconsize)$",
+                  "position_offset_y": "$gv(func/theme)$$#padwgthor + #padobjhor$"
+                },
+                "internal_globals": {
+                  "icon_size": "external/appiconsize"
                 }
-              },
-              {
-                "internal_type": "TextModule",
-                "text_expression": "$gv(json/device)$",
-                "internal_title": "Test",
-                "text_family": "kfile://org.kustom.provider/fonts/Noto Sans Mono-600.ttf",
-                "text_filter": [
-                  "UP"
-                ],
-                "paint_stroke": 2.0,
-                "paint_color": "#FF000000",
-                "text_size": 18.0
               }
             ]
           },
           {
-            "internal_type": "TextModule",
-            "text_expression": "$gv(curpage)$"
+            "internal_type": "StackLayerModule",
+            "internal_title": "App 2",
+            "config_stacking": "HORIZONTAL_CENTER",
+            "internal_toggles": {
+              "config_visible": 10
+            },
+            "internal_formulas": {
+              "config_visible": "$if(gv(external/appicon2) != 0, ALWAYS, REMOVE)$"
+            },
+            "viewgroup_items": [
+              {
+                "internal_type": "FontIconModule",
+                "internal_title": "App 2",
+                "icon_set": "kfile://org.kustom.provider/icons/hawgts2.ttf",
+                "internal_events": [
+                  {
+                    "type": "SINGLE_TAP",
+                    "action": "TRIGGER_FLOW",
+                    "flow_id": "FLEl6LBU",
+                    "switch_text": "appicon2"
+                  }
+                ],
+                "internal_toggles": {
+                  "paint_color": 10,
+                  "position_anchor": 10,
+                  "position_offset_x": 10,
+                  "icon_size": 100,
+                  "icon_icon": 10,
+                  "position_offset_y": 10
+                },
+                "internal_formulas": {
+                  "paint_color": "$gv(func/themecolors)$$#objiconoff$",
+                  "icon_icon": "$gv(func/jsontemp)$$lv(ext, gv(external/appicon2))$$if(#ext = 1, #ticon,#ext = 2, \"app-home-assistant\",#ext = 3, \"app-home-assistant-assist\",#ext = 4, \"mdi-cog\",#ext = 5, #ticon,\"\")$",
+                  "position_anchor": "$if(gv(theme/advanced/box1pos) = RIGHT, BOTTOMLEFT, gv(theme/advanced/box1pos) = LEFT, BOTTOMRIGHT,  gv(theme/advanced/box1pos) = TOP, BOTTOMRIGHT,  gv(theme/advanced/box1pos) = BOTTOM, TOPRIGHT)$",
+                  "position_offset_x": "$gv(func/theme)$$#padwgtver + #padobjhor$",
+                  "position_offset_y": "$gv(func/theme)$$#padwgthor + #padobjhor$"
+                },
+                "internal_globals": {
+                  "icon_size": "external/appiconsize"
+                }
+              }
+            ]
           }
         ]
       },
@@ -2551,7 +2720,7 @@
           "position_anchor": 10
         },
         "internal_formulas": {
-          "position_anchor": "$if(gv(box1position) = RIGHT, TOPLEFT, gv(box1position) = LEFT, TOPRIGHT,  gv(box1position) = TOP, BOTTOMLEFT,  gv(box1position) = BOTTOM, TOPLEFT)$"
+          "position_anchor": "$if(gv(theme/advanced/box1pos) = RIGHT, TOPLEFT, gv(theme/advanced/box1pos) = LEFT, TOPRIGHT,  gv(theme/advanced/box1pos) = TOP, BOTTOMLEFT,  gv(theme/advanced/box1pos) = BOTTOM, TOPLEFT)$"
         },
         "shape_width": 30.0,
         "paint_color": "#00FFFFFF",

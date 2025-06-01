@@ -1,54 +1,115 @@
-//////////////////////////////////////
-// HAWGTS JSON information and data
-//////////////////////////////////////
+# Modifying HAWGTS JSON
+Use these instructions to create custom themes and templates for your widget. Refer to [globals.md](globals.md) for global names and values
+
+## Custom theme
+ Instructions for creating a custom theme
+ 1. Create a theme JSON using the data below
+    - Use the color generator in the settings or see the [Kustom Reference for si()](https://docs.kustom.rocks/docs/reference/functions/si/) for generated colors
+    - See [theme.json](theme.json) for a human-readable version of `json/theme` for easier editing
+ 2. Append your theme JSON into the global `json/theme`. Paste your "ThemeName" array into the blank space at the bottom of the JSON, leaving the remaining brackets below your insertation
+ 3. Edit `settheme` and append your theme name to the end. This must match the name used in the JSON exactly!
+ `0##OneUI,1##Material,2##Basic` > `0##OneUI,1##Material,2##Basic,3##ThemeName`
+ 4. Save everything and select your custom theme from `settheme`
+ 5. Export modified widget to use your changes on multiple widgets
+
+> If you're an advanced user and want to add custom options to the JSON, edit `func/theme` to add support for new JSON keys and features
+
+#### Theme syntax reference
+```
 {
-    "preset_info": {
-    },
-    "preset_root": {
-          "globals_list": {
-            "globalname1": {
-              "index": 1,
-              "type": "string",
-              "title": "string",
-              "description": "string",
-              "value": "1"
-            },
-            "globalname2": {
-              "index": 2,
-              "type": "string",
-              "title": "string",
-              "description": "string",
-              "value": "1"
-            }
-          },
-          "internal_flows": [
-          ],
-          "viewgroup_items": [
-          ]
+  "ThemeName": {
+    "border_width": 0,
+    "corner_radius": 0,
+    "pad_widget": 0,          // Padding around outside of widget
+    "pad_obj": 0,             // Padding between objects
+    "pad_sides": 0,           // Padding from box edge to first object
+    "ring_shape": "shape",    // Insert any Kustom shape value here
+    "ring_percent": 0,        // Size - percentage of the ring compared to the icon
+    "dev_ico_ring": 0,        // Padding around outside of widget
+    "wgt_opacity": 0,
+    "shadow": 0,
+    "colors": {
+      "light": {              // Either a KWGT si() command or a Hex color value
+        "back_1": "",         // syscn1,90 or #FFFFFF
+        "back_2": "",
+        "obj_icon_off": "",
+        "obj_ring_off": "",
+        "obj_icon_on": "",
+        "obj_ring_on": "",
+        "border": ""
+      },
+      "dark": {               // Either a KWGT si() command or a Hex color value
+        "back_1": "",         // sysca3,20 or #000000
+        "back_2": "",
+        "obj_icon_off": "",
+        "obj_ring_off": "",
+        "obj_icon_on": "",
+        "obj_ring_on": "",
+        "border": ""
+      }
     }
-},
+  }
+}
+```
 
-//////////////////////////////////////
-// TEMPLATE JSON
-//////////////////////////////////////
-
-// Template versions: - Deprecate? Use Name for descripion instead?
+#### Working example of the "Material" theme
+```
 {
-  "3": "1 Device,    1 Row,  Box1 Sm-Lg",
-  "2": "1 Device,    2 Rows, Box1 Icon",
-  "5": "2 Device,    2 Rows, Box1 Icon",
-  "4": "2 Device,    2 Row,  Box1 lg",
-  "1": "2-4 Devices, 2 Rows, Box1 Lg",
-  "6": ""
-},
+  "Material": {
+    "border_width": 0,
+    "corner_radius": 2,
+    "pad_widget": 10,
+    "pad_obj": 10,
+    "pad_sides": 16,
+    "ring_shape": "CIRCLE",
+    "ring_percent": 25,
+    "dev_ico_ring": 1,
+    "wgt_opacity": 50,
+    "shadow": 1,
+    "colors": {
+      "light": {
+        "back_1": "syscn1, 90",
+        "back_2": "syscn2, 90",
+        "obj_icon_off": "sysca2, 30",
+        "obj_ring_off": "sysca2, 90",
+        "obj_icon_on": "sysca1, 100",
+        "obj_ring_on": "sysca1, 40",
+        "border": ""
+      },
+      "dark": {
+        "back_1": "syscn1, 22",
+        "back_2": "syscn2, 22",
+        "obj_icon_off": "sysca2, 90",
+        "obj_ring_off": "sysca2, 30",
+        "obj_icon_on": "sysca1, 20",
+        "obj_ring_on": "sysca1, 80",
+        "border": ""
+      }
+    }
+  }
+}
+```
 
-// Sample JSON
+## Custom template
+Instructions for creating a custom template
+1. Create a template JSON using the data below
+    - Add it to the `custom` array and name it `custom1-6`
+    - See [template.json](template.json) for a human-readable version of `template/theme` for easier editing
+ 2. Append your theme JSON into the global `json/theme`. Paste your template into the blank space at the bottom of the JSON, leaving the remaining brackets below your insertation
+3. Save everything and select `custom` template from `devicetype`
+4. Select the Template number in `templateselect` that matches your
+5. Save everything again
+
+> If you're an advanced user and want to add custom options to the JSON, edit `func/template` to add support for new JSON keys and features
+
+#### Template syntax reference
+```
 {
   "device_type": {                                // Device category
     "objects": {                                  // "objects" - list of controls/commands
       "control_namea": {                          // Name of control/command
         "icon": "icon-name",                      // Icon name from hawgts icon pack
-        "type": "action,page",                    // Type of control - Internal "page" or external "action"
+        "type": "action,page",                    // Control - "action" > Tasker, future "template"
         "onstate": "#>#,on,off,page#",            // Matches "active" Device state from HA or `curpage`
         "action": "light,on,off,toggle,template", // Indicate which action to run when activated
         "cmd": "",                                // Used internally for light control (brightness and color)
@@ -118,10 +179,13 @@
       }
     }
   }
-},
+}
+```
 
-// Testing Template JSON
-{  "light": {
+#### Working example of a "light" device with 3 templates
+```
+{
+  "light": {
     "objects": {
       "bedroom": {
         "icon": "mdi-room-king-bed",
@@ -164,7 +228,7 @@
         "data": ""
       },
       "controlapp": {
-        "icon": "mdi-room-king-bed",
+        "icon": "app-home-assistant",
         "type": "action",
         "onstate": "",
         "action": "",
@@ -376,232 +440,8 @@
             "3": "high"
           }
       }
-    },
-    "light4": {
-      "name": "Light - 0 page, 2 Device, 2 Row",
-      "note": "Testing Template V3",
-      "icon": "material-ico-wb-incandescent-mod",
-      "box1_size": 0,
-      "page": 0,
-      "row_count": 2,
-      "device_icon_pos": 2,
-      "device_count": 2,
-      "box1": {
-          "row1": {
-            "0": "controlapp",
-            "1": "color"
-          },
-          "row2": {
-            "0": "off",
-            "1": "on"
-          }
-      },
-      "box2": {
-          "row1": {
-            "0": "controlapp",
-            "1": "color"
-          },
-          "row2": {
-            "0": "off",
-            "1": "on"
-          }
-      }
-    }
-}
-
-// V3 template - Blank slate
-  "<type>": {
-    "objects": {
-      "<name>": {
-        "icon": "",
-        "type": "action",
-        "onstate": "",
-        "action": "",
-        "cmd": "",
-        "data": ""
-      },
-    },
-    "<type>1": {
-      "name": "",
-      "note": "",
-      "icon": "",
-      "page": 0,
-      "box1_size": 2,
-      "row_count": 2,
-      "device_icon_pos": 1,
-      "device_count": 1,
-      "box1": {
-        "row1": {
-          "0": "",
-          "1": ""
-        },
-        "row2": {
-          "0": "",
-          "1": ""
-        }
-      },
-      "box2": {
-        "row1": {
-          "0": "",
-          "1": "",
-          "2": "",
-          "3": ""
-        },
-        "row2": {
-          "0": "",
-          "1": "",
-          "2": "",
-          "3": ""
-        }
-      }
-    }
-  },
-//////////////////////////////////////
-// Device JSON
-//////////////////////////////////////
-{
-  "device_states": [
-    {
-      "entity_id": "light.bedroom_lights",
-      "state": "on",
-      "brightness": "255",
-      "color": "255, 255, 128, 75"
-    },
-    {
-      "entity_id": "light.study_lights",
-      "state": "on",
-      "brightness": "125",
-      "color": "255, 255, 128, 75"
-    },
-    {
-      "entity_id": "light.lr_lights",
-      "state": "off",
-      "brightness": "200",
-      "color": "255, 200, 128, 80"
-    },
-    {
-      "entity_id": "light.foyer_lights",
-      "state": "on",
-      "brightness": "200",
-      "color": "255, 200, 128, 80"
-    },
-    {
-      "entity_id": "sensor.hallway_temperature",
-      "state": "20C",
-      "last_updated": "10:30 AM"
-    },
-  ]
-}
-
-{
-  "device_states": [
-    {
-      "entity_id": "light.lr_lights",
-      "state": "off",
-      "brightness": 200,"color": "255,200,128,80"
-    },
-    {
-      "entity_id": "sensor.hallway_temperature",
-      "state": "20C",
-      "last_updated": "10: 30AM"
-    },
-    {
-      "entity_id": "light.foyer_lights",
-      "state": "on",
-      "brightness": "125",
-      "color": "255,0,0"
-    },
-    {
-      "entity_id": "light.study_lights",
-      "state": "unavailable"
-    },
-    {
-      "entity_id": "sensor.watch_battery_level",
-      "state": "19"
-    },
-    {
-      "entity_id": "sensor.s23_ultra_battery_level",
-      "state": "30"
-    },
-    {
-      "entity_id": "light.bedroom_lights",
-      "state": "on",
-      "brightness": "130",
-      "color": "255,205,166"
-    },
-    {
-      "entity_id": "sensor.remotephone_battery_level",
-      "state": "100"
-    }
-  ]
-}
-
-
-//////////////////////////////////////
-// Template data returned from Home assistant to tasker
-//////////////////////////////////////
-{
-  'device_id'':'light.ensuite_light',
-  'device_name:'ensuite lights',
-  'from':'on',
-  'to':'off'
-}
-
-{
-  "entity_id": "%entity_id",
-  "state": "%state",
-  "brightness": "%brightness",
-  "color": "$color"
-},
-
-//////////////////////////////////////
-/// Status JSON (system not complete)
-//////////////////////////////////////
-{
-  "comm": {
-    "1": {
-      "error": "Could not communicate with HA"
-    },
-    "2": {
-      "error": "Could not communicate with Tasker"
-    },
-    "3": {
-      "error": "Cannot get state information"
-    }
-  },
-  "widget": {
-    "1": {
-      "error": "Cannot load template from JSON"
-    },
-    "2": {
-      "error": "Device States JSON error"
-    },
-    "3": {
-      "error": "Template information is missing or corrupted"
-    }
-  },
-  "template": {
-    "1": {
-      "error": "Widget cannot fit all icons"
-    },
-    "2": {
-      "error": "Widget cannot fit 2 rows"
-    }
-  },
-  "theme": {
-    "1": {
-      "error": "Could not retrieve system colors"
-    },
-    "2": {
-      "error": "Sizing/alignment error"
-    },
-    "3": {
-      "error": "Theme JSON error"
-    },
-  },
-  "setup": {
-    "1": {
-      "error": "Click the \"Globals\" tab to set up your widget"
     }
   }
 }
+
+```

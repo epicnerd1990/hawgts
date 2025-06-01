@@ -1,4 +1,4 @@
 *.code-workspace
-/.codex
+CODEX.md
 /.vscode
 fave_formulas.json

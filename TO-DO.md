@@ -1,10 +1,10 @@
-# This file is meant for the developer for reference only and only for viewing in the code editor, not a rendering preview. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
+# This file is meant for the developer for reference only and the content is laid out for viewing in the code editor only. Using markdown as a simple organizing format for readability, notes, folding and pseudocode
 
 ###### #####################################
 ###### TO-DO to get to V1 release
 ###### #####################################
 This is a floating list used to keep track of where everything is at while developing the core of the widget.
-It contains lists, resources, plans and data lists
+It contains lists, resources and plans
 
 
 ###### Legend for to-do list
@@ -88,56 +88,68 @@ UTF Hex       REGEX                  KWGT
 
 
 ###### #####################################
-###### TO-DO - V1 General Tasks
+###### Dev version > Release version
 ###### #####################################
-- Complete Readme
-    - Readme = basic, wiki = advanced use?
-- Continue to work on Codex AI programming
-- Look at YAML for lists?
-- Create Template database
-    - Specific templates to make:
-        - "House Security" template
-    - Specific Komponents to make:
-        - Battery - Complete
-            - Setup battery in different sizes/modes - Find way to scale?
-        - Create "Komponent" Templates for different modes
+- Remove debugging, setup data, etc globals and objects completely
+- Remove Device Icon click to open editor extra item
+- Create a "setup your widget by going to globals" textbox with basic setup info
+- Remove "notes" key in template JSON
+- Set page icons to generic for editing by user
+- Include "kustom.codeworkspace" in repo again?
+- Use Kustom packager to create Android "App"?
+- Ensure JSON is synced between widget and *.json files
+- Ensure `json/theme` and `json/template` include blank lines for pasting
+- Set all non-needed values to blank. This also enables the setup screen
+- `json/theme` and `json/template`
+    - 2 blank lines at bottom of JSON for easy user addition - center of editor
+- Rename all globals to be edit by users to 9? chars again
+
+
+###### #####################################
+###### TO-DO - Tasks to complete for V1
+###### #####################################
+- Complete Readme **60%**
+    - ~~"globals.md" + "json.md"~~
+    - Make readme easier to understand
+- Look at YAML for lists/notes?
 - Fix and set up favourite formulas in KWGT before starting Media Control Widget **50%**
+- Confirm icon pack is up to date with latest icon list
 - Create official build process - "build.md"?
     - Create script that creates a "globals.md" chart with name and description imported from json
-    - Check "Final To-Do" list way below
+    - Reference "Dev version > Release version" list above
+- Finish Features below
+
 
 ###### #####################################
 ###### TO-DO - Features to complete for V1
 ###### #####################################
-
 - Finish implementing Templates V3 and alignment system cleanup **90%**
     - Complete templates for all devices **10%**
-    - ~~Fix remaining glitches and alignment issues~~ **100%**
-    - Add support for battery items?
-    - Add support for custom dials and displays - or just make these komponent/addons?
+    - "House Security"?
 - JSON System completion **70%**
     - Look into file-based JSON template
-    - Allow user to select their own custom JSON using flow and file picker? Flow could remove whitespace and write to `json/template`?
-    - Could also document the template syntax on github wiki and users can append to the template json for custom layouts.
-        - Provide basic samples and a copy of template.json for reference
+    - Allow user to select their own custom JSON using flow and file picker?
+    - Document the JSON syntax on github and users can append to the template json for custom layouts.
+        - Provide basic samples and a copy of json files for reference
     - Could use "Send Data" option in flows or WebGet()
     - File permissions?
-- Confirm icon pack is up to date with latest icon list
-- Group configuration options in folders/subfolders more
-- Should have a flow for each global thats updated with content from the template that is ONLY activated when the template changes. This will maintain user overrides of template settings until they change the template, which will then reset everything.
 - KWGT > TASKER - Create "custom" service call **0%**
     - Use HA templates for simplicity?
 - Set up and build Tasker plugin **0%**
-    - Simply merge everything into one downloadable group?
+    - Simply merge everything into one downloadable group? Taskernet
     - Tasker - "toggle" error
     - Make state updates more effective and work in more situations
-        - The state does not update when lights are turned from one brightness to another
-        - Is this because of the way the Tasker HA blueprint works?
         - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
 - Final review of code
     - Go through everything and ensure everything works in all scenarios
     - Slim down List Global code by using the index# directly to save excess local variables in functions
     - Test config and operation by following readme on multiple devices and launchers
+    - Catch any stray fixed values in "preset.json"
+    - ~~Review all description tags for globals~~
+    - ~~Group configuration options in folders/subfolders more~~
+- Flow at start to check widget size ratio
+    - If its a single row, make device icon same size as regular icons? 1:8 ratio and below?
+    - Check iconsize - wgtheight and resize icons if less then 10% is showing
 
 
 ###### #####################################
@@ -146,93 +158,70 @@ UTF Hex       REGEX                  KWGT
 - `templateinfo` Flow
     - Create a for loop for `ntwgtsize`?
     - Connect to status system?
-- Add "Setup" button that is in Box 2 when first opened
-    - Clicking it goes to the github readme?
-    - Arrow to direct user to "Globals" tab?
+    - Merge `templateinfo` and `templatename`??
+- `template.json` database creation **10%**
+    - Most of "light" and first couple "climate" templates are complete
+- Readme: "HA" > "Home Assistant"? or "HASS"?
 - Device and App icons
-    - Confirm all code works
-    - Device Icon: click to open editor or open Home Assistant directly to your device
-    - Show/hide app icon, 1st = HA, 2nd = Custom
-    - Look at "Shortcuts" next to "Flows" in editor
-    - App icons: fixed positioning
-- "Status" system completion **10%**
-    - Or use status bar? KWGT code complete, send string to kwgt br: "error" once status is working
-    - Use following errors:
-        - HA Not running
-        - Cannot get status update
-        - State not returned after change
-        - JSON Error
-        - Tasker Error
-- Complete all versions of "light" template and maybe start "climate"
-
-- Theme system notes:
-    - 2kpx = 1dp
-    - User Options
-        > System dark mode - write to global, override with toggle?
-        > Choose theme style
-            > If not "Custom", set all attributes
-            > If "Custom", use existing globals to configure (Make --3 "theme globals"?)
-    - Existing code:
-        > User select color src (wallpaper, material, etc)
-        > User select color accent `$si(sysca1, 50)$`
-        > User select color filter `$ce(#FF0000, sat, 50)$`
-        > User set filter strength and mask
-        > User overide color/manual input
-        > User set color transparency `$ce(#FF0000, alpha, 50)$`
-    - New code: `theme/`
-        > User selects theme style
-        - Custom options `theme/colors`
-            > User select color accent (allow adjustment of sysca# tone) and filter
-            > User set filter strength and mask
-            > User overide color/manual input for all colors
-            > User set color transparency
-            > User set border size and on/off
-            > User set color transparency
-        - Custom options always override theme options
-    - Kustom color resources
-        - `$si(darkmode)$` System Dark mode (1 = dark)
-        - `$si(darkwp)$`   Dark colored wallpaper
-        - `$si(wpcolor1)$` Primary wallpaper color extracted
-        - `$si(wpcolor2)$` Secondary wallpaper color extracted
-        - `$si(sysca1, 50)$` Material/OneUI Accent  #1 @ 50% tone (0=white, 100=black)
-        - `$si(sysca2, 80)$` Material/OneUI Accent  #2 @ 80% tone
-        - `$si(syscn1, 20)$` Material/OneUI Neutral #1 @ 50% tone
-    - Colors:
-        - OneUI: 
-            - Background: white/black
-            - Icons: Colorful rings (off), "blue" ring (on), 
-            - White icon outline - black where no rings are, Squirgle shape
-        - Material: 
-            - Background: white/black,
-            - Icons: no ring (off), color ring (on), white/black icon, circle shape, device icon ring
-        - Basic: 
-            - Background: wallpaper,
-            - Icons: no ring (off), white ring (on), white/black icon, circle shape
-- Go over color system - Create "themes" **90% & working**
-    - Configure colors and styles correctly, testing to get correct results
-    - Create Device Icon ring
-        - Merge with device icon touch
-        - Ensure it works in all positions
-    - Double check stack group margins in editor
-    - Create "Clear Custom Values" option - Flow
-
-__Attributes         One UI                 HA/Material            Basic                 Custom__
-Color 1 (Primary):   Material Accent #1     Material Accent #1     Wallpaper             Color Picker
-Color 2 (Secondary): Material Accent #2     Material Accent #2     Wallpaper             Color Picker
-Color 3 (Contrast):  Material Neutral #3    Material Neutral #3    White/Black           Color Picker
-Border width:        1dp                    0                      0                     `theme/bordersize`
-Padding - Outside:   16dp                   10dp                   10kpx                 `theme/horizontalpadding`, `theme/verticalpadding`
-Padding - Icons:     4dp                                                                 `theme/objpadding`, `theme/objpadding2`
-Padding - Edges:     16dp                   16dp                   10kpx                 `theme/objpaddingside`
-Corner Radius:                                                                           `theme/cornerradius`
-Icon Color:          All icons pastel       Only active coloredd   White/Black           `color/color1`, `color/color2`
-Device Icon border:  None                   Corner ball            None                  New
-
+    - Tasker: KWGT launch and launch to entity problems
+    - Look into way of using Kustom Editor "Shortcuts" tab for these items
+        - Set defaults and tell user to go to shortcuts to change?
+- Codex AI CLI custom "Kustom" prompt
+    - ~~Test by creating markdown table for globallists.md~~ **80% successful**
+    - Get AI to generate "template.json" outline and base content for editing
+        - Add more project-specific prompt info? Add reference to readme.md?
+        - Ensure `<device>.objects` is populated based on globallists.md
+- Themes
+    - `settheme` > `theme` (conflict with `theme/`?) and `devicetype` > `device`?
+    - Shadows work but seem to be trimmed at corners - launcher?
+    - Fine-tune colors for each group
+    - Check color editor and generator flows **KWGT GLITCH?**
+- "Status" system completion **45%** **TEST**
+    - Add "Stop If" to Status Flow if `#cat1` or `#error1` = ""
+    - Send string to kwgt br: "error"
+    - Integrate "Setup" button?
+    - Integrate `templateinfo` button above?
+    - "Hide/Ignore Error" button?
+    - Create functions to identify problems in `func/status` to test
+    - Build-in an initial setup mode
+        - Use `devicetype` = DATA to hide objects and show setup
+        - Create "setup" template?
+        - Include link to the github readme?
+    - Arrow to direct user to "Globals" tab?
+    - ~~Update globals.md~~
+- "globallists.md" > "docs/iconlist.md"
+    - ~~Write short intro~~
+    - ~~Create markdown table~~ **Codex AI**
 
 ###### #####################################
 ###### Completed Tasks
 ###### #####################################
 - Theme system overhaul and upgrade
+     - Test Colors, Editor and Generator
+        - Big problem with `$si(#var)$` not parsing. Look into solutions
+            - `$si(#var)` not working. `$si(#var, #var)$` works. Split in code
+        - `colorgen/adjcolor` is backwards
+        - `colorgen/opacity` change to 200 default
+        - Suggest user makes final adjustments in color picker before copying from colorgenerator or coloreditor
+            - Add note in `colorgen` and `coloreditor`?
+        - `coloredit/opacity` is only 0-100
+        - color editor not pulling colors correctly **TEST**
+        - `coloreditor` > `coloredit`
+        - `colors/coloredit/wallcolorset` > `colors/coloredit/filter`
+        - `colors/coloredit/adjcolor` > `colors/coloredit/adjfilter`
+        - Test opacity, shadows and borders
+        - Pastels do not work
+    - "light" object color data - check system and find way to indicate on widget
+    - Swap widget opacity direction? **Cannot, by design**
+    - `box1align` in `func/alignment` > box1anchor
+    - `func/themecolors` not allowing color hex values in JSON??
+        - Border size only working on Box 1
+    - `Add widget shadow` **TEST**
+        - Get shadows working 
+    - `theme/ringshape` > List with blank first entry? **TEST**
+    - `objpaddinghor` only working on box 1
+    - Add `objpaddingside` to `box1size` so it adjusts as well
+    - Look at border code - should not need formula for switch?
     - Implement Tasker color picker? **NO**
     - Create "themes" like One UI, material, HA card, etc. Template independant
     - Store data in JSON
@@ -243,16 +232,16 @@ Device Icon border:  None                   Corner ball            None         
     - Finish moving preset.json code to new theme func
         - Remove formulas from globals meant for custom
     - Use existing code where possible but remove duplicates - no need for color1 and color2
+    - Device icon color > `#objiconoff`
     - Merge `theme/color1sync` & `theme/color2sync`
-    - Merge `theme/coloreditor/opacity` & `theme/color2alph~
+    - Merge `colors/coloredit/opacity` & `theme/color2alph
     - Create `theme/color#` x 4, paired to theme
     - Write theme json code in templates.md
-    - `Update `theme/color/*` from `theme/coloreditor` or make user c&p?`~
+    - `Update `theme/color/*` from `colors/coloredit` or make user c&p?`~
    - `"Fill In" "custom" theme values from theme to global` - option? **Potentially not**
         - On "Custom" select? If user goes back to regular theme, settings would persist
-        - Switch at top of `theme/coloreditor`?
-    - `Write flow for "theme/coloreditor"`
-     - `Make circle shape configurable with "ring_shape"`
+        - Switch at top of `colors/coloredit`?
+    - `Write flow for "colors/coloredit"`
     - Look at each theme in JSON
         - Verify configurations seem to match chart below and Material/OneUI specs
         - `Convert "dp" to "kpx`"
@@ -260,23 +249,60 @@ Device Icon border:  None                   Corner ball            None         
     - `Figure out pastel icon colors for OneUI` ".OneUI.colors.pastel{}"
         - `Add new circle icon color code in template.md to all objects`
     - Remove "10" mode from theme globals so they arent in formula mode
+    - `#padwgthor` and `#padwgtver` are backwards
+    - Several object formulas set to `#tradius` not `#radius`
+        - Double check stack group margins in editor
+    - Box border strokes incorrect
+    - Icon ring meant to be 25% bigger then icon size  in material - implement ring size
+    - `"State" title on rings > "Ring"`
+    - `Make circle shape configurable with "ring_shape"`
+    - `Implement Opacity code into background`
+    - Create "Clear Custom Values" option - Flow
+    - ~~Auto-shrink icons to fit ring size instead of iconsize being bigger then icon~~
+    - Find new way to do pastels that maintains their color once set
+        - ~~Run number generater inside object formula directly~~
+        - ~~`Change "pastel" to "randomring" systemwide`~~
+        - ~~`Insert new code in "preset.json"`~~
+        - ~~Create `core/pastel` (> `core/randomring`)~~
+        - ~~`Create template key for colorlist feature`~~
 - Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - `"lock" in devicetype > "security"`
 - `"Icon #" > "Object #" in editor`
 - `theme/objpaddingbox2` > `theme/objpaddingside`
-
+- Some entities missing after theme work
+- "Status" system
+    - `Create and populate `func/status` from backend.md`
+- Device and App icons
+    - `appiconvis` backwards
+    - Design: 
+        - `external/appiconsize` for icon size
+        - list: `deviceicontap` choose editor, ha, ha assist, none or other to open
+        - list: `appicon1` choose editor, ha, ha assist, none or other to open
+        - list: `appicon2` choose editor, ha, ha assist, none or other to open
+        - Link icons to these actions for appicons
+        - Tasker "Secondary" URI
+    - Device and App icon postion problems
+    - `Create `external/custom` for users to enter a custom android app to open`
+    - Update globals.md
+- All of `core/size` merged into `func/alignment`
+    - Update all references to `core/size` in preset.json
+- globallists.md
+    - ~~Write short intro~~
+    - ~~Create markdown table~~ **Codex AI**
+- Clear `core/tasker/temp` after flow
+- json.md #2 - add suggestion on best way to do this
+- Include a theme.json and template.json in /docs and link to json.md
+- Move service global folders to bottom from top
 
 
 ###### #####################################
-###### Feature Wishlist (V1+)
+###### Future features and plans (V1+)
 ###### #####################################
-
 - Create a kustom flow that formats json from no formatting to human readable **Universally**
     - Use for loops and awareness of {} level, arrays and commas.
     - Wipe all whitespace first to get json to consistant state
     - Provide custom HA calls for lights and potentially other devices? Or use templates instead?
 - Create a flow loop that writes new lv() - Can reduce stacks of defined lv()
-- Make widget a Komponent that can be added to a KWLP wallpaper
 - Integrate all options into the globals.
 - Setup Mode
     - Set up "setupmode" text layout better and add a few different text options (sizing, json, etc)
@@ -286,163 +312,23 @@ Device Icon border:  None                   Corner ball            None         
 - Change tasker/cmd data to process json instead of "&" syntax?
     - Can write template json in KWGT to send to tasker
 - Integerate TV templates into widget once TV Remote is complete
-
-
-###### #####################################
-###### Dev version > Release version
-###### #####################################
-
-- Move service global folders to bottom from top
-- Remove debugging, setup data, etc globals and objects completely
-- Remove Device Icon click to open editor option?
-- Create a "setup your widget by going to globals" textbox with basic setup info
-- Remove "notes" key in template JSON
-
-
-###### #####################################
-###### All Globals
-###### #####################################
-6.0:                            4.9:                    Task:                                       Notes:
-core
-    core/size
-        core/size/wgtwidth      generate/wgtwidth       Flow Generated Width
-        core/size/wgtheight     generate/wgtheigh       Flow Generated Height
-        core/size/box2width     generate/box2wid        Flow Generated Box 2 Width
-        core/size/box2height    generate/box2hei        Flow Generated Box 2 Height
-        core/size/box1col                               Box 1 icon count                            Review
-                                generate/box1hei                                                    DEPRECATED
-        core/size/box2minsize   generate/box2min        Box 2 minimum size
-        core/size/box1iconmax                           Box Icon sizes
-        core/size/box2iconmax   generate/icocount       Box Icon sizes
-    core/currentstatus                                                                              Status system - not complete
-    core/setstatus                                                                                  Status system - not complete
-    core/statustimer                                                                                Status system - not complete
-    core/curpage                generate/pagenum        Page number for multi-page widgets
-    core/stackalign             formulas/icostack       Formula for stack groups and such           Deprecate soon?
-    core/boxalign               formulas/icopos         Formula for box1 positioning
-    core/contentalign                                                                               UNUSED - DEPRECATE?
-    core/color1                 generate/col1
-    core/color2                 generate/col2
-tasker
-    tasker/data                 tasker/info             Recent command from Tasker
-    core/tasker/fromtasker           tasker/stateupd         tasker/data to Device JSON
-    core/tasker/fromcolorpic         tasker/colpic           Unused Tasker color picker                  Review with color system redesign
-    tasker/cmd                                   Button press data > template JSON           Confirm template code
-                                tasker/sendtoha         Data sent to tasker from widget. Flow uses  DEPRECATED
-                                tasker/statedat         Device state DB                             DEPRECATED
-func
-    func/jsonmain              formulas/devstate       LV - Main JSON read
-    func/func/jsonstate             formulas/devstate       LV - Device State data (in-code use)
-                                formulas/lgtlevel                                                   DEPRECATED - Merged into "tjsonkeys"
-                                formulas/lgtcolor                                                   DEPRECATED - Merged into "tjsonkeys"
-    func/jsonobj               formulas/devstate       LV - Template data (in-code use)
-    func/devjsonrem                                 TASKER > KWGT FLOW - Remove entity from list
-    func/devjsonadd                                TASKER > KWGT FLOW                          Review
-    func/devjsonindent                                TASKER > KWGT FLOW                          Review
-    func/devjsonnew                                 TASKER > KWGT FLOW - Add new entity to list
-    func/alignment                                        Generate how many icons can fit in Box 2
-readme
-setupmode                       setupmde                Display JSON data for debugging             DEBUGGING
--- 1.
-colors
-    theme/colornote
-    settheme
-    theme/coloreditor/syscolorset
-    theme/color1fil1
-    theme/coloreditor/adjcolor
-    theme/color1fil2
-    theme/color1pick
-    theme/coloreditor/opacity
-    theme/color2sel
-    theme/color2sysc
-    theme/color2fil1
-    theme/coloreditor/adjcolor
-    theme/color2fil2
-    theme/color2pick
-    theme/color2alph
-    theme/colors/objiconon
-    theme/colicoon
-    theme/color2fin
-    theme/color1fin
-    theme/border
-    theme/bordersize
-    theme/colors/border
-    theme/colors/back1
-    theme/colors/back2
-                     devcount                Op: Select # of devices to control
-                                1-device                1 device style options (rows, etc)          DEPRECATED
-                                2-device                2 device style options (rows, etc)          DEPRECATED
-devicetype                                              Op: Select Device type from template data   NEW
-deviceicons                     devico
-templateselect                                          Op: Select template # to use (1-6)          NEW
-templatename                                            Display Template name selected              NEW
-entities
-    entities/entitynote
-    entities/entity1
-    entities/entity2
-    entities/entity3
-    entities/entity4
-    entities/entity5
-    entities/entity6
--- 2.
-deviceiconposition              devicovi                Op: Device icon position                    Merged both together
-deviceiconrotation                                      Op: Device icon rotation
-deviceiconsize                                          Op: Device icon size
-boxtoggle                                                Op: Box 1 > Box 2
-core/box1vis                        generate/box1wid        Op: Width of Box 1.                         Switched from auto to overrideable
-box1size                                                Op: Manual override of "core/box1vis"
-box2align                       box2alig                Op: Align custom content in Box 2           DEPRECATE?
-iconsize                        icosize                 Op: Choose main icon size
-appiconvis                      appicovi                Op: Choose app icon visibility
-appiconsize                     appico                  Op: Choose app icon size
-theme/cornerradius                    boxrad                  Op: Widget corner radius
-theme/objpadding              icopad                  Op: Icon padding
-theme/objpadding2                icopad                  Op: Icon padding
-theme/objpaddingside                                          Op: Icon padding to Box 1
-                                icodevszsc
-                                icodevsz
-theme/verticalpadding                 verpad                  Op: Widget vertical padding
-theme/horizontalpadding               horpad                  Op: Widget horizontal padding
--- 3.
-currenttemplate                                         Display the name of the current template
-boxdir1
-autoalign                       autoalig
-widgetorient                    wgtalign
-box1position                    position                Op: Set position/alignment of Box 1 icons.  Merge with "box2align"?
-deviceiconshrink                                        Op: Shrink Device icon to App icon size
-deviceappiconpadding            apicopad                Op: Override icon count calc for box 2      DEPRECATE??
-deviceopeneditor                openedit                Op: Open editor on device icon click
--- 4.
-json/error                                               JSON - Status                               Not working
-json/device                                              JSON - Devicestates.json                    Generated
-json/template                                            JSON - Templates.json
-
-
-###### #####################################
-###### All Flows
-###### #####################################
-Template Touch - KWGT > Tasker
-Current Template Global Set
-Template DB & Device Icon Set
-KWGT > Tasker
-Tasker > KWGT DB
-Tasker > Status
-AA - Box 1 Position
-AA - Box 1 Size
-Color 1 Set
-Color 2 Set
-Icon Padding Set
-Icon Count Set
-Template Name
-
-
-###### #####################################
-###### All Global Functions
-###### #####################################
-
-`func/jsonmain`
-`#dbtemp`                   Template JSON
-
+- Create Device Icon ring
+    - Merge with device icon touch
+    - Ensure it works in all positions
+- Komponents
+    - Make widget a Komponent that can be added to a KWLP wallpaper
+    - Add support for custom dials and displays
+        - Climate dial, Security panel?, Battery meter
+- Override templates like themes?
+- Find way to communicate with Tasker better - Send Data option in flows maybe?
+    - Even better, skip Tasker altogether - Find way to use HA API directly in widget?
+        - Make HA service calls using homeassistant:// intent
+        - This would allow the widget to not need any setup, other then the HA app configured
+        - No API keys or Tasker needed, No HA config at ALL
+        - Can I get state information???
+            - Use HA app and wg()? Can I get auth that way?
+        - https://companion.home-assistant.io/docs/integrations/url-handler/#call-service
+- "Pastel" OneUI feature to be expanded to random color option for any theme
 
 ###### #####################################
 ###### Icon Pack
@@ -452,6 +338,8 @@ Template Name
 - Schedule/calender
 - Pool or Hot Tub room/controls
 - A/C off
+- HA "Assist" assistant "app-home-assistant-assist"
+- KWGT icon? allowed?
 
 ###### Change
 - Sit on edge of screen like TV
