@@ -90,23 +90,27 @@ UTF Hex       REGEX                  KWGT
 ###### #####################################
 ###### Dev version > Release version
 ###### #####################################
-- Move service global folders to bottom from top
 - Remove debugging, setup data, etc globals and objects completely
-- Remove Device Icon click to open editor option?
+- Remove Device Icon click to open editor extra item
 - Create a "setup your widget by going to globals" textbox with basic setup info
 - Remove "notes" key in template JSON
 - Set page icons to generic for editing by user
 - Include "kustom.codeworkspace" in repo again?
 - Use Kustom packager to create Android "App"?
+- Ensure JSON is synced between widget and *.json files
+- Ensure `json/theme` and `json/template` include blank lines for pasting
+- Set all non-needed values to blank. This also enables the setup screen
+- `json/theme` and `json/template`
+    - 2 blank lines at bottom of JSON for easy user addition - center of editor
+- Rename all globals to be edit by users to 9? chars again
 
 
 ###### #####################################
 ###### TO-DO - Tasks to complete for V1
 ###### #####################################
-- Complete Readme **50%**
-    - "globals.md" + "json.md"
+- Complete Readme **60%**
+    - ~~"globals.md" + "json.md"~~
     - Make readme easier to understand
-- Continue to work on Codex AI programming
 - Look at YAML for lists/notes?
 - Fix and set up favourite formulas in KWGT before starting Media Control Widget **50%**
 - Confirm icon pack is up to date with latest icon list
@@ -132,11 +136,9 @@ UTF Hex       REGEX                  KWGT
 - KWGT > TASKER - Create "custom" service call **0%**
     - Use HA templates for simplicity?
 - Set up and build Tasker plugin **0%**
-    - Simply merge everything into one downloadable group?
+    - Simply merge everything into one downloadable group? Taskernet
     - Tasker - "toggle" error
     - Make state updates more effective and work in more situations
-        - The state does not update when lights are turned from one brightness to another
-        - Is this because of the way the Tasker HA blueprint works?
         - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
 - Final review of code
     - Go through everything and ensure everything works in all scenarios
@@ -145,6 +147,9 @@ UTF Hex       REGEX                  KWGT
     - Catch any stray fixed values in "preset.json"
     - ~~Review all description tags for globals~~
     - ~~Group configuration options in folders/subfolders more~~
+- Flow at start to check widget size ratio
+    - If its a single row, make device icon same size as regular icons? 1:8 ratio and below?
+    - Check iconsize - wgtheight and resize icons if less then 10% is showing
 
 
 ###### #####################################
@@ -154,38 +159,68 @@ UTF Hex       REGEX                  KWGT
     - Create a for loop for `ntwgtsize`?
     - Connect to status system?
     - Merge `templateinfo` and `templatename`??
-- Device and App icons
-    - Confirm all code works
-    - Device Icon: click to open editor or open Home Assistant directly to your device
-    - Show/hide app icon, 1st = HA, 2nd = Custom
-    - Look at "Shortcuts" next to "Flows" in editor
-    - App icons: fixed positioning
-    - Home Assistant "Assist" URI
-- "Status" system completion **40%**
-    - Send string to kwgt br: "error"
-    - Integrate "Setup" button below?
-    - Integrate `templateinfo` button above?
-- Add "Setup" button that is in Box 2 when first opened
-    - Clicking it goes to the github readme?
-    - Arrow to direct user to "Globals" tab?
 - `template.json` database creation **10%**
     - Most of "light" and first couple "climate" templates are complete
-- Theme system **90%**
-    - Configure colors and styles correctly, testing to get correct results
-        - ~~Big problem with `$si(#var)$` not parsing. Look into solutions~~
-            - ~~`$si(#var)` = not working. `$si(#var, #var)$` works. Split in code~~
-        - Fine-tune colors for each group
-        - Test opacity, shadows and borders
-        - Check color editor and generator flows
-    - `Add widget shadow` - Testing in editor
-    - `func/themecolors` not allowing color hex values in JSON??
-    - Test Color Editor and Color Generator
-
+- Readme: "HA" > "Home Assistant"? or "HASS"?
+- Device and App icons
+    - Tasker: KWGT launch and launch to entity problems
+    - Look into way of using Kustom Editor "Shortcuts" tab for these items
+        - Set defaults and tell user to go to shortcuts to change?
+- Codex AI CLI custom "Kustom" prompt
+    - ~~Test by creating markdown table for globallists.md~~ **80% successful**
+    - Get AI to generate "template.json" outline and base content for editing
+        - Add more project-specific prompt info? Add reference to readme.md?
+        - Ensure `<device>.objects` is populated based on globallists.md
+- Themes
+    - `settheme` > `theme` (conflict with `theme/`?) and `devicetype` > `device`?
+    - Shadows work but seem to be trimmed at corners - launcher?
+    - Fine-tune colors for each group
+    - Check color editor and generator flows **KWGT GLITCH?**
+- "Status" system completion **45%** **TEST**
+    - Add "Stop If" to Status Flow if `#cat1` or `#error1` = ""
+    - Send string to kwgt br: "error"
+    - Integrate "Setup" button?
+    - Integrate `templateinfo` button above?
+    - "Hide/Ignore Error" button?
+    - Create functions to identify problems in `func/status` to test
+    - Build-in an initial setup mode
+        - Use `devicetype` = DATA to hide objects and show setup
+        - Create "setup" template?
+        - Include link to the github readme?
+    - Arrow to direct user to "Globals" tab?
+    - ~~Update globals.md~~
+- "globallists.md" > "docs/iconlist.md"
+    - ~~Write short intro~~
+    - ~~Create markdown table~~ **Codex AI**
 
 ###### #####################################
 ###### Completed Tasks
 ###### #####################################
 - Theme system overhaul and upgrade
+     - Test Colors, Editor and Generator
+        - Big problem with `$si(#var)$` not parsing. Look into solutions
+            - `$si(#var)` not working. `$si(#var, #var)$` works. Split in code
+        - `colorgen/adjcolor` is backwards
+        - `colorgen/opacity` change to 200 default
+        - Suggest user makes final adjustments in color picker before copying from colorgenerator or coloreditor
+            - Add note in `colorgen` and `coloreditor`?
+        - `coloredit/opacity` is only 0-100
+        - color editor not pulling colors correctly **TEST**
+        - `coloreditor` > `coloredit`
+        - `colors/coloredit/wallcolorset` > `colors/coloredit/filter`
+        - `colors/coloredit/adjcolor` > `colors/coloredit/adjfilter`
+        - Test opacity, shadows and borders
+        - Pastels do not work
+    - "light" object color data - check system and find way to indicate on widget
+    - Swap widget opacity direction? **Cannot, by design**
+    - `box1align` in `func/alignment` > box1anchor
+    - `func/themecolors` not allowing color hex values in JSON??
+        - Border size only working on Box 1
+    - `Add widget shadow` **TEST**
+        - Get shadows working 
+    - `theme/ringshape` > List with blank first entry? **TEST**
+    - `objpaddinghor` only working on box 1
+    - Add `objpaddingside` to `box1size` so it adjusts as well
     - Look at border code - should not need formula for switch?
     - Implement Tasker color picker? **NO**
     - Create "themes" like One UI, material, HA card, etc. Template independant
@@ -199,14 +234,14 @@ UTF Hex       REGEX                  KWGT
     - Use existing code where possible but remove duplicates - no need for color1 and color2
     - Device icon color > `#objiconoff`
     - Merge `theme/color1sync` & `theme/color2sync`
-    - Merge `colors/coloreditor/opacity` & `theme/color2alph
+    - Merge `colors/coloredit/opacity` & `theme/color2alph
     - Create `theme/color#` x 4, paired to theme
     - Write theme json code in templates.md
-    - `Update `theme/color/*` from `colors/coloreditor` or make user c&p?`~
+    - `Update `theme/color/*` from `colors/coloredit` or make user c&p?`~
    - `"Fill In" "custom" theme values from theme to global` - option? **Potentially not**
         - On "Custom" select? If user goes back to regular theme, settings would persist
-        - Switch at top of `colors/coloreditor`?
-    - `Write flow for "colors/coloreditor"`
+        - Switch at top of `colors/coloredit`?
+    - `Write flow for "colors/coloredit"`
     - Look at each theme in JSON
         - Verify configurations seem to match chart below and Material/OneUI specs
         - `Convert "dp" to "kpx`"
@@ -223,11 +258,41 @@ UTF Hex       REGEX                  KWGT
     - `Make circle shape configurable with "ring_shape"`
     - `Implement Opacity code into background`
     - Create "Clear Custom Values" option - Flow
+    - ~~Auto-shrink icons to fit ring size instead of iconsize being bigger then icon~~
+    - Find new way to do pastels that maintains their color once set
+        - ~~Run number generater inside object formula directly~~
+        - ~~`Change "pastel" to "randomring" systemwide`~~
+        - ~~`Insert new code in "preset.json"`~~
+        - ~~Create `core/pastel` (> `core/randomring`)~~
+        - ~~`Create template key for colorlist feature`~~
 - Changing state now only works after 2 taps, not one. Look at KWGT > Tasker flow.
 - `"lock" in devicetype > "security"`
 - `"Icon #" > "Object #" in editor`
 - `theme/objpaddingbox2` > `theme/objpaddingside`
 - Some entities missing after theme work
+- "Status" system
+    - `Create and populate `func/status` from backend.md`
+- Device and App icons
+    - `appiconvis` backwards
+    - Design: 
+        - `external/appiconsize` for icon size
+        - list: `deviceicontap` choose editor, ha, ha assist, none or other to open
+        - list: `appicon1` choose editor, ha, ha assist, none or other to open
+        - list: `appicon2` choose editor, ha, ha assist, none or other to open
+        - Link icons to these actions for appicons
+        - Tasker "Secondary" URI
+    - Device and App icon postion problems
+    - `Create `external/custom` for users to enter a custom android app to open`
+    - Update globals.md
+- All of `core/size` merged into `func/alignment`
+    - Update all references to `core/size` in preset.json
+- globallists.md
+    - ~~Write short intro~~
+    - ~~Create markdown table~~ **Codex AI**
+- Clear `core/tasker/temp` after flow
+- json.md #2 - add suggestion on best way to do this
+- Include a theme.json and template.json in /docs and link to json.md
+- Move service global folders to bottom from top
 
 
 ###### #####################################
@@ -254,7 +319,16 @@ UTF Hex       REGEX                  KWGT
     - Make widget a Komponent that can be added to a KWLP wallpaper
     - Add support for custom dials and displays
         - Climate dial, Security panel?, Battery meter
-
+- Override templates like themes?
+- Find way to communicate with Tasker better - Send Data option in flows maybe?
+    - Even better, skip Tasker altogether - Find way to use HA API directly in widget?
+        - Make HA service calls using homeassistant:// intent
+        - This would allow the widget to not need any setup, other then the HA app configured
+        - No API keys or Tasker needed, No HA config at ALL
+        - Can I get state information???
+            - Use HA app and wg()? Can I get auth that way?
+        - https://companion.home-assistant.io/docs/integrations/url-handler/#call-service
+- "Pastel" OneUI feature to be expanded to random color option for any theme
 
 ###### #####################################
 ###### Icon Pack
@@ -264,6 +338,8 @@ UTF Hex       REGEX                  KWGT
 - Schedule/calender
 - Pool or Hot Tub room/controls
 - A/C off
+- HA "Assist" assistant "app-home-assistant-assist"
+- KWGT icon? allowed?
 
 ###### Change
 - Sit on edge of screen like TV

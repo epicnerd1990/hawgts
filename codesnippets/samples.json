@@ -409,7 +409,53 @@
     }
 }
 
-
+// V3 template - Blank slate
+  "<type>": {
+    "objects": {
+      "<name>": {
+        "icon": "",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+    },
+    "<type>1": {
+      "name": "",
+      "note": "",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 1,
+      "box1": {
+        "row1": {
+          "0": "",
+          "1": ""
+        },
+        "row2": {
+          "0": "",
+          "1": ""
+        }
+      },
+      "box2": {
+        "row1": {
+          "0": "",
+          "1": "",
+          "2": "",
+          "3": ""
+        },
+        "row2": {
+          "0": "",
+          "1": "",
+          "2": "",
+          "3": ""
+        }
+      }
+    }
+  },
 //////////////////////////////////////
 // Device JSON
 //////////////////////////////////////
@@ -490,127 +536,6 @@
   ]
 }
 
-//////////////////////////////////////
-// Theme JSON
-//////////////////////////////////////
-{
-  "OneUI": {
-    "border_width": 2,
-    "corner_radius": 2,
-    "pad_widget": 16,
-    "pad_obj": 10,
-    "pad_sides": 16,
-    "ring_shape": "SQUIRCLE",
-    "ring_percent": 25,
-    "dev_ico_ring": 0,
-    "wgt_opacity": 150,
-    "shadow": 0,
-    "colors": {
-      "light": {
-        "back_1": "syscn1, 90",
-        "back_2": "syscn2, 90",
-        "obj_icon_off": "sysca2, 30",
-        "obj_ring_off": "",
-        "obj_icon_on": "sysca1, 100",
-        "obj_ring_on": "",
-        "border": "#EBEBEB"
-      },
-      "dark": {
-        "back_1": "syscn1, 22",
-        "back_2": "syscn2, 22",
-        "obj_icon_off": "sysca2, 90",
-        "obj_ring_off": "sysca2, 30",
-        "obj_icon_on": "sysca1, 20",
-        "obj_ring_on": "sysca1, 80",
-        "border": "#EBEBEB"
-      },
-      "pastel": {
-        "0": "#9bbe04",
-        "1": "#15b76d",
-        "2": "#0c967c",
-        "3": "#18dc7f",
-        "4": "#11b1f3",
-        "5": "#091ea",
-        "6": "#1e4bc6",
-        "7": "#6693ed",
-        "8": "#7882ff",
-        "9": "#8064f4",
-        "10": "#6445e5",
-        "11": "#ee2172",
-        "12": "#f01446",
-        "13": "#d60052",
-        "14": "#e53d35",
-        "15": "#e95b31",
-        "16": "#ff9e00",
-        "17": "#ff7b22",
-        "18": "#ff9e00"
-      }
-    }
-  },
-  "Material": {
-    "border_width": 0,
-    "corner_radius": 2,
-    "pad_widget": 10,
-    "pad_obj": 10,
-    "pad_sides": 16,
-    "ring_shape": "CIRCLE",
-    "ring_percent": 25,
-    "dev_ico_ring": 1,
-    "wgt_opacity": 50,
-    "shadow": 1,
-    "colors": {
-      "light": {
-        "back_1": "syscn1, 90",
-        "back_2": "syscn2, 90",
-        "obj_icon_off": "sysca2, 30",
-        "obj_ring_off": "sysca2, 90",
-        "obj_icon_on": "sysca1, 100",
-        "obj_ring_on": "sysca1, 40",
-        "border": ""
-      },
-      "dark": {
-        "back_1": "syscn1, 22",
-        "back_2": "syscn2, 22",
-        "obj_icon_off": "sysca2, 90",
-        "obj_ring_off": "sysca2, 30",
-        "obj_icon_on": "sysca1, 20",
-        "obj_ring_on": "sysca1, 80",
-        "border": ""
-      }
-    }
-  },
-  "Basic": {
-    "border_width": 0,
-    "corner_radius": 10,
-    "pad_widget": 6,
-    "pad_obj": 10,
-    "pad_sides": 12,
-    "ring_shape": "CIRCLE",
-    "ring_percent": 0,
-    "dev_ico_ring": 0,
-    "wgt_opacity": 75,
-    "colors": {
-      "light": {
-        "back_1": "wpcolor1",
-        "back_2": "wpcolor2",
-        "obj_icon_off": "#E7FFFFFF",
-        "obj_ring_off": "#FF000000",
-        "obj_icon_on": "wpcolor1",
-        "obj_ring_on": "#FFFFFF",
-        "border": ""
-      },
-      "dark": {
-        "back_1": "wpcolor1",
-        "back_2": "wpcolor2",
-        "obj_icon_off": "#FFFFFF",
-        "obj_ring_off": "#FF000000",
-        "obj_icon_on": "wpcolor1",
-        "obj_ring_on": "#FFFFFF",
-        "border": ""
-      }
-    }
-  }
-}
 
 //////////////////////////////////////
 // Template data returned from Home assistant to tasker
@@ -646,21 +571,13 @@
   },
   "widget": {
     "1": {
-      "error": "Template JSON error"
+      "error": "Cannot load template from JSON"
     },
     "2": {
       "error": "Device States JSON error"
     },
     "3": {
-      "error": "Theme JSON error"
-    }
-  },
-  "theme": {
-    "1": {
-      "error": "Could not retrieve system colors"
-    },
-    "2": {
-      "error": "Sizing/alignment error"
+      "error": "Template information is missing or corrupted"
     }
   },
   "template": {
@@ -669,6 +586,22 @@
     },
     "2": {
       "error": "Widget cannot fit 2 rows"
+    }
+  },
+  "theme": {
+    "1": {
+      "error": "Could not retrieve system colors"
+    },
+    "2": {
+      "error": "Sizing/alignment error"
+    },
+    "3": {
+      "error": "Theme JSON error"
+    },
+  },
+  "setup": {
+    "1": {
+      "error": "Click the \"Globals\" tab to set up your widget"
     }
   }
 }

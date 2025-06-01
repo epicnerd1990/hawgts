@@ -59,8 +59,9 @@ This cannot be merged into following flows due to problems with writing more tha
                    ("tasker://secondary?service_call=" + #obaction + "&parameters=" + #obparam),
                    #obtype = "action",
                    ("tasker://secondary?service_call=" + #obaction + "&entity_id=" + #entity + "&parameters=" + #obparam),
+                   #obtype = "page", "page",
                    "")))$
-  $if(#uri = "" & #obtype = "page", #obdata, #uri)$
+  $if(#uri = "" | #uri = "page", #obdata, #uri)$
 ```
 
 ###### 2 - Set Global Variable: `$gv(core/tasker/temp)$`

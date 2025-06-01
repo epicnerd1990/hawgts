@@ -5,13 +5,14 @@ Use these instructions to create custom themes and templates for your widget. Re
  Instructions for creating a custom theme
  1. Create a theme JSON using the data below
     - Use the color generator in the settings or see the [Kustom Reference for si()](https://docs.kustom.rocks/docs/reference/functions/si/) for generated colors
- 2. Append the new theme JSON into the global `json/theme`, being careful not to interfere with the existing themes
- 3. Edit `settheme` and append your theme name to the end. It must match the name used in the JSON exactly!
+    - See [theme.json](theme.json) for a human-readable version of `json/theme` for easier editing
+ 2. Append your theme JSON into the global `json/theme`. Paste your "ThemeName" array into the blank space at the bottom of the JSON, leaving the remaining brackets below your insertation
+ 3. Edit `settheme` and append your theme name to the end. This must match the name used in the JSON exactly!
  `0##OneUI,1##Material,2##Basic` > `0##OneUI,1##Material,2##Basic,3##ThemeName`
  4. Save everything and select your custom theme from `settheme`
  5. Export modified widget to use your changes on multiple widgets
 
-> If you're advanced and want to add custom options to the JSON, edit `func/theme` to add support for new JSON keys and features
+> If you're an advanced user and want to add custom options to the JSON, edit `func/theme` to add support for new JSON keys and features
 
 #### Theme syntax reference
 ```
@@ -91,13 +92,15 @@ Use these instructions to create custom themes and templates for your widget. Re
 
 ## Custom template
 Instructions for creating a custom template
-1. Create a template JSON using the data below. Name it `custom` and `custom1-6`
-2. Append the new template JSON into the global `json/template`, being careful not to interfere with the existing templates
+1. Create a template JSON using the data below
+    - Add it to the `custom` array and name it `custom1-6`
+    - See [template.json](template.json) for a human-readable version of `template/theme` for easier editing
+ 2. Append your theme JSON into the global `json/theme`. Paste your template into the blank space at the bottom of the JSON, leaving the remaining brackets below your insertation
 3. Save everything and select `custom` template from `devicetype`
 4. Select the Template number in `templateselect` that matches your
 5. Save everything again
 
-> If you're advanced and want to add custom options to the JSON, edit `func/template` to add support for new JSON keys and features
+> If you're an advanced user and want to add custom options to the JSON, edit `func/template` to add support for new JSON keys and features
 
 #### Template syntax reference
 ```
@@ -106,7 +109,7 @@ Instructions for creating a custom template
     "objects": {                                  // "objects" - list of controls/commands
       "control_namea": {                          // Name of control/command
         "icon": "icon-name",                      // Icon name from hawgts icon pack
-        "type": "action,page",                    // Type of control - Internal "page" or external "action"
+        "type": "action,page",                    // Control - "action" > Tasker, future "template"
         "onstate": "#>#,on,off,page#",            // Matches "active" Device state from HA or `curpage`
         "action": "light,on,off,toggle,template", // Indicate which action to run when activated
         "cmd": "",                                // Used internally for light control (brightness and color)

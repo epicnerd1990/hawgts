@@ -11,7 +11,7 @@
 - Colors
 
 ###### #####################################
-###### Flow: "AA - Box 1 Position"
+###### Flow - Box 1 Position
 ###### #####################################
 **Trigger:** `On Change` of `$gv(theme/advanced/boxtoggle)$$si(rratio)$`
 
@@ -26,23 +26,22 @@
                #align = 1 & #invert = 0, "TOP", 
                #align = 1 & #invert = 1, "BOTTOM"
            )))$
-  $if(gv(theme/advanced/autoalign) = 1, #pos, gv(theme/advanced/box1pos))$
+  $if(gv(theme/advanced/autoalign) = 1, #pos, #box1pos)$
 ```
 
 ###### 2 - Set Global Variable: `theme/advanced/box1pos`
 
 ###### #####################################
-###### Flow: "AA - Box 1 Size"
+###### Flow - Box 1 Size
 ###### #####################################
-**Trigger:** `On Change` of `$gv(theme/advanced/widgetorient)$$gv(devicetype)$$gv(templateselect)$$gv(core/size/wgtwidth)$$gv(core/size/wgtheight)$`
+**Trigger:** `On Change` of `$gv(theme/advanced/widgetorient)$$gv(devicetype)$$gv(templateselect)$`
 
 **Action**
 
-###### 1 - `Stop IF`: `theme/advanced/autoalign` = 0
+###### 1 - `Stop IF`: `theme/advanced$#/autoalign` = 0
 
 ###### 2 - Formula - Write to the template
 ```
-
   $gv(func/jsontemp)$
   $gv(func/alignment)$
 
@@ -62,7 +61,7 @@
   )$
   $lv(box1col, if(#box1col1 = "" & #box1col2 = "", 0, 1))$
 
-  $lv(size, (if(gv(theme/advanced/box1sq)  = 1,  #wgtdir, 
+  $lv(size, (if(gv(theme/advanced/box1sq)   = 1,   #wgtdir,
               (if(#tbox1    = 0,                   0,
                   #tbox1    = 1,                   #box1sm,
                   #tbox1    = 2 & #box1col  = 0,   #box1sm,
@@ -78,192 +77,270 @@
 ###### 3 - Set Global Variable: `theme/advanced/box1size`
 
 ###### #####################################
-###### Autosizing Global Function
+###### Flow - External launcher
 ###### #####################################
+**Trigger:** Manual (called from object touch)
 
-###### func/alignment - Functions for template code to use to reference autosizing data
-`$gv(func/alignment)$`
+**Action**
+
+###### 1 - Formula
+> #last = devicon, appicon1, appicon2
 ```
-  $gv(func/theme)$
+  $lv(ext, gv(external/#last))$
+  $gv(func/jsonmain)$
 
-  $lv(align,    gv(theme/advanced/widgetorient))$
-  $lv(override, gv(theme/advanced/autoalign))$
-  $lv(invert,   gv(theme/advanced/boxtoggle))$
+  $lv(app,
+    if(#ext = 1, ("ha.entity." + #entity),
+       #ext = 2, "ha",
+       #ext = 3, "ha.assist",
+       #ext = 4, "kwgt",
+       #ext = 5, gv(external/custom),
+       ""
+  ))$
+  $lv(action, if(#ext = 5, "custom", "open"))$
+  $"tasker://secondary?action=" + #action + "&app=" + #app$
+```
 
-  $lv(wgtwidth1, (if(#align = 0, si(rheight), si(rwidth))))$
-  $lv(wgtdir,   (if(#align = 0, gv(core/size/wgtheight), gv(core/size/wgtwidth  ))))$
-  $lv(wgtdirop, (if(#align = 0, gv(core/size/wgtwidth),  gv(core/size/wgtheight ))))$
-  $lv(iconcalc, (gv(theme/iconsize) * 2) + #padobjhor)$
-  $lv(pad,      (#wgtdir - #iconcalc))$
+###### 2 - Open URI
+`#last`
 
-  $lv(box1sm, (gv(theme/iconsize) + (#padobjver * 2) * 100 / #wgtwidth1))$
-  $lv(box1lg, (((#padobjver * 2) + #iconcalc)))$
-  $lv(boxalign, (if(gv(theme/advanced/box1pos) = RIGHT,  CENTERRIGHT,
-                    gv(theme/advanced/box1pos) = LEFT,   CENTERLEFT,
-                    gv(theme/advanced/box1pos) = TOP,    TOP,
-                    gv(theme/advanced/box1pos) = BOTTOM, BOTTOM
-  )))$
-  $lv(boxcenter, (if(gv(theme/advanced/box1pos) = RIGHT,  VERTICAL_RIGHT,
-                     gv(theme/advanced/box1pos) = LEFT,   VERTICAL_LEFT,
-                     gv(theme/advanced/box1pos) = TOP,    HORIZONTAL_TOP,
-                     gv(theme/advanced/box1pos) = BOTTOM, HORIZONTAL_BOTTOM
-  )))$
-
-  $lv(margin1, if(#align = 0, "#padobjver" , "#padobjhor"))$
-  $lv(margin2, if(#align = 0, "#padobjhor" , "#padobjver"))$
+Examples:
+```
+tasker://secondary?action=open&app=ha
+tasker://secondary?action=custom&app=com.samsung.android.app
 ```
 
 ###### #####################################
-###### Autosizing Global Variables
+###### Flow - Update status
 ###### #####################################
+**Trigger:** `On Change` of `$gv(core/status/setstatus)$`
 
-###### core/size/wgtwidth
-`$gv(func/theme)$$si(rwidth) - (#padwgthor * 2)$`
+**Action**
 
-###### core/size/wgtheight
-`$gv(func/theme)$$si(rwidth) - (#padwgtver * 2)$`
+###### 1 - Stop If
+`#cat1` or `#error1` = ""
 
-###### core/size/box2width
+###### 2 - Formula
 ```
-  $gv(func/alignment)$
-  $if(#tbox1 = 0 | #align = 1, gv(core/size/wgtwidth), (#wgtdirop - gv(theme/advanced/box1size)))$
-```
-
-###### core/size/box2height
-```
-  $gv(func/alignment)$
-  $if(#tbox1 = 0 | #align = 0, gv(core/size/wgtheight), (#wgtdirop - gv(theme/advanced/box1size)))$
+$gv(func/status)$
+$tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error"))$
 ```
 
-###### core/size/box2maxobj
-```
-  $gv(func/alignment)$
-  $gv(func/theme)$
-  $lv(box2dir,  (if(#align = 0, gv(core/size/box2width), gv(core/size/box2height))))$
-  $lv(icon, ((gv(theme/iconsize) * #ringsize / 100) + gv(theme/iconsize) + #padobjhor))$
-  $lv(boxsize, (#box2dir - gv(theme/deviceiconsize)) / (#icon + #padobjhor))$
-  $if(gv(fitmoreobj) = 0,
-        (if(#boxsize <= 2, 2, mu(round, #boxsize))),
-        10
-     )$
-```
+###### 3 - Set Global Variable `core/status/currentstatus`
+
+###### 4 - Toggle Global Variable `core/status/statustimer`
 
 ###### #####################################
-###### Status System **40%**
+###### Status System **45%**
 ###### #####################################
 
 ###### func/status
+`$gv(func/status)$`
 ```
   $lv(dbstatus, gv(json/status))$
 
 // template1
-  $lv(objfit, gv(core/size/box2maxobj))$
-  $lv(posid, (".box2.row1." + (#objfit - 1)))$
-  $gv(func/jsontemp)$
+  $lv(posid, (".box2.row1." + (#box2maxobj - 1)))$
+  $gv(func/jsonobj)$
 
+// widget1
+  $lv(tempjson,
+      if(#tname   = "" | #ticon   = "" | #tbox1   = "" |
+         #trowct  = "" | #ticopos = "" | #tdevct  = "" |
+         #obid    = "" | #obtype  = "" | #obicon  = "" |
+         #obaction= "" | #obcmd   = "" | #obdata  = "" |
+         #obparam = "",
+        1, 0
+  ))$
 
+// widget2
+  $lv(devjson,
+      if(#obtype    = "" | #obonstate = "" | #ststate = "" |
+         #stobtype  = "" | #stoutput = ""  | gv(json/device) = "",
+        1, 0
+  ))$
+
+// widget3
+  $lv(tempmain,
+      if(#template = "" | #tpageon   = "" | #obj     = "" |
+         #curpage  = "" | #objfindkey= "" | #objkey  = "" |
+         #entity   = "" | #entitykey = "" | #box1obj = "",
+        1, 0
+  ))$
+
+// Populate
 // 1 = error, 0 = none
-  $lv(comm1,     (if(# = #, 1, 0)))$
-  $lv(comm2,     (if(# = #, 1, 0)))$
-  $lv(comm3,     (if(# = #, 1, 0)))$
+  $lv(comm1,     "")$
+  $lv(comm2,     "")$
+  $lv(comm3,     "")$
+  $lv(widget1,   #tempjson)$
+  $lv(widget2,   #devjson)$
+  $lv(widget3,   #tempmain)$
+  $lv(widget4,   "")$
   $lv(template1, (if(#obid = 0, 1, 0)))$
-  $lv(template2, (if(# = #, 1, 0)))$
-  $lv(theme1,    (if(# = #, 1, 0)))$
-  $lv(theme2,    (if(# = #, 1, 0)))$
-  $lv(widget1,   (if(# = #, 1, 0)))$
-  $lv(widget2,   (if(# = #, 1, 0)))$
-  $lv(widget3,   (if(# = #, 1, 0)))$
+  $lv(template2, "")$
+  $lv(theme1,    "")$
+  $lv(theme2,    "")$
+  $lv(setup1,    (if(gv(devicetype) = "DATA", 1, 0)))$
 
 // Load current errors
-  $if(#comm1,    lv(error, (#error + "," + "comm;1" + #comm1)),
-      #comm2,    lv(error, (#error + "," + "comm;2" + #comm2)),
-      #comm3,    lv(error, (#error + "," + "comm;3" + #comm3)),
-      #widget1,  lv(error, (#error + "," + "widget;1" + #widget1)),
-      #widget2,  lv(error, (#error + "," + "widget;2" + #widget2)),
-      #widget3,  lv(error, (#error + "," + "widget;3" + #widget3))
-      #template1,lv(error, (#error + "," + "template;1" + #template1)),
-      #template2,lv(error, (#error + "," + "template;2" + #template2)),
-      #theme1,   lv(error, (#error + "," + "theme;1" + #theme1)),
-      #theme2,   lv(error, (#error + "," + "theme;2" + #theme2)),
-  )$
+  $lv(error,
+    (if(#comm1 = 1,     (#error + ";" + "comm,1"),
+        #comm2 = 1,     (#error + ";" + "comm,2"),
+        #comm3 = 1,     (#error + ";" + "comm,3"),
+        #widget1 = 1,   (#error + ";" + "widget,1"),
+        #widget2 = 1,   (#error + ";" + "widget,2"),
+        #widget3 = 1,   (#error + ";" + "widget,3"),
+        #widget4 = 1,   (#error + ";" + "widget,4"),
+        #template1 = 1, (#error + ";" + "template,1"),
+        #template2 = 1, (#error + ";" + "template,2"),
+        #theme1 = 1,    (#error + ";" + "theme,1"),
+        #theme2 = 1,    (#error + ";" + "theme,2"),
+        #setup1 = 1,    (#error + ";" + "setup,1")
+  )))$
 
 // Split data for use
-  $lv(error1, tc(split, #error,  ",", 0))$
-  $lv(cat1,   tc(split, #error1, ";", 0))$
-  $lv(num1,   tc(split, #error1, ";", 1))$
-  $lv(error2, tc(split, #error,  ",", 1))$
-  $lv(cat2,   tc(split, #error2, ";", 0))$
-  $lv(num2,   tc(split, #error2, ";", 1))$
+  $lv(error1, tc(split, #error,  ";", 0))$
+  $lv(cat1,   tc(split, #error1, ",", 0))$
+  $lv(num1,   tc(split, #error1, ",", 1))$
 
-// Output error message
-  $lv(errorout1, tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error")))$
-  $lv(errorout2, tc(json, #dbstatus, ("." + #cat2 + "." + #error2 + ".error")))$
-
-```
-
-
-**V2** fl() test
-```
-  $lv(dbstatus, gv(json/status))$
-
-// "template.1.error"
-  $lv(objfit, gv(core/size/box2maxobj))$
-  $lv(posid, (".box2.row1." + (#objfit - 1)))$
-  $gv(func/jsontemp)$
-
-// "template.1.error"
-  $lv(temp1, (if(#obid = 0, (tc(json, #dbstatus, (".template.1.error"), 1)))))$
-  $lv(temp2, (if(#obid = 0, (tc(json, #dbstatus, (".template.2.error"))))))$
-  $lv(temp3, (if(#obid = 0, (tc(json, #dbstatus, (".template.3.error"))))))$
-
-  $lv(cat, "temp")$
-
-  $lv(i, 1)$
-  $lv(erroroutput, fl(1, 3, "i + 1", 
-    (lv(temp, "#temp" + i) + 
-     if(gv(core/statusname, #temp) = 1, #temp)
-    ),
-  ","))$
-
-
-  $lv(erroroutput, fl(1, 3, "i + 1", 
-    (lv(temp, "#temp" + i) +
-     lv(form, gv(core/statusname, #temp)) +
-     lv(run, fl(0,0,0, #form)) +
-     if(#run = 1, i, 0)
-    )))$
-  $#erroroutput$
-  
-    $lv(error, (tc(json, #dbstatus, ("." + #cat + "." + #erroroutput + ".error"), 1)))
-  $#error$
-```
-
-`gv(core/statusname)`
-```
-temp1##if(#obid = 0, 1, 0)
-temp2##if(#trowct = 2, 1, 0)
-temp3##temp3
-```
-
-**V1 - 2023**
-```
-  $lv(dbstatus, gv(errordb))$
-  $lv(stnew, gv(currentstatus))$
-  $lv(stname,   (tc(json, #dbstatus, (".status." + #stnew + ".error_name"))))$
-  $lv(stdetail, (tc(json, #dbstatus, (".status." + #stnew + ".error_content"))))$
-  $lv(out, #stdetail)$
 ```
 
 ###### #####################################
-###### Theme System
+###### External launcher
+###### #####################################
+
+###### external/devicon external/appicon1 external/appicon2
+> No "0##Hidden" entry in `external/devicon`
+```
+0##Hidden,
+1##This device in Home Assistant App,
+2##Home Assistant App,
+3##Home Assistant Assist,
+4##KWGT Editor (Great while configuring widget),
+5##Custom
+```
+
+###### "icon_icon"
+```
+  $gv(func/jsontemp)$
+  $lv(ext, gv(external/appicon1))$
+  $if(#ext = 1, #ticon,
+      #ext = 2, "app-home-assistant",
+      #ext = 3, "app-home-assistant-assist",
+      #ext = 4, "mdi-cog",
+      #ext = 5, #ticon,
+      ""
+  )$
+```
+
+###### #####################################
+###### Alignment Global Function
+###### #####################################
+
+###### func/alignment - Functions for widget objects to reference sizing data
+`$gv(func/alignment)$`
+```
+  $gv(func/theme)$
+  $gv(func/jsontemp)$
+
+  $lv(align,     gv(theme/advanced/widgetorient))$
+  $lv(override,  gv(theme/advanced/autoalign))$
+  $lv(invert,    gv(theme/advanced/boxtoggle))$
+  $lv(box1pos,   gv(theme/advanced/box1pos))$
+  $lv(box1size,  gv(theme/advanced/box1size))$
+  $lv(objsize,   gv(theme/objsize))$
+
+  $lv(wgtwidth,  (si(rwidth) - (#padwgtver * 2)))$
+  $lv(wgtheight, (si(rheight) - (#padwgthor * 2)))$
+  $lv(wgtdir,    (if(#align = 0, #wgtheight, #wgtwidth )))$
+  $lv(wgtdirop,  (if(#align = 0, #wgtwidth,  #wgtheight)))$
+  $lv(devobjpos, (if(#align = 0, #wgtheight, #box1size)))$
+  $lv(objiconsize,(#objsize - (#objsize * #iconsize / 100)))$
+  $lv(devposcalc,((#devobjpos / 2) + #padwgtver - (gv(theme/deviceiconsize) / 2)))$
+
+  $lv(box2obj,   (#objsize + #padobjhor))$
+  $lv(box2width,
+    (if(#tbox1 = 0 | #align = 1, #wgtwidth, (#wgtdirop - #box1size))))$
+  $lv(box2height,
+    (if(#tbox1 = 0 | #align = 0, #wgtheight, (#wgtdirop - #box1size))))$
+  $lv(box2dir,   (if(#align = 0, #box2width, #box2height)))$
+  $lv(box2size,  (#box2dir - gv(theme/deviceiconsize)) / (#box2obj + #padobjhor))$
+  $lv(box2maxobj,(if(gv(fitmoreobj) = 0,
+        (if(#box2size <= 2, 2, mu(round, #box2size))), 10
+     )))$
+
+  $lv(box1sm, (#objsize + (#padobjside * 2) * 100 / #wgtdir))$
+  $lv(box1lg, (((#objsize + #padobjside) * 2) + #padobjhor))$
+
+  $lv(L, "LEFT")$   $lv(R, "RIGHT")$ $lv(T, "TOP")$
+  $lv(B, "BOTTOM")$ $lv(C, "CENTER")$
+
+  $lv(box1anchor,
+    (if(#box1pos = #R, (#C + #R), #box1pos = #L, (#C + #L),
+        #box1pos = #T, #T,        #box1pos = #B, #B
+  )))$
+  $lv(box1center,
+    (if(#box1pos = #R, ("VERTICAL_" + #R), #box1pos = #L, ("VERTICAL_" + #L),
+        #box1pos = #T, ("VERTICAL_" + #T), #box1pos = #B, ("VERTICAL_" + #B)
+  )))$
+
+  $lv(devicopos,
+    if(#box1pos = #R,
+        (if(#ticopos = 1, (#T + #L), #ticopos = 2, (#C + #R),
+            #ticopos = 3, (#B + #L)
+        )),
+       #box1pos = #L,
+        (if(#ticopos = 1, (#T + #R), #ticopos = 2, (#C + #L),
+            #ticopos = 3, (#B + #R)
+        )),
+       #box1pos = #T,
+        (if(#ticopos = 1, (#B + #L), #ticopos = 2, #T,
+            #ticopos = 3, (#B + #R)
+        )),
+       #box1pos = #B,
+        (if(#ticopos = 1, (#T + #L), #ticopos = 2, #B,
+            #ticopos = 3, (#T + #R)
+        ))
+    ))$
+  $lv(appicopos,
+    (if(#box1pos = #R, (#B + #L),
+        #box1pos = #L, (#B + #R),
+        #box1pos = #T, (#B + #R),
+        #box1pos = #B, (#T + #R)
+    )))$
+  $lv(devicoalign,
+    (if(#box1pos = #R | #box1pos = #L, 1,
+        #box1pos = #T | #box1pos = #B, 0
+    )))$
+
+
+  $lv(pad1, if(#align = 0, "#padobjver" , "#padobjhor"))$
+  $lv(pad2, if(#align = 0, "#padobjhor" , "#padobjver"))$
+  $lv(pad3, if(#align = 0, "#padwgtver" , "#padwgthor"))$
+```
+
+###### #####################################
+###### Theme Globals and lists
 ###### #####################################
 
 ###### settheme
 ```
-0##OneUI,1##Material,2##Basic
+OneUI,Material,Basic
 ```
 
-###### theme/colors
+###### theme/deviceiconrotation
+```
+DATA##\"Select the rotation of the Device Icon on your Widget\",
+NONE##0 Degrees,
+DEG90##90 Degrees,
+DEG180##180 Degrees,
+DEG270##180 Degrees,
+FLIP_X##Flip Vertically,
+FLIP_Y##Flip Horizontally
+```
+
+###### colors
 `colors/back1`
 `colors/back2`
 `colors/objiconon`
@@ -284,19 +361,19 @@ temp3##temp3
   ))$
 ```
 
-###### colors/coloreditor/editcolor
+###### colors/coloredit/editcolor
 - Select color to edit
 ```
-0##Background 1,
-1##Background 2,
-2##Icon Off,
-3##Icon On,
-4##Ring Off,
-5##Ring On,
-6##Border Color,
-7##Wallpaper Color 1,
-8##Wallpaper Color 2,
-9##Wallpaper Color 3
+back1##Background 1,
+back2##Background 2,
+objiconoff##Icon Off,
+objiconon##Icon On,
+cobjringoff##Ring Off,
+cobjringon##Ring On,
+border##Border Color,
+wpcolor1##Wallpaper Color 1,
+wpcolor2##Wallpaper Color 2,
+wpcolor3##Wallpaper Color 3
 ```
 
 ###### colors/colorgen/syscolorset
@@ -311,7 +388,7 @@ temp3##temp3
 6##Neutral #3
 ```
 
-###### colors/coloreditor/wallcolorset
+###### colors/coloredit/filter
 - Wallpaper & imported color only
 ```
 0##None,
@@ -320,20 +397,38 @@ temp3##temp3
 3##Complimentary Color
 ```
 
-###### `theme/deviceiconrotation` 
-```
-DATA##\"Select the rotation of the Device Icon on your Widget\",
-NONE##0 Degrees,
-DEG90##90 Degrees,
-DEG180##180 Degrees,
-DEG270##180 Degrees,
-FLIP_X##Flip Vertically,
-FLIP_Y##Flip Horizontally
-```
+###### colors/themeinfo
+Use this to override color properties set by the theme JSON. All values in this folder are ignored when empty.\n\n
 
-###### `appiconvis`
+There is also a color generator to use your phone's system colors and an editor to modify colors\n\n
+
+See readme for more information and JSON config
+
+###### colors/colorgen/info
+Use this color generator to get colors from your device theme and modify them\n\n
+
+This is based on \"Material Design\" specifications. So \"Primary 80\" should be Accent #1 + 80% tone. See specifications online and readme for more details.\n\n
+
+Note: Background color opacity can also be set in the \"theme\" folder\n\n
+
+You will have to copy the color to where you want to use it when generated
+
+###### colors/coloredit/info
+Use this color editor to modify the existing colors used in your theme, or extracted from your wallpaper\n\n
+
+Select the color source you want to modify. Colors are from the selected theme or your overridden color, if set. Wallpaper colors are extracted from the device wallpaper by KWGT.\n\n
+
+Note: Background color opacity can also be set in the \"theme\" folder\n\n
+
+You will have to copy the color to where you want to use it once complete
+
+###### `readme`
 ```
-DATA##\"Set visbility of App Icons. Hiding these when using one row will make the device icon to fit the widget height.\",
-0##Show App Icons,
-1##Hide App Icons
+See readme.md for instructions on how to connect HAWGTS with your Home Assistant system. Follow the instructions below to setup your widget with the settings in this menu\n\n
+
+1. Choose a theme. Change any theme settings or colors you'd like to make it your own, or skip this part\n
+2. Set your device type, then toggle through the templates to see which one works for your layout and launcher\n
+3. Set your entity_id(s) from Home Assistant\n\n
+
+The widget should now be able to control your configured device. Once your first widget is complete, export it from KWGT to make copies of your customized widget for other devices
 ```

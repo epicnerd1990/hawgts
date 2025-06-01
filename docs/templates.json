@@ -1,0 +1,570 @@
+{
+// light - 50% complete - 1-4 are working. 5-6 are dummy
+  "light": {
+    "objects": {
+      "bedroom": {
+        "icon": "mdi-room-king-bed",
+        "type": "page",
+        "onstate": "page1",
+        "action": "page",
+        "cmd": "",
+        "data": "1"
+      },
+      "office": {
+        "icon": "mdi-room-desk",
+        "type": "page",
+        "onstate": "page2",
+        "action": "page",
+        "cmd": "",
+        "data": "2"
+      },
+      "livingroom": {
+        "icon": "mdi-room-sofa-single-outline",
+        "type": "page",
+        "onstate": "page3",
+        "action": "page",
+        "cmd": "",
+        "data": "3"
+      },
+      "foyer": {
+        "icon": "mdi-room-coat-rack",
+        "type": "page",
+        "onstate": "page4",
+        "action": "page",
+        "cmd": "",
+        "data": "4"
+      },
+      "power": {
+        "icon": "mdi-power",
+        "type": "action",
+        "onstate": "",
+        "action": "toggle",
+        "cmd": "",
+        "data": ""
+      },
+      "controlapp": {
+        "icon": "app-home-assistant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "color": {
+        "icon": "mdi-palette",
+        "type": "action",
+        "onstate": "",
+        "action": "color",
+        "cmd": "color",
+        "data": "#FFFFFF"
+      },
+      "off": {
+        "icon": "mdi-lightbulb-off-outline",
+        "type": "action",
+        "onstate": "off",
+        "action": "off",
+        "cmd": "",
+        "data": ""
+      },
+      "low": {
+        "icon": "mdi-lightbulb-on-30",
+        "type": "action",
+        "onstate": "1>75",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "74"
+      },
+      "med": {
+        "icon": "mdi-lightbulb-on-60",
+        "type": "action",
+        "onstate": "76>200",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "150"
+      },
+      "high": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "200>255",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255"
+      },
+      "on": {
+        "icon": "mdi-lightbulb-on",
+        "type": "action",
+        "onstate": "on",
+        "action": "light",
+        "cmd": "brightness",
+        "data": "255"
+      }
+    },
+    "light1": {
+      "name": "Light - 2-4 Page/Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 1,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": "2-4",
+      "page1": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page2": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page3": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      },
+      "page4": {
+        "box1": {
+          "row1": {
+            "0": "bedroom",
+            "1": "office"
+          },
+          "row2": {
+            "0": "livingroom",
+            "1": "foyer"
+          }
+        },
+        "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+        }
+      }
+    },
+    "light2": {
+      "name": "Light - 0 Page, 1 Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 1,
+      "box2": {
+          "row1": {
+            "0": "power",
+            "1": "controlapp",
+            "2": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+      }
+    },
+    "light3": {
+      "name": "Light - 0 page, 1 Device, 1 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 1,
+      "device_icon_pos": 1,
+      "device_count": 1,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "off",
+            "1": "low",
+            "2": "med",
+            "3": "high"
+          }
+      }
+    },
+    "light4": {
+      "name": "Blank",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "page": 0,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      }
+    },
+    "light5": {
+      "name": "Blank",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "page": 0,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      }
+    },
+    "light6": {
+      "name": "Light - 0 page, 2 Device, 2 Row",
+      "note": "Testing Template V3",
+      "icon": "material-ico-wb-incandescent-mod",
+      "box1_size": 0,
+      "page": 0,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "controlapp",
+            "1": "color"
+          },
+          "row2": {
+            "0": "off",
+            "1": "on"
+          }
+      }
+    }
+  },
+
+// climate - 15% complete
+  "climate": {
+    "objects": {
+      // device-specific objects
+      "fanpower": {
+        "icon": "mdi-fan-power-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanspeed": {
+        "icon": "mdi-plus-minus-variant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanoscillation": {
+        "icon": "mdi-fan-oscillation-cus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acpower": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acspeed": {
+        "icon": "mdi-plus-minus-variant",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acmode": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      // general climate objects
+      "tempdown": {
+        "icon": "mdi-thermometer-minus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "tempup": {
+        "icon": "mdi-thermometer-plus",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "schedule": {
+        "icon": "mdi-schedule",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "heat": {
+        "icon": "material-dev-mode-heat",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "cool": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "mode": {
+        "icon": "mdi-snowflake-melt",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      // power climate objects
+      "acpoweron": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "acpoweroff": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanpoweron": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      },
+      "fanpoweroff": {
+        "icon": "mdi-dev-air-conditioner",
+        "type": "action",
+        "onstate": "",
+        "action": "",
+        "cmd": "",
+        "data": ""
+      }
+    },
+    "climate3": {
+      "name": "Air Conditioner (LG)",
+      "note": "Climate - 0 Page, 2 Device, 2 Row",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box1": {
+          "row1": {
+            "0": "",
+            "1": ""
+          },
+          "row2": {
+            "0": "",
+            "1": ""
+          }
+      },
+      "box2": {
+          "row1": {
+            "0": "",
+            "1": "",
+            "2": "",
+            "3": ""
+          },
+          "row2": {
+            "0": "",
+            "1": "",
+            "2": "",
+            "3": ""
+          }
+      }
+    },
+    "climate4": {
+      "name": "Air Conditioner (LG)",
+      "note": "Climate - 0 Page, 2 Device, 2 Row",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 1,
+      "device_count": 2,
+    "box_1": {
+      "row_1": {
+        "0": "acpower"
+      },
+      "row_2": {
+        "0": "acmode"
+      }
+    },
+    "box_2": {
+      "row_1": {
+        "0": "acmode",
+        "1": "schedule"
+      },
+      "row_2": {
+        "0": "acspeed",
+        "1": "acdown",
+        "2": "acup"
+      }
+    }
+    },
+    "climate5": {
+      "name": "Power toggle 2 devices (SM)",
+      "note": "Climate - 1 Box, 0 Page, 2 Device, 2 Row",
+      "icon": "",
+      "page": 0,
+      "box1_size": 2,
+      "row_count": 2,
+      "device_icon_pos": 2,
+      "device_count": 2,
+      "box_2": {
+        "row_1": {
+          "0": "acpoweron",
+          "1": "acpoweroff"
+        },
+        "row_2": {
+          "0": "fanpoweron",
+          "1": "fanpoweroff"
+        }
+      }
+    }
+  }
+}
