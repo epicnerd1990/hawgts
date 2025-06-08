@@ -25,7 +25,7 @@ The *Global* tab in the Kustom editor is configured as a "Settings Menu" for thi
 | Name                    | Description                                                    | Values,Cur | Editable |
 |-------------------------|----------------------------------------------------------------|------------|----------|
 | `readme`                | User Readme                                                    | Note       | No       |
-| `settheme`              | Select the theme to use on this widget. Customize with "theme" | List       | Yes      |
+| `settheme`              | Select the theme to use on this widget                         | List       | Yes      |
 |                         | *OneUI, Material, Basic*                                       | List       | Yes      |
 | `devicetype`            | Select the type of device you'd like to control:               | List       | Yes      |
 ||*light, climate, tv, sound, security, lock, power, remote, appliance, home, electronics, maintence, custom*|List |
@@ -33,9 +33,9 @@ The *Global* tab in the Kustom editor is configured as a "Settings Menu" for thi
 | `templatename`          | Debugging - Chosen Template name                               |            | Yes      |
 | `templateinfo`          | Template Description via flow                                  |            | Yes      |
 | `fitmoreobj`            | Disable widget object count restrictions                       | Toggle     | Yes      |
-| **`theme`**             | **Override preset sizing and alignment variables**             | **Folder** | **Yes**  |
+| **`theme`**             | **Override theme presets**                                     | **Folder** | **Yes**  |
 | > `themeinfo`           | User custom theme instructions                                 | Note       | No       |
-| > `objsize`             | (Preset to 80) - Size of the object icons                      | 20-200, 80 | Yes      |
+| > `objsize`             | (Preset to 90) - Size of the object rings                      | 20-200, 90 | Yes      |
 | > `iconsize`            | Icon ring percentange/ratio (icon background:icon size)        | 0-100, 0   | Yes      |
 | > `deviceiconsize`      | (Preset to 120) - Size of the Device Icon                      | 0-450, 120 | Yes      |
 | > `deviceiconrotation`  | Rotate or flip the device icon on your Widget                  | List       | Yes      |
@@ -84,19 +84,19 @@ The *Global* tab in the Kustom editor is configured as a "Settings Menu" for thi
 | >> `adjfilter`          | Strength of color filter                                       | 0-100      | Yes      |
 | >> `opacity`            | Opacity Adjustment - 0 = Transparent, 100 = Solid              | 0-100      | Yes      |
 | >> `output`             | Color output. Tap to tweak and copy hex code to "colors" folder| Hex Color  | Yes      |
-| **`entities`**          | **Home Assistant entity names**                                | **Folder** | **Yes**  |
+| **`entities`**          | **Set Home Assistant "entity_id"**                             | **Folder** | **Yes**  |
 | > `entitynote`          | User entity instructions                                       | Note       | No       |
 | > `entity1`             | Device 1 Entity ID                                             | entity_id  | Yes      |
 | > `entity2`             | Device 2 Entity ID                                             | entity_id  | Yes      |
 | > `entity3`             | Device 3 Entity ID                                             | entity_id  | Yes      |
 | > `entity4`             | Device 4 Entity ID                                             | entity_id  | Yes      |
-| **`external`**          | **Configure device icon and app icon apps to open**            | **Folder** | **Yes**  |
+| **`external`**          | **Configure device apps to open**                              | **Folder** | **Yes**  |
 | > `external/devicon`    | Select an app to open on touch: Device icon                    | Toggle     | Yes      |
 | > `external/appicon1`   | Select an app to open on touch: App icon #1                    | Toggle     | Yes      |
 | > `external/appicon2`   | Select an app to open on touch: App icon #2                    | Toggle     | Yes      |
 | > `external/appiconsize`| (Preset to 32) Set the size of the small app-launcher object(s)| 0-75, 32   | Yes      |
 | > `external/custom`     | Enter the Android package name to open (eg com.android.appname)| 0-75, 32   | Yes      |
-| **`core`**              | **Core globals for status and tasker**                         | **Folder** | **No**   |
+| **`core`**              | **LOCKED: Core globals**                                       | **Folder** | **No**   |
 | > `curpage`             | Current page for paged templates                               | X          | No       |
 | > `randomring`          | Code for ring "paint_color" attribute                          | X          | No       |
 | **`core/tasker`**       | **Tasker**                                                     | **Folder** | **No**   |
@@ -105,9 +105,8 @@ The *Global* tab in the Kustom editor is configured as a "Settings Menu" for thi
 | >> `temp`               | Temp storage for Tasker > KWGT flow                            | X          | No       |
 | **`core/status`**       | **Status System**                                              | **Folder** | **No**   |
 | >> `currentstatus`      | Current status or last status displayed                        | X          | No       |
-| >> `setstatus`          | Send error id (##) to this to activate error                   | X          | No       |
-| >> `statustimer`        | Time to display Status message                                 | X          | No       |
-| **`func`**              | **Global functions**                                           | **Folder** | **No**   |
+| >> `status`             | Display status or error message                                | X          | No       |
+| **`func`**              | **LOCKED: Global functions**                                   | **Folder** | **No**   |
 | > `jsonmain`            | Load JSON data for following 3 global variables                | X          | No       |
 | > `jsonstate`           | Get the current state of devices. Call with ".box1.row2.0"     | X          | No       |
 | > `jsonobj`             | Get object information. Call with ".box1.row2.0"               | X          | No       |
@@ -120,12 +119,12 @@ The *Global* tab in the Kustom editor is configured as a "Settings Menu" for thi
 | > `devjsonadd`          | Device State - Add newlines and spaces to JSON                 | X          | No       |
 | > `devjsonindent`       | Device State - Add indentation to JSON                         | X          | No       |
 | > `devjsonnew`          | Device State - Add new entity to bottom of list                | X          | No       |
-| **`json`**              | **JSON databases for widget**                                  | **Folder** | **Yes**  |
+| **`json`**              | **LOCKED: JSON databases**                                     | **Folder** | **Yes**  |
 | > `device`              | Device states database                                         | JSON       | No       |
 | > `theme`               | Theme database                                                 | JSON       | Advanced |
 | > `template`            | Template database                                              | JSON       | Advanced |
 | > `status`              | Status and error database                                      | JSON       | No       |
-| `setupmode`             | Debugging - Enable showing setup data                          |            | Yes      |
+| `setupmode`             | Debugging                                                      |            | Yes      |
 |                         |                                                                |            |          |
 
 Legend: ">" indicates the folder tree level, "**Bold**" indicates folders, `global` indicates global name

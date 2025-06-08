@@ -347,7 +347,12 @@
       }
     }
   },
+  // "Setup" mode template
+  "DATA": {
+    "DATA1":{
 
+    }
+  },
 // climate - 15% complete
   "climate": {
     "objects": {

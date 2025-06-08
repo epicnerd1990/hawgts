@@ -111,30 +111,14 @@ UTF Hex       REGEX                  KWGT
 
 
 ###### #####################################
-###### TO-DO - Features to complete for V1
-###### #####################################
-- Confirm icon pack is up to date with latest icon list
-- KWGT > TASKER - Create "custom" service call **0%**
-    - Use HA templates for simplicity?
-    - Populate [](docs/advanced.md#2-kwgt--tasker)
-- Set up and build Tasker plugin **0%**
-    - Simply merge everything into one downloadable group? Taskernet
-    - Tasker - "toggle" error
-    - Make state updates more effective and work in more situations
-        - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
-    - Configure "template" and "custom" service calls
-- Flow at start to check widget size ratio
-    - If its a single row, make device icon same size as regular icons? 1:8 ratio and below?
-    - Check iconsize - wgtheight and resize icons if less then 10% is showing
-
-
-###### #####################################
 ###### TO-DO - Loose Ends/low priority
 ###### #####################################
+- Confirm icon pack is up to date with latest icon list
 - `template.json` database creation **10%**
     - Most of "light" and first couple "climate" templates are complete
     - "House Security"?
-- Readme: "HA" > "Home Assistant"? or "HASS"?
+- Complete Readme **80%**
+    - "HA" > "Home Assistant"? or "HASS"?
 - Device and App icons
     - Tasker: KWGT launch and launch to entity problems
     - Look into way of using Kustom Editor "Shortcuts" tab for these items
@@ -149,41 +133,51 @@ UTF Hex       REGEX                  KWGT
 ###### #####################################
 ###### TO-DO - Current
 ###### #####################################
-- Complete Readme **80%**
-    - ~~"globals.md" + "json.md"~~
-    - ~~Make readme easier to understand~~
-- `templateinfo` Flow
+- KWGT > TASKER - Create "custom" service call **0%**
+    - Use HA templates for simplicity?
+    - Populate [](docs/advanced.md#2-kwgt--tasker)
+- Set up and build Tasker plugin **0%**
+    - Simply merge everything into one downloadable group? Taskernet
+    - Tasker - "toggle" error
+    - Make state updates more effective and work in more situations
+        - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
+    - Configure "template" and "custom" service calls
+- Build templates - `templateinfo` Flow
     - Create a for loop for `ntwgtsize`?
     - Connect to status system?
     - Merge `templateinfo` and `templatename`??
+    - Integrate calc that will display a "generic" template if the chosen one doesn't work?
 - Themes
     - `settheme` > `theme` (conflict with `theme/`?) and `devicetype` > `device`?
     - Shadows work but seem to be trimmed at corners - launcher?
-    - Fine-tune colors for each group
+    - Fine-tune colors for each theme
     - Check color editor and generator flows **KWGT GLITCH?**
-- "Status" system completion **45%** **TEST**
-    - Add "Stop If" to Status Flow if `#cat1` or `#error1` = ""
-    - Send string to kwgt br: "error"
-    - Integrate "Setup" button?
+- "Status" system **70%**
+    - Test Tasker > KWGT broadcast
+    - Finish writing error criteria in `func/status`
+    - Status bar alignment and padding calc
     - Integrate `templateinfo` button above?
-    - "Hide/Ignore Error" button?
-    - Create functions to identify problems in `func/status` to test
-    - Build-in an initial setup mode
-        - Use `devicetype` = DATA to hide objects and show setup
-        - Create "setup" template?
-        - Include link to the github readme?
-    - Arrow to direct user to "Globals" tab?
-- `json.md` > `advanced.md`?
+- Build-in an initial setup mode
+    - Create "setup" template **Outlined**
+    - Include link to the github readme?
+    - Utilize "Setup" notification
 
 ###### #####################################
 ###### Completed Tasks
 ###### #####################################
+- Readme
+    - "globals.md" + "json.md"
+    - Make readme easier to understand
 - Theme system overhaul and upgrade
     - "Pastel" OneUI feature to be expanded to random color option for any theme
-    - ~~Fix ringsize in OneUI? Does this still work?~~
+    - Fix ringsize in OneUI? Does this still work?
 - "Status" system
     - `Create and populate `func/status` from backend.md`
-    - ~~Update globals.md~~
+    - Update globals.md
+    - Integrate "Setup" button? **NO**
+    - "Hide/Ignore Error" button? Replace timer with hide switch
+        - Use `devicetype` = DATA to hide objects and show setup
+    - Arrow to direct user to "Globals" tab? **NO**
 - Device and App icons
     - `appiconvis` backwards
     - Design: 
@@ -199,16 +193,17 @@ UTF Hex       REGEX                  KWGT
 - All of `core/size` merged into `func/alignment`
     - Update all references to `core/size` in preset.json
 - "globallists.md" > "docs/iconlist.md"
-    - ~~Write short intro~~
-    - ~~Create markdown table~~ **Codex AI**
+    - Write short intro
+    - Create markdown table **Codex AI**
+- `json.md` > `advanced.md`
 - Clear `core/tasker/temp` after flow
 - json.md #2 - add suggestion on best way to do this
 - Include a theme.json and template.json in /docs and link to json.md
 - Move service global folders to bottom from top
-- ~~Review all description tags for globals~~
-- ~~Group configuration options in folders/subfolders more~~
-- ~~Document the JSON syntax on github and users can append to the template json for custom layouts~~
-- ~~Provide basic samples and a copy of json files for reference~~
+- Review all description tags for globals
+- Group configuration options in folders/subfolders more
+- Document the JSON syntax on github and users can append to the template json for custom layouts
+- Provide basic samples and a copy of json files for reference
 
 
 ###### #####################################
@@ -219,6 +214,9 @@ UTF Hex       REGEX                  KWGT
     - Wipe all whitespace first to get json to consistant state
     - Provide custom HA calls for lights and potentially other devices? Or use templates instead?
     - May have to copy json to Tasker, make edits and return it as backup option
+- Flow at start to check widget size ratio
+    - If its a single row, make device icon same size as regular icons? 1:8 ratio and below?
+    - Check iconsize - wgtheight and resize icons if less then 10% is showing
 - Create a flow loop that writes new lv() - Can reduce stacks of defined lv()
 - Integrate all options into the globals.
 - Setup Mode

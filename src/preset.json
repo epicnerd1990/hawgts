@@ -32,7 +32,7 @@
         "index": 2,
         "type": "LIST",
         "title": "settheme",
-        "description": "Select the theme to use on this widget. Open the \"theme\" folder below to customize it",
+        "description": "Select the theme to use on this widget",
         "entries": "OneUI,Material,Basic",
         "value": "Basic"
       },
@@ -42,7 +42,7 @@
         "title": "devicetype",
         "description": "Select the type of device to control",
         "entries": "DATA##\"Select the type of device to control\",light##Lights,climate##Climate,tv##Television,sound##Sound System,security##Security,lock##Doors and Locks,power##Charging and Battery,remote##Remote control,appliance##Home Appliances,home##Home Features?,electronics#Personal Electronics,maintence##Home Maintence,custom##Custom",
-        "value": "light"
+        "value": "DATA"
       },
       "templateselect": {
         "index": 4,
@@ -77,7 +77,7 @@
         "index": 8,
         "type": "FOLDER",
         "title": "theme",
-        "description": "Override preset sizing and alignment variables"
+        "description": "Override theme presets"
       },
       "theme/themeinfo": {
         "index": 9,
@@ -453,7 +453,7 @@
         "index": 56,
         "type": "FOLDER",
         "title": "entities",
-        "description": "Home Assistant \"entity_id\" to use"
+        "description": "Set Home Assistant \"entity_id\""
       },
       "entities/entitynote": {
         "index": 57,
@@ -495,7 +495,7 @@
         "index": 62,
         "type": "FOLDER",
         "title": "external",
-        "description": "Configure device icon and app icon apps to open"
+        "description": "Configure device apps to open"
       },
       "external/devicon": {
         "index": 63,
@@ -541,7 +541,7 @@
         "index": 68,
         "type": "FOLDER",
         "title": "core",
-        "description": "Core globals for status and tasker"
+        "description": "LOCKED: Core globals"
       },
       "core/curpage": {
         "index": 69,
@@ -597,25 +597,18 @@
         "description": "Current status or last status displayed",
         "value": ""
       },
-      "core/status/setstatus": {
-        "index": 77,
-        "type": "TEXT",
-        "title": "setstatus",
-        "description": "",
-        "value": "01"
-      },
-      "core/status/statustimer": {
+      "core/status/status": {
         "index": 78,
         "type": "SWITCH",
-        "title": "statustimer",
-        "description": "Time to display Status message",
+        "title": "status",
+        "description": "Display status or error message",
         "value": 1
       },
       "func": {
         "index": 79,
         "type": "FOLDER",
         "title": "func",
-        "description": "Global functions"
+        "description": "LOCKED: Global functions"
       },
       "func/jsonmain": {
         "index": 80,
@@ -671,7 +664,7 @@
         "type": "TEXT",
         "title": "status",
         "description": "Calculate widget status",
-        "value": "$lv(dbstatus,gv(json/status))$$lv(status,gv(core/tasker/status))$lv(posid,(\".box2.row1.\"+(#box2maxobj-1)))$$gv(func/jsonobj)$$gv(func/themecolors)$$lv(comm1,if(#status!=\"\"|#status!=\"br(tasker,status)\",1,0))$$lv(comm2,if(#status!=\"\"|#status!=\"br(tasker,status)\",1,0))$$lv(comm3,if(#status!=\"\"|#status!=\"br(tasker,status)\",1,0))$$lv(widget1,if(#tname=\"\"|#ticon=\"\"|#tbox1=\"\"|#trowct=\"\"|#ticopos=\"\"|#tdevct=\"\"|#obid=\"\"|#obtype=\"\"|#obicon=\"\"|#obaction=\"\"|#obcmd=\"\"|#obdata=\"\"|#obparam=\"\",1,0))$$lv(widget2,if(#obtype=\"\"|#obonstate=\"\"|#ststate=\"\"|#stobtype=\"\"|#stoutput=\"\"|gv(json/device)=\"\",1,0))$$lv(widget3,if(#template=\"\"|#tpageon=\"\"|#obj=\"\"|#curpage=\"\"|#objfindkey=\"\"|#objkey=\"\"|#entity=\"\"|#entitykey=\"\"|#box1obj=\"\",1,0))$$lv(widget4,\"\")$$lv(template1,if(#obid=0,1,0))$$lv(template2,\"\")$$lv(theme1,if(#back1=\"\"|#back2=\"\"|#objiconon=\"\"|#objiconoff=\"\"|#objringon=\"\"|#objringoff=\"\"|#border=\"\",1,0))$$lv(theme2,\"\")$$lv(theme3,if(#dbtheme=\"\"|#settheme=\"\",1,0))$$lv(setup1,if(gv(devicetype)=\"DATA\",1,0))$$lv(error,(if(#comm1=1,(if(#error=\"\",#error+\";\")+\"comm,1\"),#comm2=1,(if(#error=\"\",#error+\";\")+\"comm,2\"),#comm3=1,(if(#error=\"\",#error+\";\")+\"comm,3\"),#widget1=1,(if(#error=\"\",#error+\";\")+\"widget,1\"),#widget2=1,(if(#error=\"\",#error+\";\")+\"widget,2\"),#widget3=1,(if(#error=\"\",#error+\";\")+\"widget,3\"),#widget4=1,(if(#error=\"\",#error+\";\")+\"widget,4\"),#template1=1,(if(#error=\"\",#error+\";\")+\"template,1\"),#template2=1,(if(#error=\"\",#error+\";\")+\"template,2\"),#theme1=1,(if(#error=\"\",#error+\";\")+\"theme,1\"),#theme2=1,(if(#error=\"\",#error+\";\")+\"theme,2\"),#setup1=1,(if(#error=\"\",#error+\";\")+\"setup,1\"))))$$lv(error1,tc(split,#error,\";\",0))$$lv(cat1,tc(split,#error1,\",\",0))$$lv(num1,tc(split,#error1,\",\",1))$"
+        "value": "$lv(dbstatus,gv(json/status))$$lv(status,gv(core/tasker/status))$$lv(posid,(\".box2.row1.\"+(#box2maxobj-1)))$$gv(func/jsonobj)$$gv(func/jsontemp)$$gv(func/themecolors)$$gv(func/alignment)$$lv(comm1,if(#status!=\"\",1,0))$$lv(comm2,if(#status!=\"\",1,0))$$lv(comm3,if(#status!=\"\",1,0))$$lv(widget1,if(#tname=\"\"|#ticon=\"\"|#tbox1=\"\"|#trowct=\"\"|#ticopos=\"\"|#tdevct=\"\"|#obid=\"\"|#obtype=\"\"|#obicon=\"\"|#obaction=\"\",1,0))$$lv(widget2,if(#obtype=\"\"|#obonstate=\"\"|#ststate=\"\"|#stobtype=\"\"|#stoutput=\"\"|gv(json/device)=\"\",1,0))$$lv(widget3,if(#template=\"\"|#tpageon=\"\"|#obj=\"\"|#curpage=\"\"|#objfindkey=\"\"|#objkey=\"\"|#entity=\"\"|#entitykey=\"\"|#box1obj=\"\",1,0))$$lv(widget4,\"\")$$lv(template1,if(#obid=0,1,0))$$lv(template2,\"\")$$lv(theme1,if(#back1=\"\"|#back2=\"\"|#objiconon=\"\"|#objiconoff=\"\"|#objringon=\"\"|#objringoff=\"\"|#border=\"\",1,0))$$lv(theme2,\"\")$$lv(theme3,if(#dbtheme=\"\"|#settheme=\"\",1,0))$$lv(setup1,if(gv(devicetype)=\"DATA\",1,0))$$lv(setup2,if(gv(setupmoder)=1,1,0))$$lv(error,(if(#comm1=1,(if(#error=\"\",#error+\";\")+\"comm,1\"),#comm2=1,(if(#error=\"\",#error+\";\")+\"comm,2\"),#comm3=1,(if(#error=\"\",#error+\";\")+\"comm,3\"),#widget1=1,(if(#error=\"\",#error+\";\")+\"widget,1\"),#widget2=1,(if(#error=\"\",#error+\";\")+\"widget,2\"),#widget3=1,(if(#error=\"\",#error+\";\")+\"widget,3\"),#widget4=1,(if(#error=\"\",#error+\";\")+\"widget,4\"),#template1=1,(if(#error=\"\",#error+\";\")+\"template,1\"),#template2=1,(if(#error=\"\",#error+\";\")+\"template,2\"),#theme1=1,(if(#error=\"\",#error+\";\")+\"theme,1\"),#theme2=1,(if(#error=\"\",#error+\";\")+\"theme,2\"),#setup1=1,(if(#error=\"\",#error+\";\")+\"setup,1\"),#setup2=1,(if(#error=\"\",#error+\";\")+\"setup,2\"))))$$lv(error1,tc(split,#error,\";\",0))$$lv(cat1,tc(split,#error1,\",\",0))$$lv(num1,tc(split,#error1,\",\",1))$"
       },
       "func/devjsonrem": {
         "index": 88,
@@ -704,8 +697,8 @@
       "json": {
         "index": 92,
         "type": "FOLDER",
-        "title": "JSON Data",
-        "description": "JSON databases for widget"
+        "title": "json",
+        "description": "LOCKED: JSON databases"
       },
       "json/device": {
         "index": 93,
@@ -733,13 +726,13 @@
         "type": "TEXT",
         "title": "status",
         "description": "Status and error database",
-        "value": "{\"status\": {\"01\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"02\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"03\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"04\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"05\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"06\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"},\"07\": {\"error_name\": \"error1\",\"error_content\": \"Error 1\"}}}"
+        "value": "{\"comm\":{\"1\":{\"error\":\"CouldnotcommunicatewithHA\"},\"2\":{\"error\":\"CouldnotcommunicatewithTasker\"},\"3\":{\"error\":\"Cannotgetstateinformation\"}},\"widget\":{\"1\":{\"error\":\"CannotloadtemplatefromJSON\"},\"2\":{\"error\":\"DeviceStatesJSONerror\"},\"3\":{\"error\":\"Templateinformationismissingorcorrupted\"}},\"template\":{\"1\":{\"error\":\"Widgetcannotfitallicons\"},\"2\":{\"error\":\"Widgetcannotfit2rows\"}},\"theme\":{\"1\":{\"error\":\"Couldnotretrievecolors\"},\"2\":{\"error\":\"Sizing/alignmenterror\"},\"3\":{\"error\":\"ThemeJSONerror\"},},\"setup\":{\"1\":{\"error\":\"Clickthe\\\"Globals\\\"tabtosetupyourwidget\"},\"2\":{\"error\":\"SetupModeEnabled\"}}}"
       },
       "setupmode": {
         "index": 97,
         "type": "SWITCH",
         "title": "setupmode",
-        "description": "Debugging - Enable showing setup data",
+        "description": "Debugging",
         "value": 0
       }
     },
@@ -841,7 +834,7 @@
             "id": "TAYv78pd",
             "type": "A_GLOBAL",
             "params": {
-              "global": "statustimer"
+              "global": "status"
             }
           }
         ]
@@ -1214,8 +1207,7 @@
             "id": "TT9nchCA",
             "type": "T_FORMULA",
             "params": {
-              "formula": "$gv(core/status/setstatus)$",
-              "trigger": "NOT_EMPTY"
+              "formula": "$gv(func/status)$$#comm1$$#comm2$$#comm3$$#widget1$$#widget2$$#widget3$$#widget4$$#template1$$#template2$$#theme1$$#theme2$$#setup1$$#setup2$"
             }
           }
         ],
@@ -1224,7 +1216,7 @@
             "id": "TAwVXxGZ",
             "type": "A_FORMULA",
             "params": {
-              "formula": "$gv(func/status)$$tc(json, #dbstatus, (\".\" + #cat1 + \".\" + #error1 + \".error\"))$"
+              "formula": "$gv(func/status)$$lv(curerror,tc(json,#dbstatus,(\".\"+#cat1+\".\"+#num1+\".error\")))$$if(#curerror!=\"\",#curerror)$"
             }
           },
           {
@@ -1232,13 +1224,6 @@
             "type": "A_GLOBAL",
             "params": {
               "global": "core/status/currentstatus"
-            }
-          },
-          {
-            "id": "TAj1Cwa8",
-            "type": "A_GLOBAL",
-            "params": {
-              "global": "core/status/statustimer"
             }
           }
         ]
@@ -2512,7 +2497,7 @@
               "config_visible": 10
             },
             "internal_formulas": {
-              "config_visible": "$if(gv(core/status/statustimer) = 1, ALWAYS, REMOVE)$"
+              "config_visible": "$if(gv(core/status/status) = 1, ALWAYS, REMOVE)$"
             },
             "config_stacking": "HORIZONTAL_CENTER",
             "position_anchor": "BOTTOMLEFT",

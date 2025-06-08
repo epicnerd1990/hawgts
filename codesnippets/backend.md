@@ -113,23 +113,30 @@ tasker://secondary?action=custom&app=com.samsung.android.app
 
 ###### #####################################
 ###### Flow - Update status
-###### #####################################
-**Trigger:** `On Change` of `$gv(core/status/setstatus)$`
+###### ##################################
+**Trigger:** `On Change` of
+```
+  $gv(func/status)$
+  $#comm1$$#comm2$$#comm3$
+  $#widget1$$#widget2$$#widget3$$#widget4$
+  $#template1$$#template2$
+  $#theme1$$#theme2$
+  $#setup1$$#setup2$
+```
 
 **Action**
 
-###### 1 - Stop If
-`#cat1` or `#error1` = ""
-
-###### 2 - Formula
+###### 3 - Formula
 ```
-$gv(func/status)$
-$tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error"))$
+  $gv(func/status)$
+  $lv(curerror, tc(json, #dbstatus, ("." + #cat1 + "." + #num1 + ".error")))$
+  $if(#curerror != "", #curerror)$
+
 ```
 
 ###### 3 - Set Global Variable `core/status/currentstatus`
 
-###### 4 - Toggle Global Variable `core/status/statustimer`
+###### 4 - Toggle Global Variable `core/status/status`
 
 ###### #####################################
 ###### Status System **45%**
@@ -139,22 +146,21 @@ $tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error"))$
 `$gv(func/status)$`
 ```
   $lv(dbstatus, gv(json/status))$
-  $lv(status, gv(core/tasker/status))
+  $lv(status, gv(core/tasker/status))$
 
   $lv(posid, (".box2.row1." + (#box2maxobj - 1)))$
   $gv(func/jsonobj)$
-
+  $gv(func/jsontemp)$
   $gv(func/themecolors)$
-
-  $lv(comm1, if(#status != "" | #status != "br(tasker, status)", 1, 0))$
-  $lv(comm2, if(#status != "" | #status != "br(tasker, status)", 1, 0))$
-  $lv(comm3, if(#status != "" | #status != "br(tasker, status)", 1, 0))$
+  $gv(func/alignment)$
+  $lv(comm1, if(#status != "", 1, 0))$
+  $lv(comm2, if(#status != "", 1, 0))$
+  $lv(comm3, if(#status != "", 1, 0))$
   $lv(widget1,
       if(#tname   = "" | #ticon   = "" | #tbox1   = "" |
          #trowct  = "" | #ticopos = "" | #tdevct  = "" |
          #obid    = "" | #obtype  = "" | #obicon  = "" |
-         #obaction= "" | #obcmd   = "" | #obdata  = "" |
-         #obparam = "",
+         #obaction= "",
         1, 0
   ))$
   $lv(widget2,
@@ -180,6 +186,7 @@ $tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error"))$
   $lv(theme2,    "")$
   $lv(theme3, if(#dbtheme = "" | #settheme = "", 1, 0))$
   $lv(setup1, if(gv(devicetype) = "DATA", 1, 0))$
+  $lv(setup2, if(gv(setupmoder) = 1, 1, 0))$
 
   $lv(error,
     (if(#comm1 = 1,     (if(#error = "", #error + ";") + "comm,1"),
@@ -193,13 +200,14 @@ $tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error"))$
         #template2 = 1, (if(#error = "", #error + ";") + "template,2"),
         #theme1 = 1,    (if(#error = "", #error + ";") + "theme,1"),
         #theme2 = 1,    (if(#error = "", #error + ";") + "theme,2"),
-        #setup1 = 1,    (if(#error = "", #error + ";") + "setup,1")
+        #setup1 = 1,    (if(#error = "", #error + ";") + "setup,1"),
+        #setup2 = 1,    (if(#error = "", #error + ";") + "setup,2")
   )))$
 
   $lv(error1, tc(split, #error,  ";", 0))$
   $lv(cat1,   tc(split, #error1, ",", 0))$
   $lv(num1,   tc(split, #error1, ",", 1))$
-
+$#error$
 ```
 
 ###### #####################################

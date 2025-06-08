@@ -16,7 +16,7 @@ This page contains information that will help you to contribute to the project o
  Instructions for creating a custom theme
  1. Create a theme JSON. If you're using a desktop editor, [theme.json](theme.json) is identical to `json/theme` included in the widget
 > Use the color generator in the settings or see the [Kustom reference for si()](https://docs.kustom.rocks/docs/reference/functions/si/) for generated colors
- 2. Copy the theme JSON into the global `json/theme`. Only copy your "ThemeName" array and paste it into the blank space at the bottom of the JSON (leaving the remaining brackets below the insertation)
+ 2. Copy the theme JSON into the global `json/theme`. Only copy your "ThemeName" array and paste it into the blank space at the bottom of the JSON (leaving the remaining brackets below the insertion)
  3. Edit the `settheme` global and append the new theme name to the end. This must match the name used in the JSON exactly!
  `0##OneUI,1##Material,2##Basic` > `0##OneUI,1##Material,2##Basic,3##ThemeName`
  4. Save everything, then select your custom theme from the `settheme` menu
@@ -65,11 +65,11 @@ This page contains information that will help you to contribute to the project o
 
 ## Custom template
 Templates are used to indicate what type of interface to present, based on the device chosen and your prefered style. They control icons, layouts, rows and commands send to HA. See the JSON below for detailed specifications. Instructions for creating a custom template:
-> A desktop editor is highly reccommended for editing large amounts of code like this. See [editing Kode from your desktop](https://docs.kustom.rocks/docs/tutorials/Edit_kode_desktop/) for more information
+> A desktop editor is highly recommended for editing large amounts of code like this. See [editing Kode from your desktop](https://docs.kustom.rocks/docs/tutorials/Edit_kode_desktop/) for more information
 
 1. Open the template JSON. It can be found in the global `json/template` or [templates.json](templates.json) (these are identical)
 2. Find an existing template that is similar to what you want and make a copy of the array. Assign "device_type" to `custom` and name templates accordingly (see below reference JSON)
-3. Append your theme JSON into the global `json/theme`. Only copy your template array and paste it into the blank space at the bottom of the JSON (leaving the remaining brackets below your insertation)
+3. Append your theme JSON into the global `json/theme`. Only copy your template array and paste it into the blank space at the bottom of the JSON (leaving the remaining brackets below the insertion)
 3. Save everything, then select `custom` template from `devicetype`
 4. Select the Template number in `templateselect` that matches the name you assigned
 5. Save everything again
@@ -83,7 +83,7 @@ Templates are used to indicate what type of interface to present, based on the d
     "objects": {                                  // "objects" - list of controls/commands
       "control_namea": {                          // Name of control/command
         "icon": "icon-name",                      // Icon name from hawgts icon pack
-        "type": "action,page",                    // Control - "action" > Tasker, future "template"
+        "type": "action,page",                    // Control - "action" > Tasker, "page" internal
         "onstate": "#>#,on,off,page#",            // Matches "active" Device state from HA or `curpage`
         "action": "light,on,off,toggle,template", // Indicate which action to run when activated
         "cmd": "",                                // Used internally for light control (brightness and color)

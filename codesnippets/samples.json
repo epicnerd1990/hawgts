@@ -602,6 +602,9 @@
   "setup": {
     "1": {
       "error": "Click the \"Globals\" tab to set up your widget"
+    },
+    "2": {
+      "error": "Setup Mode Enabled"
     }
   }
 }
