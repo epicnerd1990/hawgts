@@ -1,5 +1,5 @@
 # HAWGTS Globals
-The *Global* tab in the Kustom editor is configured as a "Settings Menu" for this widget. Always check the settings first before editing the widget interface directly. Below is a summary of the setting folders and a list of every setting available (same options and order as *Global* tab) for reference. Also see [advanced configuration](json.md) for additional details
+The *Global* tab in the Kustom editor is configured as a "Settings Menu" for this widget. Always check the settings first before editing the widget interface directly. Below is a summary of the setting folders and a list of every setting available (same options and order as *Global* tab) for reference. Also see [advanced configuration](advanced.md) for additional details
 
 - Initial configuration
     - Set device type, then toggle through the templates to see which one works for your layout and launcher
@@ -15,10 +15,10 @@ The *Global* tab in the Kustom editor is configured as a "Settings Menu" for thi
     - `colors/coloredit` - A color editor that allows you to tweak the colors that your current widget theme uses, such as darkening the icon color or adding transparency. It can also extract colors to use from your wallpaper
         - Advanced users: Color editor uses the Kustom [si(wpcolor#)](https://docs.kustom.rocks/docs/reference/functions/si/) function to get wallpaper colors and [ce(sat/lum/comp)](https://docs.kustom.rocks/docs/reference/functions/ce/) to modify the colors
 - `entities` - Set your entity here, and set up to 4 if you use a multi-device template
-- `core` and `func` - Do not edit values in these folders, they run the backend. View the [function API](json.md#2-making-modifications-to-the-widget) section of the readme
-- `json` - Widget databases - for advanced users only. Create your own theme or template for ultimate customization. See [JSON.md](json.md) for details.
+- `core` and `func` - Do not edit values in these folders, they run the backend. View the [function API](advanced.md#2-making-modifications-to-the-widget) section of the readme
+- `json` - Widget databases - for advanced users only. Create your own theme or template for ultimate customization. See [JSON.md](advanced.md) for details.
 
-> For advanced layouts, colors and icons use, create your own [device templates](json.md#custom-template) or [theme](json.md#create-a-custom-theme). If you do this, please add the JSON as a pull request to improve the widget options for everyone!
+> For advanced layouts, colors and icons use, create your own [device templates](advanced.md#custom-template) or [theme](advanced.md#create-a-custom-theme). If you do this, please add the JSON as a pull request to improve the widget options for everyone!
 
 
 ### Global variable table

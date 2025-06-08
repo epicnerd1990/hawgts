@@ -116,7 +116,7 @@ UTF Hex       REGEX                  KWGT
 - Confirm icon pack is up to date with latest icon list
 - KWGT > TASKER - Create "custom" service call **0%**
     - Use HA templates for simplicity?
-    - Populate [](docs/json.md#2-kwgt--tasker)
+    - Populate [](docs/advanced.md#2-kwgt--tasker)
 - Set up and build Tasker plugin **0%**
     - Simply merge everything into one downloadable group? Taskernet
     - Tasker - "toggle" error

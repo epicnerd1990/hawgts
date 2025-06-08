@@ -2,7 +2,7 @@
 
 A customizable and themable [Home Assistant](https://www.home-assistant.io) (HA) widget for Android Launchers. Designed to be more customizable then the widgets included with the Home Assistant android app to blend into any home screen. Choose from preset themes and layouts to control your smart home the way you want with this icon-based widget
 
-HAWGTS uses the powerful [Kustom](https://docs.kustom.rocks) customization suite and [Tasker](https://tasker.joaoapps.com/index.html), the best automation app for Android, to facilitate customization and communication to HA. The design of HAWGTS attempts to mimimize the learning curve and time needed by these complex apps by offering most customization through Kustom [**Globals**](/docs/globals.md) (settings). For advanced users or those already familiar with Kustom and Tasker, see [custom themes](/docs/json.md#create-a-custom-theme), [device templates](/docs/json.md#custom-template) and [**Globals**](/docs/globals.md) in addition to the information below
+HAWGTS uses the powerful [Kustom](https://docs.kustom.rocks) customization suite and [Tasker](https://tasker.joaoapps.com/index.html), the best automation app for Android, to facilitate customization and communication to HA. The design of HAWGTS attempts to mimimize the learning curve and time needed by these complex apps by offering most customization through Kustom [**Globals**](/docs/globals.md) (settings). For advanced users or those already familiar with Kustom and Tasker, see [custom themes](/docs/advanced.md#create-a-custom-theme), [device templates](/docs/advanced.md#custom-template) and [**Globals**](/docs/globals.md) in addition to the information below
 
 (2) The original concept for this widget was a HA dashboard on the wall using an old android phone. I wanted to put all of my commonly controlled devices on the screen and mount it next to a light switch to use as a smart home hub. I prefered this look over just leaving the dashboard open. I also wanted to be able to control my phone and smarthome from widgets of the same style when I was using my main device, which is heavily customized and themed. Once I realized how much work this project would entail, I decided to go all-in and make it as customizable and fluid as it could, ensuring HA enthusists could use it without having to learn "Kustom" coding like I did.
 
@@ -65,7 +65,7 @@ HAWGTS prioritizes style customization and fills the niche of those wanting to c
 Using the Kustom editor, all of the parameters set from HAWGTS can be overridden. This can be done by going to the object you want to edit in the "Items" tab. If an object parameter has a calculator or global icon to the right of it, it is pre-configured as part of HAWGTS. This configuration can be modified by tapping the item, or remove it by selecting the checkbox and touching the calculator or globe icon in the top right of the editor to cancel it out. Once the HAWGTS configuration is removed, the option can be edited freely
 
 #### Changing Icons
-HAWGTS includes some "Material" icons (what HA uses). They include most common HA devices. While the tempalates are pre-configured for most configurations, some may want to use alternative Material icons, or even your own. Icons can be changed by following the instructions [above](#changing-settings-not-included-in-globals-menu) to override the icon set by the template on the object. The icon you'd like can now be selected using the Kustom icon picker. For advanced users, [create your own template](/docs/json.md#custom-template) and set icons to objects directly
+HAWGTS includes some "Material" icons (what HA uses). They include most common HA devices. While the tempalates are pre-configured for most configurations, some may want to use alternative Material icons, or even your own. Icons can be changed by following the instructions [above](#changing-settings-not-included-in-globals-menu) to override the icon set by the template on the object. The icon you'd like can now be selected using the Kustom icon picker. For advanced users, [create your own template](/docs/advanced.md#custom-template) and set icons to objects directly
 
 #### Padding and alignment
 Some launchers allow you to remove additional padding to allow widgets to touch, and placement of widgets on half-grid locations. Look at the settings menu for your launcher to see if this option is available. Within the widget, you can make many padding and alignment adjustments in the "theme" folder. See [**Globals**](/docs/globals.md#global-variable-table) for specifics.
@@ -76,7 +76,7 @@ This widget can be used without HA. The main reason for this is if you want to s
 1. Override the object settings as shown [above](#changing-settings-not-included-in-globals-menu)
 2. Change the "Touch" tab to control whatever you'd like, using Kustoms many options. To do two things at once, two different "Touch" commands can be set.
 
-For more power and integration, you can [send custom commands to Tasker directly](/docs/json.md#1-custom-kwgt--tasker-commands) and write actions there.
+For more power and integration, you can [send custom commands to Tasker directly](/docs/advanced.md#1-custom-kwgt--tasker-commands) and write actions there.
 
 
 ## Building process
