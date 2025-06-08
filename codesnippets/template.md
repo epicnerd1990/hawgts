@@ -261,6 +261,8 @@ Only call the local variables with no prefix for valid data.
   $lv(wgtopa,     (if(#gwgtopa,    (if((#gwgtopa * 1)    <= 0, #twgtopa,   #gwgtopa)),    #twgtopa)))$
 
   $lv(squircle, (#iconsize / 70) * 100)$
+  $lv(colorcount, if(#ringrnd = 1, tc(reg, fl(0, 20, "i+1", gv(core/randomring), ","), "[\d+,]*,(\d+),*", "$1")))$
+  $lv(colorcheck, if(#colorcount ~= "[,*]" & #ringrnd = 1, 0, #colorcount))$
 ```
 
 ###### #####################################
@@ -417,14 +419,12 @@ Only call the local variables with no prefix for valid data.
 ###### Rings
 - paint_color
 ```
-  $lv(posid, ".box2.row2.0")$
+  $lv(posid, ".box1.row2.1")$
   $gv(func/jsonstate)$
   $gv(func/themecolors)$
-  $lv(colorcount, if(#ringrnd = 1, tc(reg, fl(0, 40, "i+1", gv(core/randomring), ","), "[\d+,]*,(\d+),*", "$1")))$
+  $if(#ringcolor = "", lv(ringcolor, ce(tc(json, #dbtheme, (".randomring." + mu(rnd, 0, #colorcount))), sat, 20)))$
 
-  $if(#ringcolor = "" & #ringrnd = 1, lv(ringcolor, ce(tc(json, #dbtheme, (".randomring." + mu(rnd, 0, #colorcount))), sat, 20)))$
-
-  $if(#objringoff = "random" & #ringrnd = 1, #ringcolor,
+  $if(#objringoff = "random" & #ringrnd = 1 & #colorcheck != 0, #ringcolor,
       if(#stoutput = 1, #objringon,
          #objringoff)
   )$

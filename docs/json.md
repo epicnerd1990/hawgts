@@ -1,20 +1,30 @@
-# Modifying HAWGTS JSON
-Use these instructions to create custom themes and templates for your widget. Refer to [globals.md](globals.md) for global names and values
+# Advanced widget configuration
 
-## Custom theme
+This page contains information that will help you to contribute to the project or create advanced widgets that go beyond the default configuration
+
+## Useful information and links
+- Kustom and KWGT education
+    - Kustom and "Kode" offical [documentation](https://docs.kustom.rocks)
+    - A [detailed guide](https://theothertored.github.io/kode-guide/) to understanding "Kode" by contributer [tored](https://github.com/theothertored)
+    - Kustom [discord group](https://kustom.rocks/discord) for Kustom and Kode support and tutorials
+- Tasker education
+    - Official [userguide](https://tasker.joaoapps.com/userguide/en/index.html) that matches `?` info in Tasker
+- See [globals reference](/docs/globals.md) for what each **Global**/setting does
+
+
+## Create a custom theme
  Instructions for creating a custom theme
- 1. Create a theme JSON using the data below
-    - Use the color generator in the settings or see the [Kustom Reference for si()](https://docs.kustom.rocks/docs/reference/functions/si/) for generated colors
-    - See [theme.json](theme.json) for a human-readable version of `json/theme` for easier editing
- 2. Append your theme JSON into the global `json/theme`. Paste your "ThemeName" array into the blank space at the bottom of the JSON, leaving the remaining brackets below your insertation
- 3. Edit `settheme` and append your theme name to the end. This must match the name used in the JSON exactly!
+ 1. Create a theme JSON. If you're using a desktop editor, [theme.json](theme.json) is identical to `json/theme` included in the widget
+> Use the color generator in the settings or see the [Kustom reference for si()](https://docs.kustom.rocks/docs/reference/functions/si/) for generated colors
+ 2. Copy the theme JSON into the global `json/theme`. Only copy your "ThemeName" array and paste it into the blank space at the bottom of the JSON (leaving the remaining brackets below the insertation)
+ 3. Edit the `settheme` global and append the new theme name to the end. This must match the name used in the JSON exactly!
  `0##OneUI,1##Material,2##Basic` > `0##OneUI,1##Material,2##Basic,3##ThemeName`
- 4. Save everything and select your custom theme from `settheme`
+ 4. Save everything, then select your custom theme from the `settheme` menu
  5. Export modified widget to use your changes on multiple widgets
 
-> If you're an advanced user and want to add custom options to the JSON, edit `func/theme` to add support for new JSON keys and features
+> If you're an advanced user and want to add custom options to the JSON, edit `func/theme` to add support for new JSON keys and features and see [theme information](#theme-and-color-functions)
 
-#### Theme syntax reference
+### Theme syntax reference
 ```
 {
   "ThemeName": {
@@ -52,57 +62,21 @@ Use these instructions to create custom themes and templates for your widget. Re
 }
 ```
 
-#### Working example of the "Material" theme
-```
-{
-  "Material": {
-    "border_width": 0,
-    "corner_radius": 2,
-    "pad_widget": 10,
-    "pad_obj": 10,
-    "pad_sides": 16,
-    "ring_shape": "CIRCLE",
-    "ring_percent": 25,
-    "dev_ico_ring": 1,
-    "wgt_opacity": 50,
-    "shadow": 1,
-    "colors": {
-      "light": {
-        "back_1": "syscn1, 90",
-        "back_2": "syscn2, 90",
-        "obj_icon_off": "sysca2, 30",
-        "obj_ring_off": "sysca2, 90",
-        "obj_icon_on": "sysca1, 100",
-        "obj_ring_on": "sysca1, 40",
-        "border": ""
-      },
-      "dark": {
-        "back_1": "syscn1, 22",
-        "back_2": "syscn2, 22",
-        "obj_icon_off": "sysca2, 90",
-        "obj_ring_off": "sysca2, 30",
-        "obj_icon_on": "sysca1, 20",
-        "obj_ring_on": "sysca1, 80",
-        "border": ""
-      }
-    }
-  }
-}
-```
 
 ## Custom template
-Instructions for creating a custom template
-1. Create a template JSON using the data below
-    - Add it to the `custom` array and name it `custom1-6`
-    - See [template.json](template.json) for a human-readable version of `template/theme` for easier editing
- 2. Append your theme JSON into the global `json/theme`. Paste your template into the blank space at the bottom of the JSON, leaving the remaining brackets below your insertation
-3. Save everything and select `custom` template from `devicetype`
-4. Select the Template number in `templateselect` that matches your
+Templates are used to indicate what type of interface to present, based on the device chosen and your prefered style. They control icons, layouts, rows and commands send to HA. See the JSON below for detailed specifications. Instructions for creating a custom template:
+> A desktop editor is highly reccommended for editing large amounts of code like this. See [editing Kode from your desktop](https://docs.kustom.rocks/docs/tutorials/Edit_kode_desktop/) for more information
+
+1. Open the template JSON. It can be found in the global `json/template` or [templates.json](templates.json) (these are identical)
+2. Find an existing template that is similar to what you want and make a copy of the array. Assign "device_type" to `custom` and name templates accordingly (see below reference JSON)
+3. Append your theme JSON into the global `json/theme`. Only copy your template array and paste it into the blank space at the bottom of the JSON (leaving the remaining brackets below your insertation)
+3. Save everything, then select `custom` template from `devicetype`
+4. Select the Template number in `templateselect` that matches the name you assigned
 5. Save everything again
 
-> If you're an advanced user and want to add custom options to the JSON, edit `func/template` to add support for new JSON keys and features
+> If you're an advanced user and want to add custom options to the JSON, edit `func/template` to add support for new JSON keys and features and reference [function information](#template-and-object-information) below
 
-#### Template syntax reference
+### Template syntax reference
 ```
 {
   "device_type": {                                // Device category
@@ -182,266 +156,89 @@ Instructions for creating a custom template
 }
 ```
 
-#### Working example of a "light" device with 3 templates
-```
-{
-  "light": {
-    "objects": {
-      "bedroom": {
-        "icon": "mdi-room-king-bed",
-        "type": "page",
-        "onstate": "page1",
-        "action": "page",
-        "cmd": "",
-        "data": "1"
-      },
-      "office": {
-        "icon": "mdi-room-desk",
-        "type": "page",
-        "onstate": "page2",
-        "action": "page",
-        "cmd": "",
-        "data": "2"
-      },
-      "livingroom": {
-        "icon": "mdi-room-sofa-single-outline",
-        "type": "page",
-        "onstate": "page3",
-        "action": "page",
-        "cmd": "",
-        "data": "3"
-      },
-      "foyer": {
-        "icon": "mdi-room-coat-rack",
-        "type": "page",
-        "onstate": "page4",
-        "action": "page",
-        "cmd": "",
-        "data": "4"
-      },
-      "power": {
-        "icon": "mdi-power",
-        "type": "action",
-        "onstate": "",
-        "action": "toggle",
-        "cmd": "",
-        "data": ""
-      },
-      "controlapp": {
-        "icon": "app-home-assistant",
-        "type": "action",
-        "onstate": "",
-        "action": "",
-        "cmd": "",
-        "data": ""
-      },
-      "color": {
-        "icon": "mdi-palette",
-        "type": "action",
-        "onstate": "",
-        "action": "color",
-        "cmd": "color",
-        "data": "#FFFFFF"
-      },
-      "off": {
-        "icon": "mdi-lightbulb-off-outline",
-        "type": "action",
-        "onstate": "off",
-        "action": "off",
-        "cmd": "",
-        "data": ""
-      },
-      "low": {
-        "icon": "mdi-lightbulb-on-30",
-        "type": "action",
-        "onstate": "1>75",
-        "action": "light",
-        "cmd": "brightness",
-        "data": "74"
-      },
-      "med": {
-        "icon": "mdi-lightbulb-on-60",
-        "type": "action",
-        "onstate": "76>200",
-        "action": "light",
-        "cmd": "brightness",
-        "data": "150"
-      },
-      "high": {
-        "icon": "mdi-lightbulb-on",
-        "type": "action",
-        "onstate": "200>255",
-        "action": "light",
-        "cmd": "brightness",
-        "data": "255"
-      },
-      "on": {
-        "icon": "mdi-lightbulb-on",
-        "type": "action",
-        "onstate": "on",
-        "action": "light",
-        "cmd": "brightness",
-        "data": "255"
-      }
-    },
-    "light1": {
-      "name": "Light - 2-4 Page/Device, 2 Row",
-      "note": "Testing Template V3",
-      "icon": "material-ico-wb-incandescent-mod",
-      "page": 1,
-      "box1_size": 2,
-      "row_count": 2,
-      "device_icon_pos": 1,
-      "device_count": "2-4",
-      "page1": {
-        "box1": {
-          "row1": {
-            "0": "bedroom",
-            "1": "office"
-          },
-          "row2": {
-            "0": "livingroom",
-            "1": "foyer"
-          }
-        },
-        "box2": {
-          "row1": {
-            "0": "power",
-            "1": "controlapp",
-            "2": "color"
-          },
-          "row2": {
-            "0": "off",
-            "1": "low",
-            "2": "med",
-            "3": "high"
-          }
-        }
-      },
-      "page2": {
-        "box1": {
-          "row1": {
-            "0": "bedroom",
-            "1": "office"
-          },
-          "row2": {
-            "0": "livingroom",
-            "1": "foyer"
-          }
-        },
-        "box2": {
-          "row1": {
-            "0": "power",
-            "1": "controlapp",
-            "2": "color"
-          },
-          "row2": {
-            "0": "off",
-            "1": "low",
-            "2": "med",
-            "3": "high"
-          }
-        }
-      },
-      "page3": {
-        "box1": {
-          "row1": {
-            "0": "bedroom",
-            "1": "office"
-          },
-          "row2": {
-            "0": "livingroom",
-            "1": "foyer"
-          }
-        },
-        "box2": {
-          "row1": {
-            "0": "power",
-            "1": "controlapp",
-            "2": "color"
-          },
-          "row2": {
-            "0": "off",
-            "1": "low",
-            "2": "med",
-            "3": "high"
-          }
-        }
-      },
-      "page4": {
-        "box1": {
-          "row1": {
-            "0": "bedroom",
-            "1": "office"
-          },
-          "row2": {
-            "0": "livingroom",
-            "1": "foyer"
-          }
-        },
-        "box2": {
-          "row1": {
-            "0": "power",
-            "1": "controlapp",
-            "2": "color"
-          },
-          "row2": {
-            "0": "off",
-            "1": "low",
-            "2": "med",
-            "3": "high"
-          }
-        }
-      }
-    },
-    "light2": {
-      "name": "Light - 0 Page, 1 Device, 2 Row",
-      "note": "Testing Template V3",
-      "icon": "material-ico-wb-incandescent-mod",
-      "page": 0,
-      "box1_size": 2,
-      "row_count": 2,
-      "device_icon_pos": 2,
-      "device_count": 1,
-      "box2": {
-          "row1": {
-            "0": "power",
-            "1": "controlapp",
-            "2": "color"
-          },
-          "row2": {
-            "0": "off",
-            "1": "low",
-            "2": "med",
-            "3": "high"
-          }
-      }
-    },
-    "light3": {
-      "name": "Light - 0 page, 1 Device, 1 Row",
-      "note": "Testing Template V3",
-      "icon": "material-ico-wb-incandescent-mod",
-      "page": 0,
-      "box1_size": 2,
-      "row_count": 1,
-      "device_icon_pos": 1,
-      "device_count": 1,
-      "box1": {
-          "row1": {
-            "0": "controlapp",
-            "1": "color"
-          }
-      },
-      "box2": {
-          "row1": {
-            "0": "off",
-            "1": "low",
-            "2": "med",
-            "3": "high"
-          }
-      }
-    }
-  }
-}
 
-```
+## (2) KWGT \> Tasker
+Currently, HAWGTS uses Taskers [secondary app uri](https://www.youtube.com/watch?v=37afVpb8R_8) interface to send commands. It uses a **Flow** to process the touch command of the widget, then send the URI with the information to Tasker.
+
+Syntax:  `tasker://secondary?service_call=var&entity_id=var&parameters=var:100`  
+Example: `tasker://secondary?service_call=light&entity_id=light.bedroom_lights&parameters=brightness:125`
+
+- `service_call`: light, on, off, toggle, template, custom. [Set by `#obaction`](#template-and-object-information)
+- `entity_id`: entity to control
+- `parameters`: Optional. Only used for following service calls: light, template, custom
+    - `brightness`: "light" only, 0-255 range
+    - `template`: Send a HA template command directly from widget
+    - `custom`: Send a custom command to Tasker for any use
+
+
+To use the `custom` service call, you will need to configure Tasker directly. Open the Tasker HAWGTS plugin you installed during your setup. Inside the task labelled "command", there is a space for you to insert custom code to run. You can also include additional variables to process in `parameters` if needed
+
+To use a HA template, insert the template into [`#obdata`](#template-and-object-information) when building your template
+
+## (1) Tasker > HA
+
+The HAWGTS tasker plugin is a modified version of [Taskers HA plugin](https://tasker.joaoapps.com/home_automation.html). The HAWGTS version removes unneeded sections and adds HAWGTS-specific features in.
+
+
+## Making modifications to HAWGTS
+If you wish to contribute or modify the widget, the following information will help and allow you to tap into the widget backend. Please also view the documents included in [/codesnippets](../codesnippets/) as they contain all the core widget code and specifications. They're designed to allow code to be modified in an IDE like VSCODE. The below information is basic and requires knowledge of Kustom and Tasker. See [useful information](#useful-information) at the top for links to Kode and Tasker documentation and tutorials.
+
+### Basic Kustom notes
+As a scripting language, Kustom "Kode" doesn't support custom functions globally or any form of function import. However, one can create their own "global functions" by declaring variables inside of a global variable, and then calling that variable in the same way one would import a class into code. In Kode, there are global variables `$gv(varName)$` and local variables `$lv(varName, value)$`. Global variables (from your **Globals** tab) cannot be set inside the code, but local variables can. `#varName` will display the value of a local variable. These can be used anywhere in the widget. HAWGTS contains some "Global Functions" that you can use to get data from the theme, template or device databases. Kode can be used in text and formula fields, as long as its surrounded by `$`.
+
+Another main feature utilized in Kustom for this widget is **Flows**, which are located on the tab next to **Globals**. Flows function in a way similar to Tasker "actions". These are automated groups of functions that are preformed in order. They have the ability to call and write variables, download data from a site and output data in many ways. These are not documented in the same way as the [**Globals**](/docs/globals.md) are, but are pretty easy to understand if you view them in the editor.
+
+### Theme and color functions
+Sample: `$gv(func/theme)$$#border$` = border color
+- See [theme JSON](#create-a-custom-theme) for key and variable information
+- Append "t" to function name to force JSON data or "g" to force global data. Otherwise, use normal priority (eg `#border` or `#tborder`)
+
+| `theme.json`                     |`func/theme`        |
+|----------------------------------|--------------------|
+| .theme.border_width              | #border            |
+| .theme.corner_radius             | #radius            |
+| .theme.pad_widget                | #padwgtver         |
+| .theme.pad_widget                | #padwgthor         |
+| .theme.pad_obj                   | #padobjhor         |
+| .theme.pad_obj                   | #padobjver         |
+| .theme.pad_sides                 | #padobjside        |
+| .theme.ring_shape                | #ringsha           |
+| .theme.ring_percent              | #objsize           |
+| .theme.ring_random               | #objsize           |
+| .theme.wgt_opacity               | #wgtopa            |
+| .theme.shadow                    | #shadow            |
+|                                  | `func/themecolors` |
+| .theme.colors.(d/l).back_1       | #back1             |
+| .theme.colors.(d/l).back_2       | #back2             |
+| .theme.colors.(d/l).obj_icon_on  | #objiconon         |
+| .theme.colors.(d/l).obj_icon_off | #objiconoff        |
+| .theme.colors.(d/l).obj_ring_on  | #objringon         |
+| .theme.colors.(d/l).obj_ring_off | #objringoff        |
+| .theme.colors.(d/l).border       | #border            |
+
+### Template and object information
+Sample: `$lv(posid, ".box2.row1.0")$$gv(func/jsonobj)$$#obicon$` = icon for this object
+- `func/jsontemp` returns values specific to the chosen template
+- `func/jsonobj` returns values specific each object. Must set `#posid` (as per sample) to get the data from the correct object before calling the global variable
+
+| `template.json`                |`func/jsontemp` |
+|--------------------------------|----------------|
+| .(dev).(type1).name            | #tname         |
+| .(dev).(type1).icon            | #ticon         |
+| .(dev).(type1).box1_size       | #tbox1         |
+| .(dev).(type1).row_count       | #trowct        |
+| .(dev).(type1).device_icon_pos | #ticopos       |
+| .(dev).(type1).device_count    | #tdevct        |
+|                                | `func/jsonobj` |
+| \<object exists\>              | #obid          |
+| .(dev).objects.type            | #obtype        |
+| .(dev).objects.icon            | #obicon        |
+| .(dev).objects.action          | #obaction      |
+| .(dev).objects.cmd             | #obcmd         |
+| .(dev).objects.data            | #obdata        |
+| \<#obcmd and/or #obdata\>      | #obparam       |
+
+### Current state data
+Sample: `$lv(posid, ".box2.row1.0")$$gv(func/jsonstate)$$#stoutput$`
+- `#stoutput` returns a simple 0 or 1 indicating if the device state matches the "onstate" value in the template JSON. Must set `#posid` (as per sample) to get the data from the correct object before calling the global variable
+

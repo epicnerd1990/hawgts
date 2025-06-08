@@ -590,7 +590,7 @@
   },
   "theme": {
     "1": {
-      "error": "Could not retrieve system colors"
+      "error": "Could not retrieve colors"
     },
     "2": {
       "error": "Sizing/alignment error"

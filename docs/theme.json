@@ -25,7 +25,7 @@
         "back_1": "syscn1, 22",
         "back_2": "syscn2, 22",
         "obj_icon_off": "sysca2, 90",
-        "obj_ring_off": "sysca2, 30",
+        "obj_ring_off": "random",
         "obj_icon_on": "sysca1, 20",
         "obj_ring_on": "sysca1, 80",
         "border": "#EBEBEB"

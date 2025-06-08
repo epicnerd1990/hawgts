@@ -103,64 +103,37 @@ UTF Hex       REGEX                  KWGT
 - `json/theme` and `json/template`
     - 2 blank lines at bottom of JSON for easy user addition - center of editor
 - Rename all globals to be edit by users to 9? chars again
-
-
-###### #####################################
-###### TO-DO - Tasks to complete for V1
-###### #####################################
-- Complete Readme **60%**
-    - ~~"globals.md" + "json.md"~~
-    - Make readme easier to understand
-- Look at YAML for lists/notes?
-- Fix and set up favourite formulas in KWGT before starting Media Control Widget **50%**
-- Confirm icon pack is up to date with latest icon list
-- Create official build process - "build.md"?
-    - Create script that creates a "globals.md" chart with name and description imported from json
-    - Reference "Dev version > Release version" list above
-- Finish Features below
-
-
-###### #####################################
-###### TO-DO - Features to complete for V1
-###### #####################################
-- Finish implementing Templates V3 and alignment system cleanup **90%**
-    - Complete templates for all devices **10%**
-    - "House Security"?
-- JSON System completion **70%**
-    - Look into file-based JSON template
-    - Allow user to select their own custom JSON using flow and file picker?
-    - Document the JSON syntax on github and users can append to the template json for custom layouts.
-        - Provide basic samples and a copy of json files for reference
-    - Could use "Send Data" option in flows or WebGet()
-    - File permissions?
-- KWGT > TASKER - Create "custom" service call **0%**
-    - Use HA templates for simplicity?
-- Set up and build Tasker plugin **0%**
-    - Simply merge everything into one downloadable group? Taskernet
-    - Tasker - "toggle" error
-    - Make state updates more effective and work in more situations
-        - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
 - Final review of code
     - Go through everything and ensure everything works in all scenarios
     - Slim down List Global code by using the index# directly to save excess local variables in functions
     - Test config and operation by following readme on multiple devices and launchers
     - Catch any stray fixed values in "preset.json"
-    - ~~Review all description tags for globals~~
-    - ~~Group configuration options in folders/subfolders more~~
+
+
+###### #####################################
+###### TO-DO - Features to complete for V1
+###### #####################################
+- Confirm icon pack is up to date with latest icon list
+- KWGT > TASKER - Create "custom" service call **0%**
+    - Use HA templates for simplicity?
+    - Populate [](docs/json.md#2-kwgt--tasker)
+- Set up and build Tasker plugin **0%**
+    - Simply merge everything into one downloadable group? Taskernet
+    - Tasker - "toggle" error
+    - Make state updates more effective and work in more situations
+        - Perhaps use Tasker to regularly check the current state of connected entities and update widget accordingly?
+    - Configure "template" and "custom" service calls
 - Flow at start to check widget size ratio
     - If its a single row, make device icon same size as regular icons? 1:8 ratio and below?
     - Check iconsize - wgtheight and resize icons if less then 10% is showing
 
 
 ###### #####################################
-###### TO-DO - Current
+###### TO-DO - Loose Ends/low priority
 ###### #####################################
-- `templateinfo` Flow
-    - Create a for loop for `ntwgtsize`?
-    - Connect to status system?
-    - Merge `templateinfo` and `templatename`??
 - `template.json` database creation **10%**
     - Most of "light" and first couple "climate" templates are complete
+    - "House Security"?
 - Readme: "HA" > "Home Assistant"? or "HASS"?
 - Device and App icons
     - Tasker: KWGT launch and launch to entity problems
@@ -171,6 +144,18 @@ UTF Hex       REGEX                  KWGT
     - Get AI to generate "template.json" outline and base content for editing
         - Add more project-specific prompt info? Add reference to readme.md?
         - Ensure `<device>.objects` is populated based on globallists.md
+
+
+###### #####################################
+###### TO-DO - Current
+###### #####################################
+- Complete Readme **80%**
+    - ~~"globals.md" + "json.md"~~
+    - ~~Make readme easier to understand~~
+- `templateinfo` Flow
+    - Create a for loop for `ntwgtsize`?
+    - Connect to status system?
+    - Merge `templateinfo` and `templatename`??
 - Themes
     - `settheme` > `theme` (conflict with `theme/`?) and `devicetype` > `device`?
     - Shadows work but seem to be trimmed at corners - launcher?
@@ -188,12 +173,14 @@ UTF Hex       REGEX                  KWGT
         - Create "setup" template?
         - Include link to the github readme?
     - Arrow to direct user to "Globals" tab?
+- `json.md` > `advanced.md`?
 
 ###### #####################################
 ###### Completed Tasks
 ###### #####################################
 - Theme system overhaul and upgrade
-    - 
+    - "Pastel" OneUI feature to be expanded to random color option for any theme
+    - ~~Fix ringsize in OneUI? Does this still work?~~
 - "Status" system
     - `Create and populate `func/status` from backend.md`
     - ~~Update globals.md~~
@@ -218,6 +205,10 @@ UTF Hex       REGEX                  KWGT
 - json.md #2 - add suggestion on best way to do this
 - Include a theme.json and template.json in /docs and link to json.md
 - Move service global folders to bottom from top
+- ~~Review all description tags for globals~~
+- ~~Group configuration options in folders/subfolders more~~
+- ~~Document the JSON syntax on github and users can append to the template json for custom layouts~~
+- ~~Provide basic samples and a copy of json files for reference~~
 
 
 ###### #####################################
@@ -227,6 +218,7 @@ UTF Hex       REGEX                  KWGT
     - Use for loops and awareness of {} level, arrays and commas.
     - Wipe all whitespace first to get json to consistant state
     - Provide custom HA calls for lights and potentially other devices? Or use templates instead?
+    - May have to copy json to Tasker, make edits and return it as backup option
 - Create a flow loop that writes new lv() - Can reduce stacks of defined lv()
 - Integrate all options into the globals.
 - Setup Mode
@@ -253,7 +245,14 @@ UTF Hex       REGEX                  KWGT
         - Can I get state information???
             - Use HA app and wg()? Can I get auth that way?
         - https://companion.home-assistant.io/docs/integrations/url-handler/#call-service
-- "Pastel" OneUI feature to be expanded to random color option for any theme
+- Automate build process using github?
+    - Create script that creates a "globals.md" chart with name and description imported from json
+    - Reference "Dev version > Release version" list above
+- Look into file-based JSON template
+    - Watch for android permission issues
+    - Allow user to select their own custom JSON using flow and file picker?
+    - Could use "Send Data" option in flows or WebGet()
+
 
 ###### #####################################
 ###### Icon Pack

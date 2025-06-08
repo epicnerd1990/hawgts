@@ -8,6 +8,7 @@
 - Backend KWGT Flows and Functions
 - Autosizing Code
 - Status System
+- App launcher
 - Colors
 
 ###### #####################################
@@ -138,13 +139,17 @@ $tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error"))$
 `$gv(func/status)$`
 ```
   $lv(dbstatus, gv(json/status))$
+  $lv(status, gv(core/tasker/status))
 
-// template1
   $lv(posid, (".box2.row1." + (#box2maxobj - 1)))$
   $gv(func/jsonobj)$
 
-// widget1
-  $lv(tempjson,
+  $gv(func/themecolors)$
+
+  $lv(comm1, if(#status != "" | #status != "br(tasker, status)", 1, 0))$
+  $lv(comm2, if(#status != "" | #status != "br(tasker, status)", 1, 0))$
+  $lv(comm3, if(#status != "" | #status != "br(tasker, status)", 1, 0))$
+  $lv(widget1,
       if(#tname   = "" | #ticon   = "" | #tbox1   = "" |
          #trowct  = "" | #ticopos = "" | #tdevct  = "" |
          #obid    = "" | #obtype  = "" | #obicon  = "" |
@@ -152,54 +157,45 @@ $tc(json, #dbstatus, ("." + #cat1 + "." + #error1 + ".error"))$
          #obparam = "",
         1, 0
   ))$
-
-// widget2
-  $lv(devjson,
+  $lv(widget2,
       if(#obtype    = "" | #obonstate = "" | #ststate = "" |
          #stobtype  = "" | #stoutput = ""  | gv(json/device) = "",
         1, 0
   ))$
-
-// widget3
-  $lv(tempmain,
+  $lv(widget3,
       if(#template = "" | #tpageon   = "" | #obj     = "" |
          #curpage  = "" | #objfindkey= "" | #objkey  = "" |
          #entity   = "" | #entitykey = "" | #box1obj = "",
         1, 0
   ))$
-
-// Populate
-// 1 = error, 0 = none
-  $lv(comm1,     "")$
-  $lv(comm2,     "")$
-  $lv(comm3,     "")$
-  $lv(widget1,   #tempjson)$
-  $lv(widget2,   #devjson)$
-  $lv(widget3,   #tempmain)$
   $lv(widget4,   "")$
-  $lv(template1, (if(#obid = 0, 1, 0)))$
+  $lv(template1, if(#obid = 0, 1, 0))$
   $lv(template2, "")$
-  $lv(theme1,    "")$
+  $lv(theme1,
+        if(#back1   = "" | #back2     = "" | #objiconon  = "" |
+         #objiconoff= "" | #objringon = "" | #objringoff = "" |
+         #border    = "",
+         1, 0
+  ))$
   $lv(theme2,    "")$
-  $lv(setup1,    (if(gv(devicetype) = "DATA", 1, 0)))$
+  $lv(theme3, if(#dbtheme = "" | #settheme = "", 1, 0))$
+  $lv(setup1, if(gv(devicetype) = "DATA", 1, 0))$
 
-// Load current errors
   $lv(error,
-    (if(#comm1 = 1,     (#error + ";" + "comm,1"),
-        #comm2 = 1,     (#error + ";" + "comm,2"),
-        #comm3 = 1,     (#error + ";" + "comm,3"),
-        #widget1 = 1,   (#error + ";" + "widget,1"),
-        #widget2 = 1,   (#error + ";" + "widget,2"),
-        #widget3 = 1,   (#error + ";" + "widget,3"),
-        #widget4 = 1,   (#error + ";" + "widget,4"),
-        #template1 = 1, (#error + ";" + "template,1"),
-        #template2 = 1, (#error + ";" + "template,2"),
-        #theme1 = 1,    (#error + ";" + "theme,1"),
-        #theme2 = 1,    (#error + ";" + "theme,2"),
-        #setup1 = 1,    (#error + ";" + "setup,1")
+    (if(#comm1 = 1,     (if(#error = "", #error + ";") + "comm,1"),
+        #comm2 = 1,     (if(#error = "", #error + ";") + "comm,2"),
+        #comm3 = 1,     (if(#error = "", #error + ";") + "comm,3"),
+        #widget1 = 1,   (if(#error = "", #error + ";") + "widget,1"),
+        #widget2 = 1,   (if(#error = "", #error + ";") + "widget,2"),
+        #widget3 = 1,   (if(#error = "", #error + ";") + "widget,3"),
+        #widget4 = 1,   (if(#error = "", #error + ";") + "widget,4"),
+        #template1 = 1, (if(#error = "", #error + ";") + "template,1"),
+        #template2 = 1, (if(#error = "", #error + ";") + "template,2"),
+        #theme1 = 1,    (if(#error = "", #error + ";") + "theme,1"),
+        #theme2 = 1,    (if(#error = "", #error + ";") + "theme,2"),
+        #setup1 = 1,    (if(#error = "", #error + ";") + "setup,1")
   )))$
 
-// Split data for use
   $lv(error1, tc(split, #error,  ";", 0))$
   $lv(cat1,   tc(split, #error1, ",", 0))$
   $lv(num1,   tc(split, #error1, ",", 1))$

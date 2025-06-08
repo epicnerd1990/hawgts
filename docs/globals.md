@@ -1,20 +1,24 @@
 # HAWGTS Globals
-The *Global* tab in the Kustom editor is configured as a "Settings Menu" for this widget. Always check the settings first before editing the widget interface directly. Below is a summary of the setting groups, followed by a chart of every setting available and information about it, in order. This is the same information available in the *Global* tab in Kustom editor, just formatted in an easier-to-read way for myself and others to reference as needed
+The *Global* tab in the Kustom editor is configured as a "Settings Menu" for this widget. Always check the settings first before editing the widget interface directly. Below is a summary of the setting folders and a list of every setting available (same options and order as *Global* tab) for reference. Also see [advanced configuration](json.md) for additional details
 
 - Initial configuration
-    - Set your device type, then toggle through the templates to see which one works for your layout and launcher
-    - Adjust basic widget settings
-- `theme` - Set size, alignment and visual variables such as object sizes, padding, opacity, etc
+    - Set device type, then toggle through the templates to see which one works for your layout and launcher
+        - Choose from dozens of device/layout combinations for different sizes and styles of widget
+        - Some templates have device-specfic controls such as light colour and brightness options
+> After choosing a template, dont forget to read all template information in the global below (`templateinfo`)
+- `theme` - Overide all theme settings and set size, alignment and visual variables such as object sizes, padding, opacity, etc
 - `theme/advanced` - Advanced alignment and padding options. Use only if needed
-- `colors` - Override the colors set by whatever theme you're using. Remove the colors to go back to the theme defaults. Takes 3-8 digit RBG Hex color codes (#FFFFFFFF)
-- `colors/colorgen` - A color generator that uses colors from your system theme where available and allows you to edit them to "Material" specifications or anything you want!
-    - Advanced users: This generator uses the Kustom [si(syscx#)](https://docs.kustom.rocks/docs/reference/functions/si/) formula. [Color chart of what it generates]().
-- `colors/coloredit` - A color editor that allows you to tweak the colors that your current widget theme uses, such as darkening the icon color or adding transparency. It can also extract colors to use from your wallpaper
-    - Advanced users: Color editor uses the Kustom [si(wpcolor#)](https://docs.kustom.rocks/docs/reference/functions/si/) function to get wallpaper colors and [ce(sat/lum/comp)](https://docs.kustom.rocks/docs/reference/functions/ce/) to modify the colors
+- `colors` - Override the colors set by the theme. Remove the colors to go back to the theme defaults. Use 3-8 digit RBG Hex color codes (#FFFFFFFF)
+    - Widget colors can be replaced and edited in the `colors` folder. Here you can choose alternative system colors, extract colors from your wallpaper, edit the colors and more
+    - `colors/colorgen` - A color generator that uses colors from your system theme where available and allows you to edit them to "Material" specifications or anything you want!
+        - Advanced users: This generator uses the Kustom [si(syscx#)](https://docs.kustom.rocks/docs/reference/functions/si/) formula. [Color chart of what it generates]().
+    - `colors/coloredit` - A color editor that allows you to tweak the colors that your current widget theme uses, such as darkening the icon color or adding transparency. It can also extract colors to use from your wallpaper
+        - Advanced users: Color editor uses the Kustom [si(wpcolor#)](https://docs.kustom.rocks/docs/reference/functions/si/) function to get wallpaper colors and [ce(sat/lum/comp)](https://docs.kustom.rocks/docs/reference/functions/ce/) to modify the colors
 - `entities` - Set your entity here, and set up to 4 if you use a multi-device template
-- `core` and `func` - Do not edit values in these folders, they run the backend. View the [function API](../README.md#function-api-information) section of the readme
+- `core` and `func` - Do not edit values in these folders, they run the backend. View the [function API](json.md#2-making-modifications-to-the-widget) section of the readme
 - `json` - Widget databases - for advanced users only. Create your own theme or template for ultimate customization. See [JSON.md](json.md) for details.
 
+> For advanced layouts, colors and icons use, create your own [device templates](json.md#custom-template) or [theme](json.md#create-a-custom-theme). If you do this, please add the JSON as a pull request to improve the widget options for everyone!
 
 
 ### Global variable table
@@ -92,11 +96,12 @@ The *Global* tab in the Kustom editor is configured as a "Settings Menu" for thi
 | > `external/appicon2`   | Select an app to open on touch: App icon #2                    | Toggle     | Yes      |
 | > `external/appiconsize`| (Preset to 32) Set the size of the small app-launcher object(s)| 0-75, 32   | Yes      |
 | > `external/custom`     | Enter the Android package name to open (eg com.android.appname)| 0-75, 32   | Yes      |
-| **`core`**              | **Core**                                                       | **Folder** | **No**   |
+| **`core`**              | **Core globals for status and tasker**                         | **Folder** | **No**   |
 | > `curpage`             | Current page for paged templates                               | X          | No       |
 | > `randomring`          | Code for ring "paint_color" attribute                          | X          | No       |
 | **`core/tasker`**       | **Tasker**                                                     | **Folder** | **No**   |
 | >> `fromtasker`         | State information sent from tasker to apply to "json/device"   | X          | No       |
+| >> `status`             | Status and error messages from Tasker                          | X          | No       |
 | >> `temp`               | Temp storage for Tasker > KWGT flow                            | X          | No       |
 | **`core/status`**       | **Status System**                                              | **Folder** | **No**   |
 | >> `currentstatus`      | Current status or last status displayed                        | X          | No       |
